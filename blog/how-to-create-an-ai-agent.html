@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>How to Create an AI Agent for Your Business (Honest 2026 Guide) | 41 Labs</title>
+    <meta name="description" content="How to create an AI agent in 2026: the honest stack, whether you need to code, real DIY time and cost against done-for-you figures, and the 6 steps from price list to live agent.">
+    <meta name="keywords" content="how to create an ai agent, ai agent for business, how to make ai chatbot, do ai need coding, build ai agent, ai agent no code">
+    <meta name="author" content="Alexander Lee">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://41labs.ai/blog/how-to-create-an-ai-agent">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://41labs.ai/blog/how-to-create-an-ai-agent">
+    <meta property="og:title" content="How to Create an AI Agent for Your Business (Honest 2026 Guide) | 41 Labs">
+    <meta property="og:description" content="The honest stack behind every AI agent, whether you need to code, real DIY time and cost against done-for-you figures, and the 6 steps from price list to live agent.">
+    <meta property="og:image" content="https://41labs.ai/blog/img/how-to-create-an-ai-agent.webp">
+    <meta property="og:site_name" content="41 Labs">
+    <meta property="article:published_time" content="2026-07-24T08:00:00+08:00">
+    <meta property="article:modified_time" content="2026-07-24T08:00:00+08:00">
+    <meta property="article:author" content="https://www.linkedin.com/in/leejunweialexander/">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://41labs.ai/blog/how-to-create-an-ai-agent">
+    <meta name="twitter:title" content="How to Create an AI Agent for Your Business (Honest 2026 Guide) | 41 Labs">
+    <meta name="twitter:description" content="The honest stack behind every AI agent, whether you need to code, real DIY time and cost against done-for-you figures, and the 6 steps from price list to live agent.">
+    <meta name="twitter:image" content="https://41labs.ai/blog/img/how-to-create-an-ai-agent.webp">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../logo-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../logo-icon.png">
+    <link rel="apple-touch-icon" href="../logo-icon.png">
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="41 Labs Blog" href="https://41labs.ai/feed.xml">
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How to Create an AI Agent for Your Business (Honest 2026 Guide)",
+        "description": "How to create an AI agent in 2026: the honest stack, whether you need to code, real DIY time and cost against done-for-you figures, and the 6 steps from price list to live agent.",
+        "image": "https://41labs.ai/blog/img/how-to-create-an-ai-agent.webp",
+        "author": {
+            "@type": "Person",
+            "name": "Alexander Lee",
+            "jobTitle": "Founder & CEO",
+            "url": "https://www.linkedin.com/in/leejunweialexander/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "41 Labs",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://41labs.ai/logo-full.png"
+            }
+        },
+        "datePublished": "2026-07-24T08:00:00+08:00",
+        "dateModified": "2026-07-24T08:00:00+08:00",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://41labs.ai/blog/how-to-create-an-ai-agent"
+        }
+    }
+    </script>
+
+    <!-- FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Can I create an AI agent for free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, for a prototype. ManyChat has a free plan, ChatGPT lets you build a custom GPT at no charge, and LLM APIs cost cents per conversation while you test. What free tiers will not give you is production use on WhatsApp, where Meta charges per-conversation fees and most tools gate the Business API behind paid plans. The real cost of a free agent is your time, and the ceiling arrives fast: no catalogue quoting, no follow-up, no human handoff. Prototyping free is a good way to learn. Once the agent talks to paying customers, budget real money."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do AI agents need coding?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Simple flows, no. No-code tools like Tidio and ManyChat handle FAQ answering and lead capture from US$14 to US$79 a month with a visual editor. An agent that quotes from a real price list, applies business rules, follows up leads, and books appointments needs engineering: structured data, integrations, testing, and someone to maintain it all. That gap is the reason done-for-you services exist."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How long does it take to build an AI agent?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A simple no-code FAQ flow takes a weekend to two weeks. A DIY agent that quotes from your catalogue takes six weeks to six months of engineering, based on 41 Labs project logs. Done for you, 41 Labs takes a managed 41 Closer agent live in 48 hours, and fully custom builds run 3 to 8 weeks."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between an AI agent and a chatbot?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A chatbot follows scripted flows or gives generic answers. An AI agent understands your products, prices, and policies, holds a natural conversation, generates real quotes, and qualifies leads before handing them to your team. In practice the gap is accuracy, and accuracy is what lets an agent quote and sell where a scripted bot stalls."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://41labs.ai/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://41labs.ai/blog"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "How to Create an AI Agent for Your Business (Honest 2026 Guide)"
+            }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="../styles.css?v=7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
+
+    <script>/* deferred analytics for Core Web Vitals: load on first interaction or after 4s */
+    (function(){var loaded=false;function load(){if(loaded)return;loaded=true;
+      var g=document.createElement('script');g.async=1;g.src='https://www.googletagmanager.com/gtag/js?id=G-VQQ49H8N1L';document.head.appendChild(g);
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-VQQ49H8N1L');
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WQJF7DK7');}
+      var e=['scroll','mousemove','touchstart','click','keydown'];e.forEach(function(n){window.addEventListener(n,load,{once:true,passive:true});});setTimeout(load,4000);})();
+    </script>
+    <script src="/track.js" defer></script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQJF7DK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+                    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <img src="../logo-nav.png?v=2" alt="41 Labs" class="logo-img" style="height: 60px;">
+            </a>
+            <ul class="nav-links"><li><a href="/41-closer" class="nav-flagship">41 Closer</a></li>
+                <li class="nav-dropdown-wrap">
+                    <a href="#" class="nav-dropdown-trigger">Solutions <span style="font-size:0.65em;opacity:0.7;">&#9662;</span></a>
+                    <div class="nav-dropdown">
+                        <a href="/ai-automation-agency-singapore">AI Automation Agency</a>
+                        <a href="/ai-development-company-singapore">AI Development Company</a>
+                        <a href="/ai-sales-agent-singapore">AI Sales Agent</a>
+                        <a href="/ai-for-ecommerce">AI for Ecommerce</a>
+                        <a href="/whatsapp-ai-chatbot">WhatsApp AI Chatbot</a>
+                        <a href="/ai-appointment-booking">AI Appointment Booking</a>
+                        <a href="/services/ai-consulting">AI Consulting</a>
+                    </div>
+                </li>
+
+                <li class="nav-dropdown-wrap">
+                    <a href="#" class="nav-dropdown-trigger">Industries <span style="font-size:0.65em;opacity:0.7;">&#9662;</span></a>
+                    <div class="nav-dropdown"><a href="/industries" style="font-weight:700;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:8px;margin-bottom:4px;">Browse All Industries</a>
+                        <a href="/industries/construction">Construction</a>
+                        <a href="/industries/healthcare">Healthcare &amp; Clinics</a>
+                        <a href="/industries/home-services">Home Services</a>
+                        <a href="/industries/professional-services">Professional Services</a>
+                        <a href="/industries/automotive">Automotive &amp; Tow Truck</a>
+                        <a href="/industries/fnb">F&amp;B &amp; Restaurants</a>
+                        <a href="/industries/beauty-wellness">Beauty &amp; Wellness</a>
+                    </div>
+                </li>
+                <li><a href="../case-studies.html">Case Studies</a></li>
+
+
+                <li><a href="/events">Events</a></li>
+
+            </ul>
+            <a href="https://wa.me/6580124848?text=Hi%2041%20Labs%21%20I%27m%20exploring%20AI%20for%20my%20business%20and%20not%20sure%20where%20to%20start." target="_blank" rel="noopener" class="btn btn-primary nav-cta">WhatsApp Us</a>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <article class="post-article">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" href="../index.html"><span itemprop="name">Home</span></a>
+                        <meta itemprop="position" content="1">
+                    </li>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" href="../blog.html"><span itemprop="name">Blog</span></a>
+                        <meta itemprop="position" content="2">
+                    </li>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <span itemprop="name">How to Create an AI Agent for Your Business</span>
+                        <meta itemprop="position" content="3">
+                    </li>
+                </ol>
+            </nav>
+
+            <!-- Post Header -->
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">AI Systems</span>
+                    <span class="post-date">Last updated: July 24, 2026</span>
+                    <span class="post-read-time">10 min read</span>
+                </div>
+                <h1>How to Create an AI Agent for Your Business (Honest 2026 Guide)</h1>
+                <p class="post-excerpt">What an AI agent is made of, when you can build one without code, what DIY costs in hours and dollars, and the six steps that take you from price list to live agent. Written by a team that builds these for a living, including the part about when you should not hire us.</p>
+                <div class="post-author">
+                    <span>By <strong><a href="https://www.linkedin.com/in/leejunweialexander/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Alexander Lee</a></strong>, Founder, 41 Labs</span>
+                </div>
+            </header>
+
+            <!-- Post Content -->
+            <div class="post-content">
+                <figure style="margin:0 0 28px;">
+                    <img src="/blog/img/how-to-create-an-ai-agent.webp" width="1536" height="1024" alt="Flat illustration of the six stages of creating an AI agent for a business, from price list and business data through prompt and guardrails to a live WhatsApp agent" loading="eager" decoding="async" style="width:100%;height:auto;border-radius:14px;display:block;">
+                    <figcaption style="font-size:0.85rem;color:#6b6b6b;margin-top:8px;text-align:center;">The six stages of creating an AI agent for your business, from one clear job to a live, monitored agent.</figcaption>
+                </figure>
+                <h2>The short answer</h2>
+                <div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:14px;padding:24px 28px;margin:16px 0 32px;">
+                    <p style="margin:0 0 12px;">Creating an AI agent takes six steps: pick one job for it, get your business data into clean shape, choose a platform or an LLM API, write the prompt and guardrails, test it like a hostile customer, then go live and read the transcripts. A simple FAQ bot on a no-code tool costs US$29 to US$79 a month and takes a weekend. An agent that quotes real prices from your catalogue is a different animal. DIY, that is weeks to months of engineering. Done for you, 41 Labs takes a <a href="/41-closer" style="color:#22c55e;">41 Closer</a> agent live in 48 hours from S$690 a month, and custom builds run 3 to 8 weeks at S$7,000 to S$25,000. If your enquiries are low stakes, build it yourself. When each one is worth real money, pay someone who has done it fifty times.</p>
+                    <p style="margin:0;font-size:0.88rem;color:#6b6b6b;">Last updated: July 24, 2026. Prices and timelines come from 41 Labs published pages and our July 2026 chatbot comparison. DIY figures are our estimates and labeled as such.</p>
+                </div>
+
+                <h2>What do you actually need to build an AI agent?</h2>
+                <p>Strip away the vendor noise and every working agent has the same five parts. This holds whether you build on a US$29 tool or spend S$25,000 on a custom system. And if you are still deciding whether you need an agent at all, read our <a href="/blog/ai-agent-vs-chatbot" style="color:#22c55e;font-weight:600;">AI agent vs chatbot guide</a> first, then come back.</p>
+                <p>The intelligence is rented. Nobody trains their own model for this in 2026. Your agent calls an LLM API from Anthropic, OpenAI, or Google and pays cents per conversation. It is the cheapest part of the whole build, which surprises owners who assumed the AI itself would be the expensive bit.</p>
+                <p>Your business data is where projects die. An agent can only answer from what you give it, which means a price list in a clean spreadsheet, delivery rules written down, and the 20 questions customers actually ask along with the answers your best salesperson gives. We have watched builds stall for weeks because the prices lived in the owner's head.</p>
+                <p>Then a channel. A web chat widget is the easy one. WhatsApp is where the money is for most SMEs in Singapore and Australia, and it is harder: you need the WhatsApp Business API through Meta or a provider, approval takes days, and Meta bills per conversation on top of whatever tool you use. We keep a plain guide to <a href="/whatsapp-automation-singapore" style="color:#22c55e;font-weight:600;">WhatsApp automation</a> if that is your main channel.</p>
+                <p>The prompt and guardrails do more work than any other text in the system. The prompt sets the agent's job, its tone, and its hard limits. The guardrails cover what it does when it does not know: hand off to a human, never invent a price, never promise a delivery date it cannot check. An agent without guardrails will cheerfully give a customer 40 percent off.</p>
+                <p>Last, monitoring. Someone reads the transcripts, catches wrong answers, and tunes the prompt every week. Every failed chatbot we have been asked to rescue skipped this part.</p>
+
+                <h2>Do you need to code?</h2>
+                <p>For simple flows, no. Tidio, ChatBot.com, and ManyChat let you build FAQ answering and lead capture in a visual editor for US$14 to US$79 a month. If what you want is really how to make an AI chatbot that answers opening hours and captures phone numbers, a no-code tool is the whole answer and you can be live this week. People type "do AI need coding" into search, and for this tier the honest answer is no.</p>
+                <p>The answer flips the moment the agent has to sell. Quoting from a 300-line price list needs structured data and retrieval, because pasting the whole list into a prompt breaks fast. Rules like minimum order quantities, delivery zones, and GST live in code, outside the prompt. A follow-up two days later means a database and a scheduled job, and booking means calendar integration. Each piece is engineering, and the maintenance never ends, because your prices change and Meta changes its API.</p>
+                <p>So be honest about which agent you are building. The most common wreck we see is a no-code tool stretched past its limits: the flow gets 40 branches deep, one person understands it, and then that person resigns. If the conversations are worth real money, treat the agent as software, with an owner, tests, and someone to call when it breaks.</p>
+
+                <h2>How long does it take and what does it cost?</h2>
+                <p>Honest ranges. Where a number is our estimate rather than a published price, we say so.</p>
+                <p>A DIY FAQ flow on a no-code tool takes a weekend to two weeks of evenings. Call it 10 to 30 hours of your time plus US$29 to US$79 a month in subscription fees.</p>
+                <p>A DIY quoting agent is the range nobody publishes. From our own build logs and the half-finished projects clients bring us, expect six weeks to six months with a competent developer, somewhere around 100 to 300 hours of engineering. At S$80 to S$100 an hour that is S$8,000 to S$30,000 of time before the agent answers its first customer. Your developer may be faster. Ours were not, at the start.</p>
+                <p>Done for you, the numbers sit on our pricing pages. <a href="/41-closer" style="color:#22c55e;font-weight:600;">41 Closer</a>, the managed WhatsApp and web chat agent we run for clients, goes live in 48 hours: you send your product list and prices, we build it, connect your WhatsApp, and switch it on. Plans start at S$690 a month plus a one-time build fee from S$4,800, and you can cancel any time. Fully custom systems, where the agent has to work inside your inventory or booking software, run 3 to 8 weeks and S$7,000 to S$25,000 depending on scope. That is the work our <a href="/ai-automation-agency-singapore" style="color:#22c55e;font-weight:600;">AI automation team in Singapore</a> does, and we <a href="/ai-automation-agency-australia" style="color:#22c55e;font-weight:600;">serve Australian businesses remotely</a> the same way.</p>
+
+                <figure style="margin:28px 0;background:#fafafa;border:1px solid rgba(0,0,0,0.08);border-radius:14px;padding:24px 26px;">
+                  <figcaption style="font-weight:700;font-size:1rem;color:#111;margin-bottom:18px;">Time to a live AI agent: DIY vs done-for-you, July 2026</figcaption>
+                  <svg viewBox="0 0 640 310" width="100%" role="img" aria-label="Bar chart of time to a live AI agent: DIY simple FAQ flow 3 to 14 days (41 Labs estimate), DIY quoting agent 6 weeks to 6 months (41 Labs estimate), 41 Closer managed agent live in 48 hours (published), 41 Labs custom build 3 to 8 weeks (published)" style="max-width:640px;display:block;">
+                    <text x="0" y="34" font-family="Inter,sans-serif" font-size="13" fill="#333">DIY, simple FAQ flow (no-code tool)</text>
+                    <rect x="0" y="42" width="36" height="26" rx="4" fill="#4ade80"></rect>
+                    <text x="46" y="60" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#111">3 to 14 days (our estimate)</text>
+                    <text x="0" y="108" font-family="Inter,sans-serif" font-size="13" fill="#333">DIY, quoting agent (real engineering)</text>
+                    <rect x="0" y="116" width="460" height="26" rx="4" fill="#166534"></rect>
+                    <text x="450" y="134" text-anchor="end" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#fff">6 weeks to 6 months (our estimate)</text>
+                    <text x="0" y="182" font-family="Inter,sans-serif" font-size="13" fill="#333">41 Closer, managed (run by 41 Labs)</text>
+                    <rect x="0" y="190" width="12" height="26" rx="4" fill="#4ade80"></rect>
+                    <text x="22" y="208" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#111">live in 48 hours (published)</text>
+                    <text x="0" y="256" font-family="Inter,sans-serif" font-size="13" fill="#333">41 Labs custom build</text>
+                    <rect x="0" y="264" width="143" height="26" rx="4" fill="#166534"></rect>
+                    <text x="153" y="282" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#111">3 to 8 weeks (published)</text>
+                  </svg>
+                  <p style="font-size:0.82rem;color:#6b6b6b;margin:14px 0 0;">Source: DIY ranges are 41 Labs estimates from our own build logs and rescue projects, labeled as estimates. The 48-hour figure for 41 Closer and the 3 to 8 week custom range are the published timelines on 41labs.ai. Bars are drawn to the top of each range, so read the labels rather than comparing lengths exactly.</p>
+                </figure>
+
+                <figure style="margin:28px 0;background:#fafafa;border:1px solid rgba(0,0,0,0.08);border-radius:14px;padding:24px 26px;">
+                  <figcaption style="font-weight:700;font-size:1rem;color:#111;margin-bottom:18px;">What each route costs, July 2026</figcaption>
+                  <svg viewBox="0 0 640 310" width="100%" role="img" aria-label="Bar chart of cost bands to create an AI agent: no-code tools US$29 to US$79 a month, DIY engineering time S$8,000 to S$30,000 at 100 to 300 hours (41 Labs estimate), 41 Closer from S$690 a month plus one-time build from S$4,800, 41 Labs custom builds S$7,000 to S$25,000" style="max-width:640px;display:block;">
+                    <text x="0" y="34" font-family="Inter,sans-serif" font-size="13" fill="#333">No-code tool subscription</text>
+                    <rect x="0" y="42" width="12" height="26" rx="4" fill="#4ade80"></rect>
+                    <text x="22" y="60" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#111">US$29 to US$79 a month</text>
+                    <text x="0" y="108" font-family="Inter,sans-serif" font-size="13" fill="#333">DIY engineering time (100 to 300 hours)</text>
+                    <rect x="0" y="116" width="460" height="26" rx="4" fill="#166534"></rect>
+                    <text x="450" y="134" text-anchor="end" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#fff">S$8,000 to S$30,000 (our estimate)</text>
+                    <text x="0" y="182" font-family="Inter,sans-serif" font-size="13" fill="#333">41 Closer, managed (run by 41 Labs)</text>
+                    <rect x="0" y="190" width="74" height="26" rx="4" fill="#4ade80"></rect>
+                    <text x="84" y="208" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#111">build from S$4,800 + from S$690 a month</text>
+                    <text x="0" y="256" font-family="Inter,sans-serif" font-size="13" fill="#333">41 Labs custom build (one-time)</text>
+                    <rect x="0" y="264" width="383" height="26" rx="4" fill="#166534"></rect>
+                    <text x="373" y="282" text-anchor="end" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#fff">S$7,000 to S$25,000 (published)</text>
+                  </svg>
+                  <p style="font-size:0.82rem;color:#6b6b6b;margin:14px 0 0;">Source: no-code prices run from Tidio at US$29 to respond.io at US$79, from our July 2026 chatbot comparison. The DIY band is 100 to 300 engineering hours at S$80 to S$100 an hour, a 41 Labs estimate. 41 Closer and custom-build figures are published 41 Labs pricing. Monthly subscriptions and one-time builds share one chart, so read the labels, and bars are drawn to the top of each range.</p>
+                </figure>
+
+                <h2>The 6 steps to a working agent</h2>
+                <p>The same six steps apply whether you build it yourself or brief an agency.</p>
+                <ol>
+                    <li><strong>Pick one job.</strong> One conversation type, done well: answer product questions and quote prices, or book appointments, or qualify leads for your sales team. One job means you can test it properly. Five jobs and it fails quietly in all of them.</li>
+                    <li><strong>Get the knowledge out of people's heads.</strong> Export the price list to a spreadsheet. Write down the rules a good salesperson applies without thinking, minimum orders, delivery zones, what to say when someone asks for a discount. Pull the last 50 real enquiries from your inbox or WhatsApp and note what customers asked in their own words. This step is unglamorous and it decides everything after it.</li>
+                    <li><strong>Choose the platform to match the job.</strong> For FAQ answering and lead capture, a no-code tool at US$29 to US$79 a month is enough. For quoting, follow-up, or booking, you need an LLM API plus real engineering, whether that is your developer or an agency. Mixing this up wastes months.</li>
+                    <li><strong>Write the prompt and the guardrails together.</strong> Give the agent its job, its tone, and the data from step 2. Then write the refusals: never invent a price, never promise stock without checking, hand off to a human when the customer is angry or the question is out of scope. Get the refusals right before you polish a single sales line.</li>
+                    <li><strong>Test it like your worst customer.</strong> Ask for discounts it cannot give. Misspell your own product names. Switch to Mandarin or Malay halfway through. Ask for something that is off the price list, then send seven messages in a row. Fix what breaks and test again before a single real customer sees it.</li>
+                    <li><strong>Go live small and read every transcript.</strong> Route 10 percent of enquiries to it, or one product line. For the first two weeks read everything it says, then tune weekly. Agents drift as your catalogue and prices change, and an unread transcript is where the first embarrassing answer hides.</li>
+                </ol>
+
+                <h2>When DIY is the right call, and when it is not</h2>
+                <p>Build it yourself when the stakes per enquiry are low, the questions repeat, and someone on your team genuinely wants to own it. A cafe answering opening hours, a salon taking bookings, a store pointing people to tracking pages. At US$29 a month the downside is a lost weekend. DIY is also right if you are technical and want to learn, and this guide plus a free LLM API tier is enough to get moving.</p>
+                <p>Hand it over when each enquiry is worth hundreds or thousands of dollars, when quotes come from a real catalogue, or when the honest answer to "who will maintain this?" is nobody. That is the situation 41 Closer exists for, and the same reason we build custom systems for companies whose agent has to live inside their inventory or booking software. If you want to check the fit before spending anything, we build a free working prototype on your real data, you test it, and only then decide whether to pay.</p>
+                <p>Disclosure: we sell the done-for-you option, so weigh our fork advice with that in mind. We have tried to be exact about where the cheap tools win.</p>
+
+                <div class="commercial-link" style="background:#0a0a0a;border-radius:14px;padding:24px 28px;margin:32px 0;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+                    <span style="color:#fff;font-weight:600;font-size:1.02rem;">Building it yourself? Save the six steps and go. Or skip the build. Message the agent we run and see the finished result.</span>
+                    <a href="https://wa.me/6580124848?text=Hi%2C%20I%20read%20your%20guide%20on%20creating%20an%20AI%20agent.%20Show%20me%20the%20finished%20result." style="background:#4ade80;color:#06281a;padding:10px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:0.92rem;" target="_blank" rel="noopener">Message the live agent &rarr;</a>
+                </div>
+
+                <h2>Frequently asked questions</h2>
+
+                <h3>Can I create an AI agent for free?</h3>
+                <p>Yes, for a prototype. ManyChat has a free plan, ChatGPT lets you build a custom GPT at no charge, and LLM APIs cost cents per conversation while you test. What free tiers will not give you is production use on WhatsApp, where Meta charges per-conversation fees and most tools gate the Business API behind paid plans. The real cost of a free agent is your time, and the ceiling arrives fast: no catalogue quoting, no follow-up, no human handoff. Prototyping free is a good way to learn. Once the agent talks to paying customers, budget real money.</p>
+
+                <h3>Do AI agents need coding?</h3>
+                <p>Simple flows, no. No-code tools like Tidio and ManyChat handle FAQ answering and lead capture from US$14 to US$79 a month with a visual editor. An agent that quotes from a real price list, applies business rules, follows up leads, and books appointments needs engineering: structured data, integrations, testing, and someone to maintain it all. That gap is the reason done-for-you services exist.</p>
+
+                <h3>How long does it take to build an AI agent?</h3>
+                <p>A simple no-code FAQ flow takes a weekend to two weeks. A DIY agent that quotes from your catalogue takes six weeks to six months of engineering, based on 41 Labs project logs. Done for you, 41 Labs takes a managed 41 Closer agent live in 48 hours, and fully custom builds run 3 to 8 weeks.</p>
+
+                <h3>What is the difference between an AI agent and a chatbot?</h3>
+                <p>A chatbot follows scripted flows or gives generic answers. An AI agent understands your products, prices, and policies, holds a natural conversation, generates real quotes, and qualifies leads before handing them to your team. In practice the gap is accuracy, and accuracy is what lets an agent quote and sell where a scripted bot stalls.</p>
+
+                <h2>Where to start</h2>
+                <p>If you are building it yourself, start today with steps 1 and 2: pick the one job and pull the last 50 enquiries. Everything else follows from those two. If you would rather see the finished result before deciding anything, message <strong>+65 8012 4848</strong> on WhatsApp. The agent that replies is 41 Closer, built and run by us. Poke it. Ask it for a price. Ten minutes with a working agent teaches you more than any guide, including this one.</p>
+
+                <p style="margin-top: 32px;">
+                    <a href="https://wa.me/6580124848?text=Hi%2C%20I%20read%20your%20guide%20on%20creating%20an%20AI%20agent.%20Show%20me%20the%20finished%20result." class="btn btn-primary btn-large" target="_blank" rel="noopener">Skip the build: message the agent we run</a>
+                </p>
+
+<div class="related-articles" style="margin: 48px 0; padding: 32px; background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.18); border-radius: 16px;">
+    <h3 style="font-size: 18px; font-weight: 700; color: #111; margin-bottom: 16px;">Related Articles</h3>
+    <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+        <li><a href="/blog/ai-agent-vs-chatbot" style="color: #4ade80; text-decoration: none; font-size: 15px; font-weight: 500;">AI Agent vs Chatbot: What's the Difference? &rarr;</a></li>
+        <li><a href="/blog/managed-whatsapp-ai-agent-vs-diy-chatbot" style="color: #4ade80; text-decoration: none; font-size: 15px; font-weight: 500;">Managed WhatsApp AI Agent vs DIY Chatbot &rarr;</a></li>
+        <li><a href="/blog/how-much-does-custom-ai-cost" style="color: #4ade80; text-decoration: none; font-size: 15px; font-weight: 500;">How Much Does Custom AI Cost? &rarr;</a></li>
+        <li><a href="/blog/how-to-add-ai-agent-to-whatsapp-business" style="color: #4ade80; text-decoration: none; font-size: 15px; font-weight: 500;">How to Add an AI Agent to WhatsApp Business &rarr;</a></li>
+    </ul>
+</div>
+            </div>
+
+            <!-- Share Buttons -->
+            <div class="post-share">
+                <span>Share this article:</span>
+                <div class="share-buttons">
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://41labs.ai/blog/how-to-create-an-ai-agent" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url=https://41labs.ai/blog/how-to-create-an-ai-agent&text=How%20to%20Create%20an%20AI%20Agent%20for%20Your%20Business%20%28Honest%202026%20Guide%29" target="_blank" rel="noopener" aria-label="Share on Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <button onclick="navigator.clipboard.writeText('https://41labs.ai/blog/how-to-create-an-ai-agent')" aria-label="Copy link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Want to skip the build?</h2>
+                <p>Message the agent we run and see the finished result. The AI that replies is 41 Closer, selling itself.</p>
+                <a href="https://wa.me/6580124848?text=Hi%2C%20I%20read%20your%20guide%20on%20creating%20an%20AI%20agent.%20Show%20me%20the%20finished%20result." class="btn btn-primary btn-large" target="_blank" rel="noopener">Message the 41 Closer Demo</a>
+            </div>
+        </div>
+    </section>
+
+                    <!-- Footer -->
+    <!-- E-E-A-T author box -->
+    <section class="author-bio-section" style="border-top:1px solid rgba(0,0,0,0.08);">
+      <div class="container" style="max-width:760px;padding:32px 24px;">
+        <div class="author-bio" style="display:flex;gap:18px;align-items:flex-start;background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.18);border-radius:14px;padding:24px;">
+          <div class="author-avatar" style="flex:0 0 56px;width:56px;height:56px;border-radius:50%;background:#4ade80;color:#06281a;font-weight:800;font-size:1.3rem;display:flex;align-items:center;justify-content:center;">AL</div>
+          <div>
+            <div style="font-weight:700;font-size:1.02rem;">Alexander Lee <span style="color:#6b6b6b;font-weight:500;">· Founder, 41 Labs</span></div>
+            <p style="margin:8px 0 10px;color:#555;font-size:0.93rem;line-height:1.6;">Alexander founded 41 Labs, a Singapore AI company that builds custom AI systems for SMEs and mid-market businesses. He works hands-on with companies across construction, healthcare, logistics, real estate, and professional services, finding the one process costing the most time and money, then building an AI system that fixes it. 41 Labs maintains a 100% production deployment rate.</p>
+            <a href="https://www.linkedin.com/in/leejunweialexander/" target="_blank" rel="noopener" style="font-size:0.88rem;font-weight:600;color:#22c55e;">Connect on LinkedIn →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="../logo-full.png" alt="41 Labs" class="footer-logo">
+                    <p>Custom AI systems for revenue and operations.</p>
+                    <div class="footer-contact">
+                        <a href="mailto:alexander@41labs.ai">alexander@41labs.ai</a>
+                        <span>Singapore</span>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html#what-we-do">What We Do</a>
+                    <a href="https://wa.me/6580124848?text=Hi%2041%20Labs%21%20I%27m%20exploring%20AI%20for%20my%20business%20and%20not%20sure%20where%20to%20start." target="_blank" rel="noopener">WhatsApp Us</a>
+                    <a href="../case-studies.html">Case Studies</a>
+                    <a href="../about.html">About</a>
+                    <a href="../blog.html">Blog</a>
+                    <a href="/41-closer-terms">Plan Terms</a><a href="../privacy.html">Privacy</a>
+                </div>
+                <div class="footer-industries">
+                    <strong>Industries</strong>
+                    <a href="/industries/construction">Construction</a>
+                    <a href="/industries/healthcare">Healthcare</a>
+                    <a href="/industries/home-services">Home Services</a>
+                    <a href="/industries/professional-services">Professional Services</a>
+                    <a href="/industries/automotive">Automotive</a>
+                    <a href="/industries/fnb">F&amp;B</a>
+                    <a href="/industries/beauty-wellness">Beauty &amp; Wellness</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/fortyonelabs" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 41 Labs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js" defer></script>
+
+    <!-- Floating WhatsApp button (auto-injected) -->
+    <a class="wa-float" href="https://wa.me/6580124848?text=Hi%2041%20Labs%21%20I%27m%20exploring%20AI%20for%20my%20business%20and%20not%20sure%20where%20to%20start." target="_blank" rel="noopener" aria-label="Message 41 Labs on WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.728-.957zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    </a>
+    <style>
+        .wa-float { position:fixed; bottom:24px; right:24px; width:60px; height:60px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 22px rgba(37,211,102,0.5); z-index:9999; transition:transform .2s ease; animation:wa-pulse 2.4s infinite; }
+        .wa-float:hover { transform:scale(1.08); }
+        @keyframes wa-pulse { 0%{box-shadow:0 6px 22px rgba(37,211,102,0.5),0 0 0 0 rgba(37,211,102,0.45);} 70%{box-shadow:0 6px 22px rgba(37,211,102,0.5),0 0 0 16px rgba(37,211,102,0);} 100%{box-shadow:0 6px 22px rgba(37,211,102,0.5),0 0 0 0 rgba(37,211,102,0);} }
+        @media (max-width:640px){ .wa-float{ width:54px; height:54px; bottom:18px; right:18px; } }
+    </style>
+</body>
+</html>

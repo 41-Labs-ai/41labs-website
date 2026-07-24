@@ -8,13 +8,43 @@
     <link>https://41labs.ai/blog</link>
     <description>Practical insights on AI systems, automation, and operational efficiency for B2B businesses in Southeast Asia.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2026 08:52:09 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 09:56:53 GMT</lastBuildDate>
     <atom:link href="https://41labs.ai/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://41labs.ai/logo-full.png</url>
       <title>41 Labs Blog</title>
       <link>https://41labs.ai</link>
     </image>
+
+    <item>
+      <title>AI Customer Service: An Honest Guide for Business Owners (2026)</title>
+      <link>https://41labs.ai/blog/ai-customer-service</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/ai-customer-service</guid>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>What AI customer service reliably handles in 2026, what it costs, and where it fails. Published numbers from Intercom and Klarna, DIY tool pricing from US$14 a month vs managed agents from S$690, and the honest case for keeping humans in the loop.</description>
+    </item>
+
+    <item>
+      <title>Does AI Automation Actually Work? Real Numbers From 50+ Builds</title>
+      <link>https://41labs.ai/blog/does-ai-automation-work</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/does-ai-automation-work</guid>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>Does AI automation actually work? The honest answer with real numbers: 80% of AI projects never ship industry-wide, while every one of our 50+ builds is still running. Quote time cut from 3 hours to 5 minutes, lead response from 24 hours to under 2 minutes, conversion up 40%.</description>
+    </item>
+
+    <item>
+      <title>How to Create an AI Agent for Your Business (Honest 2026 Guide)</title>
+      <link>https://41labs.ai/blog/how-to-create-an-ai-agent</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/how-to-create-an-ai-agent</guid>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>How to create an AI agent in 2026: the honest stack, whether you need to code, real DIY time and cost against done-for-you figures, and the 6 steps from price list to live agent.</description>
+    </item>
 
     <item>
       <title>Best AI Chatbots for Business in Australia (2026): Honest Comparison</title>

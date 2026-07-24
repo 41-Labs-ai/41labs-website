@@ -1,6 +1,36 @@
 {
   "posts": [
     {
+      "slug": "does-ai-automation-work",
+      "title": "Does AI Automation Actually Work? Real Numbers From 50+ Builds",
+      "date": "2026-07-24",
+      "author": "Alexander Lee",
+      "category": "ai-systems",
+      "excerpt": "Most AI projects never ship. Ours are all still running. The honest answer to whether AI automation works, what results look like, where it fails, and the conservative ROI math.",
+      "readTime": "9 min",
+      "image": "/blog/img/does-ai-automation-work.webp"
+    },
+    {
+      "slug": "how-to-create-an-ai-agent",
+      "title": "How to Create an AI Agent for Your Business (Honest 2026 Guide)",
+      "date": "2026-07-24",
+      "author": "Alexander Lee",
+      "category": "ai-systems",
+      "excerpt": "The real steps to a working AI agent: the stack you need, whether you must code, honest time and cost ranges for DIY vs done-for-you, and the 6 steps that get you live.",
+      "readTime": "11 min",
+      "image": "/blog/img/how-to-create-an-ai-agent.webp"
+    },
+    {
+      "slug": "ai-customer-service",
+      "title": "AI Customer Service: An Honest Guide for Business Owners (2026)",
+      "date": "2026-07-24",
+      "author": "Alexander Lee",
+      "category": "insights",
+      "excerpt": "Can AI replace customer service? What Klarna and Intercom's published numbers really show, what it costs from DIY tools to managed service, where AI fails, and how to add it without wrecking your brand.",
+      "readTime": "12 min",
+      "image": "/blog/img/ai-customer-service.webp"
+    },
+    {
       "slug": "best-ai-chatbot-for-business-australia",
       "title": "Best AI Chatbots for Business in Australia (2026): Honest Comparison",
       "date": "2026-07-23",
