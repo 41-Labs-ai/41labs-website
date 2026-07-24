@@ -8,7 +8,7 @@
     <link>https://41labs.ai/blog</link>
     <description>Practical insights on AI systems, automation, and operational efficiency for B2B businesses in Southeast Asia.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Jul 2026 13:26:20 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 15:09:54 GMT</lastBuildDate>
     <atom:link href="https://41labs.ai/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://41labs.ai/logo-full.png</url>
@@ -24,6 +24,26 @@
       <dc:creator>Alexander Lee</dc:creator>
       <category>Insights</category>
       <description>What AI customer service reliably handles in 2026, what it costs, and where it fails. Published numbers from Intercom and Klarna, DIY tool pricing from US$14 a month vs managed agents from S$690, and the honest case for keeping humans in the loop.</description>
+    </item>
+
+    <item>
+      <title>AI for Small Business: What Actually Works in 2026 (and What to Skip)</title>
+      <link>https://41labs.ai/blog/ai-for-small-business</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/ai-for-small-business</guid>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>Where AI pays off in a small business in 2026: lead replies, quoting, repeat questions. Honest costs from US$14 a month to S$25,000, and a 30-day starting plan.</description>
+    </item>
+
+    <item>
+      <title>AI vs Automation vs AI Agents: What's the Difference (and Which Do You Need)?</title>
+      <link>https://41labs.ai/blog/ai-vs-automation</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/ai-vs-automation</guid>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>Automation follows fixed rules, AI interprets messy input, and an AI agent acts across a whole workflow. Plain definitions, one concrete example of each, published cost bands, and a decision guide keyed to where your business loses money.</description>
     </item>
 
     <item>
@@ -44,6 +64,16 @@
       <dc:creator>Alexander Lee</dc:creator>
       <category>Insights</category>
       <description>Does AI automation actually work? The honest answer with real numbers: 80% of AI projects never ship industry-wide, while every one of our 50+ builds is still running. Quote time cut from 3 hours to 5 minutes, lead response from 24 hours to under 2 minutes, conversion up 40%.</description>
+    </item>
+
+    <item>
+      <title>How Do AI Agents Work? A Plain-English Explainer for Business Owners</title>
+      <link>https://41labs.ai/blog/how-do-ai-agents-work</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/how-do-ai-agents-work</guid>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>How AI agents work, in plain English: a language model plus your business data, tools, and rules, running in a loop. What happens when a customer messages one, what agents get wrong, and what you need to run one.</description>
     </item>
 
     <item>

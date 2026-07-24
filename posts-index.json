@@ -1,6 +1,36 @@
 {
   "posts": [
     {
+      "slug": "ai-vs-automation",
+      "title": "AI vs Automation vs AI Agents: What's the Difference (and Which Do You Need)?",
+      "date": "2026-07-24",
+      "author": "Alexander Lee",
+      "category": "ai-systems",
+      "excerpt": "Automation runs fixed rules. AI interprets and decides. An agent does the whole job. Crisp definitions, real examples, cost bands, and a decision guide for which one fixes your leak.",
+      "readTime": "9 min",
+      "image": "/blog/img/ai-vs-automation.webp"
+    },
+    {
+      "slug": "how-do-ai-agents-work",
+      "title": "How Do AI Agents Work? A Plain-English Explainer for Business Owners",
+      "date": "2026-07-24",
+      "author": "Alexander Lee",
+      "category": "ai-systems",
+      "excerpt": "What an AI agent actually is, what happens when a customer messages one, where they go wrong, and what you need to run one. No jargon, real numbers from a live agent.",
+      "readTime": "10 min",
+      "image": "/blog/img/how-do-ai-agents-work.webp"
+    },
+    {
+      "slug": "ai-for-small-business",
+      "title": "AI for Small Business: What Actually Works in 2026 (and What to Skip)",
+      "date": "2026-07-24",
+      "author": "Alexander Lee",
+      "category": "ai-systems",
+      "excerpt": "Where AI actually pays off in a small business: lead response speed, quoting, and repetitive questions. Honest cost tiers from free to custom, what to skip, and a 30-day starting plan.",
+      "readTime": "11 min",
+      "image": "/blog/img/ai-for-small-business.webp"
+    },
+    {
       "slug": "best-ai-automation-agencies",
       "title": "Best AI Automation Agencies in 2026: An Honest Global Shortlist",
       "date": "2026-07-24",
