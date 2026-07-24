@@ -8,7 +8,7 @@
     <link>https://41labs.ai/blog</link>
     <description>Practical insights on AI systems, automation, and operational efficiency for B2B businesses in Southeast Asia.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Jul 2026 09:56:53 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 13:26:20 GMT</lastBuildDate>
     <atom:link href="https://41labs.ai/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://41labs.ai/logo-full.png</url>
@@ -24,6 +24,16 @@
       <dc:creator>Alexander Lee</dc:creator>
       <category>Insights</category>
       <description>What AI customer service reliably handles in 2026, what it costs, and where it fails. Published numbers from Intercom and Klarna, DIY tool pricing from US$14 a month vs managed agents from S$690, and the honest case for keeping humans in the loop.</description>
+    </item>
+
+    <item>
+      <title>Best AI Automation Agencies in 2026: An Honest Global Shortlist</title>
+      <link>https://41labs.ai/blog/best-ai-automation-agencies</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/best-ai-automation-agencies</guid>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>The best AI automation agencies in 2026, compared from what their own sites publish: Axe Automation, Morningside AI, AY Automate, Team400, 41 Labs, LeewayHertz, Markovate, Uvik, and Goodish, each with a best-for verdict and one honest limitation.</description>
     </item>
 
     <item>
