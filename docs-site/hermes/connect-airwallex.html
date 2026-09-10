@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting your Airwallex account</title>
+<style>
+  :root{
+    --green:#16a34a; --green-bg:#f0fdf4; --ink:#1a1a1a; --muted:#52525b;
+    --rule:#e4e4e7; --amber-bg:#fffbeb; --amber-border:#f59e0b; --code-bg:#f4f4f5;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    margin:0; background:#e9e9ec; color:var(--ink);
+    font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;
+    font-size:10pt; line-height:15.5pt;
+  }
+
+  /* ---- Sheet (screen) ---- */
+  .doc{
+    background:#fff; width:210mm; margin:24px auto; padding:24mm 22mm 22mm;
+    box-shadow:0 2px 22px rgba(0,0,0,.13);
+  }
+
+  /* ---- Header ---- */
+  .run-header{ margin:0 0 6mm; }
+  .run-header .row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12pt;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+  .run-header .supplier{ text-transform:uppercase; letter-spacing:.04em; }
+  .run-header .docname{ text-align:right; }
+  .run-header .rule{ border-bottom:2.5pt solid var(--green); margin-top:4pt; }
+
+  /* ---- Footer ---- */
+  .run-footer{ margin:8mm 0 0; }
+  .run-footer .rule{ border-top:.5pt solid var(--rule); margin-bottom:4pt; }
+  .run-footer .row{
+    display:flex; justify-content:space-between;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+
+  /* ---- Titles ---- */
+  h1.title{ font-size:23pt; line-height:27pt; font-weight:bold; margin:0 0 3pt; }
+  p.subtitle{ font-size:11.5pt; line-height:16pt; color:var(--muted); margin:0 0 6pt; }
+  p.meta{ font-size:8.8pt; line-height:13pt; color:var(--muted); margin:0 0 14pt; }
+
+  h2.section-h{
+    font-size:13.5pt; line-height:17pt; font-weight:bold; margin:16pt 0 7pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+
+  p{ margin:0 0 6pt; }
+  strong{ font-weight:bold; }
+
+  /* ---- Lists ---- */
+  ul.bullets{ margin:0 0 4pt; padding-left:12pt; }
+  ul.bullets li{ margin:0 0 2pt; }
+  ol.actions{ margin:0 0 4pt; padding-left:14pt; }
+  ol.actions li{ margin:0 0 2pt; }
+
+  /* ---- Callouts ---- */
+  .callout{
+    width:100%; padding:7pt 9pt; margin:0 0 6pt;
+    font-size:9.2pt; line-height:14pt;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .callout p{ margin:0 0 4pt; font-size:9.2pt; line-height:14pt; }
+  .callout p:last-child{ margin-bottom:0; }
+  .callout ol{ margin:2pt 0 0; padding-left:14pt; }
+  .callout ol li{ margin:0 0 2pt; }
+  .callout ol li:last-child{ margin-bottom:0; }
+  .note{ background:var(--green-bg); border-left:2.2pt solid var(--green); }
+  .warn{ background:var(--amber-bg); border-left:2.2pt solid var(--amber-border); }
+
+  /* ---- Steps ---- */
+  .step{ margin:0 0 9pt; }
+  .step-head{
+    display:flex; align-items:flex-start; gap:8pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+  .step-head .num{
+    flex:0 0 auto; width:7.5mm; height:7.5mm; background:var(--green);
+    color:#fff; font-size:9.5pt; font-weight:bold;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-head .step-title{
+    font-size:11.5pt; line-height:15pt; font-weight:bold; margin:0;
+    align-self:center;
+  }
+  .step-body{ margin:5pt 0 0 10mm; }
+
+  /* ---- Key / value table ---- */
+  table.kv{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.kv td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.kv tr:last-child td{ border-bottom:0; }
+  table.kv td.k{ width:45mm; font-weight:bold; padding-right:6pt; }
+
+  /* ---- Data table (multi-column) ---- */
+  table.data{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.data th{
+    font-size:8.6pt; line-height:12.5pt; text-align:left; font-weight:bold;
+    padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:1.2pt solid var(--muted);
+    text-transform:uppercase; letter-spacing:.03em; color:var(--muted);
+  }
+  table.data td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.data td:last-child, table.data th:last-child{ padding-right:0; }
+  table.data tr:last-child td{ border-bottom:0; }
+  table.data td.yes{ color:var(--green); font-weight:bold; }
+  table.data .ok{ color:var(--green); font-weight:bold; }
+  table.data .bad{ color:#b91c1c; font-weight:bold; }
+
+  /* ---- Code block ---- */
+  .code{
+    width:100%; background:var(--code-bg); padding:6pt 8pt; margin:0 0 6pt;
+    font-family:"Courier New",Courier,monospace; font-size:8.6pt; line-height:12.5pt;
+    word-break:break-all; break-inside:avoid; page-break-inside:avoid;
+  }
+  code.inline{
+    font-family:"Courier New",Courier,monospace; font-size:8.8pt;
+    background:var(--code-bg); padding:0 3pt; border-radius:2px;
+  }
+
+  /* ---- Print ---- */
+  @media print{
+    @page{ size:A4; margin:24mm 22mm 22mm 22mm; }
+    body{ background:#fff; }
+    .doc{ width:auto; margin:0; padding:0; box-shadow:none; }
+    .run-header{ position:fixed; top:-15mm; left:0; right:0; margin:0; }
+    .run-footer{ position:fixed; bottom:-15mm; left:0; right:0; margin:0; }
+    .run-header .row, .run-footer .row{ color:var(--muted); }
+  }
+
+  @media screen and (max-width:800px){
+    .doc{ width:auto; margin:0; padding:16px; box-shadow:none; }
+    table.data{ display:block; overflow-x:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============ HEADER (repeats on every printed page) ============ -->
+  <header class="run-header">
+    <div class="row">
+      <div class="supplier">HERMES &middot; 41 LABS</div>
+      <div class="docname">Connecting Airwallex</div>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <!-- ============ BODY ============ -->
+  <main class="run-body">
+
+    <h1 class="title">Connecting your Airwallex account</h1>
+    <p class="subtitle">How to link your own Airwallex account to Hermes so the assistant can send your customers a checkout link and the money lands with you.</p>
+
+    <div class="callout note">
+      <p><strong>Money goes to your account, not ours.</strong> Hermes never holds your funds. You connect your own Airwallex account, and every payment a customer makes settles directly there. 41 Labs bills you separately &mdash; that is a different screen and has nothing to do with this one.</p>
+    </div>
+
+    <h2 class="section-h">Before you start</h2>
+    <p>You will need:</p>
+    <ul class="bullets">
+      <li>An <strong>Airwallex account</strong>, with permission to view API keys (in Airwallex: <strong>Developer &rarr; API keys</strong>).</li>
+      <li>Access to your Hermes workspace as an <strong>owner or admin</strong>.</li>
+      <li>About 10 minutes. You can stop after Step 5 and finish later &mdash; nothing breaks half-done.</li>
+    </ul>
+    <div class="callout note">
+      <p><strong>Don't have your keys yet?</strong> You can skip all of this for now. An unconnected workspace runs on 41 Labs' shared test sandbox, so you can rehearse the entire sales flow &mdash; including a real Airwallex-hosted checkout page &mdash; without connecting anything. No real money moves, and test payments never count towards your sales figures.</p>
+    </div>
+
+    <h2 class="section-h">What Hermes will ask you for</h2>
+    <table class="data">
+      <thead>
+        <tr><th>Field</th><th>Required?</th><th>Where to find it in Airwallex</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Client ID</strong></td><td class="yes">Yes</td><td>Developer &rarr; API keys. Shown in the clear so you can check it's the right account.</td></tr>
+        <tr><td><strong>API key</strong></td><td class="yes">Yes</td><td>Developer &rarr; API keys. Treat this like a password.</td></tr>
+        <tr><td><strong>Webhook secret</strong></td><td>Optional</td><td>Developer &rarr; Webhooks, after you create the endpoint in Step 7.</td></tr>
+        <tr><td><strong>Default currency</strong></td><td class="yes">Yes</td><td>Your choice &mdash; the currency your prices are quoted in.</td></tr>
+      </tbody>
+    </table>
+    <p>Airwallex needs <strong>both</strong> the Client ID and the API key &mdash; one without the other will not connect.</p>
+
+    <h2 class="section-h">Step by step</h2>
+
+    <!-- STEP 1 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">01</div>
+        <h3 class="step-title">Open the Payments screen</h3>
+      </div>
+      <div class="step-body">
+        <p>In Hermes, go to <strong>Settings &rarr; Payments</strong>. If you don't see Settings, ask whoever set up your workspace to make you an admin.</p>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">02</div>
+        <h3 class="step-title">Choose Airwallex</h3>
+      </div>
+      <div class="step-body">
+        <p>In the <strong>Provider</strong> dropdown, select <strong>Airwallex</strong>. A hint appears underneath telling you where the keys live in Airwallex.</p>
+        <div class="callout warn">
+          <p><strong>Already connected to Stripe?</strong> Hermes will warn you before you switch. Your stored Stripe keys do not work for Airwallex and will be replaced, and new payment links go through Airwallex the moment you save &mdash; so you'll need to set up the webhook in Airwallex too (Step 7).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">03</div>
+        <h3 class="step-title">Rehearse in Sandbox first (recommended)</h3>
+      </div>
+      <div class="step-body">
+        <p>Under <strong>Mode</strong>, leave <strong>Sandbox</strong> selected and press <strong>Save</strong>. Send yourself a test conversation and take a test payment end to end. Nothing is charged and nothing shows up in your revenue figures.</p>
+        <p>When you're happy it works, come back and continue from Step 4.</p>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">04</div>
+        <h3 class="step-title">Switch to Live</h3>
+      </div>
+      <div class="step-body">
+        <p>Under <strong>Mode</strong>, press <strong>Live</strong>. The credential fields only appear in Live mode &mdash; that's deliberate, because Sandbox doesn't use your keys at all.</p>
+        <div class="callout warn">
+          <p><strong>Demo and live Airwallex keys look identical.</strong> Hermes cannot tell them apart, so the Mode you pick here is what decides which Airwallex account is used. Pick the one your keys actually belong to. Get it wrong and the connection fails when you test it &mdash; it won't fail silently later.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">05</div>
+        <h3 class="step-title">Get your credentials from Airwallex</h3>
+      </div>
+      <div class="step-body">
+        <p>In a separate tab, sign in to Airwallex and go to <strong>Developer &rarr; API keys</strong>. Copy your <strong>Client ID</strong> and your <strong>API key</strong>.</p>
+        <p>If your Airwallex login can't see that page, someone with admin rights on the Airwallex account will need to fetch them for you.</p>
+      </div>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">06</div>
+        <h3 class="step-title">Paste them in and test</h3>
+      </div>
+      <div class="step-body">
+        <p>Back in Hermes, paste the Client ID and API key into their fields, then press <strong>Test connection</strong>.</p>
+        <p>Hermes signs in to Airwallex with the pair right there and back. Nothing is charged and no customer is affected &mdash; it's purely a check that the keys work.</p>
+        <table class="kv">
+          <tr><td class="k">You should see</td><td><span class="ok">&#10003; Connected (LIVE mode)</span></td></tr>
+          <tr><td class="k">If it fails</td><td>See <strong>If something goes wrong</strong> below.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- STEP 7 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">07</div>
+        <h3 class="step-title">Register the webhook in Airwallex</h3>
+      </div>
+      <div class="step-body">
+        <p>This is how Airwallex tells Hermes a customer has actually paid. Without it, a payment succeeds but the conversation never updates and the sale isn't recorded.</p>
+        <p>Copy the <strong>Webhook URL</strong> Hermes shows you (there's a <strong>Copy</strong> button next to it) &mdash; it looks like this:</p>
+        <div class="code">https://&lt;your-hermes-site&gt;/api/webhooks/payments/&lt;your-workspace-id&gt;</div>
+        <p>In Airwallex, go to <strong>Developer &rarr; Webhooks</strong>, create a notification endpoint with that URL, and subscribe it to these three events:</p>
+        <div class="code">payment_intent.succeeded&nbsp;&nbsp;&nbsp;&nbsp;payment_intent.failed&nbsp;&nbsp;&nbsp;&nbsp;refund.succeeded</div>
+      </div>
+    </section>
+
+    <!-- STEP 8 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">08</div>
+        <h3 class="step-title">Paste the webhook secret back into Hermes</h3>
+      </div>
+      <div class="step-body">
+        <p>When Airwallex creates the endpoint it gives you a secret. Copy it into the <strong>Webhook secret</strong> field in Hermes.</p>
+        <p>It's technically optional, but without it Hermes can't verify that an incoming payment notification genuinely came from Airwallex. Set it.</p>
+      </div>
+    </section>
+
+    <!-- STEP 9 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">09</div>
+        <h3 class="step-title">Set your default currency</h3>
+      </div>
+      <div class="step-body">
+        <p>Pick the currency your prices are quoted in from the <strong>Default currency</strong> dropdown.</p>
+      </div>
+    </section>
+
+    <!-- STEP 10 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">10</div>
+        <h3 class="step-title">Save</h3>
+      </div>
+      <div class="step-body">
+        <p>Press <strong>Save</strong>. The screen should now show Airwallex as connected, in Live mode, with your API key masked.</p>
+      </div>
+    </section>
+
+    <!-- STEP 11 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">11</div>
+        <h3 class="step-title">Turn on the Payment Link tool</h3>
+      </div>
+      <div class="step-body">
+        <p>One last thing, and it's easy to miss: connecting the account doesn't by itself let the assistant send a pay link.</p>
+        <p>Go to <strong>Brain Lab</strong> and enable the <strong>Payment Link</strong> tool in the conversation stages where you want the assistant to be able to ask for payment.</p>
+      </div>
+    </section>
+
+    <h2 class="section-h">How to know it's really working</h2>
+    <p>Run one real, small transaction &mdash; charge yourself the smallest amount your business would ever bill. Then check all three:</p>
+    <ul class="bullets">
+      <li>The payment appears in <strong>your own Airwallex dashboard</strong>.</li>
+      <li>The conversation in Hermes updates to show it was paid.</li>
+      <li>The sale shows up in your Hermes revenue figures.</li>
+    </ul>
+    <p>If the money arrives in Airwallex but Hermes doesn't notice, the webhook (Steps 7&ndash;8) is the thing to re-check.</p>
+
+    <h2 class="section-h">If something goes wrong</h2>
+    <table class="data">
+      <thead>
+        <tr><th>What you see</th><th>What it usually means</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="bad">&#10007;</span> Airwallex rejected the credentials</td><td>The Client ID and API key aren't a matching pair, or they belong to the other account type &mdash; demo keys in Live mode, or live keys in Sandbox. Check the Mode you picked in Step 4.</td></tr>
+        <tr><td><span class="bad">&#10007;</span> Airwallex needs a Client ID as well as the API key</td><td>The Client ID field is empty. Airwallex needs both.</td></tr>
+        <tr><td>Connected, but payments never show up in Hermes</td><td>The webhook isn't registered, points at the wrong URL, or is missing the three events. Redo Steps 7&ndash;8.</td></tr>
+        <tr><td>The assistant never offers to take payment</td><td>The Payment Link tool isn't switched on for that conversation stage. See Step 11.</td></tr>
+        <tr><td>Screen says "shared test sandbox"</td><td>You're still in Sandbox mode. Switch to Live and connect your keys (Steps 4&ndash;6).</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="section-h">Good to know</h2>
+    <ul class="bullets">
+      <li><strong>Your API key is stored encrypted</strong> and is never shown back to you in full &mdash; only a masked version, so you can confirm which key is in place.</li>
+      <li><strong>You can disconnect at any time</strong> using the Disconnect button. The assistant falls back to the test sandbox and stops being able to take real payments.</li>
+      <li><strong>Changing provider later is a fresh connection</strong>, not an edit &mdash; the new provider needs its own keys and its own webhook.</li>
+      <li><strong>Never send your API key by email or chat.</strong> Enter it directly into the Hermes screen. Nobody at 41 Labs needs to see it.</li>
+    </ul>
+
+  </main>
+
+  <!-- ============ FOOTER (repeats on every printed page) ============ -->
+  <footer class="run-footer">
+    <div class="rule"></div>
+    <div class="row">
+      <div>Questions? Reply to your 41 Labs contact.</div>
+      <div class="pageno"></div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

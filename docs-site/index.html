@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>41 Labs · Operator Docs</title>
+<meta name="description" content="Internal operator runbooks for 41 Labs delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link rel="stylesheet" href="./assets/fonts.css">
+<style>
+:root{
+  --bg:#f4f7f4; --surface:#ffffff; --ink:#14201a; --muted:#586a60; --faint:#7d8d84;
+  --accent:#0f8a5f; --accent-soft:#e2f1ea; --line:#dce5df;
+  --shadow:0 1px 2px rgba(20,32,26,.04),0 8px 24px -12px rgba(20,32,26,.12); --radius:14px;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme:dark){
+    --bg:#0e1310; --surface:#151c18; --ink:#e6ede8; --muted:#93a49a; --faint:#75857b;
+    --accent:#2ecb8f; --accent-soft:#16271f; --line:#25302a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1310; --surface:#151c18; --ink:#e6ede8; --muted:#93a49a; --faint:#75857b;
+  --accent:#2ecb8f; --accent-soft:#16271f; --line:#25302a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  font-size:16.5px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:812px; margin:0 auto; padding:0 24px 96px}
+.topbar{display:flex; align-items:center; gap:10px; padding:20px 0 8px; font-weight:600; font-size:14px; letter-spacing:.02em}
+.dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px var(--accent-soft)}
+.topbar span{color:var(--muted)}
+header{padding:40px 0 8px; border-bottom:1px solid var(--line)}
+h1{font-family:"Bricolage Grotesque",system-ui,sans-serif; font-size:34px; line-height:1.15; margin:0 0 10px; letter-spacing:-.02em}
+.lede{color:var(--muted); margin:0 0 28px; font-size:17.5px}
+h2{font-size:13px; text-transform:uppercase; letter-spacing:.09em; color:var(--faint); margin:36px 0 14px}
+.card{
+  display:block; text-decoration:none; color:inherit; background:var(--surface);
+  border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:20px 22px; margin-bottom:12px; transition:border-color .15s, transform .15s;
+}
+.card:hover{border-color:var(--accent); transform:translateY(-1px)}
+.card h3{margin:0 0 4px; font-size:17px; font-weight:600}
+.card p{margin:0; color:var(--muted); font-size:15px}
+.card .tag{display:inline-block; margin-top:10px; font-size:12.5px; color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:3px 10px}
+footer{margin-top:48px; padding-top:20px; border-top:1px solid var(--line); color:var(--faint); font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><span class="dot"></span> 41 Labs <span>· Operator docs</span></div>
+  <header>
+    <h1>Operator documentation</h1>
+    <p class="lede">Internal runbooks for delivery. Not indexed, not linked from the marketing site.</p>
+  </header>
+
+  <h2>Hermes</h2>
+  <a class="card" href="/hermes/whatsapp-onboarding-runbook">
+    <h3>WhatsApp Onboarding Runbook</h3>
+    <p>Connecting a client's WhatsApp number through Meta's "Connect on WhatsApp" wizard — fresh Meta App to a live AI reply.</p>
+    <span class="tag">Verified 2026-09-06</span>
+  </a>
+
+  <footer>41 Labs · docs.41labs.ai</footer>
+</div>
+</body>
+</html>

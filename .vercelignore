@@ -5,3 +5,4 @@ tests
 docs
 *.cjs
 *.md
+docs-site
