@@ -1,0 +1,4 @@
+# Deploy scope for the docs.41labs.ai project (Root Directory = docs-site).
+# Empty on purpose: ignore nothing. The repo-root .vercelignore excludes
+# docs-site from the MAIN 41labs.ai project; this file keeps that exclusion
+# from reaching this project, which builds from docs-site only.
