@@ -284,7 +284,7 @@
       <div class="step-body">
         <p>This is how Airwallex tells Hermes a customer has actually paid. Without it, a payment succeeds but the conversation never updates and the sale isn't recorded.</p>
         <p>Copy the <strong>Webhook URL</strong> Hermes shows you (there's a <strong>Copy</strong> button next to it) &mdash; it looks like this:</p>
-        <div class="code">https://&lt;your-hermes-site&gt;/api/webhooks/payments/&lt;your-workspace-id&gt;</div>
+        <div class="code">https://aisalescloser.41labs.ai/api/webhooks/payments/&lt;your-workspace-id&gt;</div>
         <p>In Airwallex, go to <strong>Developer &rarr; Webhooks</strong>, create a notification endpoint with that URL, and subscribe it to these three events:</p>
         <div class="code">payment_intent.succeeded&nbsp;&nbsp;&nbsp;&nbsp;payment_intent.failed&nbsp;&nbsp;&nbsp;&nbsp;refund.succeeded</div>
       </div>
