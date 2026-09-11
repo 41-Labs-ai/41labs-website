@@ -239,7 +239,7 @@
 
     <h1 class="title">Connecting your booking backend</h1>
     <p class="subtitle">Your backend pushes every price, vehicle and charge to the AI sales agent, so the agent quotes live figures instead of reading a spreadsheet.</p>
-    <p class="meta">For your in-house developer &middot; v2 &middot; 11 September 2026</p>
+    <p class="meta">For your in-house developer &middot; v3 &middot; 11 September 2026</p>
 
     <div class="callout note">
       <p><strong>The method is a real-time webhook push.</strong> Your backend calls one 41 Labs endpoint each time a price, a vehicle or a picture changes. The change reaches the agent at once.</p>
@@ -352,6 +352,26 @@ Content-Type: application/json</pre>
       <tr><td><code class="inline">blackout_periods</code></td><td>A list of names, for example <code class="inline">["CNY", "Hari Raya"]</code>.</td></tr>
     </table>
 
+    <h2 class="section-h">Dates and the price</h2>
+    <div class="callout warn">
+      <p><strong>This one is still open, and you choose the format.</strong> The fields above price a rental by its length. None of them says what a rental costs on a given date.</p>
+    </div>
+    <p>Tell us which of these you have:</p>
+    <ul class="bullets">
+      <li>A daily rate that changes by date range: peak, off-peak, school holidays, year end.</li>
+      <li>A surcharge that lands on a date, and whether it applies per day or per rental.</li>
+      <li>A public holiday rate, and the calendar that names the holidays.</li>
+      <li>A blackout period that carries real dates, not only a name.</li>
+      <li>A minimum hire length on some dates.</li>
+      <li>A rate with a start date and an end date, sent before it starts.</li>
+    </ul>
+    <div class="callout note">
+      <p><strong>Send us what you already hold, and we adjust to it.</strong> A date range on a rate break, a season table, a spreadsheet tab, or an export. Any shape works.</p>
+    </div>
+    <p>Send one example of each price that moves with the calendar. Your own format is enough. We write the mapping and send it back to you.</p>
+    <p>If your backend does not hold the dates, tell us where they live today. We read them from that source.</p>
+    <p>Until this is settled the agent quotes the same daily rate on every date.</p>
+
     <h2 class="section-h">Availability</h2>
     <div class="callout warn">
       <p><strong>This one is still open, and it decides what the agent can answer.</strong> The backend holds price and picture, not inventory. Availability sits in the RBF spreadsheet, and in a separate tab for Trip.com.</p>
@@ -440,10 +460,10 @@ Content-Type: application/json</pre>
     <section class="step">
       <div class="step-head">
         <div class="num">02</div>
-        <h3 class="step-title">Name the availability source</h3>
+        <h3 class="step-title">Send your date prices in the format you hold</h3>
       </div>
       <div class="step-body">
-        <p>Pick one of the three options under <strong>Availability</strong>, or name a fourth. This decides whether the agent quotes availability or price only.</p>
+        <p>Send one example of each price that moves with the calendar. Use the list under <strong>Dates and the price</strong>. Any format works. We map it and send the mapping back.</p>
       </div>
     </section>
 
@@ -451,6 +471,17 @@ Content-Type: application/json</pre>
     <section class="step">
       <div class="step-head">
         <div class="num">03</div>
+        <h3 class="step-title">Name the availability source</h3>
+      </div>
+      <div class="step-body">
+        <p>Pick one of the three options under <strong>Availability</strong>, or name a fourth. This decides whether the agent quotes availability or price only.</p>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">04</div>
         <h3 class="step-title">Introduce your developer to the 41 Labs tech team</h3>
       </div>
       <div class="step-body">
@@ -461,10 +492,11 @@ Content-Type: application/json</pre>
     <h2 class="section-h">Checklist</h2>
     <table class="checklist">
       <tr><td class="box"><input type="checkbox" id="ck1"></td><td><label for="ck1">Every field in the tables marked as held or not held, and the list sent back (Step 1)</label></td></tr>
-      <tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">The availability source named (Step 2)</label></td></tr>
-      <tr><td class="box"><input type="checkbox" id="ck3"></td><td><label for="ck3">Your developer introduced to the 41 Labs tech team (Step 3)</label></td></tr>
-      <tr><td class="box"><input type="checkbox" id="ck4"></td><td><label for="ck4">The secret token stored as an environment variable, not in code (Step 3)</label></td></tr>
-      <tr><td class="box"><input type="checkbox" id="ck5"></td><td><label for="ck5">A dry-run sent to the test endpoint and answered <strong>200 OK</strong> (Step 3)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">One example of each price that moves with the calendar, sent in your own format (Step 2)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck3"></td><td><label for="ck3">The availability source named (Step 3)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck4"></td><td><label for="ck4">Your developer introduced to the 41 Labs tech team (Step 4)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck5"></td><td><label for="ck5">The secret token stored as an environment variable, not in code (Step 4)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck6"></td><td><label for="ck6">A dry-run sent to the test endpoint and answered <strong>200 OK</strong> (Step 4)</label></td></tr>
     </table>
 
   </main>
