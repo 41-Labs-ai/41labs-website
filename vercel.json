@@ -1,5 +1,11 @@
 {
   "cleanUrls": true,
+  "crons": [
+    { "path": "/api/cron/booking-sync", "schedule": "*/5 * * * *" }
+  ],
+  "functions": {
+    "api/cron/booking-sync.js": { "maxDuration": 60 }
+  },
   "trailingSlash": false,
   "redirects": [
     {
