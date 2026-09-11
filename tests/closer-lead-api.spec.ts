@@ -51,6 +51,9 @@ const lead = {
   enquiries: '50to150',
   saleValue: '200to1k',
   qualified: 'yes',
+  tier: 'A',
+  fitReason: 'High enquiry value and real sales work in chat',
+  jobs: ['quotes', 'bookings'],
   notes: 'Most chats come in after 9pm',
   utm_source: 'facebook',
   utm_campaign: '41closer_lp_2026-09',
@@ -107,6 +110,9 @@ test.describe('POST /api/closer-lead', () => {
     expect(opp.body.leadSource).toContain('41closer_lp_2026-09');
     expect(opp.body.statusNotes).toContain('50-150');
     expect(opp.body.statusNotes).toContain('Qualified: yes');
+    expect(opp.body.statusNotes).toContain('Tier: A');
+    expect(opp.body.statusNotes).toContain('Chats involve: Quotes, Bookings');
+    expect(opp.body.nextAction).toMatch(/^TIER A/);
     expect(opp.body.statusNotes).toContain('after 9pm');
     expect(opp.body.statusNotes).toContain('fbclid=abc123');
   });

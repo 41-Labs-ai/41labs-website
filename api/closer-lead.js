@@ -10,6 +10,12 @@ const TWENTY_BASE = process.env.TWENTY_BASE_URL || 'https://twenty-server-produc
 const ENQUIRIES = { under20: 'Under 20', '20to50': '20-50', '50to150': '50-150', '150plus': '150+' };
 const SALE = { under200: 'Under S$200', '200to1k': 'S$200-1,000', '1kto5k': 'S$1,000-5,000', '5kplus': 'S$5,000+' };
 const ROLE = { owner: 'Owner', sales_head: 'Head of sales', manager: 'Manager', other: 'Other' };
+const JOBS = { answers: 'Simple questions', quotes: 'Quotes', bookings: 'Bookings', stock: 'Stock/price checks', orders: 'Orders/payments' };
+const NEXT = {
+  A: 'TIER A: guarantee-eligible. Call within 1 hour, even if they booked.',
+  B: 'TIER B: confirm the call is booked. If not, WhatsApp them within 1 working hour.',
+  C: 'TIER C: triage. WhatsApp within 1 working day, check volume and ticket before offering a call.',
+};
 
 function readBody(req) {
   return new Promise((resolve) => {
@@ -72,13 +78,18 @@ module.exports = async (req, res) => {
     .map((k) => (clean(body[k], 120) ? `${k}=${clean(body[k], 120)}` : ''))
     .filter(Boolean);
   const fbclid = clean(body.fbclid, 300);
+  const tier = ['A', 'B', 'C'].includes(body.tier) ? body.tier : '';
+  const jobs = (Array.isArray(body.jobs) ? body.jobs : [body.jobs])
+    .map((j) => JOBS[j]).filter(Boolean);
 
   const notes = [
     `Form: 41labs.ai/ai-closer`,
     `Role: ${ROLE[body.role] || clean(body.role, 40) || '-'}`,
     `WhatsApp enquiries/week: ${ENQUIRIES[body.enquiries] || clean(body.enquiries, 40) || '-'}`,
     `Average sale: ${SALE[body.saleValue] || clean(body.saleValue, 40) || '-'}`,
+    `Chats involve: ${jobs.length ? jobs.join(', ') : '-'}`,
     `Qualified: ${clean(body.qualified, 10) || '-'}`,
+    tier ? `Tier: ${tier}${clean(body.fitReason, 200) ? ` (${clean(body.fitReason, 200)})` : ''}` : '',
     clean(body.notes, 1500) ? `Notes: ${clean(body.notes, 1500)}` : '',
     utm.length ? `UTM: ${utm.join(' ')}` : '',
     fbclid ? `fbclid=${fbclid}` : '',
@@ -99,7 +110,7 @@ module.exports = async (req, res) => {
       waitingOn: 'US',
       leadSource: `Meta ad landing page${utm.length ? ' | ' + utm.join(' ') : ''}`.slice(0, 500),
       statusNotes: notes.slice(0, 2500),
-      nextAction: 'Confirm the call is booked. If not, WhatsApp them within 1 working hour.',
+      nextAction: NEXT[tier] || NEXT.B,
       firstContactAt: new Date().toISOString(),
       pointOfContactId: personId,
       companyId,

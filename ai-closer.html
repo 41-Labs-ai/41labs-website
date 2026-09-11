@@ -171,6 +171,17 @@
         .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%236b6b6b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
         .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent-hover); background: #fff; outline: none; }
         .field textarea { min-height: 88px; resize: vertical; }
+        fieldset.jobs { border: 0; padding: 0; margin: 0; min-width: 0; }
+        fieldset.jobs legend { font-size: 14px; font-weight: 600; margin: 0 0 10px; padding: 0; }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip { position: relative; cursor: pointer; }
+        .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+        .chip span { display: inline-block; font-size: 14.5px; padding: 10px 14px; border-radius: var(--radius-pill); border: 1.5px solid #e3e3e8; background: #fafafb; transition: all .15s ease; }
+        .chip input:checked + span { background: var(--dark); color: #fff; border-color: var(--dark); }
+        .chip input:checked + span::before { content: "\2713  "; color: var(--accent); font-weight: 800; }
+        .chip input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+        .jobs-error { color: #dc2626; font-size: 13px; font-weight: 600; margin: 8px 0 0; }
+        #cl-cal iframe { width: 100%; height: 640px; border: 0; background: #fff; }
         .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
         .form-foot { margin-top: 22px; display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
         .form-foot .btn { width: 100%; }
@@ -376,7 +387,7 @@
             <div class="guarantee reveal">
                 <p class="kicker">The guarantee</p>
                 <h2><em>S$20,000</em> in booked sales within six weeks of go-live.</h2>
-                <p>That's about twice the setup fee. Every Friday we check the running total against your own receipts, so there's no argument at week six. If it falls short, we keep working on it at no charge.</p>
+                <p>Every Friday we check the running total against your own receipts, so there's no argument at week six. If it falls short, we keep working on it free for up to six more weeks.</p>
                 <p>We only offer this after we've looked at your numbers. If the maths isn't there for your business, we'll tell you on the call.</p>
                 <p class="fine">Full terms are in your agreement.</p>
             </div>
@@ -416,7 +427,7 @@
         <div class="wrap narrow">
             <p class="kicker">Next step</p>
             <h2>See if your business qualifies.</h2>
-            <p class="sub">Six quick questions. If it's a fit, you pick a 20-minute call on the next screen. On the call we look at your numbers and show you the Closer working on a business like yours.</p>
+            <p class="sub">Seven quick questions. If it's a fit, you pick a 20-minute call on the next screen. On the call we look at your numbers and show you the Closer working on a business like yours.</p>
 
             <div class="form-card">
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
@@ -452,6 +463,17 @@
                                     <option value="5kplus">Over S$5,000</option>
                                 </select>
                             </div>
+                            <fieldset class="field full jobs" id="cl-jobs">
+                                <legend>What do your WhatsApp chats usually involve? <span class="opt">(pick all that apply)</span></legend>
+                                <div class="chips">
+                                    <label class="chip"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
+                                    <label class="chip"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
+                                    <label class="chip"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
+                                    <label class="chip"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
+                                    <label class="chip"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
+                                </div>
+                                <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
+                            </fieldset>
                             <div class="field full"><label for="cl-email">Email <span class="opt">(optional)</span></label><input id="cl-email" name="email" type="email" autocomplete="email"></div>
                             <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
                             <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
@@ -507,7 +529,7 @@
                 <details><summary>Is this a chatbot?</summary><p>No. A chatbot answers questions and sends menus. 41 Closer sells. It qualifies the buyer, recommends, quotes from your prices, follows up, and books the sale or takes the deposit.</p></details>
                 <details><summary>What if it says something wrong?</summary><p>It only works from what you give it: your prices, stock and policies. When it isn't sure, it hands the chat to your team with the full history. Your team tests it for two weeks before any customer sees it.</p></details>
                 <details><summary>How long does it take?</summary><p>Six weeks from go-ahead. We build it in the first two, your team tests it in weeks 3 and 4, and it goes live in phases after that.</p></details>
-                <details><summary>What does it cost?</summary><p>The build is S$9,600, paid in two halves. Then from S$1,490 a month once it's live, which includes us running and improving it. On the call we check your numbers first, so you know whether it pays for itself before you spend anything.</p></details>
+                <details><summary>What does it cost?</summary><p>It depends on your chat volume, your systems and what the Closer needs to do. There's a one-time build, then a monthly fee once it's live that covers us running and improving it. On the call we look at your numbers first and give you an exact figure. If it won't pay for itself, we'll tell you.</p></details>
                 <details><summary>Who runs it day to day?</summary><p>We do. We watch it, tune it and report the results to you every week. Your team steps in when a customer needs a person.</p></details>
                 <details><summary>Does it use my WhatsApp?</summary><p>Yes. It runs on the WhatsApp Business API under your own business account, and that account stays yours.</p></details>
             </div>
@@ -518,7 +540,7 @@
     <section class="final">
         <div class="wrap narrow reveal">
             <h2>Find out what your after-hours WhatsApp is costing you.</h2>
-            <p class="sub" style="margin:0 auto">Six questions, about two minutes. Then we look at the numbers together.</p>
+            <p class="sub" style="margin:0 auto">Seven questions, about two minutes. Then we look at the numbers together.</p>
             <a class="btn btn-primary" href="#qualify">See if your business qualifies <span class="arrow">&rarr;</span></a>
         </div>
     </section>
@@ -536,9 +558,12 @@
 <script src="closer-qualify.js"></script>
 <script src="/track.js" defer></script>
 <script>
-    // Calendar: paste the Cal.com event link (e.g. '41labs/closer-call') once the
-    // booking page exists. Until then qualified leads see the WhatsApp fallback.
-    var CAL_LINK = '';
+    // Calendar for qualified leads. Paste ONE of:
+    //   Google Calendar appointment schedule embed URL
+    //     (Calendar > appointment schedule > Share > Website embed > copy the iframe src)
+    //   or a Cal.com link like '41labs/closer-call'
+    // Empty = qualified leads see the WhatsApp fallback.
+    window.BOOKING_URL = window.BOOKING_URL || '';
 
     (function(){
         // ---- Attribution: keep the ad's UTMs and fbclid for this visit ----
@@ -560,28 +585,48 @@
 
         // ---- Form ----
         var form = document.getElementById('cl-form');
+        var jobsError = document.getElementById('cl-jobs-error');
+        form.addEventListener('change', function(e){
+            if (e.target && e.target.name === 'jobs' && form.querySelector('input[name="jobs"]:checked')) jobsError.hidden = true;
+        });
         form.addEventListener('submit', function(e){
             e.preventDefault();
             if (!form.checkValidity()) { form.reportValidity(); return; }
+            if (!form.querySelector('input[name="jobs"]:checked')) {
+                jobsError.hidden = false;
+                document.getElementById('cl-jobs').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
 
             var fd = new FormData(form);
             var data = {};
-            fd.forEach(function(v, k){ data[k] = v; });
-            var answers = { enquiries: data.enquiries, saleValue: data.saleValue, role: data.role };
-            var qualified = true;
-            try { qualified = typeof window.qualify41 === 'function' ? !!window.qualify41(answers) : true; } catch (err) { qualified = true; }
+            fd.forEach(function(v, k){ if (k !== 'jobs') data[k] = v; });
+            data.jobs = fd.getAll('jobs');
+            var answers = { enquiries: data.enquiries, saleValue: data.saleValue, role: data.role, jobs: data.jobs };
+
+            // qualify41 returns { qualified, tier, reason } (or a bare boolean). Fail open to the calendar.
+            var fit = { qualified: true, tier: 'B', reason: '' };
+            try {
+                var r = typeof window.qualify41 === 'function' ? window.qualify41(answers) : true;
+                fit = (r && typeof r === 'object') ? r : { qualified: !!r, tier: r ? 'B' : 'C', reason: '' };
+            } catch (err) {}
+            var qualified = !!fit.qualified;
             data.qualified = qualified ? 'yes' : 'no';
+            data.tier = fit.tier || (qualified ? 'B' : 'C');
+            data.fitReason = fit.reason || '';
             Object.keys(attr).forEach(function(k){ data[k] = attr[k]; });
 
             // CRM record (server-side) and the Formspree email copy, both best-effort.
             fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(function(){});
             var copy = new FormData(form);
             copy.append('qualified', data.qualified);
+            copy.append('tier', data.tier);
+            copy.append('fit_reason', data.fitReason);
             Object.keys(attr).forEach(function(k){ copy.append(k, attr[k]); });
             fetch(form.action, { method: 'POST', body: copy, headers: { 'Accept': 'application/json' } }).catch(function(){});
 
-            pixel('Lead', { content_name: 'ai_closer_form', qualified: data.qualified });
-            track('generate_lead', { event_category: 'conversion', cta_id: 'ai_closer', qualified: data.qualified });
+            pixel('Lead', { content_name: 'ai_closer_form', qualified: data.qualified, tier: data.tier });
+            track('generate_lead', { event_category: 'conversion', cta_id: 'ai_closer', qualified: data.qualified, tier: data.tier });
 
             var first = (data.name || '').trim().split(/\s+/)[0] || 'there';
             document.querySelectorAll('.cl-first').forEach(function(el){ el.textContent = first; });
@@ -593,7 +638,23 @@
         });
 
         function showCalendar(data){
-            if (!CAL_LINK) { document.getElementById('cl-cal').hidden = true; document.getElementById('cl-cal-fallback').hidden = false; return; }
+            var url = (window.BOOKING_URL || '').trim();
+            var holder = document.getElementById('cl-cal');
+            if (!url) { holder.hidden = true; document.getElementById('cl-cal-fallback').hidden = false; return; }
+
+            // Google Calendar appointment schedule: plain iframe. It can't tell us when a
+            // booking lands, so booked calls are counted from the calendar, not the pixel.
+            if (/^https:\/\/calendar\.google\.com\//.test(url)) {
+                var f = document.createElement('iframe');
+                f.src = url;
+                f.title = 'Book a 20-minute call with Alexander';
+                f.loading = 'lazy';
+                holder.appendChild(f);
+                return;
+            }
+
+            // Cal.com: inline embed with prefill and a booking callback (fires Schedule).
+            var CAL_LINK = url.replace(/^https:\/\/cal\.com\//, '');
             (function (C, A, L) { var p = function (a, ar) { a.q.push(ar); }; var d = C.document; C.Cal = C.Cal || function () { var cal = C.Cal; var ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { var api = function () { p(api, arguments); }; var namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
             Cal('init', { origin: 'https://cal.com' });
             Cal('inline', {
