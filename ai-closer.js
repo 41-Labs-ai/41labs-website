@@ -1,5 +1,5 @@
 // Shared funnel logic for /ai-closer (long form) and /ai-closer-sf (short form).
-// Two-step form (details, then WhatsApp questions), ICP qualify (closer-qualify.js),
+// Two-step form (qualifying questions first, then contact details), ICP qualify (closer-qualify.js),
 // lead to /api/closer-lead + Formspree copy, Pixel Lead / Schedule, calendar step.
 //
 // Calendar for qualified leads. Set ONE of, before this script loads or here:
@@ -40,11 +40,17 @@ window.BOOKING_URL = window.BOOKING_URL || '';
 
         function setTab(n) { tabs.forEach(function (t, i) { t.classList.toggle('on', i === n - 1); }); }
 
+        // Step 1 = the qualifying questions (industry, WhatsApp use, volume, ticket, chat jobs).
         function validPart1() {
             var ok = true;
-            part1.querySelectorAll('input[required]').forEach(function (el) {
+            part1.querySelectorAll('select[required], input[required]').forEach(function (el) {
                 if (ok && !el.checkValidity()) { el.reportValidity(); ok = false; }
             });
+            if (ok && !form.querySelector('input[name="jobs"]:checked')) {
+                jobsError.hidden = false;
+                document.getElementById('cl-jobs').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                ok = false;
+            }
             return ok;
         }
         function goPart2() {
@@ -64,19 +70,15 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (part2.hidden) { goPart2(); return; }          // Enter pressed on step 1
+            if (!validPart1()) { part2.hidden = true; part1.hidden = false; setTab(1); return; }
             if (!form.checkValidity()) { form.reportValidity(); return; }
-            if (!form.querySelector('input[name="jobs"]:checked')) {
-                jobsError.hidden = false;
-                document.getElementById('cl-jobs').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
 
             var fd = new FormData(form);
             var data = {};
             fd.forEach(function (v, k) { if (k !== 'jobs') data[k] = v; });
             data.jobs = fd.getAll('jobs');
             data.variant = variant;
-            var answers = { enquiries: data.enquiries, saleValue: data.saleValue, role: data.role, jobs: data.jobs };
+            var answers = { industry: data.industry, whatsappUse: data.whatsappUse, enquiries: data.enquiries, saleValue: data.saleValue, role: data.role, jobs: data.jobs };
 
             // qualify41 returns { qualified, tier, reason } (or a bare boolean). Fail open to the calendar.
             var fit = { qualified: true, tier: 'B', reason: '' };
@@ -163,10 +165,28 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         update();
     }
 
-    // ---- Hero chat plays in ----
-    var msgs = document.querySelectorAll('.chat .msg');
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    msgs.forEach(function (m, i) { if (reduce) m.classList.add('show'); else setTimeout(function () { m.classList.add('show'); }, 400 + i * 700); });
+    // ---- Hero WhatsApp screen plays in, with "typing..." before each business reply ----
+    var live = document.querySelector('.wa-live');
+    if (live) {
+        var msgs = live.querySelectorAll('.wa-msg');
+        var status = live.querySelector('.wa-status-line');
+        var idle = status ? status.textContent : '';
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) { msgs.forEach(function (m) { m.classList.add('show'); }); }
+        else {
+            var t = 500;
+            msgs.forEach(function (m) {
+                var business = m.classList.contains('wa-in');
+                if (business && status) {
+                    setTimeout(function () { status.textContent = 'typing...'; }, t);
+                    t += 1100;
+                }
+                setTimeout(function () { m.classList.add('show'); if (status) status.textContent = idle; }, t);
+                t += business ? 900 : 1300;
+            });
+        }
+    }
+    document.querySelectorAll('.wa:not(.wa-live) .wa-msg').forEach(function (m) { m.classList.add('show'); });
 
     // ---- Reveal on scroll ----
     if ('IntersectionObserver' in window) {

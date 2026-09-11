@@ -27,6 +27,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="wa.css">
     <style>
         :root {
             --accent: #4ade80;
@@ -174,12 +175,12 @@
         fieldset.jobs { border: 0; padding: 0; margin: 0; min-width: 0; }
         fieldset.jobs legend { font-size: 14px; font-weight: 600; margin: 0 0 10px; padding: 0; }
         .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-        .chip { position: relative; cursor: pointer; }
-        .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-        .chip span { display: inline-block; font-size: 14.5px; padding: 10px 14px; border-radius: var(--radius-pill); border: 1.5px solid #e3e3e8; background: #fafafb; transition: all .15s ease; }
-        .chip input:checked + span { background: var(--dark); color: #fff; border-color: var(--dark); }
-        .chip input:checked + span::before { content: "\2713  "; color: var(--accent); font-weight: 800; }
-        .chip input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+        .chip-opt { position: relative; cursor: pointer; }
+        .chip-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+        .chip-opt span { display: inline-block; font-size: 14.5px; padding: 10px 14px; border-radius: var(--radius-pill); border: 1.5px solid #e3e3e8; background: #fafafb; transition: all .15s ease; }
+        .chip-opt input:checked + span { background: var(--dark); color: #fff; border-color: var(--dark); }
+        .chip-opt input:checked + span::before { content: "\2713  "; color: var(--accent); font-weight: 800; }
+        .chip-opt input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
         .jobs-error { color: #dc2626; font-size: 13px; font-weight: 600; margin: 8px 0 0; }
         #cl-cal iframe { width: 100%; height: 640px; border: 0; background: #fff; }
         .cl-tabs { display: flex; gap: 6px; margin: 0 0 18px; }
@@ -187,6 +188,7 @@
         .cl-tab.on { background: var(--dark); color: #fff; }
         .fields.one { grid-template-columns: 1fr !important; }
         .btn-block { width: 100%; margin-top: 18px; }
+        .help { display: block; font-size: 12.5px; color: var(--text-2); margin-top: 6px; }
         .consent { font-size: 12.5px; color: var(--text-2); text-align: center; margin: 10px 0 0; }
         .link-back { background: none; border: 0; font: inherit; font-weight: 600; color: var(--text-2); cursor: pointer; padding: 8px 0; }
         .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -282,22 +284,7 @@
                 </div>
             </div>
             <div>
-                <div class="phone" aria-label="Example WhatsApp conversation handled by 41 Closer">
-                    <div class="screen">
-                        <div class="chat-head">
-                            <div class="avatar">41</div>
-                            <div><b>Your business</b><small>online</small></div>
-                        </div>
-                        <div class="chat" id="chat">
-                            <div class="msg in">Hi, still open? Need 3 aircon units serviced.<time>02:02</time></div>
-                            <div class="msg out">Hi! Yes, we can help. Is it a condo or landed, and which area?<time>02:02</time></div>
-                            <div class="msg in">Condo, Tampines<time>02:03</time></div>
-                            <div class="msg out">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<time>02:03</time></div>
-                            <div class="msg in">10am please<time>02:03</time></div>
-                            <div class="msg out">Done. You're booked for Saturday 10am. Your confirmation is right here.<time>02:03</time></div>
-                        </div>
-                    </div>
-                </div>
+                <!-- WA-HERO --><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires at 2am and the 41 Closer books the job"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">CA</div><div class="wa-who"><div class="wa-name">CoolAir Services</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, still open? Need 3 aircon units serviced.<span class="wa-meta">02:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes, we can help. Is it a condo or landed, and which area?<span class="wa-meta">02:02</span></div><div class="wa-msg wa-out">Condo, Tampines<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<span class="wa-meta">02:03</span></div><div class="wa-msg wa-out">10am please<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Done. You&#x27;re booked for Saturday 10am. I&#x27;ll send a reminder the day before.<span class="wa-meta">02:03</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div><!-- /WA-HERO -->
                 <p class="phone-note">Example chat. Yours would use your own prices and open slots.</p>
             </div>
         </div>
@@ -439,61 +426,46 @@
             <div class="form-card">
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
-                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Your details</span><span class="cl-tab">2. Your WhatsApp</span></div>
+                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Check if you qualify</span><span class="cl-tab">2. Your details</span></div>
                         <div id="cl-part1">
-                            <div class="fields one">
-                                <div class="field"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
-                                <div class="field"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required></div>
-                                <div class="field"><label for="cl-company">Company</label><input id="cl-company" name="company" type="text" autocomplete="organization" required></div>
-                            </div>
-                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
-                            <p class="consent">We'll message you on WhatsApp about your demo. No spam, no lists.</p>
-                        </div>
-                        <div id="cl-part2" hidden>
                             <div class="fields">
-                                <div class="field"><label for="cl-role">Your role</label>
-                                    <select id="cl-role" name="role" required>
-                                        <option value="" disabled selected>Choose one</option>
-                                        <option value="owner">Owner</option>
-                                        <option value="sales_head">Head of sales</option>
-                                        <option value="manager">Manager</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
+                                <div class="field full"><label for="cl-industry">What does your business do?</label>
+                                    <select id="cl-industry" name="industry" required><option value="" disabled selected>Choose one</option><option value="renovation">Renovation or interior design</option><option value="clinic">Clinic, aesthetics or dental</option><option value="car">Car rental or car dealer</option><option value="property">Property agency</option><option value="education">Education or tuition</option><option value="distributor">Distributor, wholesale or trade supplier</option><option value="servicing">Servicing (aircon, plumbing, pest control, cleaning)</option><option value="travel">Travel or tours</option><option value="retail">Retail or online shop</option><option value="other">Something else</option></select></div>
+                                <div class="field full"><label for="cl-wa">Do customers message you on WhatsApp before they buy?</label>
+                                    <select id="cl-wa" name="whatsappUse" required><option value="" disabled selected>Choose one</option><option value="most">Yes, most sales start on WhatsApp</option><option value="some">Some do</option><option value="no">Not really</option></select></div>
                                 <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
-                                    <select id="cl-enquiries" name="enquiries" required>
-                                        <option value="" disabled selected>Choose one</option>
-                                        <option value="under20">Under 20</option>
-                                        <option value="20to50">20 to 50</option>
-                                        <option value="50to150">50 to 150</option>
-                                        <option value="150plus">Over 150</option>
-                                    </select>
-                                </div>
-                                <div class="field full"><label for="cl-sale">Average sale</label>
-                                    <select id="cl-sale" name="saleValue" required>
-                                        <option value="" disabled selected>Choose one</option>
-                                        <option value="under200">Under S$200</option>
-                                        <option value="200to1k">S$200 to S$1,000</option>
-                                        <option value="1kto5k">S$1,000 to S$5,000</option>
-                                        <option value="5kplus">Over S$5,000</option>
-                                    </select>
-                                </div>
+                                    <select id="cl-enquiries" name="enquiries" required><option value="" disabled selected>Choose one</option><option value="under20">Under 20</option><option value="20to50">20 to 50</option><option value="50to150">50 to 150</option><option value="150plus">Over 150</option></select></div>
+                                <div class="field"><label for="cl-sale">Average sale</label>
+                                    <select id="cl-sale" name="saleValue" required><option value="" disabled selected>Choose one</option><option value="under200">Under S$200</option><option value="200to1k">S$200 to S$1,000</option><option value="1kto5k">S$1,000 to S$5,000</option><option value="5kplus">Over S$5,000</option></select></div>
                                 <fieldset class="field full jobs" id="cl-jobs">
-                                    <legend>What do your WhatsApp chats usually involve? <span class="opt">(pick all that apply)</span></legend>
+                                    <legend>What do those chats usually involve? <span class="opt">(pick all that apply)</span></legend>
                                     <div class="chips">
-                                        <label class="chip"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
                                     </div>
                                     <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
                                 </fieldset>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
+                        </div>
+                        <div id="cl-part2" hidden>
+                            <div class="fields">
+                                <div class="field"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
+                                <div class="field"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required></div>
+                                <div class="field"><label for="cl-company">Company</label><input id="cl-company" name="company" type="text" autocomplete="organization" required></div>
+                                <div class="field"><label for="cl-role">Your role</label>
+                                    <select id="cl-role" name="role" required><option value="" disabled selected>Choose one</option><option value="owner">Owner</option><option value="sales_head">Head of sales</option><option value="manager">Manager</option><option value="other">Other</option></select></div>
+                                <div class="field full"><label for="cl-website">Website or Instagram</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com or @yourcompany">
+                                    <small class="help">We look at it before the call, so your demo uses your own products and prices.</small></div>
                                 <div class="field full"><label for="cl-email">Email <span class="opt">(optional)</span></label><input id="cl-email" name="email" type="email" autocomplete="email"></div>
                                 <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
-                                <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+                                <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
+                            <p class="consent">After you book, our AI Closer will message you on WhatsApp to confirm and prepare your demo. No spam, no lists.</p>
                             <div class="form-foot">
                                 <button class="link-back" id="cl-back" type="button">&larr; Back</button>
                                 <button class="btn btn-primary" id="cl-submit" type="submit">Get my free demo <span class="arrow">&rarr;</span></button>
@@ -503,18 +475,18 @@
 
                     <div id="cl-step2" hidden>
                         <div id="cl-book" hidden>
-                            <span class="ok-badge">&#10003; Looks like a fit</span>
+                            <span class="ok-badge">&#10003; You qualify</span>
                             <h3>Pick a time for your free demo.</h3>
-                            <p>20 minutes on Google Meet with Alexander. Before the call we'll run your WhatsApp leak audit, so bring your numbers.</p>
+                            <p>20 minutes on Google Meet with Alexander. Our AI Closer will WhatsApp you to confirm and ask a few questions so we come prepared.</p>
                             <div id="cl-cal"></div>
                             <div id="cl-cal-fallback" hidden>
-                                <p>Thanks, <span class="cl-first"></span>. Alexander will WhatsApp you within one working hour to lock in a time.</p>
+                                <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
                                 <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
                             </div>
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>We'll look at your numbers and WhatsApp you within one working day. If a demo isn't worth your time yet, we'll tell you straight.</p>
+                            <p>From your answers, a demo may not be worth your time yet. We'll look at your details and WhatsApp you within one working day either way.</p>
                         </div>
                     </div>
                 </form>

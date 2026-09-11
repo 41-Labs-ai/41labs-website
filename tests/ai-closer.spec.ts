@@ -32,20 +32,27 @@ async function stubPixel(page: Page) {
   });
 }
 
-async function fillPart1(page: Page) {
-  await page.fill('#cl-name', 'Tan Wei Ming');
-  await page.fill('#cl-whatsapp', '+65 9123 4567');
-  await page.fill('#cl-company', 'Tan Aircon Services');
-}
-
-async function fillForm(page: Page, opts: { enquiries?: string } = {}) {
-  await fillPart1(page);
-  await page.click('#cl-next');
-  await page.selectOption('#cl-role', 'owner');
+async function fillQualify(page: Page, opts: { enquiries?: string; whatsappUse?: string; industry?: string } = {}) {
+  await page.selectOption('#cl-industry', opts.industry || 'servicing');
+  await page.selectOption('#cl-wa', opts.whatsappUse || 'most');
   await page.selectOption('#cl-enquiries', opts.enquiries || '50to150');
   await page.selectOption('#cl-sale', '200to1k');
   await page.check('input[name="jobs"][value="quotes"]');
   await page.check('input[name="jobs"][value="bookings"]');
+}
+
+async function fillContact(page: Page) {
+  await page.fill('#cl-name', 'Tan Wei Ming');
+  await page.fill('#cl-whatsapp', '+65 9123 4567');
+  await page.fill('#cl-company', 'Tan Aircon Services');
+  await page.fill('#cl-website', 'tanaircon.sg');
+  await page.selectOption('#cl-role', 'owner');
+}
+
+async function fillForm(page: Page, opts: { enquiries?: string; whatsappUse?: string; industry?: string } = {}) {
+  await fillQualify(page, opts);
+  await page.click('#cl-next');
+  await fillContact(page);
 }
 
 const fbqEvents = (page: Page) =>
@@ -76,10 +83,10 @@ for (const P of PAGES) {
     test('house style: no em dashes, no hype words', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
-      // Our copy only. Verbatim demo chats (.chatcard) are product output, quoted word for word.
+      // Our copy only. Verbatim demo chats (proof WhatsApp screens) are product output, quoted word for word.
       const text = await page.evaluate(() => {
         const c = document.body.cloneNode(true) as HTMLElement;
-        c.querySelectorAll('.chatcard').forEach((n) => n.remove());
+        c.querySelectorAll('.chatfig, #proof-2 .wa').forEach((n) => n.remove());
         return c.innerText;
       });
       expect(text).not.toContain('—');
@@ -88,26 +95,44 @@ for (const P of PAGES) {
       }
     });
 
-    test('step 1 requires name, WhatsApp and company before Next', async ({ page }) => {
+    test('step 1 qualifies first: industry, WhatsApp use, volume, ticket, chat jobs before Next', async ({ page }) => {
       const sent = await stubNetwork(page);
       await page.goto(P.path);
+      await expect(page.locator('#cl-part1 #cl-name')).toHaveCount(0);
       await page.click('#cl-next');
       await expect(page.locator('#cl-part2')).toBeHidden();
-      await fillPart1(page);
+      await page.selectOption('#cl-industry', 'servicing');
+      await page.selectOption('#cl-wa', 'most');
+      await page.selectOption('#cl-enquiries', '50to150');
+      await page.selectOption('#cl-sale', '200to1k');
+      await page.click('#cl-next');
+      await expect(page.locator('#cl-jobs-error')).toBeVisible();
+      await expect(page.locator('#cl-part2')).toBeHidden();
+      await page.check('input[name="jobs"][value="bookings"]');
       await page.click('#cl-next');
       await expect(page.locator('#cl-part2')).toBeVisible();
       await expect(page.locator('#cl-part1')).toBeHidden();
       expect(sent.api).toHaveLength(0);
     });
 
-    test('Back returns to step 1 with answers kept', async ({ page }) => {
+    test('Back returns to the questions with answers kept', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
-      await fillPart1(page);
+      await fillQualify(page);
       await page.click('#cl-next');
       await page.click('#cl-back');
       await expect(page.locator('#cl-part1')).toBeVisible();
-      await expect(page.locator('#cl-name')).toHaveValue('Tan Wei Ming');
+      await expect(page.locator('#cl-industry')).toHaveValue('servicing');
+    });
+
+    test('step 2 requires name, WhatsApp and company', async ({ page }) => {
+      const sent = await stubNetwork(page);
+      await page.goto(P.path);
+      await fillQualify(page);
+      await page.click('#cl-next');
+      await page.click('#cl-submit');
+      await expect(page.locator('#cl-step2')).toBeHidden();
+      expect(sent.api).toHaveLength(0);
     });
 
     test('submit: lead with UTMs + tier to the CRM, email copy, Lead pixel', async ({ page }) => {
@@ -121,6 +146,7 @@ for (const P of PAGES) {
       expect(sent.api[0]).toMatchObject({
         name: 'Tan Wei Ming', whatsapp: '+65 9123 4567', company: 'Tan Aircon Services',
         enquiries: '50to150', saleValue: '200to1k', jobs: ['quotes', 'bookings'],
+        industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg', role: 'owner',
         tier: 'A', qualified: 'yes', variant: P.variant,
         utm_campaign: '41closer_lp_2026-09', utm_content: 'ad_stalk1', fbclid: 'abc123',
       });
@@ -129,18 +155,14 @@ for (const P of PAGES) {
       expect(await fbqEvents(page)).toContain('Lead');
     });
 
-    test('complexity question is required', async ({ page }) => {
+    test('customers not on WhatsApp: triage, never the calendar', async ({ page }) => {
       const sent = await stubNetwork(page);
       await page.goto(P.path);
-      await fillPart1(page);
-      await page.click('#cl-next');
-      await page.selectOption('#cl-role', 'owner');
-      await page.selectOption('#cl-enquiries', '50to150');
-      await page.selectOption('#cl-sale', '200to1k');
+      await fillForm(page, { whatsappUse: 'no' });
       await page.click('#cl-submit');
-      await expect(page.locator('#cl-step2')).toBeHidden();
-      await expect(page.locator('#cl-jobs-error')).toBeVisible();
-      expect(sent.api).toHaveLength(0);
+      await expect(page.locator('#cl-notyet')).toBeVisible();
+      await expect(page.locator('#cl-book')).toBeHidden();
+      expect(sent.api[0]).toMatchObject({ qualified: 'no', tier: 'C', whatsappUse: 'no' });
     });
 
     test('low volume + low value goes to WhatsApp triage, not the calendar', async ({ page }) => {
@@ -191,11 +213,31 @@ for (const P of PAGES) {
       expect(await fbqEvents(page)).toContain('Schedule');
     });
 
-    test('consent to be contacted on WhatsApp is stated before step 1', async ({ page }) => {
+    test('consent to be contacted on WhatsApp is stated next to the contact details', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
-      await expect(page.locator('#cl-part1')).toContainText(/WhatsApp/);
-      await expect(page.locator('#cl-part1 .consent')).toBeVisible();
+      await fillQualify(page);
+      await page.click('#cl-next');
+      await expect(page.locator('#cl-part2 .consent')).toBeVisible();
+      await expect(page.locator('#cl-part2 .consent')).toContainText(/WhatsApp/);
+    });
+
+    test('WhatsApp screens look like WhatsApp: customer view, beige wallpaper, green bubbles right, ticks, input bar', async ({ page }) => {
+      await stubNetwork(page);
+      await page.goto(P.path);
+      const wa = page.locator('.wa').first();
+      await expect(wa.locator('.wa-head .wa-name')).not.toHaveText('');
+      await expect(wa.locator('.wa-head')).toContainText(/business account|online|typing/i);
+      await expect(wa.locator('.wa-input')).toBeVisible();
+      const bg = await wa.locator('.wa-body').evaluate((el) => getComputedStyle(el).backgroundColor);
+      expect(bg).toBe('rgb(239, 234, 226)');
+      const out = wa.locator('.wa-msg.wa-out').first();
+      await expect(out).toHaveCSS('background-color', 'rgb(217, 253, 211)');
+      await expect(out.locator('.wa-ticks')).toHaveCount(1);
+      const inn = wa.locator('.wa-msg.wa-in').first();
+      await expect(inn).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+      const [ob, ib] = await Promise.all([out.boundingBox(), inn.boundingBox()]);
+      expect(ob!.x + ob!.width).toBeGreaterThan(ib!.x + ib!.width); // customer bubbles sit on the right
     });
   });
 }
@@ -241,8 +283,32 @@ test.describe('long form follows the event opt-in structure', () => {
 
   test('clicking a CTA brings the form into view', async ({ page }) => {
     await stubNetwork(page);
+    await page.emulateMedia({ reducedMotion: 'reduce' }); // instant jump, no smooth-scroll race under parallel load
     await page.goto('/ai-closer.html');
     await page.locator('#faq a.btn-cta').first().click();
-    await expect(page.locator('#cl-name')).toBeInViewport();
+    await expect(page.locator('#cl-industry')).toBeInViewport();
+  });
+
+  test('"Seen at" strip reuses the homepage logos, no role captions', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    const srcs = await page.locator('#seen img').evaluateAll((els) => els.map((e) => e.getAttribute('src')));
+    expect(srcs).toEqual(['/logos/saia.png', '/logos/nrf.jpg', '/logos/superai.jpg', '/logos/stripe.png']);
+    await expect(page.locator('#seen')).not.toContainText(/chair|day 3|pitch/i);
+  });
+
+  test('proof chats are WhatsApp screens too', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    expect(await page.locator('#proof-2 .wa').count()).toBe(3);
+  });
+
+  test('mobile: the first form question is reachable within two screens', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'mobile only');
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    const box = await page.locator('#cl-industry').boundingBox();
+    const vh = page.viewportSize()!.height;
+    expect(box!.y).toBeLessThan(vh * 2);
   });
 });

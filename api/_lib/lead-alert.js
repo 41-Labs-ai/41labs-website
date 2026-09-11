@@ -21,7 +21,9 @@ function alertLines(lead, { html }) {
   const lines = [
     html ? `<b>${esc(lead.tier ? `TIER ${lead.tier}` : 'NEW LEAD')}</b> · 41 Closer ad lead` : `${lead.tier ? `TIER ${lead.tier}` : 'NEW LEAD'} · 41 Closer ad lead`,
     html ? `<b>${esc(who)}</b>` : `Name: ${who}`,
-    `Company: ${esc(lead.company || '-')}`,
+    `Company: ${esc(lead.company || '-')}${lead.industry ? ` · ${esc(lead.industry)}` : ''}`,
+    lead.website ? `Website: ${esc(lead.website)}` : '',
+    lead.whatsappUse ? `WhatsApp use: ${esc(lead.whatsappUse)}` : '',
     wa
       ? (html ? `WhatsApp: <a href="${wa}">${esc(lead.whatsapp)}</a>` : `WhatsApp: ${lead.whatsapp} (${wa})`)
       : `WhatsApp: ${esc(lead.whatsapp || '-')}`,

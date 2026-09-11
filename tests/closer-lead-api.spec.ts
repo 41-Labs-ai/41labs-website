@@ -106,6 +106,9 @@ const lead = {
   utm_campaign: '41closer_lp_2026-09',
   utm_content: 'ad_stalk1_notchatbot',
   fbclid: 'abc123',
+  industry: 'servicing',
+  whatsappUse: 'most',
+  website: 'tanaircon.sg',
 };
 
 test.describe('POST /api/closer-lead', () => {
@@ -116,7 +119,7 @@ test.describe('POST /api/closer-lead', () => {
   });
 
   test('honeypot filled: pretends success and never calls anything', async () => {
-    const { res, json, calls } = await run({ ...lead, website: 'http://spam.example' }, { env: FULL_ENV });
+    const { res, json, calls } = await run({ ...lead, url_hp: 'http://spam.example' }, { env: FULL_ENV });
     expect(res.statusCode).toBe(200);
     expect(json.skipped).toBe('bot');
     expect(calls).toHaveLength(0);
@@ -295,6 +298,9 @@ test.describe('closer-lead: Hermes handoff', () => {
       jobs: ['quotes', 'bookings'],
       tier: 'A',
       fitReason: 'High enquiry value and real sales work in chat',
+      industry: 'servicing',
+      whatsappUse: 'most',
+      website: 'tanaircon.sg',
       notes: 'Most chats come in after 9pm',
       utm: { source: 'facebook', campaign: '41closer_lp_2026-09', content: 'ad_stalk1_notchatbot' },
       fbclid: 'abc123',
@@ -336,5 +342,49 @@ test.describe('closer-lead: Hermes handoff', () => {
     const { res, json } = await run(lead, { env: FULL_ENV, failHosts: ['hermes.example.com'] });
     expect(res.statusCode).toBe(200);
     expect(json.hermes).toBe('failed');
+  });
+
+  test('a real website answer is NOT mistaken for the spam trap', async () => {
+    const { json } = await run(lead);
+    expect(json.skipped).toBeUndefined();
+    expect(json.ok).toBe(true);
+  });
+
+  test('industry, WhatsApp use and website land in Twenty; website becomes the company domain', async () => {
+    const { calls } = await run(lead);
+    const company = calls.find((c) => c.url.endsWith('/rest/companies'))!;
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(company.body.domainName).toEqual({ primaryLinkUrl: 'https://tanaircon.sg' });
+    expect(opp.body.statusNotes).toContain('Industry: Servicing');
+    expect(opp.body.statusNotes).toContain('WhatsApp: Most sales start on WhatsApp');
+    expect(opp.body.statusNotes).toContain('Website: tanaircon.sg');
+    expect(opp.body.nextAction).toMatch(/WOW preview/i);
+  });
+
+  test('an Instagram handle is kept in notes but not used as a domain', async () => {
+    const { calls } = await run({ ...lead, website: '@tanaircon' });
+    const company = calls.find((c) => c.url.endsWith('/rest/companies'))!;
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(company.body.domainName).toBeUndefined();
+    expect(opp.body.statusNotes).toContain('Website: @tanaircon');
+  });
+
+  test('tier C leads are not sent a WOW preview task', async () => {
+    const { calls } = await run({ ...lead, tier: 'C', qualified: 'no' });
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp.body.nextAction).not.toMatch(/WOW/i);
+  });
+
+  test('the Hermes handoff carries industry, WhatsApp use and website', async () => {
+    const { calls } = await run(lead, { env: FULL_ENV });
+    const h = hermesCall(calls)!;
+    expect(h.body.lead).toMatchObject({ industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg' });
+  });
+
+  test('the Telegram alert shows industry and website', async () => {
+    const { calls } = await run(lead, { env: FULL_ENV });
+    const text = tgCall(calls)!.body.text;
+    expect(text).toContain('Servicing');
+    expect(text).toContain('tanaircon.sg');
   });
 });

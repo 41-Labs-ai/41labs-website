@@ -17,6 +17,8 @@ const TWENTY_BASE = process.env.TWENTY_BASE_URL || 'https://twenty-server-produc
 const ENQUIRIES = { under20: 'Under 20', '20to50': '20-50', '50to150': '50-150', '150plus': '150+' };
 const SALE = { under200: 'Under S$200', '200to1k': 'S$200-1,000', '1kto5k': 'S$1,000-5,000', '5kplus': 'S$5,000+' };
 const ROLE = { owner: 'Owner', sales_head: 'Head of sales', manager: 'Manager', other: 'Other' };
+const INDUSTRY = { renovation: 'Renovation / interior', clinic: 'Clinic / aesthetics / dental', car: 'Car rental / dealer', property: 'Property', education: 'Education / tuition', distributor: 'Distributor / wholesale', servicing: 'Servicing', travel: 'Travel / tours', retail: 'Retail / online shop', other: 'Other' };
+const WA_USE = { most: 'Most sales start on WhatsApp', some: 'Some customers use WhatsApp', no: 'Not really on WhatsApp' };
 const JOBS = { answers: 'Simple questions', quotes: 'Quotes', bookings: 'Bookings', stock: 'Stock/price checks', orders: 'Orders/payments' };
 const NEXT = {
   A: 'TIER A: guarantee-eligible. Call within 1 hour, even if they booked.',
@@ -70,7 +72,8 @@ module.exports = async (req, res) => {
   const body = await readBody(req);
 
   // honeypot: bots fill hidden fields. Pretend success and skip.
-  if (clean(body._gotcha) || clean(body.website)) return send(res, 200, { ok: true, skipped: 'bot' });
+  // (the field is url_hp; 'website' is a real question now)
+  if (clean(body._gotcha) || clean(body.url_hp)) return send(res, 200, { ok: true, skipped: 'bot' });
 
   const name = clean(body.name, 120);
   const whatsapp = clean(body.whatsapp, 40);
@@ -94,6 +97,13 @@ module.exports = async (req, res) => {
   const jobs = jobKeys.map((j) => JOBS[j]);
   const fitReason = clean(body.fitReason, 200);
   const leadNotes = clean(body.notes, 1500);
+  const industryKey = INDUSTRY[body.industry] ? body.industry : '';
+  const industry = INDUSTRY[industryKey] || '';
+  const whatsappUse = WA_USE[body.whatsappUse] ? body.whatsappUse : '';
+  const website = clean(body.website, 200);
+  // Only a real domain becomes the company's domain in Twenty; an @handle stays in the notes.
+  const domain = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i.test(website) && !website.startsWith('@')
+    ? (website.startsWith('http') ? website : `https://${website}`) : '';
   const headers = req.headers || {};
   const userAgent = clean(headers['user-agent'], 300);
 
@@ -102,6 +112,9 @@ module.exports = async (req, res) => {
   const notes = [
     `Form: 41labs.ai/ai-closer`,
     `Role: ${ROLE[body.role] || clean(body.role, 40) || '-'}`,
+    industry ? `Industry: ${industry.split(' / ')[0]}` : '',
+    whatsappUse ? `WhatsApp: ${WA_USE[whatsappUse]}` : '',
+    website ? `Website: ${website}` : '',
     `WhatsApp enquiries/week: ${ENQUIRIES[body.enquiries] || clean(body.enquiries, 40) || '-'}`,
     `Average sale: ${SALE[body.saleValue] || clean(body.saleValue, 40) || '-'}`,
     `Chats involve: ${jobs.length ? jobs.join(', ') : '-'}`,
@@ -112,6 +125,9 @@ module.exports = async (req, res) => {
     userAgent ? `UA: ${userAgent}` : '',
     leadNotes ? `Notes: ${leadNotes}` : '',
   ].filter(Boolean).join('\n');
+
+  // Qualified leads: build a WOW preview on their own site before the demo.
+  const nextAction = (NEXT[tier] || NEXT.B) + (tier !== 'C' && website ? ` Build the WOW preview from ${website} before the call.` : '');
 
   let oppId = null;
   let crmError = '';
@@ -127,7 +143,7 @@ module.exports = async (req, res) => {
         ...(email ? { emails: { primaryEmail: email } } : {}),
         jobTitle: ROLE[body.role] || '',
       });
-      const companyId = await create(key, 'companies', { name: company });
+      const companyId = await create(key, 'companies', { name: company, ...(domain ? { domainName: { primaryLinkUrl: domain } } : {}) });
       oppId = await create(key, 'opportunities', {
         name: `${company} - 41 Closer (ad landing page)`,
         stage: 'SCREENING',
@@ -135,7 +151,7 @@ module.exports = async (req, res) => {
         waitingOn: 'US',
         leadSource: `Meta ad landing page${utm.length ? ' | ' + utm.join(' ') : ''}`.slice(0, 500),
         statusNotes: notes.slice(0, 2500),
-        nextAction: NEXT[tier] || NEXT.B,
+        nextAction: nextAction,
         firstContactAt: new Date().toISOString(),
         pointOfContactId: personId,
         companyId,
@@ -165,7 +181,10 @@ module.exports = async (req, res) => {
       notes: leadNotes,
       utmContent: utmObj.content || '',
       utmCampaign: utmObj.campaign || '',
-      nextAction: NEXT[tier] || NEXT.B,
+      nextAction,
+      industry,
+      website,
+      whatsappUse: WA_USE[whatsappUse] || '',
       twentyUrl: oppId ? `${TWENTY_BASE}/object/opportunity/${oppId}` : '',
       crmError,
     }, deps),
@@ -182,6 +201,9 @@ module.exports = async (req, res) => {
         jobs: jobKeys,
         tier,
         fitReason,
+        industry: industryKey,
+        whatsappUse,
+        website,
         notes: leadNotes,
         utm: utmObj,
         fbclid,

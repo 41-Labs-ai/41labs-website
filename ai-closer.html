@@ -27,6 +27,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="wa.css">
     <style>
         :root {
             --accent: #4ade80;
@@ -61,8 +62,7 @@
         h2 { font-size: clamp(28px, 4.6vw, 44px); }
         h2.caps { font-size: clamp(26px, 4.2vw, 40px); }
         .hl { color: var(--accent); }
-        .ul { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 6px; text-decoration-color: var(--accent); }
-        .mark { background: linear-gradient(transparent 58%, var(--accent) 58%); padding: 0 3px; }
+                .mark { background: linear-gradient(transparent 58%, var(--accent) 58%); padding: 0 3px; }
         .sub { color: var(--text-2); font-size: 18px; margin: 16px auto 0; max-width: 700px; }
 
         /* ---------- Buttons ---------- */
@@ -85,34 +85,25 @@
         .brand span { color: rgba(255,255,255,0.55); font-weight: 500; }
 
         /* ---------- HERO (his: audience bar, pre-head, caps headline, video + form) ---------- */
-        #hero { position: relative; background: var(--ink); color: #fff; padding: 76px 0 56px; overflow: hidden; }
-        #hero::before { content: ""; position: absolute; inset: 0; background: url('assets/closer/lp-hero-stage.webp') right bottom / auto 96% no-repeat; opacity: .5; }
-        #hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--ink) 38%, rgba(15,19,17,0.7) 70%, rgba(15,19,17,0.35)); }
+        #hero { position: relative; background: var(--ink); color: #fff; padding: 76px 0 48px; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+        .hero-bg img { position: absolute; top: 0; height: 100%; width: 34%; max-width: none; object-fit: cover; filter: grayscale(0.4) brightness(0.5); opacity: .8; }
+        .hero-bg .bg-left { left: 0; object-position: 55% 30%; }
+        .hero-bg .bg-right { right: 0; object-position: 50% 20%; }
+        .hero-bg::after { content: ""; position: absolute; inset: 0; background:
+            linear-gradient(90deg, rgba(15,19,17,0.2) 0%, rgba(15,19,17,0.96) 30%, rgba(15,19,17,0.96) 70%, rgba(15,19,17,0.2) 100%),
+            linear-gradient(180deg, rgba(15,19,17,0.6), rgba(15,19,17,0.2) 40%, rgba(15,19,17,0.85)); }
         #hero > .wrap { position: relative; z-index: 1; }
         .aud { display: block; max-width: 760px; margin: 0 auto; background: var(--accent); color: var(--ink); font-style: italic; font-weight: 800; font-size: clamp(13px, 1.9vw, 16px); text-align: center; padding: 8px 16px; border-radius: 8px; }
         .prehead { text-align: center; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: clamp(13px, 1.8vw, 16px); margin: 22px 0 10px; }
-        #hero h1 { text-align: center; text-transform: uppercase; font-size: clamp(27px, 4vw, 44px); line-height: 1.07; max-width: 980px; margin: 0 auto; }
+        #hero h1 { text-align: center; text-transform: uppercase; font-size: clamp(23px, 3.6vw, 42px); line-height: 1.1; max-width: 960px; margin: 0 auto; }
         .hero-sub { text-align: center; color: rgba(255,255,255,0.72); font-size: clamp(16px, 2vw, 19px); max-width: 760px; margin: 18px auto 0; }
         .hero-grid { display: grid; gap: 22px; margin-top: 26px; align-items: start; }
 
         .vbox { background: #0b0f0d; border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; overflow: hidden; }
         .vbox-title { background: #fff; color: var(--ink); font-weight: 800; text-align: center; padding: 11px 14px; font-size: 15px; }
-        .vbox-body { padding: 18px; display: grid; place-items: center; background: radial-gradient(closest-side at 50% 40%, rgba(74,222,128,0.14), transparent); }
+        .vbox-body { padding: 26px 18px 30px; display: grid; place-items: center; background: radial-gradient(closest-side at 50% 40%, rgba(74,222,128,0.14), transparent); }
         .vnote { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: rgba(255,255,255,0.75); padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.08); }
-
-        /* phone mock */
-        .phone { width: 100%; max-width: 330px; background: #0f0f0f; border: 1px solid rgba(255,255,255,0.12); border-radius: 32px; padding: 10px; box-shadow: 0 30px 80px rgba(0,0,0,0.55); }
-        .screen { background: #0b141a; border-radius: 24px; overflow: hidden; }
-        .chat-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #1f2c34; }
-        .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; font-weight: 900; font-size: 12px; }
-        .chat-head b { display: block; font-size: 14px; }
-        .chat-head small { color: var(--accent); font-size: 11.5px; }
-        .chat { padding: 14px 10px 16px; display: flex; flex-direction: column; gap: 7px; min-height: 330px; }
-        .msg { max-width: 84%; padding: 7px 10px 5px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .35s ease; color: #e9edef; }
-        .msg.show { opacity: 1; transform: none; }
-        .msg time { display: block; text-align: right; font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 2px; font-family: var(--mono); }
-        .in { align-self: flex-start; background: #202c33; border-top-left-radius: 2px; }
-        .out { align-self: flex-end; background: #005c4b; border-top-right-radius: 2px; }
 
         /* form card */
         .fcard { background: #fff; color: var(--text); border-radius: 20px; padding: 22px 20px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
@@ -132,14 +123,15 @@
         .field textarea { min-height: 80px; resize: vertical; }
         fieldset.jobs { border: 0; padding: 0; margin: 0; min-width: 0; }
         .chips { display: flex; flex-wrap: wrap; gap: 7px; }
-        .chip { position: relative; cursor: pointer; }
-        .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-        .chip span { display: inline-block; font-size: 14px; padding: 9px 13px; border-radius: var(--radius-pill); border: 1.5px solid #e1e1e6; background: #fafafb; transition: background .15s ease, color .15s ease; }
-        .chip input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
-        .chip input:checked + span::before { content: "\2713  "; color: var(--accent); font-weight: 900; }
-        .chip input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+        .chip-opt { position: relative; cursor: pointer; }
+        .chip-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+        .chip-opt span { display: inline-block; font-size: 14px; padding: 9px 13px; border-radius: var(--radius-pill); border: 1.5px solid #e1e1e6; background: #fafafb; transition: background .15s ease, color .15s ease; }
+        .chip-opt input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+        .chip-opt input:checked + span::before { content: "\2713  "; color: var(--accent); font-weight: 900; }
+        .chip-opt input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
         .jobs-error { color: #dc2626; font-size: 13px; font-weight: 700; margin: 8px 0 0; }
         .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+        .help { display: block; font-size: 12.5px; color: var(--text-2); margin-top: 6px; }
         .consent { font-size: 12.5px; color: var(--text-2); text-align: center; margin: 10px 0 0; }
         .form-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
         .link-back { background: none; border: 0; font: inherit; font-weight: 700; color: var(--text-2); cursor: pointer; padding: 8px 0; }
@@ -165,14 +157,10 @@
         /* as seen at */
         #seen { padding: 0; margin-top: -30px; position: relative; z-index: 2; }
         .seen { background: #fff; border-radius: 20px; box-shadow: var(--shadow); padding: 20px; max-width: 900px; margin: 0 auto; text-align: center; }
-        .seen h3 { font-size: 15px; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 12px; }
-        .seen-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 34px; align-items: center; }
-        .seen-row span { font-weight: 900; font-size: 18px; color: #3a3a3f; letter-spacing: -0.01em; }
-        .seen-row small { display: block; font-weight: 600; font-size: 11.5px; color: var(--text-2); letter-spacing: .04em; text-transform: uppercase; }
-        .seen-row .logo { margin: 0; display: grid; justify-items: center; gap: 8px; }
-        .seen-row .logo img { height: 42px; width: auto; max-width: 170px; object-fit: contain; }
-        .seen-row .logo img.on-dark { background: var(--ink); padding: 7px 12px; border-radius: 10px; box-sizing: content-box; height: 30px; }
-        .seen-row .logo figcaption { font-size: 11.5px; font-weight: 700; color: var(--text-2); letter-spacing: .03em; text-transform: uppercase; }
+        .seen-label { text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700; color: #6b6b6b; margin: 0 0 16px; }
+        .seen-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; align-items: center; }
+        .seen-row .chip { background: #fff; border-radius: 10px; padding: 10px 18px; display: inline-flex; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #efefef; }
+        .seen-row .chip img { height: 28px; width: auto; }
 
         /* what you get */
         .get-grid { display: grid; gap: 24px; align-items: center; margin-top: 26px; }
@@ -199,14 +187,10 @@
         .result-body b { color: var(--text); }
         .result-tag { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-deep); margin-bottom: 8px; display: block; }
 
-        /* chat proof */
-        .chats { display: grid; gap: 18px; margin-top: 34px; }
-        .chatcard { background: #0b141a; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
-        .chatcard .chat-head { background: #1f2c34; }
-        .chatcard .chat { min-height: 0; max-height: 540px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
-        .chats { align-items: start; }
-        .chatcard .msg { opacity: 1; transform: none; }
-        .chatcap { color: rgba(255,255,255,0.6); font-size: 12.5px; padding: 10px 14px 14px; }
+        /* chat proof (WhatsApp screens) */
+        .chats { display: grid; gap: 34px; margin-top: 40px; align-items: start; }
+        .chatfig { margin: 0; }
+        .chatcap { color: rgba(255,255,255,0.6); font-size: 12.5px; padding: 18px 8px 0; text-align: center; }
 
         /* letter */
         #letter .panel { padding: 40px 22px; }
@@ -307,11 +291,18 @@
         .sticky.show { transform: none; }
         .sticky .btn { width: 100%; }
 
+        @media (max-width: 979px) {
+            .hero-grid .fcard { order: -1; }
+            .hero-bg img { width: 50%; opacity: .5; }
+            .prehead { margin-top: 16px; }
+            .hero-sub { font-size: 15.5px; margin-top: 12px; }
+            .vbox-title { font-size: 14px; }
+        }
         @media (min-width: 760px) {
             .fields { grid-template-columns: 1fr 1fr; }
             .fields.one { grid-template-columns: 1fr; }
             .field.full { grid-column: 1 / -1; }
-            .results, .chats, .three, .weeks { grid-template-columns: repeat(2, 1fr); }
+            .results, .three, .weeks { grid-template-columns: repeat(2, 1fr); }
             .ba { grid-template-columns: 1fr 1fr; }
             .tiles { grid-template-columns: repeat(4, 1fr); }
             .calc { grid-template-columns: 1fr 1fr; align-items: center; }
@@ -327,6 +318,7 @@
             .get-grid { grid-template-columns: 1fr 1fr; }
             .letter-grid { grid-template-columns: 0.42fr 1fr; }
             .chats { grid-template-columns: repeat(3, 1fr); }
+            .hero-grid .vcol .wa { max-width: 340px; }
             .three { grid-template-columns: repeat(3, 1fr); }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -342,39 +334,29 @@
 </header>
 
 <main>
-<!-- 01 HERO: audience bar, pre-head, caps headline, "video" + form -->
+<!-- 01 HERO: laid out like his opt-in: photos on both edges, audience bar, pre-head, caps headline, demo + form -->
 <section id="hero" class="hero">
+    <div class="hero-bg" aria-hidden="true">
+        <img class="bg-left" src="assets/closer/stage-smeicc-2026-pitch.webp" alt="">
+        <img class="bg-right" src="assets/closer/lp-founder-letter.webp" alt="">
+    </div>
     <div class="wrap">
-        <span class="aud">For Singapore owners whose customers ask, quote and book on WhatsApp</span>
+        <span class="aud">For Singapore businesses whose customers enquire, get quotes and book on WhatsApp</span>
         <p class="prehead">Not just a chatbot. Give me 20 minutes and I'll show you...</p>
-        <h1>How to reply, quote and close every WhatsApp enquiry <span class="ul">in seconds</span>, <span class="hl">even at 2am</span>, without hiring another salesperson</h1>
-        <p class="hero-sub">A salesperson on your WhatsApp that never sleeps. Built on your real chats, connected to your prices and bookings, and run by our team.</p>
+        <h1>How to reply, quote and close <span class="hl">every WhatsApp enquiry in seconds</span>, even at 2am, <span class="hl">without hiring another salesperson</span></h1>
+        <p class="hero-sub">A salesperson on your WhatsApp that never sleeps. Built on your real chats and prices, and run by our team.</p>
 
         <div class="hero-grid">
             <div class="vcol">
                 <div class="vbox">
-                    <div class="vbox-title">Watch it work: a real enquiry at 2am, handled in under a minute</div>
-                    <div class="vbox-body">
-                        <div class="phone" aria-label="Example WhatsApp conversation handled by 41 Closer">
-                            <div class="screen">
-                                <div class="chat-head"><div class="avatar">41</div><div><b>Your business</b><small>online</small></div></div>
-                                <div class="chat">
-                                    <div class="msg in">Hi, still open? Need 3 aircon units serviced.<time>02:02</time></div>
-                                    <div class="msg out">Hi! Yes, we can help. Is it a condo or landed, and which area?<time>02:02</time></div>
-                                    <div class="msg in">Condo, Tampines<time>02:03</time></div>
-                                    <div class="msg out">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<time>02:03</time></div>
-                                    <div class="msg in">10am please<time>02:03</time></div>
-                                    <div class="msg out">Done. You're booked for Saturday 10am. Your confirmation is right here.<time>02:03</time></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="vnote"><span aria-hidden="true">&#9888;</span><span>Example chat. On the demo you'll see it answer an enquiry like the ones your business gets.</span></div>
+                    <div class="vbox-title">See it work: an enquiry at 2am, handled on WhatsApp in under a minute</div>
+                    <div class="vbox-body"><!-- WA-HERO --><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires at 2am and the 41 Closer books the job"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">CA</div><div class="wa-who"><div class="wa-name">CoolAir Services</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, still open? Need 3 aircon units serviced.<span class="wa-meta">02:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes, we can help. Is it a condo or landed, and which area?<span class="wa-meta">02:02</span></div><div class="wa-msg wa-out">Condo, Tampines<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<span class="wa-meta">02:03</span></div><div class="wa-msg wa-out">10am please<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Done. You&#x27;re booked for Saturday 10am. I&#x27;ll send a reminder the day before.<span class="wa-meta">02:03</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div><!-- /WA-HERO --></div>
+                    <div class="vnote">Example chat. On your demo it answers enquiries like the ones your business gets.</div>
                 </div>
             </div>
 
-            <span id="book" aria-hidden="true"></span>
             <div class="fcard" id="qualify">
+                <span id="book" aria-hidden="true"></span>
                 <div class="fcard-head">
                     <span class="free">FREE</span>
                     <h3>WhatsApp Leak Audit + Live Demo</h3>
@@ -382,61 +364,46 @@
                 </div>
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
-                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Your details</span><span class="cl-tab">2. Your WhatsApp</span></div>
+                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Check if you qualify</span><span class="cl-tab">2. Your details</span></div>
                         <div id="cl-part1">
-                            <div class="fields one">
-                                <div class="field"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
-                                <div class="field"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required></div>
-                                <div class="field"><label for="cl-company">Company</label><input id="cl-company" name="company" type="text" autocomplete="organization" required></div>
-                            </div>
-                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
-                            <p class="consent">We'll message you on WhatsApp about your demo. No spam, no lists.</p>
-                        </div>
-                        <div id="cl-part2" hidden>
                             <div class="fields">
-                                <div class="field"><label for="cl-role">Your role</label>
-                                    <select id="cl-role" name="role" required>
-                                        <option value="" disabled selected>Choose one</option>
-                                        <option value="owner">Owner</option>
-                                        <option value="sales_head">Head of sales</option>
-                                        <option value="manager">Manager</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
+                                <div class="field full"><label for="cl-industry">What does your business do?</label>
+                                    <select id="cl-industry" name="industry" required><option value="" disabled selected>Choose one</option><option value="renovation">Renovation or interior design</option><option value="clinic">Clinic, aesthetics or dental</option><option value="car">Car rental or car dealer</option><option value="property">Property agency</option><option value="education">Education or tuition</option><option value="distributor">Distributor, wholesale or trade supplier</option><option value="servicing">Servicing (aircon, plumbing, pest control, cleaning)</option><option value="travel">Travel or tours</option><option value="retail">Retail or online shop</option><option value="other">Something else</option></select></div>
+                                <div class="field full"><label for="cl-wa">Do customers message you on WhatsApp before they buy?</label>
+                                    <select id="cl-wa" name="whatsappUse" required><option value="" disabled selected>Choose one</option><option value="most">Yes, most sales start on WhatsApp</option><option value="some">Some do</option><option value="no">Not really</option></select></div>
                                 <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
-                                    <select id="cl-enquiries" name="enquiries" required>
-                                        <option value="" disabled selected>Choose one</option>
-                                        <option value="under20">Under 20</option>
-                                        <option value="20to50">20 to 50</option>
-                                        <option value="50to150">50 to 150</option>
-                                        <option value="150plus">Over 150</option>
-                                    </select>
-                                </div>
-                                <div class="field full"><label for="cl-sale">Average sale</label>
-                                    <select id="cl-sale" name="saleValue" required>
-                                        <option value="" disabled selected>Choose one</option>
-                                        <option value="under200">Under S$200</option>
-                                        <option value="200to1k">S$200 to S$1,000</option>
-                                        <option value="1kto5k">S$1,000 to S$5,000</option>
-                                        <option value="5kplus">Over S$5,000</option>
-                                    </select>
-                                </div>
+                                    <select id="cl-enquiries" name="enquiries" required><option value="" disabled selected>Choose one</option><option value="under20">Under 20</option><option value="20to50">20 to 50</option><option value="50to150">50 to 150</option><option value="150plus">Over 150</option></select></div>
+                                <div class="field"><label for="cl-sale">Average sale</label>
+                                    <select id="cl-sale" name="saleValue" required><option value="" disabled selected>Choose one</option><option value="under200">Under S$200</option><option value="200to1k">S$200 to S$1,000</option><option value="1kto5k">S$1,000 to S$5,000</option><option value="5kplus">Over S$5,000</option></select></div>
                                 <fieldset class="field full jobs" id="cl-jobs">
-                                    <legend>What do your WhatsApp chats usually involve? <span class="opt">(pick all that apply)</span></legend>
+                                    <legend>What do those chats usually involve? <span class="opt">(pick all that apply)</span></legend>
                                     <div class="chips">
-                                        <label class="chip"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
-                                        <label class="chip"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
                                     </div>
                                     <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
                                 </fieldset>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
+                        </div>
+                        <div id="cl-part2" hidden>
+                            <div class="fields">
+                                <div class="field"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
+                                <div class="field"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required></div>
+                                <div class="field"><label for="cl-company">Company</label><input id="cl-company" name="company" type="text" autocomplete="organization" required></div>
+                                <div class="field"><label for="cl-role">Your role</label>
+                                    <select id="cl-role" name="role" required><option value="" disabled selected>Choose one</option><option value="owner">Owner</option><option value="sales_head">Head of sales</option><option value="manager">Manager</option><option value="other">Other</option></select></div>
+                                <div class="field full"><label for="cl-website">Website or Instagram</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com or @yourcompany">
+                                    <small class="help">We look at it before the call, so your demo uses your own products and prices.</small></div>
                                 <div class="field full"><label for="cl-email">Email <span class="opt">(optional)</span></label><input id="cl-email" name="email" type="email" autocomplete="email"></div>
                                 <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
-                                <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+                                <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
+                            <p class="consent">After you book, our AI Closer will message you on WhatsApp to confirm and prepare your demo. No spam, no lists.</p>
                             <div class="form-foot">
                                 <button class="link-back" id="cl-back" type="button">&larr; Back</button>
                                 <button class="btn btn-primary" id="cl-submit" type="submit">Get my free demo <span class="arrow">&rarr;</span></button>
@@ -446,24 +413,24 @@
 
                     <div id="cl-step2" hidden>
                         <div id="cl-book" hidden>
-                            <span class="ok-badge">&#10003; Looks like a fit</span>
+                            <span class="ok-badge">&#10003; You qualify</span>
                             <h3>Pick a time for your free demo.</h3>
-                            <p>20 minutes on Google Meet with Alexander. Before the call we'll run your WhatsApp leak audit, so bring your numbers.</p>
+                            <p>20 minutes on Google Meet with Alexander. Our AI Closer will WhatsApp you to confirm and ask a few questions so we come prepared.</p>
                             <div id="cl-cal"></div>
                             <div id="cl-cal-fallback" hidden>
-                                <p>Thanks, <span class="cl-first"></span>. Alexander will WhatsApp you within one working hour to lock in a time.</p>
+                                <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
                                 <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
                             </div>
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>We'll look at your numbers and WhatsApp you within one working day. If a demo isn't worth your time yet, we'll tell you straight.</p>
+                            <p>From your answers, a demo may not be worth your time yet. We'll look at your details and WhatsApp you within one working day either way.</p>
                         </div>
                     </div>
                 </form>
                 <div class="promise">
                     <div class="seal">NO&#8209;PITCH<br>PROMISE</div>
-                    <p><b>If it isn't a fit, we'll say so on the call.</b> You keep your leak audit either way. No follow-up spam.</p>
+                    <p><b>If it isn't a fit, we'll say so on the call.</b> You keep your leak audit either way.</p>
                 </div>
             </div>
         </div>
@@ -474,12 +441,15 @@
 <section id="seen">
     <div class="wrap">
         <div class="seen">
-            <h3>As seen at</h3>
+            <!-- SEEN -->
+            <p class="seen-label">Proud member of the Singapore A.I. Association &middot; Seen at</p>
             <div class="seen-row">
-                <figure class="logo"><img src="assets/closer/logos/superreturn-asia.png" alt="SuperReturn Asia" height="40" loading="lazy"><figcaption>Alexander chaired Day 3, 2025</figcaption></figure>
-                <figure class="logo"><img class="on-dark" src="assets/closer/logos/smeicc.png" alt="SMEICC" height="40" loading="lazy"><figcaption>Startup Zone and AI pitch, 2026</figcaption></figure>
-                <figure class="logo"><img src="assets/closer/logos/nrf-apac-2026.png" alt="NRF APAC 2026" height="40" loading="lazy"><figcaption>Exhibitor, June 2026</figcaption></figure>
+                <span class="chip"><img src="/logos/saia.png" alt="Singapore A.I. Association" height="28" loading="lazy"></span>
+                <span class="chip"><img src="/logos/nrf.jpg" alt="NRF Big Show APAC" height="28" loading="lazy"></span>
+                <span class="chip"><img src="/logos/superai.jpg" alt="SuperAI" height="28" loading="lazy"></span>
+                <span class="chip"><img src="/logos/stripe.png" alt="Stripe" height="28" loading="lazy"></span>
             </div>
+            <!-- /SEEN -->
         </div>
         <p class="chev" aria-hidden="true">&#8964; &#8964; &#8964;</p>
     </div>
@@ -491,7 +461,7 @@
         <div class="panel reveal">
             <h2 class="caps center">What you walk away with in 20 minutes</h2>
             <div class="get-grid">
-                <figure class="get-photo" style="margin:0"><img src="assets/closer/stage-smeicc-2026-pitch.webp" alt="Alexander Lee pitching 41 Closer at SMEICC 2026" width="1500" height="2000" loading="lazy"><figcaption class="photo-cap">Pitching 41 Closer at SMEICC 2026. The QR on screen opens our own Closer.</figcaption></figure>
+                <figure class="get-photo" style="margin:0"><img src="assets/closer/stage-smeicc-2026-pitch.webp" alt="Alexander Lee presenting 41 Closer on stage" width="1500" height="2000" loading="lazy"><figcaption class="photo-cap">Alexander showing 41 Closer on stage</figcaption></figure>
                 <ol class="numlist">
                     <li><div><b>Your WhatsApp leak audit.</b>Before the call we message your business like a real customer. We time the first reply, check what happens after hours, and see if anyone follows up.</div></li>
                     <li><div><b>A live demo on an enquiry like yours.</b>You watch the Closer answer, recommend, quote and book, using the kind of question your customers actually ask.</div></li>
@@ -537,7 +507,7 @@
                 <p>Founder of 41 Labs. We build AI salespeople for Singapore businesses, and we run them.</p>
             </div>
             <div class="letter-grid">
-                <figure class="letter-photo" style="margin:0"><img src="assets/closer/lp-founder-letter.webp" alt="Alexander Lee, founder of 41 Labs" width="720" height="1024" loading="lazy"><figcaption>Alexander chairing Day 3 of SuperReturn Asia 2025</figcaption></figure>
+                <figure class="letter-photo" style="margin:0"><img src="assets/closer/lp-founder-letter.webp" alt="Alexander Lee, founder of 41 Labs" width="720" height="1024" loading="lazy"><figcaption>Alexander Lee, founder of 41 Labs</figcaption></figure>
                 <div class="letter-body">
                     <p><b>Dear fellow business owner,</b></p>
                     <p>If your WhatsApp is busy but sales aren't growing, it's almost always one of three things.</p>
@@ -566,27 +536,11 @@
         <h2 class="caps center">Real conversations the Closer has handled</h2>
         <p class="sub center">Real conversations from our demo lines, word for word. Only customer details are removed.</p>
         <div class="chats" id="proof-chats">
-            <figure class="chatcard reveal" style="margin:0">
-                <div class="chat-head"><div class="avatar">41</div><div><b>Pre-owned jewellery retailer</b><small>41 Closer, demo line</small></div></div>
-                <div class="chat">
-                    <div class="msg in">hello<time>22:04</time></div><div class="msg in">what services do you offer<time>22:04</time></div><div class="msg out">Hi Daniel! Welcome to [Business]. 😊<br><br>I can help you explore our pre-owned jewellery collection — rings, necklaces, earrings, bangles and more, each a unique piece.<br><br>Are you looking for something specific, or would you like to browse? If you have a particular piece, style or budget in mind, just let me know!<time>22:04</time></div><div class="msg in">i want to buy rings<time>22:05</time></div><div class="msg out">Great, rings it is! To help me find the right ones, a couple of quick questions:<br>What is your budget range, and is this for yourself or a gift for someone?<time>22:05</time></div><div class="msg in">anything below 1k sgd<time>22:10</time></div><div class="msg out">Here are three rings under S$1,000 that caught my eye for you, Daniel:<br><b>Bow-Shoulder Diamond Ring in 18K White Gold</b> (SKU: JR•••••••) — S$509<br>A single 0.08ct diamond in four claws, with heart-shaped shoulders set with small accent stones that read like a little bow across the finger. Slim and light on the hand. Held at our ••• branch.<time>22:10</time></div><div class="msg out"><b>Diamond Cluster Ring in 18K White Gold</b> (SKU: JR•••••••) — S$999<br>Four diamonds (0.28ct total) in a diamond-shaped cluster set in fine claws, on a plain polished band. Sits low on the finger and catches the light up close. Held at our ••• branch.<time>22:10</time></div><div class="msg out"><b>Heart Diamond Ring in 18K White Gold</b> (SKU: JR•••••••) — S$979<br>A slim crossover band holds a small heart with three diamonds set down its centre. Soft and easy to wear daily. Held at our ••• branch.<time>22:10</time></div><div class="msg out">Any of these speak to you, or would you like to see something different in style or price?<time>22:10</time></div><div class="msg in">go with this JR•••••••, i want to pay<time>22:10</time></div>
-                </div>
-                <figcaption class="chatcap">Ring chosen and paid for by payment link, 10pm. Customer details removed.</figcaption>
-            </figure>
-            <figure class="chatcard reveal" style="margin:0">
-                <div class="chat-head"><div class="avatar">41</div><div><b>F&amp;B ingredients wholesaler</b><small>41 Closer, demo line</small></div></div>
-                <div class="chat">
-                    <div class="msg out">Got it. Here is what I have so far:<br><b>Anchor Salted Butter 250g</b> x 2 cartons<br><b>B&amp;W Cake Flour 22kg</b> x 3 pallets, $43.20 per bag (pallet count to be confirmed)<br><b>Black Jaggery Sugar 6kg</b> (••••••) x 10 boxes, $27.90 per box<br><br>The team is checking on the pallet quantities and butter carton details. What is the delivery address for this order?<time>14:28</time></div><div class="msg in">[delivery address]<time>14:29</time></div><div class="msg out">Thanks Marcus. Last thing, what date and time works for delivery?<br><br>[Business] delivers Monday to Friday 12pm-6pm, Saturday 11am-5pm, with a 3 to 4 working day lead time. The earliest available slot would be around Friday 28 August or Monday 31 August.<time>14:29</time></div><div class="msg in">Ok<time>14:31</time></div><div class="msg out">Which works better for you, Friday 28 August or Monday 31 August?<time>14:32</time></div><div class="msg in">1 sep<time>14:32</time></div><div class="msg out">Our weekday window is 12pm to 6pm. Did you want early afternoon or later in the day on Tuesday 1 September?<time>14:32</time></div><div class="msg in">2pm<time>14:33</time></div><div class="msg out">Let me confirm the full order before we lock it in:<br><b>Anchor Salted Butter 250g</b> (••••••), 2 cartons<br><b>B&amp;W Cake Flour 22kg</b> (••••••), 3 pallets, $43.20 per bag<br><b>Black Jaggery Sugar 6kg</b> (••••••), 10 boxes, $27.90 per box<br><br>Delivery: Tuesday 1 September, 2pm<br>Address: [delivery address]<br><br>Does everything look right?<time>14:33</time></div><div class="msg in">Yes<time>14:33</time></div><div class="msg out">Order logged and the team will raise the invoice against your account. They will confirm the pallet count, butter carton details and delivery slot.<br><br>Is there anything else you need today?<time>14:33</time></div>
-                </div>
-                <figcaption class="chatcap">Trade reorder confirmed with a delivery slot. Customer details removed.</figcaption>
-            </figure>
-            <figure class="chatcard reveal" style="margin:0">
-                <div class="chat-head"><div class="avatar">41</div><div><b>Bhutan travel specialist</b><small>41 Closer, demo line</small></div></div>
-                <div class="chat">
-                    <div class="msg out">Hi Mei! Welcome to [Business] 🙏 We&#x27;re a Bhutan travel specialist based in Singapore, and we&#x27;d love to help you plan the perfect trip.<br><br>To point you in the right direction, what draws you to Bhutan, and who are you thinking of travelling with?<time>16:12</time></div><div class="msg in">I&#x27;m planning to travel with my friends (maybe 3 of us) in December. Is that a good time?<time>16:13</time></div><div class="msg out">December is a lovely time to visit Bhutan! The skies are crystal clear, the mountains are stunning, and it&#x27;s quieter than the peak autumn season, great for a small group of friends.<br><br>A couple of festivals also fall in that window depending on exact dates. What kind of experience are you hoping for, more culture and monasteries, getting out into nature, or a mix of both?<time>16:13</time></div><div class="msg in">We&#x27;d like to experience both<time>16:14</time></div><div class="msg out">That&#x27;s a great combination, and Bhutan does both really well. A mix of culture and nature is actually the sweet spot for most trips.<br><br>Are you and your friends up for some hiking, like the famous Tiger&#x27;s Nest climb, or do you prefer a more relaxed pace with scenic drives and gentle walks?<time>16:14</time></div><div class="msg in">Yes, we&#x27;d love to see the Tiger&#x27;s nest. What&#x27;s the ideal number of days for first time travellers<time>16:14</time></div><div class="msg out">Tiger&#x27;s Nest is an absolute must, and a great anchor for the trip!<br><br>For first-timers, most of our guests find 7 to 10 days to be the sweet spot. Seven days covers the highlights beautifully (Paro, Thimphu, Punakha), while 10 days lets you go deeper into a third or fourth region and really soak it in without feeling rushed.<br><br>Do you have a rough idea of how many days you&#x27;re thinking, or would you like me to suggest what works best for a December trip?<time>16:14</time></div><div class="msg in">Maybe 7 days should be fine<time>16:15</time></div><div class="msg out">Perfect, 7 days is a great shape for a first visit and works really well in December.<br><br>One last thing to help me point you to the right option, are you thinking comfortable 3-star hotels, or would you prefer something more boutique and upscale?<time>16:15</time></div><div class="msg in">3-star will do<time>16:15</time></div><div class="msg out">So, Mei, three friends, 7 days in December, Tiger&#x27;s Nest, culture and nature, 3-star. I have a great match for you.<br><br>The <b>7-Day All-Inclusive Essential Bhutan Package</b> at US$2,388 per person covers exactly this: Paro, Thimphu, and Punakha, with Tiger&#x27;s Nest built in. Everything is included, visa, 3-star hotels, all meals, licensed guide, private vehicle, entry fees, and the SDF (sustainable development fee). No hidden costs.<br><br>It&#x27;s rated 4.89/5 from 253 travellers, and there&#x27;s a group departure on 3 Dec and 24 Dec 2026 from Singapore, which fits your December plan perfectly.<br><br>We also have the <b>7 Days Bhutan Tour with Haa Valley</b> (rated 5.0/5 from 60 reviews) if you&#x27;d like to add a more off-the-beaten-path valley to the mix.<br><br>Which sounds more like your kind of trip?<time>16:15</time></div>
-                </div>
-                <figcaption class="chatcap">Trip matched to the right package in 3 minutes. Customer details removed.</figcaption>
-            </figure>
+            <!-- PROOF-CHATS -->
+            <figure class="chatfig reveal"><div class="wa wa-scroll" role="img" aria-label="WhatsApp chat with Jewellery store"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">JS</div><div class="wa-who"><div class="wa-name">Jewellery store</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">hello<span class="wa-meta">22:04 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-out">what services do you offer<span class="wa-meta">22:04 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi Daniel! Welcome to [Business]. 😊<br><br>I can help you explore our pre-owned jewellery collection — rings, necklaces, earrings, bangles and more, each a unique piece.<br><br>Are you looking for something specific, or would you like to browse? If you have a particular piece, style or budget in mind, just let me know!<span class="wa-meta">22:04</span></div><div class="wa-msg wa-out">i want to buy rings<span class="wa-meta">22:05 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Great, rings it is! To help me find the right ones, a couple of quick questions:<br>What is your budget range, and is this for yourself or a gift for someone?<span class="wa-meta">22:05</span></div><div class="wa-msg wa-out">anything below 1k sgd<span class="wa-meta">22:10 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Here are three rings under S$1,000 that caught my eye for you, Daniel:<br><b>Bow-Shoulder Diamond Ring in 18K White Gold</b> (SKU: JR•••••••) — S$509<br>A single 0.08ct diamond in four claws, with heart-shaped shoulders set with small accent stones that read like a little bow across the finger. Slim and light on the hand. Held at our ••• branch.<span class="wa-meta">22:10</span></div><div class="wa-msg wa-in"><b>Diamond Cluster Ring in 18K White Gold</b> (SKU: JR•••••••) — S$999<br>Four diamonds (0.28ct total) in a diamond-shaped cluster set in fine claws, on a plain polished band. Sits low on the finger and catches the light up close. Held at our ••• branch.<span class="wa-meta">22:10</span></div><div class="wa-msg wa-in"><b>Heart Diamond Ring in 18K White Gold</b> (SKU: JR•••••••) — S$979<br>A slim crossover band holds a small heart with three diamonds set down its centre. Soft and easy to wear daily. Held at our ••• branch.<span class="wa-meta">22:10</span></div><div class="wa-msg wa-in">Any of these speak to you, or would you like to see something different in style or price?<span class="wa-meta">22:10</span></div><div class="wa-msg wa-out">go with this JR•••••••, i want to pay<span class="wa-meta">22:10 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div><figcaption class="chatcap">Ring chosen and paid for by payment link, 10pm. Demo line, customer details removed.</figcaption></figure>
+            <figure class="chatfig reveal"><div class="wa wa-scroll" role="img" aria-label="WhatsApp chat with Baking supplies"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">BS</div><div class="wa-who"><div class="wa-name">Baking supplies</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-in">Got it. Here is what I have so far:<br><b>Anchor Salted Butter 250g</b> x 2 cartons<br><b>B&amp;W Cake Flour 22kg</b> x 3 pallets, $43.20 per bag (pallet count to be confirmed)<br><b>Black Jaggery Sugar 6kg</b> (••••••) x 10 boxes, $27.90 per box<br><br>The team is checking on the pallet quantities and butter carton details. What is the delivery address for this order?<span class="wa-meta">14:28</span></div><div class="wa-msg wa-out">[delivery address]<span class="wa-meta">14:29 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Thanks Marcus. Last thing, what date and time works for delivery?<br><br>[Business] delivers Monday to Friday 12pm-6pm, Saturday 11am-5pm, with a 3 to 4 working day lead time. The earliest available slot would be around Friday 28 August or Monday 31 August.<span class="wa-meta">14:29</span></div><div class="wa-msg wa-out">Ok<span class="wa-meta">14:31 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Which works better for you, Friday 28 August or Monday 31 August?<span class="wa-meta">14:32</span></div><div class="wa-msg wa-out">1 sep<span class="wa-meta">14:32 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Our weekday window is 12pm to 6pm. Did you want early afternoon or later in the day on Tuesday 1 September?<span class="wa-meta">14:32</span></div><div class="wa-msg wa-out">2pm<span class="wa-meta">14:33 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Let me confirm the full order before we lock it in:<br><b>Anchor Salted Butter 250g</b> (••••••), 2 cartons<br><b>B&amp;W Cake Flour 22kg</b> (••••••), 3 pallets, $43.20 per bag<br><b>Black Jaggery Sugar 6kg</b> (••••••), 10 boxes, $27.90 per box<br><br>Delivery: Tuesday 1 September, 2pm<br>Address: [delivery address]<br><br>Does everything look right?<span class="wa-meta">14:33</span></div><div class="wa-msg wa-out">Yes<span class="wa-meta">14:33 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Order logged and the team will raise the invoice against your account. They will confirm the pallet count, butter carton details and delivery slot.<br><br>Is there anything else you need today?<span class="wa-meta">14:33</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div><figcaption class="chatcap">Trade reorder confirmed with a delivery slot. Demo line, customer details removed.</figcaption></figure>
+            <figure class="chatfig reveal"><div class="wa wa-scroll" role="img" aria-label="WhatsApp chat with Bhutan tours"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">BT</div><div class="wa-who"><div class="wa-name">Bhutan tours</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-in">Hi Mei! Welcome to [Business] 🙏 We&#x27;re a Bhutan travel specialist based in Singapore, and we&#x27;d love to help you plan the perfect trip.<br><br>To point you in the right direction, what draws you to Bhutan, and who are you thinking of travelling with?<span class="wa-meta">16:12</span></div><div class="wa-msg wa-out">I&#x27;m planning to travel with my friends (maybe 3 of us) in December. Is that a good time?<span class="wa-meta">16:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">December is a lovely time to visit Bhutan! The skies are crystal clear, the mountains are stunning, and it&#x27;s quieter than the peak autumn season, great for a small group of friends.<br><br>A couple of festivals also fall in that window depending on exact dates. What kind of experience are you hoping for, more culture and monasteries, getting out into nature, or a mix of both?<span class="wa-meta">16:13</span></div><div class="wa-msg wa-out">We&#x27;d like to experience both<span class="wa-meta">16:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That&#x27;s a great combination, and Bhutan does both really well. A mix of culture and nature is actually the sweet spot for most trips.<br><br>Are you and your friends up for some hiking, like the famous Tiger&#x27;s Nest climb, or do you prefer a more relaxed pace with scenic drives and gentle walks?<span class="wa-meta">16:14</span></div><div class="wa-msg wa-out">Yes, we&#x27;d love to see the Tiger&#x27;s nest. What&#x27;s the ideal number of days for first time travellers<span class="wa-meta">16:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Tiger&#x27;s Nest is an absolute must, and a great anchor for the trip!<br><br>For first-timers, most of our guests find 7 to 10 days to be the sweet spot. Seven days covers the highlights beautifully (Paro, Thimphu, Punakha), while 10 days lets you go deeper into a third or fourth region and really soak it in without feeling rushed.<br><br>Do you have a rough idea of how many days you&#x27;re thinking, or would you like me to suggest what works best for a December trip?<span class="wa-meta">16:14</span></div><div class="wa-msg wa-out">Maybe 7 days should be fine<span class="wa-meta">16:15 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Perfect, 7 days is a great shape for a first visit and works really well in December.<br><br>One last thing to help me point you to the right option, are you thinking comfortable 3-star hotels, or would you prefer something more boutique and upscale?<span class="wa-meta">16:15</span></div><div class="wa-msg wa-out">3-star will do<span class="wa-meta">16:15 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">So, Mei, three friends, 7 days in December, Tiger&#x27;s Nest, culture and nature, 3-star. I have a great match for you.<br><br>The <b>7-Day All-Inclusive Essential Bhutan Package</b> at US$2,388 per person covers exactly this: Paro, Thimphu, and Punakha, with Tiger&#x27;s Nest built in. Everything is included, visa, 3-star hotels, all meals, licensed guide, private vehicle, entry fees, and the SDF (sustainable development fee). No hidden costs.<br><br>It&#x27;s rated 4.89/5 from 253 travellers, and there&#x27;s a group departure on 3 Dec and 24 Dec 2026 from Singapore, which fits your December plan perfectly.<br><br>We also have the <b>7 Days Bhutan Tour with Haa Valley</b> (rated 5.0/5 from 60 reviews) if you&#x27;d like to add a more off-the-beaten-path valley to the mix.<br><br>Which sounds more like your kind of trip?<span class="wa-meta">16:15</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div><figcaption class="chatcap">Trip matched to the right package in 3 minutes. Demo line, customer details removed.</figcaption></figure>
+            <!-- /PROOF-CHATS -->
         </div>
         <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
     </div>
@@ -597,7 +551,7 @@
     <div class="wrap">
         <h2 class="caps center">The real reason WhatsApp enquiries go cold</h2>
         <p class="sub center">It's rarely the price. A customer who messages you is ready to talk right now. What happens in the next few minutes decides it.</p>
-        <figure class="why-photo reveal"><img src="assets/closer/talk-mandala-club-2026-05-13-close.webp" alt="Alexander Lee presenting at a 41 Labs talk, slide reads: every SME loses revenue in the same 4 places" width="1333" height="2000" loading="lazy"><figcaption class="photo-cap">From our talk on 13 May 2026: "Every SME loses revenue in the same 4 places: speed, coverage, follow-up, qualification."</figcaption></figure>
+        <figure class="why-photo reveal"><img src="assets/closer/talk-mandala-club-2026-05-13-close.webp" alt="Alexander Lee presenting at a 41 Labs talk, slide reads: every SME loses revenue in the same 4 places" width="1333" height="2000" loading="lazy"><figcaption class="photo-cap">"Every SME loses revenue in the same 4 places: speed, coverage, follow-up, qualification."</figcaption></figure>
         <div class="three">
             <div class="card reveal"><span class="tagnum">01 &middot; SPEED</span><h3>Whoever replies first usually wins</h3><p>The customer who messages at 11pm has messaged two other businesses too. The first real answer gets the booking.</p></div>
             <div class="card reveal"><span class="tagnum">02 &middot; CERTAINTY</span><h3>"Let me check" loses to a clear answer</h3><p>A reply with a real price, a real slot and a next step lets them say yes in the chat. A vague reply sends them back to shopping.</p></div>
