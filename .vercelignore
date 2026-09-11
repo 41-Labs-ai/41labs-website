@@ -6,3 +6,8 @@ docs
 *.cjs
 *.md
 docs-site
+
+# Private proof research never ships (lives in 41closer-marketing/assets/landing-proof-2026-09)
+assets/closer/chats
+assets/closer/*.json
+assets/closer/*.md
