@@ -2,8 +2,15 @@
 // Lead form on /ai-closer (the Meta ad landing page). Creates Person + Company +
 // a SCREENING 41 Closer Opportunity in Twenty, linked together, with the ad's UTMs
 // in leadSource so cost per lead / per booked call can be traced back to the ad.
-// Best-effort, like /api/partner-apply: the page also posts to Formspree for the
-// email copy, so a CRM failure never loses the lead and never blocks the visitor.
+// Then, best-effort and in parallel (a failure never blocks the visitor):
+//   - instant alert to Alexander: Telegram + a Resend email copy (api/_lib/lead-alert.js).
+//     Fires even when the CRM write fails, so the lead is never lost.
+//   - handoff to Hermes (41 Closer) intake, event 'lead_created' (api/_lib/hermes.js).
+// The page still posts to Formspree too, for now. See docs/BOOKING-PIPELINE.md.
+
+const { sendLeadAlerts } = require('./_lib/lead-alert');
+const { postHermesIntake } = require('./_lib/hermes');
+const { e164Digits } = require('./_lib/util');
 
 const TWENTY_BASE = process.env.TWENTY_BASE_URL || 'https://twenty-server-production-bb71.up.railway.app';
 
@@ -69,19 +76,29 @@ module.exports = async (req, res) => {
   const whatsapp = clean(body.whatsapp, 40);
   if (!name || !whatsapp) return send(res, 400, { ok: false, error: 'missing_fields' });
 
-  const key = process.env.TWENTY_API_KEY;
-  if (!key) return send(res, 200, { ok: false, error: 'crm_not_configured' });
+  const env = process.env;
+  const fetchImpl = (...a) => fetch(...a);
+  const key = env.TWENTY_API_KEY;
 
   const company = clean(body.company, 160) || name;
   const email = clean(body.email, 160);
-  const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+  const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  const utm = UTM_KEYS
     .map((k) => (clean(body[k], 120) ? `${k}=${clean(body[k], 120)}` : ''))
     .filter(Boolean);
+  const utmObj = {};
+  for (const k of UTM_KEYS) if (clean(body[k], 120)) utmObj[k.slice(4)] = clean(body[k], 120);
   const fbclid = clean(body.fbclid, 300);
   const tier = ['A', 'B', 'C'].includes(body.tier) ? body.tier : '';
-  const jobs = (Array.isArray(body.jobs) ? body.jobs : [body.jobs])
-    .map((j) => JOBS[j]).filter(Boolean);
+  const jobKeys = (Array.isArray(body.jobs) ? body.jobs : [body.jobs]).filter((j) => JOBS[j]);
+  const jobs = jobKeys.map((j) => JOBS[j]);
+  const fitReason = clean(body.fitReason, 200);
+  const leadNotes = clean(body.notes, 1500);
+  const headers = req.headers || {};
+  const userAgent = clean(headers['user-agent'], 300);
 
+  // Short lines first: the cron (api/cron/booking-sync.js) parses Tier, fbclid and
+  // UA back out of statusNotes, so they must survive the 2,500-char cap.
   const notes = [
     `Form: 41labs.ai/ai-closer`,
     `Role: ${ROLE[body.role] || clean(body.role, 40) || '-'}`,
@@ -89,34 +106,89 @@ module.exports = async (req, res) => {
     `Average sale: ${SALE[body.saleValue] || clean(body.saleValue, 40) || '-'}`,
     `Chats involve: ${jobs.length ? jobs.join(', ') : '-'}`,
     `Qualified: ${clean(body.qualified, 10) || '-'}`,
-    tier ? `Tier: ${tier}${clean(body.fitReason, 200) ? ` (${clean(body.fitReason, 200)})` : ''}` : '',
-    clean(body.notes, 1500) ? `Notes: ${clean(body.notes, 1500)}` : '',
+    tier ? `Tier: ${tier}${fitReason ? ` (${fitReason})` : ''}` : '',
     utm.length ? `UTM: ${utm.join(' ')}` : '',
     fbclid ? `fbclid=${fbclid}` : '',
+    userAgent ? `UA: ${userAgent}` : '',
+    leadNotes ? `Notes: ${leadNotes}` : '',
   ].filter(Boolean).join('\n');
 
-  try {
-    const personId = await create(key, 'people', {
-      name: splitName(name),
-      phones: { primaryPhoneNumber: whatsapp.replace(/[^\d+]/g, '') },
-      ...(email ? { emails: { primaryEmail: email } } : {}),
-      jobTitle: ROLE[body.role] || '',
-    });
-    const companyId = await create(key, 'companies', { name: company });
-    const oppId = await create(key, 'opportunities', {
-      name: `${company} - 41 Closer (ad landing page)`,
-      stage: 'SCREENING',
-      productLine: 'CLOSER_41',
-      waitingOn: 'US',
-      leadSource: `Meta ad landing page${utm.length ? ' | ' + utm.join(' ') : ''}`.slice(0, 500),
-      statusNotes: notes.slice(0, 2500),
-      nextAction: NEXT[tier] || NEXT.B,
-      firstContactAt: new Date().toISOString(),
-      pointOfContactId: personId,
-      companyId,
-    });
-    return send(res, 200, { ok: true, id: oppId });
-  } catch (e) {
-    return send(res, 200, { ok: false, error: 'crm_error', detail: String(e).slice(0, 300) });
+  let oppId = null;
+  let crmError = '';
+  let result;
+  if (!key) {
+    crmError = 'CRM not configured';
+    result = { ok: false, error: 'crm_not_configured' };
+  } else {
+    try {
+      const personId = await create(key, 'people', {
+        name: splitName(name),
+        phones: { primaryPhoneNumber: whatsapp.replace(/[^\d+]/g, '') },
+        ...(email ? { emails: { primaryEmail: email } } : {}),
+        jobTitle: ROLE[body.role] || '',
+      });
+      const companyId = await create(key, 'companies', { name: company });
+      oppId = await create(key, 'opportunities', {
+        name: `${company} - 41 Closer (ad landing page)`,
+        stage: 'SCREENING',
+        productLine: 'CLOSER_41',
+        waitingOn: 'US',
+        leadSource: `Meta ad landing page${utm.length ? ' | ' + utm.join(' ') : ''}`.slice(0, 500),
+        statusNotes: notes.slice(0, 2500),
+        nextAction: NEXT[tier] || NEXT.B,
+        firstContactAt: new Date().toISOString(),
+        pointOfContactId: personId,
+        companyId,
+      });
+      result = { ok: true, id: oppId };
+    } catch (e) {
+      crmError = String(e).slice(0, 300);
+      result = { ok: false, error: 'crm_error', detail: crmError };
+    }
   }
+
+  const waDigits = e164Digits(whatsapp);
+  const deps = { env, fetchImpl };
+  const [alerts, hermes] = await Promise.all([
+    sendLeadAlerts({
+      tier,
+      name,
+      company,
+      whatsapp,
+      waDigits,
+      email,
+      role: ROLE[body.role] || clean(body.role, 40),
+      enquiries: ENQUIRIES[body.enquiries] || clean(body.enquiries, 40),
+      saleValue: SALE[body.saleValue] || clean(body.saleValue, 40),
+      jobs,
+      fitReason,
+      notes: leadNotes,
+      utmContent: utmObj.content || '',
+      utmCampaign: utmObj.campaign || '',
+      nextAction: NEXT[tier] || NEXT.B,
+      twentyUrl: oppId ? `${TWENTY_BASE}/object/opportunity/${oppId}` : '',
+      crmError,
+    }, deps),
+    postHermesIntake({
+      event: 'lead_created',
+      lead: {
+        name,
+        phone: waDigits ? `+${waDigits}` : whatsapp,
+        email,
+        company,
+        role: clean(body.role, 40),
+        enquiries: clean(body.enquiries, 40),
+        saleValue: clean(body.saleValue, 40),
+        jobs: jobKeys,
+        tier,
+        fitReason,
+        notes: leadNotes,
+        utm: utmObj,
+        fbclid,
+        twentyOpportunityId: oppId,
+      },
+    }, deps),
+  ]);
+
+  return send(res, 200, { ...result, alerts, hermes });
 };
