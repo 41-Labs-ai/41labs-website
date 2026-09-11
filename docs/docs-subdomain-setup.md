@@ -13,7 +13,7 @@ docs-site/                            # deploy root for docs.41labs.ai
   hermes/
     connect-stripe.html               # → /hermes/connect-stripe
     whatsapp-onboarding-runbook.html  # → /hermes/whatsapp-onboarding-runbook
-    private/druk-asia/...html         # per-client, listed with a tag
+    private/druk-asia/...html         # per-client, never listed on the index
   assets/fonts.css                    # saved Google Fonts CSS (gstatic URLs)
   robots.txt                          # Disallow: /
   vercel.json                         # cleanUrls + security headers + X-Robots-Tag
@@ -23,12 +23,13 @@ One folder per product/system (`hermes/`, and whatever comes next); `assets/` is
 shared and referenced by absolute path (`/assets/fonts.css`) so pages work at
 any depth.
 
-The index is generated, not hand-written. `build-index.cjs` walks the whole
-`hermes/` tree, subdirectories included, and writes one card per page between
-the `DOCS:START` and `DOCS:END` markers in `index.html`. A card takes its
-heading from the page's `<title>` and its section from the page's
-`<meta name="doc-category">`, so the index cannot drift from the pages. Pages
-under `hermes/private/` are listed like any other, with a `Client-specific` tag.
+The index is generated, not hand-written. `build-index.cjs` walks the
+`hermes/` tree, subdirectories included, and writes one card per public page
+between the `DOCS:START` and `DOCS:END` markers in `index.html`. A card takes
+its heading from the page's `<title>` and its section from the page's
+`<meta name="doc-category">`, so the index cannot drift from the pages.
+`hermes/private/` is skipped entirely: those guides are written for one client
+and are shared by URL, not listed for everyone.
 
 `docs/` (this folder) stays internal — it is listed in the root `.vercelignore`,
 as is `docs-site` so the main project never serves it at `41labs.ai/docs-site/*`.
@@ -79,10 +80,9 @@ completes within a few minutes; then `https://docs.41labs.ai` serves the index.
   `robots.txt` disallows everything — these are operator docs, not marketing
   pages. Drop those three if a page should ever rank.
 - The subdomain is unlisted, not access-controlled. Anyone with the URL can read
-  it. The index lists every page under `hermes/`, `private/` included, so a
-  per-client guide is one click from the index rather than hidden behind an
-  unguessable filename. Treat the whole site as readable by anyone who reaches
-  it. If a guide must not be, put Vercel Password Protection (Deployment
-  Protection) on the `41labs-website-e8w2` project — a random filename is not
-  access control.
+  it. Keeping `hermes/private/` off the index means a per-client guide is not
+  advertised to other clients, but it is still served to anyone who has or
+  guesses the URL. If a guide must not be readable, put Vercel Password
+  Protection (Deployment Protection) on the `41labs-website-e8w2` project — an
+  unlisted page is not access control.
 - `cleanUrls: true` means `/hermes/whatsapp-onboarding-runbook` works without `.html`.

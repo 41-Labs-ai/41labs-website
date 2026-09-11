@@ -325,7 +325,9 @@ them reaches the printed page.
    hidden in `@media print`.
 3. **A card on the index.** Run `node build-index.cjs` in `docs-site/` after
    adding or renaming a document. It reads the title and the section out of the
-   file, so a card and its page can never disagree.
+   file, so a card and its page can never disagree. Documents under
+   `hermes/private/` are written for one client and are skipped — they get no
+   card, and you send their URL directly.
 
 ## 12. Check before you send
 
