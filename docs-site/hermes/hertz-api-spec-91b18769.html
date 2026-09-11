@@ -354,7 +354,7 @@ Content-Type: application/json</pre>
 
     <h2 class="section-h">Dates and the price</h2>
     <div class="callout warn">
-      <p><strong>This one is still open, and you choose the format.</strong> The fields above price a rental by its length. None of them says what a rental costs on a given date.</p>
+      <p><strong>This one is still open, and you choose the format.</strong> A car can cost more in a peak season, and less off-peak. The fields above price a rental by its length, and say nothing about the date.</p>
     </div>
     <p>Tell us which of these you have:</p>
     <ul class="bullets">
@@ -365,6 +365,7 @@ Content-Type: application/json</pre>
       <li>A minimum hire length on some dates.</li>
       <li>A rate with a start date and an end date, sent before it starts.</li>
     </ul>
+    <p>This applies to every brand you run: Hertz and Ace Drive. If the two brands price a season differently, send the dates for each brand.</p>
     <div class="callout note">
       <p><strong>Send us what you already hold, and we adjust to it.</strong> A date range on a rate break, a season table, a spreadsheet tab, or an export. Any shape works.</p>
     </div>
@@ -463,7 +464,7 @@ Content-Type: application/json</pre>
         <h3 class="step-title">Send your date prices in the format you hold</h3>
       </div>
       <div class="step-body">
-        <p>Send one example of each price that moves with the calendar. Use the list under <strong>Dates and the price</strong>. Any format works. We map it and send the mapping back.</p>
+        <p>Send one example of each price that moves with the calendar, for Hertz and for Ace Drive. Use the list under <strong>Dates and the price</strong>. Any format works. We map it and send the mapping back.</p>
       </div>
     </section>
 
@@ -492,7 +493,7 @@ Content-Type: application/json</pre>
     <h2 class="section-h">Checklist</h2>
     <table class="checklist">
       <tr><td class="box"><input type="checkbox" id="ck1"></td><td><label for="ck1">Every field in the tables marked as held or not held, and the list sent back (Step 1)</label></td></tr>
-      <tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">One example of each price that moves with the calendar, sent in your own format (Step 2)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">One example of each price that moves with the calendar, for both brands, sent in your own format (Step 2)</label></td></tr>
       <tr><td class="box"><input type="checkbox" id="ck3"></td><td><label for="ck3">The availability source named (Step 3)</label></td></tr>
       <tr><td class="box"><input type="checkbox" id="ck4"></td><td><label for="ck4">Your developer introduced to the 41 Labs tech team (Step 4)</label></td></tr>
       <tr><td class="box"><input type="checkbox" id="ck5"></td><td><label for="ck5">The secret token stored as an environment variable, not in code (Step 4)</label></td></tr>
