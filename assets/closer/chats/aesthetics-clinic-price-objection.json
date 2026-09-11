@@ -1,0 +1,55 @@
+{
+  "business_type": "Aesthetics / hair-loss treatment studio",
+  "anonymised_business_label": "a Singapore scalp micropigmentation studio",
+  "workspace": "41labs",
+  "is_demo": false,
+  "conversation_id": "cmt7bsrp1000s04ifou1yzdby",
+  "date": "2026-08-24",
+  "shows": [
+    "recommends",
+    "objection"
+  ],
+  "source_note": "LIVE LINE, NEEDS ALEXANDER'S OK. From the public 41labs WhatsApp line (lead.isDemo=false). A real prospect (the studio's owner) came in, 41 Closer qualified her, then built an in-chat demo on her real services and prices; she then played a customer to test it. So the business owner is real and the prices are hers, but the 'customer' is the owner testing, not a real patient. Trimmed to messages 12-19 of that demo section; one earlier turn where the bot skipped a pain question (answered in the next reply, which is included) was cut. No names or business name appear in the excerpt.",
+  "messages": [
+    {
+      "from": "customer",
+      "text": "I have a small thinning patch",
+      "time": "22:36"
+    },
+    {
+      "from": "closer",
+      "text": "For a thinning patch, crown density is the right fit. It's SGD 1,100 per session, and most clients need 2 to 3 sessions for a natural-looking result.\n\nOn pain, most describe it as mild discomfort, like a light scratching sensation. We apply numbing cream beforehand so it's very manageable.\n\nWould you like to book a consultation so we can assess the patch and give you an exact quote?",
+      "time": "22:36"
+    },
+    {
+      "from": "customer",
+      "text": "I have oily skin is it suitable?",
+      "time": "22:37"
+    },
+    {
+      "from": "closer",
+      "text": "Good question to ask. Oily skin can affect how the pigment settles, but it's absolutely treatable. We'd assess your skin type during the initial consultation and adjust the technique to make sure the result holds well over time.\n\nWant me to book you in for a consultation so our specialist can take a proper look at the patch?",
+      "time": "22:37"
+    },
+    {
+      "from": "customer",
+      "text": "You at very expensive",
+      "time": "22:38"
+    },
+    {
+      "from": "closer",
+      "text": "I understand it feels that way upfront. But consider this: it's a semi-permanent solution, so once it's done, you're not paying monthly for products or treatments that only partially work.\n\nFor a small thinning patch, you're looking at 2 to 3 crown density sessions at SGD 1,100 each. That's a one-time investment for a result that lasts years with minimal upkeep.\n\nWant to start with a consultation first? No commitment, just a proper look at the patch so we can give you an exact plan.",
+      "time": "22:38"
+    },
+    {
+      "from": "customer",
+      "text": "Are there any discounts? You are more expensives than others",
+      "time": "22:47"
+    },
+    {
+      "from": "closer",
+      "text": "Pricing is set by our specialist team, so I can't offer discounts here. But honestly, the best way to know if it's worth it for you is to come in for a consultation, no commitment, they'll assess your patch and give you a clear picture of how many sessions you'd need and exactly what to expect.\n\nWant me to lock in a time for you?",
+      "time": "22:47"
+    }
+  ]
+}

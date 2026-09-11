@@ -1,0 +1,69 @@
+{
+  "business_type": "F&B ingredients wholesale (B2B trade reorders)",
+  "anonymised_business_label": "a Singapore baking-ingredients wholesaler",
+  "workspace": "futurefields",
+  "is_demo": true,
+  "conversation_id": "cmt8a31gf000c04jmgv26iv3x",
+  "date": "2026-08-25",
+  "shows": [
+    "books"
+  ],
+  "source_note": "DEMO. Ran on the 41labs demo hub line under the client demo code (DB workspace = 41labs, lead.isDemo=true). Customer side = a tester (used a placeholder address), not a real trade buyer; unclear whether prospect staff or internal. Trimmed: excerpt starts mid-chat at the bot's order summary (messages 17-27 of 29); earlier the buyer picked items, the bot said it could not see a carton count or pallet pricing and flagged those to the team, which is why the summary says 'to be confirmed'. Redactions: buyer name -> placeholder, delivery address, brand name, SKU codes.",
+  "messages": [
+    {
+      "from": "closer",
+      "text": "Got it. Here is what I have so far:\n*Anchor Salted Butter 250g* x 2 cartons\n*B&W Cake Flour 22kg* x 3 pallets, $43.20 per bag (pallet count to be confirmed)\n*Black Jaggery Sugar 6kg* (••••••) x 10 boxes, $27.90 per box\n\nThe team is checking on the pallet quantities and butter carton details. What is the delivery address for this order?",
+      "time": "14:28"
+    },
+    {
+      "from": "customer",
+      "text": "[delivery address]",
+      "time": "14:29"
+    },
+    {
+      "from": "closer",
+      "text": "Thanks Marcus. Last thing, what date and time works for delivery?\n\n[Business] delivers Monday to Friday 12pm-6pm, Saturday 11am-5pm, with a 3 to 4 working day lead time. The earliest available slot would be around Friday 28 August or Monday 31 August.",
+      "time": "14:29"
+    },
+    {
+      "from": "customer",
+      "text": "Ok",
+      "time": "14:31"
+    },
+    {
+      "from": "closer",
+      "text": "Which works better for you, Friday 28 August or Monday 31 August?",
+      "time": "14:32"
+    },
+    {
+      "from": "customer",
+      "text": "1 sep",
+      "time": "14:32"
+    },
+    {
+      "from": "closer",
+      "text": "Our weekday window is 12pm to 6pm. Did you want early afternoon or later in the day on Tuesday 1 September?",
+      "time": "14:32"
+    },
+    {
+      "from": "customer",
+      "text": "2pm",
+      "time": "14:33"
+    },
+    {
+      "from": "closer",
+      "text": "Let me confirm the full order before we lock it in:\n*Anchor Salted Butter 250g* (••••••), 2 cartons\n*B&W Cake Flour 22kg* (••••••), 3 pallets, $43.20 per bag\n*Black Jaggery Sugar 6kg* (••••••), 10 boxes, $27.90 per box\n\nDelivery: Tuesday 1 September, 2pm\nAddress: [delivery address]\n\nDoes everything look right?",
+      "time": "14:33"
+    },
+    {
+      "from": "customer",
+      "text": "Yes",
+      "time": "14:33"
+    },
+    {
+      "from": "closer",
+      "text": "Order logged and the team will raise the invoice against your account. They will confirm the pallet count, butter carton details and delivery slot.\n\nIs there anything else you need today?",
+      "time": "14:33"
+    }
+  ]
+}

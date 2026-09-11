@@ -176,6 +176,10 @@
 
         /* what you get */
         .get-grid { display: grid; gap: 24px; align-items: center; margin-top: 26px; }
+        .photo-cap { font-size: 12.5px; color: var(--text-2); margin-top: 8px; text-align: center; }
+        .get-photo img { max-height: 560px; object-fit: cover; border-radius: 18px; }
+        .why-photo { margin: 28px auto 0; max-width: 460px; }
+        .why-photo img { width: 100%; height: auto; max-height: 520px; object-fit: cover; object-position: center 40%; border-radius: 20px; box-shadow: var(--shadow); }
         .get-photo { border-radius: 18px; overflow: hidden; }
         .get-photo img { width: 100%; height: auto; }
         .numlist { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; counter-reset: n; }
@@ -486,7 +490,7 @@
         <div class="panel reveal">
             <h2 class="caps center">What you walk away with in 20 minutes</h2>
             <div class="get-grid">
-                <div class="get-photo"><img src="assets/closer/lp-stage-wide.webp" alt="Alexander Lee chairing SuperReturn Asia 2025" width="1400" height="933" loading="lazy"></div>
+                <figure class="get-photo" style="margin:0"><img src="assets/closer/stage-smeicc-2026-pitch.webp" alt="Alexander Lee pitching 41 Closer at SMEICC 2026" width="1500" height="2000" loading="lazy"><figcaption class="photo-cap">Pitching 41 Closer at SMEICC 2026. The QR on screen opens our own Closer.</figcaption></figure>
                 <ol class="numlist">
                     <li><div><b>Your WhatsApp leak audit.</b>Before the call we message your business like a real customer. We time the first reply, check what happens after hours, and see if anyone follows up.</div></li>
                     <li><div><b>A live demo on an enquiry like yours.</b>You watch the Closer answer, recommend, quote and book, using the kind of question your customers actually ask.</div></li>
@@ -592,6 +596,7 @@
     <div class="wrap">
         <h2 class="caps center">The real reason WhatsApp enquiries go cold</h2>
         <p class="sub center">It's rarely the price. A customer who messages you is ready to talk right now. What happens in the next few minutes decides it.</p>
+        <figure class="why-photo reveal"><img src="assets/closer/talk-mandala-club-2026-05-13-close.webp" alt="Alexander Lee presenting at a 41 Labs talk, slide reads: every SME loses revenue in the same 4 places" width="1333" height="2000" loading="lazy"><figcaption class="photo-cap">From our talk on 13 May 2026: "Every SME loses revenue in the same 4 places: speed, coverage, follow-up, qualification."</figcaption></figure>
         <div class="three">
             <div class="card reveal"><span class="tagnum">01 &middot; SPEED</span><h3>Whoever replies first usually wins</h3><p>The customer who messages at 11pm has messaged two other businesses too. The first real answer gets the booking.</p></div>
             <div class="card reveal"><span class="tagnum">02 &middot; CERTAINTY</span><h3>"Let me check" loses to a clear answer</h3><p>A reply with a real price, a real slot and a next step lets them say yes in the chat. A vague reply sends them back to shopping.</p></div>

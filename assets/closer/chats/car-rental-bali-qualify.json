@@ -1,0 +1,75 @@
+{
+  "business_type": "Car rental (self-drive and with driver)",
+  "anonymised_business_label": "a Bali car rental company",
+  "workspace": "wirasana",
+  "is_demo": true,
+  "conversation_id": "cmsek3fuu005j04kya9etipw4",
+  "date": "2026-08-04",
+  "shows": [
+    "qualifies",
+    "recommends"
+  ],
+  "source_note": "TREAT AS DEMO. Workspace is a paid client build that was never live (pre-launch testing on the client's WhatsApp number); lead.isDemo=false is a flagging gap, not real traffic. Customer side = a Singapore tester (not a real renter); it was the same day a car-rental prospect's contact was sent to try this bot as a reference, so likely prospect-side testing. The top-pick message was sent with a car photo (not included). Trimmed to the first 12 messages; the next exchange (IDR->SGD conversion) was cut because its rough rate was imprecise. Redactions: customer initials -> placeholder, business and agent name -> placeholders.",
+  "messages": [
+    {
+      "from": "customer",
+      "text": "How much to rent a car in bali?",
+      "time": "19:09"
+    },
+    {
+      "from": "closer",
+      "text": "Hi there! 👋 I'm [agent name] from [Business] — happy to help you find the right car!\n\nMay I know your name first?",
+      "time": "19:10"
+    },
+    {
+      "from": "customer",
+      "text": "Ryan",
+      "time": "19:10"
+    },
+    {
+      "from": "closer",
+      "text": "Nice to meet you, Ryan! 🚗\n\nAre you looking to *self-drive*, or would you prefer a *car with a driver*?",
+      "time": "19:10"
+    },
+    {
+      "from": "customer",
+      "text": "mostly self drive but can consider with driver depend on the cost.",
+      "time": "19:11"
+    },
+    {
+      "from": "closer",
+      "text": "Got it, Ryan! Self-drive to start 👍\n\nWhat are your travel dates, and how many days are you planning to rent?",
+      "time": "19:11"
+    },
+    {
+      "from": "customer",
+      "text": "In mid sept about 7 days",
+      "time": "19:12"
+    },
+    {
+      "from": "closer",
+      "text": "How many passengers will there be?",
+      "time": "19:12"
+    },
+    {
+      "from": "customer",
+      "text": "4",
+      "time": "19:12"
+    },
+    {
+      "from": "closer",
+      "text": "And how many bags/luggage are you bringing?",
+      "time": "19:12"
+    },
+    {
+      "from": "customer",
+      "text": "4 to 5",
+      "time": "19:12"
+    },
+    {
+      "from": "closer",
+      "text": "My top pick for you: *Toyota All New Avanza* 🚗\n\n• *Self-drive:* IDR 500.000/day × 7 days = *IDR 3.500.000 total*\n• *With driver:* IDR 850.000/tour × 7 tours = *IDR 5.950.000 total*\n\nSeats 4–6 comfortably, fits your luggage, and it's a great all-rounder for exploring Bali at your own pace.\n\nWould you like this one, or shall I show you other options?",
+      "time": "19:12"
+    }
+  ]
+}
