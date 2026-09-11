@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stripe setup</title>
+<title>Connecting your Stripe account</title>
+<meta name="doc-category" content="Payment">
 <style>
   :root{
     --green:#16a34a; --green-bg:#f0fdf4; --ink:#1a1a1a; --muted:#52525b;
@@ -167,16 +168,65 @@
     .doc{ width:auto; margin:0; padding:16px; box-shadow:none; }
     table.data{ display:block; overflow-x:auto; }
   }
+
+  /* ---- Back to the index (screen only) ---- */
+  .back-bar{ width:210mm; max-width:100%; margin:20px auto 0; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:5pt;
+    background:#fff; border:.75pt solid var(--rule); border-radius:999px;
+    padding:5pt 11pt; font-size:9pt; line-height:12pt; color:var(--muted);
+    text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,.07);
+  }
+  .back-link:hover{ color:var(--green); border-color:var(--green); }
+  .back-link .arrow{ font-size:11pt; line-height:1; }
+
+  @media print{ .back-bar{ display:none !important; } }
+  @media screen and (max-width:800px){
+    .back-bar{ width:auto; margin:0; padding:14px 16px 0; }
+  }
+
+  /* ---- Screen reading ----
+     The sheet above is sized for A4 print at 10pt, which reads small on a
+     monitor. Scale the type up on screen only, and give code a real mono
+     stack. Print keeps the sizes above, so pagination does not move. */
+  @media screen{
+    body{
+      font-size:13pt; line-height:20pt;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    h1.title{ font-size:28pt; line-height:33pt; margin:0 0 5pt; }
+    p.subtitle{ font-size:14.5pt; line-height:21pt; margin:0 0 8pt; }
+    p.meta{ font-size:11pt; line-height:16pt; }
+    h2.section-h{ font-size:18pt; line-height:23pt; margin:24pt 0 9pt; }
+    ul.bullets, ol.actions{ padding-left:18pt; }
+    .step-head .num{ width:9mm; height:9mm; font-size:12pt; }
+    .step-head .step-title{ font-size:15pt; line-height:20pt; }
+    .callout, .callout p{ font-size:12.5pt; line-height:19pt; }
+    table.kv td, table.data td, table.checklist td{ font-size:12.5pt; line-height:19pt; }
+    table.data th{ font-size:11pt; line-height:16pt; }
+    .shot .cap{ font-size:11pt; line-height:16pt; }
+    .run-header .row, .run-footer .row{ font-size:10pt; line-height:14pt; }
+    .code, code.inline{
+      font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,
+        "Liberation Mono","Courier New",monospace;
+    }
+    .code{ font-size:12pt; line-height:18.5pt; padding:9pt 11pt; }
+    code.inline{ font-size:12pt; padding:1pt 4pt; }
+    .back-link{ font-size:11pt; line-height:15pt; padding:6pt 13pt; }
+  }
 </style>
 </head>
 <body>
+<div class="back-bar">
+  <a class="back-link" href="/"><span class="arrow" aria-hidden="true">&larr;</span> All docs</a>
+</div>
 <div class="doc">
 
   <!-- ============ HEADER (repeats on every printed page) ============ -->
   <header class="run-header">
     <div class="row">
       <div class="supplier">HERMES &middot; 41 LABS</div>
-      <div class="docname">Stripe setup</div>
+      <div class="docname">Connecting Stripe</div>
     </div>
     <div class="rule"></div>
   </header>
@@ -184,7 +234,7 @@
   <!-- ============ BODY ============ -->
   <main class="run-body">
 
-    <h1 class="title">Stripe setup</h1>
+    <h1 class="title">Connecting your Stripe account</h1>
     <p class="subtitle">At the end of this guide, the assistant can send a Stripe checkout link, and a completed payment shows in Hermes.</p>
 
     <div class="callout note">

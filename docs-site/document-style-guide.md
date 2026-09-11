@@ -110,6 +110,12 @@ Rules:
   lowest level.
 - Text is black on white. Do not tint body text.
 
+**Screen.** The table above sets the printed page. The HTML page adds a screen
+layer on top of it: body type scales to `13 / 20`, the title, headings, callouts
+and tables scale with it, and code switches to the system monospace stack. That
+layer lives in `@media screen`, so print keeps the sizes above and breaks at the
+same place.
+
 ## 4. Space
 
 The space below an element:
@@ -149,7 +155,9 @@ The header has three parts, from the top:
 1. The system name and the supplier name, on the left, in capitals, with a
    middle dot between them. Pattern: `HERMES · 41 LABS`. These are the only two
    names the header may carry. Never put a reader's name here.
-2. The document name, on the right, in sentence case. It repeats the title.
+2. The document name, on the right, in sentence case. It is the short form of
+   the title, with `your` and the noun dropped: `Connecting your Stripe account`
+   gives `Connecting Stripe`.
 3. A green rule below both, 2.5 thick, across the content width.
 
 The footer has three parts, from the top:
@@ -168,8 +176,10 @@ Rules for the page number:
 
 Use this order. Omit a part only if the guide does not need it.
 
-1. Title. A noun phrase that names the task. Example pattern:
-   `<System> setup`.
+1. Title. Every document names its task the same way: `Connecting your <thing>`.
+   Examples: `Connecting your Stripe account`, `Connecting your WhatsApp number`,
+   `Connecting your Google Calendar`. The index lists documents by title, so a
+   second pattern here splits the list.
 2. Subtitle. One sentence naming what the reader will have finished at the end.
 3. Opening callout. Only when a fact is needed before step 1, such as the access
    the reader must already hold. Omit it otherwise. It is never reassurance.
@@ -300,7 +310,24 @@ for a screen name. Do not put a value that belongs to one reader in it.
   in a code block. Do not write "click here".
 - Which names and which sentences are allowed at all is section 1.
 
-## 11. Check before you send
+## 11. The HTML page
+
+The PDF is a file you send. The HTML page also has to be found and left again,
+so it carries three things the PDF does not. All three are screen only; none of
+them reaches the printed page.
+
+1. **A section.** One meta tag in the head, directly after the title:
+   `<meta name="doc-category" content="Payment">`. The index groups cards under
+   it. The sections in use are `Payment`, `Messaging` and `Calendar`. A document
+   with no tag lands under `Other`.
+2. **A back link.** The first element inside `<body>`, above the sheet: a
+   `.back-bar` holding `<a class="back-link" href="/">← All docs</a>`. It is
+   hidden in `@media print`.
+3. **A card on the index.** Run `node build-index.cjs` in `docs-site/` after
+   adding or renaming a document. It reads the title and the section out of the
+   file, so a card and its page can never disagree.
+
+## 12. Check before you send
 
 1. No business name and no person's name appears, other than Hermes and
    41 Labs. Screenshots included.
@@ -315,3 +342,7 @@ for a screen name. Do not put a value that belongs to one reader in it.
 8. The steps run from 1, with no gaps, and no step breaks across two pages.
 9. Each checklist row names a step number.
 10. The PDF and the HTML page break at the same place, page for page.
+11. The title follows the pattern in section 7, and the running head carries its
+    short form.
+12. The HTML page carries a section tag and a back link, and `build-index.cjs`
+    has been run.
