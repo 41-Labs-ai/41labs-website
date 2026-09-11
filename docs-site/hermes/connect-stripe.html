@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stripe setup</title>
+<style>
+  :root{
+    --green:#16a34a; --green-bg:#f0fdf4; --ink:#1a1a1a; --muted:#52525b;
+    --rule:#e4e4e7; --amber-bg:#fffbeb; --amber-border:#f59e0b; --code-bg:#f4f4f5;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    margin:0; background:#e9e9ec; color:var(--ink);
+    font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;
+    font-size:10pt; line-height:15.5pt;
+  }
+
+  /* ---- Sheet (screen) ---- */
+  .doc{
+    background:#fff; width:210mm; margin:24px auto; padding:24mm 22mm 22mm;
+    box-shadow:0 2px 22px rgba(0,0,0,.13);
+  }
+
+  /* ---- Header ---- */
+  .run-header{ margin:0 0 6mm; }
+  .run-header .row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12pt;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+  .run-header .supplier{ text-transform:uppercase; letter-spacing:.04em; }
+  .run-header .docname{ text-align:right; }
+  .run-header .rule{ border-bottom:2.5pt solid var(--green); margin-top:4pt; }
+
+  /* ---- Footer ---- */
+  .run-footer{ margin:8mm 0 0; }
+  .run-footer .rule{ border-top:.5pt solid var(--rule); margin-bottom:4pt; }
+  .run-footer .row{
+    display:flex; justify-content:space-between;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+
+  /* ---- Titles ---- */
+  h1.title{ font-size:23pt; line-height:27pt; font-weight:bold; margin:0 0 3pt; }
+  p.subtitle{ font-size:11.5pt; line-height:16pt; color:var(--muted); margin:0 0 6pt; }
+  p.meta{ font-size:8.8pt; line-height:13pt; color:var(--muted); margin:0 0 14pt; }
+
+  h2.section-h{
+    font-size:13.5pt; line-height:17pt; font-weight:bold; margin:16pt 0 7pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+
+  p{ margin:0 0 6pt; }
+  strong{ font-weight:bold; }
+
+  /* ---- Lists ---- */
+  ul.bullets{ margin:0 0 4pt; padding-left:12pt; }
+  ul.bullets li{ margin:0 0 2pt; }
+  ol.actions{ margin:0 0 4pt; padding-left:14pt; }
+  ol.actions li{ margin:0 0 2pt; }
+
+  /* ---- Callouts ---- */
+  .callout{
+    width:100%; padding:7pt 9pt; margin:0 0 6pt;
+    font-size:9.2pt; line-height:14pt;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .callout p{ margin:0 0 4pt; font-size:9.2pt; line-height:14pt; }
+  .callout p:last-child{ margin-bottom:0; }
+  .callout ol{ margin:2pt 0 0; padding-left:14pt; }
+  .callout ol li{ margin:0 0 2pt; }
+  .callout ol li:last-child{ margin-bottom:0; }
+  .note{ background:var(--green-bg); border-left:2.2pt solid var(--green); }
+  .warn{ background:var(--amber-bg); border-left:2.2pt solid var(--amber-border); }
+
+  /* ---- Steps ---- */
+  .step{ margin:0 0 9pt; }
+  .step-head{
+    display:flex; align-items:flex-start; gap:8pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+  .step-head .num{
+    flex:0 0 auto; width:7.5mm; height:7.5mm; background:var(--green);
+    color:#fff; font-size:9.5pt; font-weight:bold;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-head .step-title{
+    font-size:11.5pt; line-height:15pt; font-weight:bold; margin:0;
+    align-self:center;
+  }
+  .step-body{ margin:5pt 0 0 10mm; }
+
+  /* ---- Key / value table ---- */
+  table.kv{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.kv td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.kv tr:last-child td{ border-bottom:0; }
+  table.kv td.k{ width:45mm; font-weight:bold; padding-right:6pt; }
+
+  /* ---- Data table (multi-column) ---- */
+  table.data{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.data th{
+    font-size:8.6pt; line-height:12.5pt; text-align:left; font-weight:bold;
+    padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:1.2pt solid var(--muted);
+    text-transform:uppercase; letter-spacing:.03em; color:var(--muted);
+  }
+  table.data td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.data td:last-child, table.data th:last-child{ padding-right:0; }
+  table.data tr:last-child td{ border-bottom:0; }
+  table.data td.yes{ color:var(--green); font-weight:bold; }
+  table.data .ok{ color:var(--green); font-weight:bold; }
+  table.data .bad{ color:#b91c1c; font-weight:bold; }
+
+  /* ---- Checklist ---- */
+  table.checklist{ width:100%; border-collapse:collapse; }
+  table.checklist td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.checklist tr:last-child td{ border-bottom:0; }
+  table.checklist td.box{ width:8mm; }
+  table.checklist tr{ break-inside:avoid; page-break-inside:avoid; }
+  table.checklist td label{ display:block; cursor:pointer; }
+  table.checklist input[type="checkbox"]{
+    appearance:none; -webkit-appearance:none; -moz-appearance:none;
+    width:13pt; height:13pt; margin:0; vertical-align:-2pt; cursor:pointer;
+    border:1.2pt solid var(--muted); border-radius:2px; background:#fff;
+  }
+  table.checklist input[type="checkbox"]:checked{ background:var(--green); border-color:var(--green); }
+  table.checklist input[type="checkbox"]:checked::after{
+    content:""; display:block; width:4pt; height:7.5pt; margin:0.5pt auto 0;
+    border:solid #fff; border-width:0 2pt 2pt 0; transform:rotate(45deg);
+  }
+  table.checklist input[type="checkbox"]:focus-visible{ outline:2px solid var(--green); outline-offset:1px; }
+
+  /* ---- Code block ---- */
+  .code{
+    width:100%; background:var(--code-bg); padding:6pt 8pt; margin:0 0 6pt;
+    font-family:"Courier New",Courier,monospace; font-size:8.6pt; line-height:12.5pt;
+    word-break:break-all; break-inside:avoid; page-break-inside:avoid;
+  }
+  code.inline{
+    font-family:"Courier New",Courier,monospace; font-size:8.8pt;
+    background:var(--code-bg); padding:0 3pt; border-radius:2px;
+  }
+
+  /* ---- Print ---- */
+  @media print{
+    @page{ size:A4; margin:24mm 22mm 22mm 22mm; }
+    body{ background:#fff; }
+    .doc{ width:auto; margin:0; padding:0; box-shadow:none; }
+    .run-header{ position:fixed; top:-15mm; left:0; right:0; margin:0; }
+    .run-footer{ position:fixed; bottom:-15mm; left:0; right:0; margin:0; }
+    .run-header .row, .run-footer .row{ color:var(--muted); }
+  }
+
+  @media screen and (max-width:800px){
+    .doc{ width:auto; margin:0; padding:16px; box-shadow:none; }
+    table.data{ display:block; overflow-x:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============ HEADER (repeats on every printed page) ============ -->
+  <header class="run-header">
+    <div class="row">
+      <div class="supplier">HERMES &middot; 41 LABS</div>
+      <div class="docname">Stripe setup</div>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <!-- ============ BODY ============ -->
+  <main class="run-body">
+
+    <h1 class="title">Stripe setup</h1>
+    <p class="subtitle">At the end of this guide, the assistant can send a Stripe checkout link, and a completed payment shows in Hermes.</p>
+
+    <div class="callout note">
+      <p><strong>Stripe reads test or live from the key itself.</strong> A key that starts <code class="inline">sk_test_</code> takes no real money. A key that starts <code class="inline">sk_live_</code> charges real customers.</p>
+    </div>
+
+    <h2 class="section-h">Before you start</h2>
+    <p>You need:</p>
+    <ul class="bullets">
+      <li>A <strong>Stripe</strong> account, with permission to read API keys (<strong>Developers &rarr; API keys</strong>).</li>
+      <li>Your Hermes workspace, with the <strong>admin</strong> role. Other roles cannot open this screen.</li>
+      <li>About 10 minutes. You can stop after Step 5 and continue later.</li>
+    </ul>
+
+    <h2 class="section-h">What Hermes asks you for</h2>
+    <table class="data">
+      <thead>
+        <tr><th>Field</th><th>Required?</th><th>Where to find it in Stripe</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Secret key</strong></td><td class="yes">Yes</td><td><strong>Developers &rarr; API keys</strong>. It starts with <code class="inline">sk_live_</code> or <code class="inline">sk_test_</code>. Treat it like a password.</td></tr>
+        <tr><td><strong>Webhook signing secret</strong></td><td>Optional</td><td><strong>Developers &rarr; Webhooks</strong>, after you add the endpoint in Step 6. It starts with <code class="inline">whsec_</code>.</td></tr>
+        <tr><td><strong>Default currency</strong></td><td class="yes">Yes</td><td>Your choice. It is the currency of your prices.</td></tr>
+      </tbody>
+    </table>
+    <p>Stripe needs one key only. The screen shows no <strong>Client ID</strong> field.</p>
+
+    <h2 class="section-h">Step by step</h2>
+
+    <!-- STEP 1 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">01</div>
+        <h3 class="step-title">Open the Payments screen</h3>
+      </div>
+      <div class="step-body">
+        <ol class="actions">
+          <li>In Hermes, go to <strong>Settings &rarr; Payments</strong>.</li>
+          <li>In the <strong>Provider</strong> list, select <strong>Stripe</strong>.</li>
+        </ol>
+        <p>A line below the list reads <strong>Stripe Dashboard &rarr; Developers &rarr; API keys</strong>.</p>
+        <div class="callout warn">
+          <p><strong>A change of provider replaces the stored keys.</strong> The screen warns you first. New payment links go through Stripe as soon as you save, so add the webhook in Stripe as well (Step 6).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">02</div>
+        <h3 class="step-title">Rehearse on the shared sandbox</h3>
+      </div>
+      <div class="step-body">
+        <p>This step is optional, and we recommend it.</p>
+        <ol class="actions">
+          <li>Under <strong>Mode</strong>, select <strong>Sandbox</strong>.</li>
+          <li>Press <strong>Save</strong>.</li>
+          <li>Send yourself a test conversation, and pay the test checkout page.</li>
+        </ol>
+        <p>Sandbox runs on the shared 41 Labs test account. It asks you for no keys, and a test payment stays out of your sales figures.</p>
+        <div class="callout note">
+          <p>A grey <strong>Sandbox</strong> button means this deployment has no shared Stripe test account. Ask your 41 Labs contact to add one, or go to Step 3.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">03</div>
+        <h3 class="step-title">Put Hermes into Live mode</h3>
+      </div>
+      <div class="step-body">
+        <p>Under <strong>Mode</strong>, press <strong>Live</strong>. The key fields and the webhook fields appear. Sandbox hides them, because it reads none of them.</p>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">04</div>
+        <h3 class="step-title">Copy your secret key from Stripe</h3>
+      </div>
+      <div class="step-body">
+        <ol class="actions">
+          <li>In a second tab, sign in to Stripe.</li>
+          <li>Go to <strong>Developers &rarr; API keys</strong>.</li>
+          <li>Copy the <strong>Secret key</strong>, and paste it into the <strong>Secret key</strong> field in Hermes.</li>
+        </ol>
+        <p>Copy the secret key, not the publishable key. Hermes cannot create a checkout page with a publishable key.</p>
+        <div class="callout warn">
+          <p><strong>The key wins over the Mode button.</strong> An <code class="inline">sk_test_</code> key stays in test mode, and takes no real money. To take real payments, paste a key that starts <code class="inline">sk_live_</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">05</div>
+        <h3 class="step-title">Confirm Stripe accepts the key</h3>
+      </div>
+      <div class="step-body">
+        <p>Press <strong>Test connection</strong>. Hermes asks Stripe about the key, and charges nothing.</p>
+        <table class="kv">
+          <tr><td class="k">A live key shows</td><td><span class="ok">&#10003; Connected (LIVE mode)</span></td></tr>
+          <tr><td class="k">A test key shows</td><td><span class="ok">&#10003; Connected (TEST mode)</span></td></tr>
+          <tr><td class="k">A bad key shows</td><td>A red line. Go to <strong>If something goes wrong</strong> below.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">06</div>
+        <h3 class="step-title">Register the webhook in Stripe</h3>
+      </div>
+      <div class="step-body">
+        <p>The webhook tells Hermes that a customer paid. Without it, the customer pays, and the conversation and the sales figures do not change.</p>
+        <ol class="actions">
+          <li>Next to <strong>Webhook URL</strong>, press <strong>Copy</strong>. The address has this shape:</li>
+        </ol>
+        <div class="code">https://&lt;your-hermes-site&gt;/api/webhooks/payments/&lt;your-workspace-id&gt;</div>
+        <ol class="actions" start="2">
+          <li>In Stripe, go to <strong>Developers &rarr; Webhooks</strong>, and add an endpoint with that address.</li>
+          <li>Subscribe the endpoint to these three events:</li>
+        </ol>
+        <div class="code">checkout.session.completed&nbsp;&nbsp;&nbsp;&nbsp;charge.refunded&nbsp;&nbsp;&nbsp;&nbsp;charge.dispute.created</div>
+        <p>The last two events void a sale after a refund or a dispute, so your revenue figures stay correct.</p>
+      </div>
+    </section>
+
+    <!-- STEP 7 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">07</div>
+        <h3 class="step-title">Store the webhook signing secret</h3>
+      </div>
+      <div class="step-body">
+        <p>Stripe shows a signing secret for the new endpoint. It starts with <code class="inline">whsec_</code>.</p>
+        <p>Copy it into the <strong>Webhook signing secret</strong> field in Hermes. The field is optional. Without it, Hermes rejects every payment message from Stripe, so set it.</p>
+      </div>
+    </section>
+
+    <!-- STEP 8 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">08</div>
+        <h3 class="step-title">Set the default currency</h3>
+      </div>
+      <div class="step-body">
+        <p>In the <strong>Default currency</strong> list, select the currency of your prices.</p>
+      </div>
+    </section>
+
+    <!-- STEP 9 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">09</div>
+        <h3 class="step-title">Save the connection</h3>
+      </div>
+      <div class="step-body">
+        <p>Press <strong>Save</strong>. The screen now reads <strong>Currently using Stripe</strong>, with the badge <strong>Connected &middot; own account</strong>. The key field shows the last four characters only.</p>
+      </div>
+    </section>
+
+    <!-- STEP 10 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">10</div>
+        <h3 class="step-title">Let the assistant send a pay link</h3>
+      </div>
+      <div class="step-body">
+        <p>A connected account does not let the assistant ask for payment. Turn the tool on as well.</p>
+        <ol class="actions">
+          <li>Go to <strong>Brain Lab</strong>.</li>
+          <li>Turn on the <strong>Payment Link</strong> tool for each conversation stage that can ask for payment.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- STEP 11 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">11</div>
+        <h3 class="step-title">Confirm a real payment arrives</h3>
+      </div>
+      <div class="step-body">
+        <p>Pay yourself the smallest amount you bill. Then check all three:</p>
+        <ul class="bullets">
+          <li>The payment shows in your Stripe dashboard.</li>
+          <li>The conversation in Hermes shows the payment.</li>
+          <li>The sale shows in your Hermes revenue figures.</li>
+        </ul>
+        <p>Money in Stripe, and nothing in Hermes, points at the webhook. Do Steps 6 and 7 again.</p>
+      </div>
+    </section>
+
+    <h2 class="section-h">If something goes wrong</h2>
+    <table class="data">
+      <thead>
+        <tr><th>What you see</th><th>What to do</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="bad">&#10007;</span> Stripe rejected the key</td><td>Copy the secret key again from <strong>Developers &rarr; API keys</strong>. A publishable key, a deleted key or a part of a key fails here.</td></tr>
+        <tr><td><span class="bad">&#10007;</span> Could not reach Stripe</td><td>Check your network, and press <strong>Test connection</strong> again.</td></tr>
+        <tr><td>That key is a TEST key, but LIVE mode was selected</td><td>Paste a key that starts <code class="inline">sk_live_</code>, or press <strong>Sandbox</strong> under <strong>Mode</strong>.</td></tr>
+        <tr><td>Going live needs this workspace&rsquo;s own Stripe account</td><td>The <strong>Secret key</strong> field is empty. Do Steps 3 and 4.</td></tr>
+        <tr><td>Switching to Stripe needs Stripe&rsquo;s own keys</td><td>Paste a Stripe <strong>Secret key</strong> before you save. A stored key of another provider does not carry over.</td></tr>
+        <tr><td>The badge reads <strong>Using our shared demo account</strong></td><td>You are still on the sandbox. Do Steps 3 to 5, then save.</td></tr>
+        <tr><td>Payments never show in Hermes</td><td>Check the endpoint address and the three events in Stripe. Do Steps 6 and 7 again.</td></tr>
+        <tr><td>The assistant never asks for payment</td><td>Turn on the <strong>Payment Link</strong> tool for that conversation stage. See Step 10.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="section-h">Checklist</h2>
+    <table class="checklist">
+      <tr><td class="box"><input type="checkbox" id="ck1"></td><td><label for="ck1">I selected Stripe on the Payments screen (Step 1)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">I paid a test checkout page on the sandbox (Step 2)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck3"></td><td><label for="ck3">I put the screen into Live mode (Step 3)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck4"></td><td><label for="ck4">I pasted my Stripe secret key (Step 4)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck5"></td><td><label for="ck5">Test connection shows a green line (Step 5)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck6"></td><td><label for="ck6">I added the webhook endpoint and the three events in Stripe (Step 6)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck7"></td><td><label for="ck7">I pasted the webhook signing secret into Hermes (Step 7)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck8"></td><td><label for="ck8">I set the default currency (Step 8)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck9"></td><td><label for="ck9">I saved, and the badge reads Connected &middot; own account (Step 9)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck10"></td><td><label for="ck10">I turned on the Payment Link tool in Brain Lab (Step 10)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck11"></td><td><label for="ck11">One real payment reached Stripe, the conversation and the revenue figures (Step 11)</label></td></tr>
+    </table>
+
+    <h2 class="section-h">Good to know</h2>
+    <ul class="bullets">
+      <li>Hermes stores your secret key encrypted, and shows you the last four characters only.</li>
+      <li>Press <strong>Disconnect</strong> to remove the keys. The assistant returns to the shared sandbox, and stops taking real payments.</li>
+      <li>Send your secret key to nobody. Type it into the Hermes screen only.</li>
+      <li>To rotate the key, paste the new key and press <strong>Save</strong>. The webhook endpoint in Stripe stays as it is.</li>
+    </ul>
+
+  </main>
+
+  <!-- ============ FOOTER (repeats on every printed page) ============ -->
+  <footer class="run-footer">
+    <div class="rule"></div>
+    <div class="row">
+      <div>Questions? Reply to your 41 Labs contact.</div>
+      <div class="pageno"></div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
