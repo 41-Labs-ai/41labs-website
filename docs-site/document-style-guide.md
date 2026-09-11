@@ -325,7 +325,10 @@ them reaches the printed page.
    hidden in `@media print`.
 3. **A card on the index.** Run `node build-index.cjs` in `docs-site/` after
    adding or renaming a document. It reads the title and the section out of the
-   file, so a card and its page can never disagree.
+   file, so a card and its page can never disagree. A document written for one
+   client adds a second meta tag below the section —
+   `<meta name="doc-visibility" content="private">` — and is skipped: it gets
+   no card, and you send its URL directly.
 
 ## 12. Check before you send
 

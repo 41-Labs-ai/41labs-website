@@ -2,6 +2,13 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/hermes/private/druk-asia/guide-3-google-calendar-5f1d765d",
+      "destination": "/hermes/druk-asia-google-calendar-5f1d765d",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
