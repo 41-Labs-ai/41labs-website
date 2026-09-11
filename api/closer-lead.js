@@ -1,0 +1,111 @@
+// POST /api/closer-lead
+// Lead form on /ai-closer (the Meta ad landing page). Creates Person + Company +
+// a SCREENING 41 Closer Opportunity in Twenty, linked together, with the ad's UTMs
+// in leadSource so cost per lead / per booked call can be traced back to the ad.
+// Best-effort, like /api/partner-apply: the page also posts to Formspree for the
+// email copy, so a CRM failure never loses the lead and never blocks the visitor.
+
+const TWENTY_BASE = process.env.TWENTY_BASE_URL || 'https://twenty-server-production-bb71.up.railway.app';
+
+const ENQUIRIES = { under20: 'Under 20', '20to50': '20-50', '50to150': '50-150', '150plus': '150+' };
+const SALE = { under200: 'Under S$200', '200to1k': 'S$200-1,000', '1kto5k': 'S$1,000-5,000', '5kplus': 'S$5,000+' };
+const ROLE = { owner: 'Owner', sales_head: 'Head of sales', manager: 'Manager', other: 'Other' };
+
+function readBody(req) {
+  return new Promise((resolve) => {
+    if (req.body && typeof req.body === 'object') return resolve(req.body);
+    let raw = '';
+    req.on('data', (c) => { raw += c; if (raw.length > 1e6) req.destroy(); });
+    req.on('end', () => {
+      try { resolve(raw ? JSON.parse(raw) : {}); } catch { resolve({}); }
+    });
+    req.on('error', () => resolve({}));
+  });
+}
+
+const clean = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+
+function splitName(full) {
+  const parts = full.split(/\s+/);
+  return { firstName: parts[0], lastName: parts.slice(1).join(' ') };
+}
+
+function send(res, status, obj) {
+  res.statusCode = status;
+  res.end(JSON.stringify(obj));
+}
+
+async function create(key, object, record) {
+  const r = await fetch(`${TWENTY_BASE}/rest/${object}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(record),
+  });
+  if (!r.ok) {
+    const txt = await r.text();
+    throw new Error(`${object} ${r.status}: ${txt.slice(0, 200)}`);
+  }
+  const data = await r.json();
+  const created = data && data.data ? Object.values(data.data)[0] : null;
+  return created && created.id ? created.id : null;
+}
+
+module.exports = async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method_not_allowed' });
+
+  const body = await readBody(req);
+
+  // honeypot: bots fill hidden fields. Pretend success and skip.
+  if (clean(body._gotcha) || clean(body.website)) return send(res, 200, { ok: true, skipped: 'bot' });
+
+  const name = clean(body.name, 120);
+  const whatsapp = clean(body.whatsapp, 40);
+  if (!name || !whatsapp) return send(res, 400, { ok: false, error: 'missing_fields' });
+
+  const key = process.env.TWENTY_API_KEY;
+  if (!key) return send(res, 200, { ok: false, error: 'crm_not_configured' });
+
+  const company = clean(body.company, 160) || name;
+  const email = clean(body.email, 160);
+  const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+    .map((k) => (clean(body[k], 120) ? `${k}=${clean(body[k], 120)}` : ''))
+    .filter(Boolean);
+  const fbclid = clean(body.fbclid, 300);
+
+  const notes = [
+    `Form: 41labs.ai/ai-closer`,
+    `Role: ${ROLE[body.role] || clean(body.role, 40) || '-'}`,
+    `WhatsApp enquiries/week: ${ENQUIRIES[body.enquiries] || clean(body.enquiries, 40) || '-'}`,
+    `Average sale: ${SALE[body.saleValue] || clean(body.saleValue, 40) || '-'}`,
+    `Qualified: ${clean(body.qualified, 10) || '-'}`,
+    clean(body.notes, 1500) ? `Notes: ${clean(body.notes, 1500)}` : '',
+    utm.length ? `UTM: ${utm.join(' ')}` : '',
+    fbclid ? `fbclid=${fbclid}` : '',
+  ].filter(Boolean).join('\n');
+
+  try {
+    const personId = await create(key, 'people', {
+      name: splitName(name),
+      phones: { primaryPhoneNumber: whatsapp.replace(/[^\d+]/g, '') },
+      ...(email ? { emails: { primaryEmail: email } } : {}),
+      jobTitle: ROLE[body.role] || '',
+    });
+    const companyId = await create(key, 'companies', { name: company });
+    const oppId = await create(key, 'opportunities', {
+      name: `${company} - 41 Closer (ad landing page)`,
+      stage: 'SCREENING',
+      productLine: 'CLOSER_41',
+      waitingOn: 'US',
+      leadSource: `Meta ad landing page${utm.length ? ' | ' + utm.join(' ') : ''}`.slice(0, 500),
+      statusNotes: notes.slice(0, 2500),
+      nextAction: 'Confirm the call is booked. If not, WhatsApp them within 1 working hour.',
+      firstContactAt: new Date().toISOString(),
+      pointOfContactId: personId,
+      companyId,
+    });
+    return send(res, 200, { ok: true, id: oppId });
+  } catch (e) {
+    return send(res, 200, { ok: false, error: 'crm_error', detail: String(e).slice(0, 300) });
+  }
+};
