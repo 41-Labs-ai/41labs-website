@@ -44,9 +44,7 @@ async function fillQualify(page: Page, opts: { enquiries?: string; whatsappUse?:
 async function fillContact(page: Page) {
   await page.fill('#cl-name', 'Tan Wei Ming');
   await page.fill('#cl-whatsapp', '+65 9123 4567');
-  await page.fill('#cl-company', 'Tan Aircon Services');
   await page.fill('#cl-website', 'tanaircon.sg');
-  await page.selectOption('#cl-role', 'owner');
 }
 
 async function fillForm(page: Page, opts: { enquiries?: string; whatsappUse?: string; industry?: string } = {}) {
@@ -125,7 +123,22 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-industry')).toHaveValue('servicing');
     });
 
-    test('step 2 requires name, WhatsApp and company', async ({ page }) => {
+    test('step 2 asks for three things only: name, WhatsApp, website', async ({ page }) => {
+      await stubNetwork(page);
+      await page.goto(P.path);
+      await fillQualify(page);
+      await page.click('#cl-next');
+      for (const gone of ['#cl-company', '#cl-email', '#cl-role']) {
+        await expect(page.locator(gone)).toHaveCount(0);
+      }
+      await expect(page.locator('#cl-name')).toBeVisible();
+      await expect(page.locator('#cl-whatsapp')).toBeVisible();
+      await expect(page.locator('#cl-website')).toBeVisible();
+      await expect(page.locator('#cl-website')).not.toHaveAttribute('required', /.*/);
+      await expect(page.locator('#cl-part2')).not.toContainText(/instagram/i);
+    });
+
+    test('step 2 requires name and WhatsApp', async ({ page }) => {
       const sent = await stubNetwork(page);
       await page.goto(P.path);
       await fillQualify(page);
@@ -144,9 +157,9 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-step2')).toBeVisible();
       expect(sent.api).toHaveLength(1);
       expect(sent.api[0]).toMatchObject({
-        name: 'Tan Wei Ming', whatsapp: '+65 9123 4567', company: 'Tan Aircon Services',
+        name: 'Tan Wei Ming', whatsapp: '+65 9123 4567',
         enquiries: '50to150', saleValue: '200to1k', jobs: ['quotes', 'bookings'],
-        industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg', role: 'owner',
+        industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg',
         tier: 'A', qualified: 'yes', variant: P.variant,
         utm_campaign: '41closer_lp_2026-09', utm_content: 'ad_stalk1', fbclid: 'abc123',
       });
@@ -203,6 +216,15 @@ for (const P of PAGES) {
       await fillForm(page);
       await page.click('#cl-submit');
       await expect(page.locator('#cl-notyet')).toBeVisible();
+    });
+
+    test('visitors can message the AI Closer instead of filling the form', async ({ page }) => {
+      await stubNetwork(page);
+      await page.goto(P.path);
+      const chat = page.locator('a.wa-cta').first();
+      await expect(chat).toBeVisible();
+      await expect(chat).toHaveAttribute('href', /wa\.me\/6580124848/);
+      await expect(chat).toContainText(/closer/i);
     });
 
     test('a completed booking fires Schedule', async ({ page }) => {
@@ -292,7 +314,7 @@ test.describe('long form follows the event opt-in structure', () => {
   test('"Seen at" strip reuses the homepage logos, no role captions', async ({ page }) => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
-    const srcs = await page.locator('#seen img').evaluateAll((els) => els.map((e) => e.getAttribute('src')));
+    const srcs = await page.locator('#seen .seen-row img').evaluateAll((els) => els.map((e) => e.getAttribute('src')));
     expect(srcs).toEqual(['/logos/saia.png', '/logos/nrf.jpg', '/logos/superai.jpg', '/logos/stripe.png']);
     await expect(page.locator('#seen')).not.toContainText(/chair|day 3|pitch/i);
   });
@@ -310,5 +332,25 @@ test.describe('long form follows the event opt-in structure', () => {
     const box = await page.locator('#cl-industry').boundingBox();
     const vh = page.viewportSize()!.height;
     expect(box!.y).toBeLessThan(vh * 2);
+  });
+
+  test('hero chat switches by industry so it is not one trade only', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    const tabs = page.locator('#hero .wa-tab');
+    expect(await tabs.count()).toBeGreaterThanOrEqual(4);
+    const first = await page.locator('#hero .wa-live .wa-msg').first().innerText();
+    await tabs.nth(2).click();
+    await expect(tabs.nth(2)).toHaveClass(/on/);
+    const after = await page.locator('#hero .wa-live .wa-msg').first().innerText();
+    expect(after).not.toBe(first);
+  });
+
+  test('"Built on" strip shows the platforms we actually run on', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    const alts = await page.locator('#seen .built img').evaluateAll((els) => els.map((e) => e.getAttribute('alt')));
+    expect(alts.join(' ').toLowerCase()).toContain('whatsapp');
+    expect(alts.length).toBeGreaterThanOrEqual(4);
   });
 });

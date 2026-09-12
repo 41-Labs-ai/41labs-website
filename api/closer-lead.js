@@ -83,7 +83,14 @@ module.exports = async (req, res) => {
   const fetchImpl = (...a) => fetch(...a);
   const key = env.TWENTY_API_KEY;
 
-  const company = clean(body.company, 160) || name;
+  // The form no longer asks for a company: derive it from the website, else use their name.
+  const websiteRaw = clean(body.website, 200);
+  const companyFromSite = websiteRaw
+    .replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/.*$/, '').split('.')[0]
+    .replace(/[-_]+/g, ' ').trim();
+  const company = clean(body.company, 160)
+    || (companyFromSite ? companyFromSite.charAt(0).toUpperCase() + companyFromSite.slice(1) : '')
+    || name;
   const email = clean(body.email, 160);
   const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
   const utm = UTM_KEYS
@@ -100,7 +107,7 @@ module.exports = async (req, res) => {
   const industryKey = INDUSTRY[body.industry] ? body.industry : '';
   const industry = INDUSTRY[industryKey] || '';
   const whatsappUse = WA_USE[body.whatsappUse] ? body.whatsappUse : '';
-  const website = clean(body.website, 200);
+  const website = websiteRaw;
   // Only a real domain becomes the company's domain in Twenty; an @handle stays in the notes.
   const domain = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i.test(website) && !website.startsWith('@')
     ? (website.startsWith('http') ? website : `https://${website}`) : '';

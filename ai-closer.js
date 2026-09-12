@@ -165,27 +165,44 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         update();
     }
 
-    // ---- Hero WhatsApp screen plays in, with "typing..." before each business reply ----
-    var live = document.querySelector('.wa-live');
-    if (live) {
+    // ---- Hero WhatsApp screens: industry tabs + play-in with "typing..." ----
+    function playChat(live) {
+        if (!live) return;
         var msgs = live.querySelectorAll('.wa-msg');
         var status = live.querySelector('.wa-status-line');
-        var idle = status ? status.textContent : '';
+        var idle = 'online';
         var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reduce) { msgs.forEach(function (m) { m.classList.add('show'); }); }
-        else {
-            var t = 500;
-            msgs.forEach(function (m) {
-                var business = m.classList.contains('wa-in');
-                if (business && status) {
-                    setTimeout(function () { status.textContent = 'typing...'; }, t);
-                    t += 1100;
-                }
-                setTimeout(function () { m.classList.add('show'); if (status) status.textContent = idle; }, t);
-                t += business ? 900 : 1300;
-            });
+        if (live.dataset.played === '1' || reduce) {
+            msgs.forEach(function (m) { m.classList.add('show'); });
+            if (status) status.textContent = idle;
+            return;
         }
+        live.dataset.played = '1';
+        var t = 400;
+        msgs.forEach(function (m) {
+            var business = m.classList.contains('wa-in');
+            if (business && status) { setTimeout(function () { status.textContent = 'typing...'; }, t); t += 1000; }
+            setTimeout(function () { m.classList.add('show'); if (status) status.textContent = idle; }, t);
+            t += business ? 850 : 1200;
+        });
     }
+
+    var tabs = document.querySelectorAll('.wa-tab');
+    var slots = document.querySelectorAll('.wa-slot');
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            var key = tab.getAttribute('data-chat');
+            tabs.forEach(function (t) { t.classList.toggle('on', t === tab); });
+            slots.forEach(function (sl) {
+                var on = sl.getAttribute('data-chat') === key;
+                sl.hidden = !on;
+                sl.classList.toggle('on', on);
+                if (on) playChat(sl.querySelector('.wa-live'));
+            });
+            track('hero_chat_switch', { industry: key, cta_id: 'ai_closer' });
+        });
+    });
+    playChat(document.querySelector('.wa-slot:not([hidden]) .wa-live') || document.querySelector('.wa-live'));
     document.querySelectorAll('.wa:not(.wa-live) .wa-msg').forEach(function (m) { m.classList.add('show'); });
 
     // ---- Reveal on scroll ----

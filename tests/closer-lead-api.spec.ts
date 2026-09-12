@@ -387,4 +387,18 @@ test.describe('closer-lead: Hermes handoff', () => {
     expect(text).toContain('Servicing');
     expect(text).toContain('tanaircon.sg');
   });
+
+  test('no company field: the company name comes from the website', async () => {
+    const { calls } = await run({ ...lead, company: undefined, website: 'https://www.tanaircon.sg/' });
+    const company = calls.find((c) => c.url.endsWith('/rest/companies'))!;
+    expect(company.body.name).toBe('Tanaircon');
+    expect(company.body.domainName).toEqual({ primaryLinkUrl: 'https://www.tanaircon.sg/' });
+  });
+
+  test('no company and no website: falls back to the person name', async () => {
+    const { calls } = await run({ ...lead, company: undefined, website: '' });
+    const company = calls.find((c) => c.url.endsWith('/rest/companies'))!;
+    expect(company.body.name).toBe('Tan Wei Ming');
+    expect(company.body.domainName).toBeUndefined();
+  });
 });

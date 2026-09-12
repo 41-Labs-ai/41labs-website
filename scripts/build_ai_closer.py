@@ -38,14 +38,56 @@ def screen(name, initials, msgs, status='online', cls='', label=''):
             f'<div class="wa-body"><div class="wa-day">Today</div>{"".join(rows)}</div>'
             f'<div class="wa-input">{I["plus"]}<div class="wa-field"></div>{I["cam"]}{I["mic"]}</div></div>')
 
-HERO_CHAT = screen('CoolAir Services', 'CA', [
-    ('customer', 'Hi, still open? Need 3 aircon units serviced.', '02:02'),
-    ('closer', 'Hi! Yes, we can help. Is it a condo or landed, and which area?', '02:02'),
-    ('customer', 'Condo, Tampines', '02:03'),
-    ('closer', 'Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?', '02:03'),
-    ('customer', '10am please', '02:03'),
-    ('closer', "Done. You're booked for Saturday 10am. I'll send a reminder the day before.", '02:03'),
-], cls='wa-live', label='Example WhatsApp chat: a customer enquires at 2am and the 41 Closer books the job')
+HERO_CHATS = [
+    ('servicing', 'Aircon', 'CoolAir Services', 'CA', [
+        ('customer', 'Hi, still open? Need 3 aircon units serviced.', '02:02'),
+        ('closer', 'Hi! Yes, we can help. Is it a condo or landed, and which area?', '02:02'),
+        ('customer', 'Condo, Tampines', '02:03'),
+        ('closer', 'Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?', '02:03'),
+        ('customer', '10am please', '02:03'),
+        ('closer', "Done. You're booked for Saturday 10am. I'll send a reminder the day before.", '02:03'),
+    ]),
+    ('renovation', 'Renovation', 'Meridian Interiors', 'MI', [
+        ('customer', 'Hi, how much to redo a 4 room HDB kitchen?', '23:41'),
+        ('closer', 'Evening! Happy to help. Are you keeping the current layout, or moving the sink and hob?', '23:41'),
+        ('customer', 'Keeping layout. Just cabinets and countertop', '23:42'),
+        ('closer', 'That helps. Quartz or sintered stone for the top, and are you after laminate or spray paint carpentry?', '23:42'),
+        ('customer', 'Quartz, laminate is fine', '23:43'),
+        ('closer', 'Noted. Our designer can do a site measure this week. Thursday 11am or Saturday 2pm?', '23:43'),
+        ('customer', 'Saturday', '23:44'),
+        ('closer', 'Booked for Saturday 2pm. I have sent the details here and our designer will bring samples.', '23:44'),
+    ]),
+    ('clinic', 'Clinic', 'Orchard Aesthetics', 'OA', [
+        ('customer', 'Do you have any slots this week for a consult?', '21:18'),
+        ('closer', 'Hi! Yes. Is this your first visit with us, and what would you like to treat?', '21:18'),
+        ('customer', 'First time. Acne scars', '21:19'),
+        ('closer', 'Thanks. Our doctor will assess the scar type first, then recommend the right treatment. The consult is S$55 and goes toward your treatment if you proceed.', '21:19'),
+        ('customer', 'Ok can. Thursday evening?', '21:20'),
+        ('closer', 'Thursday 7pm or 7.30pm are open. Which suits you?', '21:20'),
+        ('customer', '7pm', '21:20'),
+        ('closer', 'Booked for Thursday 7pm. Our clinic is at Orchard, and I have sent the address here.', '21:21'),
+    ]),
+    ('car', 'Car rental', 'Lion City Rentals', 'LC', [
+        ('customer', 'Hi need a car from 18 to 21 Dec', '01:12'),
+        ('closer', 'Hi! Sure. How many passengers, and are you driving into Malaysia?', '01:12'),
+        ('customer', '5 pax, yes going JB', '01:13'),
+        ('closer', 'Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day, and a Honda Stepwagon at S$135 a day. Both include the Malaysia permit.', '01:13'),
+        ('customer', 'Sienta ok. How to confirm?', '01:14'),
+        ('closer', 'A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through.', '01:14'),
+    ]),
+]
+
+def hero_block():
+    tabs, screens = [], []
+    for i, (key, label, name, ini, msgs) in enumerate(HERO_CHATS):
+        on = ' on' if i == 0 else ''
+        tabs.append(f'<button type="button" class="wa-tab{on}" data-chat="{key}">{label}</button>')
+        screens.append(f'<div class="wa-slot{on}" data-chat="{key}"{"" if i == 0 else " hidden"}>'
+                       + screen(name, ini, msgs, cls='wa-live',
+                                label=f'Example WhatsApp chat: a customer enquires and the 41 Closer replies for a {label.lower()} business')
+                       + '</div>')
+    return ('<div class="wa-tabs" role="tablist" aria-label="Pick your kind of business">' + ''.join(tabs) + '</div>'
+            + ''.join(screens))
 
 PROOF = [
     ('jewellery-ring-to-payment.json', 'Jewellery store', 'JS', 'Ring chosen and paid for by payment link, 10pm.'),
@@ -68,6 +110,17 @@ SEEN = '''<p class="seen-label">Proud member of the Singapore A.I. Association &
                 <span class="chip"><img src="/logos/nrf.jpg" alt="NRF Big Show APAC" height="28" loading="lazy"></span>
                 <span class="chip"><img src="/logos/superai.jpg" alt="SuperAI" height="28" loading="lazy"></span>
                 <span class="chip"><img src="/logos/stripe.png" alt="Stripe" height="28" loading="lazy"></span>
+            </div>
+            <div class="built">
+                <p class="built-label">Built on</p>
+                <div class="built-row">
+                    <figure class="built-item"><img src="logos/whatsapp.svg" alt="WhatsApp" height="24" loading="lazy"><figcaption>WhatsApp Business Platform</figcaption></figure>
+                    <figure class="built-item"><img src="logos/meta.svg" alt="Meta" height="20" loading="lazy"><figcaption>Meta</figcaption></figure>
+                    <figure class="built-item"><img src="logos/anthropic.svg" alt="Anthropic" height="20" loading="lazy"><figcaption>Anthropic Claude</figcaption></figure>
+                    <figure class="built-item"><img src="logos/googlegemini.svg" alt="Google Gemini" height="20" loading="lazy"><figcaption>Google</figcaption></figure>
+                    <figure class="built-item"><img src="logos/stripe.svg" alt="Stripe" height="20" loading="lazy"><figcaption>Stripe</figcaption></figure>
+                    <figure class="built-item"><span class="built-word">airwallex</span><figcaption>Airwallex</figcaption></figure>
+                </div>
             </div>'''
 
 def opt(v, t): return f'<option value="{v}">{t}</option>'
@@ -76,6 +129,7 @@ INDUSTRIES = [('renovation','Renovation or interior design'),('clinic','Clinic, 
               ('property','Property agency'),('education','Education or tuition'),('distributor','Distributor, wholesale or trade supplier'),
               ('servicing','Servicing (aircon, plumbing, pest control, cleaning)'),('travel','Travel or tours'),('retail','Retail or online shop'),('other','Something else')]
 
+FORM_CTA = '''<p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>'''
 FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
                         <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Check if you qualify</span><span class="cl-tab">2. Your details</span></div>
@@ -105,19 +159,16 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                         </div>
                         <div id="cl-part2" hidden>
                             <div class="fields">
-                                <div class="field"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
-                                <div class="field"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required></div>
-                                <div class="field"><label for="cl-company">Company</label><input id="cl-company" name="company" type="text" autocomplete="organization" required></div>
-                                <div class="field"><label for="cl-role">Your role</label>
-                                    <select id="cl-role" name="role" required>{SELECT_PH}{opt("owner","Owner")}{opt("sales_head","Head of sales")}{opt("manager","Manager")}{opt("other","Other")}</select></div>
-                                <div class="field full"><label for="cl-website">Website or Instagram</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com or @yourcompany">
+                                <div class="field full"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
+                                <div class="field full"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
+                                    <small class="help">This is where our AI Closer will message you to confirm your demo.</small></div>
+                                <div class="field full"><label for="cl-website">Your website <span class="opt">(optional)</span></label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com">
                                     <small class="help">We look at it before the call, so your demo uses your own products and prices.</small></div>
-                                <div class="field full"><label for="cl-email">Email <span class="opt">(optional)</span></label><input id="cl-email" name="email" type="email" autocomplete="email"></div>
                                 <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
-                            <p class="consent">After you book, our AI Closer will message you on WhatsApp to confirm and prepare your demo. No spam, no lists.</p>
+                            <p class="consent">After you book, our AI Closer messages you on WhatsApp to confirm and prepare your demo. No spam, no lists.</p>
                             <div class="form-foot">
                                 <button class="link-back" id="cl-back" type="button">&larr; Back</button>
                                 <button class="btn btn-primary" id="cl-submit" type="submit">Get my free demo <span class="arrow">&rarr;</span></button>
@@ -146,7 +197,8 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                             <p>From your answers, a demo may not be worth your time yet. We'll look at your details and WhatsApp you within one working day either way.</p>
                         </div>
                     </div>
-                </form>'''
+                </form>
+                {FORM_CTA}'''
 
 def replace_block(s, start, end, new):
     a = s.index(start); b = s.index(end, a) + len(end)
@@ -156,7 +208,7 @@ def build(page, hero_chat=True, seen=False, proof=False):
     p = os.path.join(ROOT, page); s = open(p).read()
     s = replace_block(s, '<form id="cl-form"', '</form>', FORM)
     if hero_chat:
-        s = replace_block(s, '<!-- WA-HERO -->', '<!-- /WA-HERO -->', '<!-- WA-HERO -->' + HERO_CHAT + '<!-- /WA-HERO -->')
+        s = replace_block(s, '<!-- WA-HERO -->', '<!-- /WA-HERO -->', '<!-- WA-HERO -->' + hero_block() + '<!-- /WA-HERO -->')
     if seen:
         s = replace_block(s, '<!-- SEEN -->', '<!-- /SEEN -->', '<!-- SEEN -->\n            ' + SEEN + '\n            <!-- /SEEN -->')
     if proof:
