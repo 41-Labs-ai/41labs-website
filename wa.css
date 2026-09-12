@@ -10,11 +10,11 @@
 .wa-bar svg { height: 11px; width: auto; fill: #111; }
 .wa-head { display: flex; align-items: center; gap: 9px; padding: 6px 12px 9px 6px; background: #F6F6F6; border-bottom: 0.5px solid #CFCFCF; }
 .wa-head .wa-back { width: 26px; height: 26px; flex: none; stroke: #111B21; }
-.wa-av { width: 36px; height: 36px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #fff; background: #25D366; }
+.wa-av { width: 36px; height: 36px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #fff; background: #075E54; }
 .wa-who { flex: 1; min-width: 0; line-height: 1.2; }
 .wa-name { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px; }
 .wa-name .wa-verified { width: 15px; height: 15px; flex: none; }
-.wa-status-line { font-size: 12.5px; color: #667781; margin-top: 1px; }
+.wa-status-line { font-size: 12.5px; color: #5a6a73; margin-top: 1px; }
 .wa-head .wa-act { width: 24px; height: 24px; flex: none; stroke: #111B21; fill: none; margin-left: 10px; }
 .wa-body { background-color: rgb(239, 234, 226); padding: 10px 10px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23d9d1c5' stroke-width='1.2' stroke-linecap='round'%3E%3Ccircle cx='18' cy='20' r='6'/%3E%3Cpath d='M60 12l6 10h-12z'/%3E%3Crect x='92' y='14' width='12' height='9' rx='2'/%3E%3Cpath d='M14 70c6-6 12 6 18 0'/%3E%3Ccircle cx='64' cy='66' r='3'/%3E%3Cpath d='M96 60l4 4 8-9'/%3E%3Cpath d='M20 104h12M26 98v12'/%3E%3Crect x='56' y='98' width='14' height='10' rx='5'/%3E%3Cpath d='M94 100q6-8 12 0'/%3E%3C/g%3E%3C/svg%3E"); }
@@ -26,7 +26,7 @@
 .wa-out::before, .wa-in::before { content: ""; position: absolute; top: 0; width: 8px; height: 13px; }
 .wa-out::before { right: -8px; background: #D9FDD3; clip-path: polygon(0 0, 100% 0, 0 100%); }
 .wa-in::before { left: -8px; background: #FFFFFF; clip-path: polygon(0 0, 100% 0, 100% 100%); }
-.wa-meta { float: right; margin: 6px 0 -4px 10px; font-size: 11px; color: #667781; display: inline-flex; align-items: center; gap: 3px; line-height: 1; }
+.wa-meta { float: right; margin: 6px 0 -4px 10px; font-size: 11px; color: #5a6a73; display: inline-flex; align-items: center; gap: 3px; line-height: 1; }
 .wa-ticks { width: 16px; height: 11px; fill: none; stroke: #53BDEB; stroke-width: 1.6; }
 .wa-msg b { font-weight: 600; }
 .wa-link { color: #027EB5; text-decoration: none; }

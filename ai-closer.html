@@ -109,7 +109,7 @@
         .fcard { background: #fff; color: var(--text); border-radius: 20px; padding: 22px 20px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
         .fcard-head { text-align: center; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 16px; }
         .fcard-head .free { display: inline-block; background: var(--ink); color: var(--accent); font-weight: 900; font-size: 13px; letter-spacing: .06em; padding: 5px 12px; border-radius: 6px; }
-        .fcard-head h3 { font-size: 21px; margin: 10px 0 4px; }
+        .fcard-head h2 { font-size: 21px; margin: 10px 0 4px; }
         .fcard-head p { margin: 0; font-size: 14px; color: var(--text-2); }
         .cl-tabs { display: flex; gap: 6px; margin: 0 0 16px; }
         .cl-tab { flex: 1; text-align: center; font-size: 12.5px; font-weight: 800; padding: 9px 6px; border-radius: 10px; background: #f0f0f3; color: var(--text-2); }
@@ -138,6 +138,10 @@
         #cl-step2 h3 { font-size: 24px; margin: 0 0 8px; }
         #cl-step2 p { color: var(--text-2); margin: 0 0 16px; }
         #cl-cal iframe { width: 100%; height: 640px; border: 0; }
+        .next-steps { counter-reset: ns; list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
+        .next-steps li { counter-increment: ns; display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-size: 14.5px; color: var(--text-2); }
+        .next-steps li::before { content: counter(ns); width: 26px; height: 26px; border-radius: 8px; background: var(--accent-soft); color: var(--accent-deep); display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+        .next-steps b { color: var(--text); }
         .ok-badge { display: inline-flex; gap: 8px; font-size: 13px; font-weight: 800; color: var(--accent-deep); background: var(--accent-soft); padding: 6px 12px; border-radius: var(--radius-pill); margin-bottom: 12px; }
         .promise { display: flex; gap: 12px; align-items: center; margin-top: 16px; padding: 14px; border-radius: 14px; background: #f6fbf7; border: 1.5px dashed #86efac; }
         .seal { flex: 0 0 58px; height: 58px; border-radius: 50%; background: var(--ink); color: var(--accent); display: grid; place-items: center; text-align: center; font-weight: 900; font-size: 10px; line-height: 1.1; letter-spacing: .03em; }
@@ -239,10 +243,10 @@
 
         /* fit tiles */
         .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 30px; }
-        .tile { background: var(--ink); color: #fff; border-radius: 16px; padding: 18px; }
+        .tile { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 16px; padding: 18px; }
         .tile b { display: block; font-size: 16px; margin-bottom: 4px; }
         .tile span { font-size: 13.5px; color: rgba(255,255,255,0.65); }
-        .fitnote { background: var(--accent-soft); border-left: 5px solid var(--accent-deep); border-radius: 12px; padding: 16px 18px; margin-top: 22px; font-size: 16px; }
+        .fitnote { background: var(--accent-soft); color: var(--ink); border-left: 5px solid var(--accent-deep); border-radius: 12px; padding: 16px 18px; margin-top: 22px; font-size: 16px; font-weight: 600; }
         .notfor { margin-top: 26px; }
         .notfor h3 { font-size: 22px; text-transform: uppercase; }
         .notfor ul { padding: 0; list-style: none; margin: 14px 0 0; display: grid; gap: 10px; }
@@ -264,8 +268,8 @@
         .calc { display: grid; gap: 18px; margin-top: 28px; }
         .calc-in { display: grid; gap: 14px; }
         .calc-in label { font-weight: 700; font-size: 14.5px; display: grid; gap: 6px; }
-        .calc-in input { font: inherit; font-size: 18px; font-weight: 700; padding: 12px 14px; border-radius: 12px; border: 1.5px solid #e1e1e6; background: #fafafb; width: 100%; }
-        .calc-out { background: var(--ink); color: #fff; border-radius: 22px; padding: 26px; text-align: center; }
+        .calc-in input { font: inherit; font-size: 18px; font-weight: 700; padding: 12px 14px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.15); background: #fff; color: var(--ink); width: 100%; }
+        .calc-out { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #fff; border-radius: 22px; padding: 30px 26px; text-align: center; }
         .calc-out .lab { color: rgba(255,255,255,0.65); font-size: 14px; }
         .calc-out .num { font-size: clamp(36px, 7vw, 54px); font-weight: 900; color: #f87171; line-height: 1.05; margin: 4px 0 10px; }
         .calc-out .row { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; font-size: 14.5px; color: rgba(255,255,255,0.75); }
@@ -359,7 +363,7 @@
                 <span id="book" aria-hidden="true"></span>
                 <div class="fcard-head">
                     <span class="free">FREE</span>
-                    <h3>WhatsApp Leak Audit + Live Demo</h3>
+                    <h2>WhatsApp Leak Audit + Live Demo</h2>
                     <p>20 minutes on Google Meet with Alexander Lee</p>
                 </div>
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
@@ -417,6 +421,11 @@
                             <h3>Pick a time for your free demo.</h3>
                             <p>20 minutes on Google Meet with Alexander. Our AI Closer will WhatsApp you to confirm and ask a few questions so we come prepared.</p>
                             <div id="cl-cal"></div>
+                            <ol class="next-steps">
+                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions, so Alexander comes prepared.</li>
+                                <li><b>We run your leak audit</b> before the call: we message your business like a customer and time the reply.</li>
+                                <li><b>20 minutes on Google Meet.</b> Your numbers, your audit result, and the Closer handling an enquiry like yours.</li>
+                            </ol>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
                                 <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
@@ -477,7 +486,7 @@
 <section id="proof-1" class="band dark">
     <div class="wrap">
         <h2 class="caps center">What a slow WhatsApp reply really costs</h2>
-        <p class="sub center">From the chat records of two businesses we work with. Named with their permission only, so these stay anonymous.</p>
+        <p class="sub center">From the chat records of two businesses we work with. We don't name clients without their permission, so these stay anonymous.</p>
         <div class="results">
             <div class="result reveal">
                 <div class="result-top">

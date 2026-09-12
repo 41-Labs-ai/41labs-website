@@ -131,6 +131,11 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                             <h3>Pick a time for your free demo.</h3>
                             <p>20 minutes on Google Meet with Alexander. Our AI Closer will WhatsApp you to confirm and ask a few questions so we come prepared.</p>
                             <div id="cl-cal"></div>
+                            <ol class="next-steps">
+                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions, so Alexander comes prepared.</li>
+                                <li><b>We run your leak audit</b> before the call: we message your business like a customer and time the reply.</li>
+                                <li><b>20 minutes on Google Meet.</b> Your numbers, your audit result, and the Closer handling an enquiry like yours.</li>
+                            </ol>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
                                 <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
