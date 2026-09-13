@@ -72,29 +72,40 @@ async function sendTelegram(lead, { env, fetchImpl }) {
   }
 }
 
+// Gmail first: the Workspace already delegates gmail.compose to the service account we
+// use for the booking calendar, so it needs no new account, has no practical quota, and
+// arrives from our own domain. Resend stays as an override if a key is ever set, since a
+// dedicated sending service is better for volume and gives delivery reporting.
 async function sendEmail(lead, { env, fetchImpl }) {
+  const subject = `${lead.partial ? 'PARTIAL' : lead.tier ? `TIER ${lead.tier}` : 'New'} lead: ${lead.name}${lead.company && lead.company !== lead.name ? `, ${lead.company}` : ''}`.slice(0, 200);
+  const text = alertLines(lead, { html: false }).join('\n');
+  const html = alertLines(lead, { html: true }).map((l) => `<p style="margin:0 0 6px">${l}</p>`).join('');
+
   const key = env.RESEND_API_KEY;
-  if (!key) return 'skipped';
-  const text = alertLines(lead, { html: false });
-  const subject = `${lead.tier ? `TIER ${lead.tier}` : 'New'} lead: ${lead.name}${lead.company && lead.company !== lead.name ? `, ${lead.company}` : ''}`;
-  const body = {
-    from: env.RESEND_FROM || DEFAULT_FROM,
-    to: [env.LEAD_ALERT_EMAIL_TO || DEFAULT_TO],
-    subject: subject.slice(0, 200),
-    text: text.join('\n'),
-    html: alertLines(lead, { html: true }).map((l) => `<p style="margin:0 0 6px">${l}</p>`).join(''),
-  };
-  if (lead.email) body.reply_to = lead.email;
-  try {
-    const r = await fetchWithTimeout(fetchImpl, 'https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    }, 4000);
-    return r.ok ? 'sent' : 'failed';
-  } catch {
-    return 'failed';
+  if (key) {
+    const body = {
+      from: env.RESEND_FROM || DEFAULT_FROM,
+      to: [env.LEAD_ALERT_EMAIL_TO || DEFAULT_TO],
+      subject, text, html,
+    };
+    if (lead.email) body.reply_to = lead.email;
+    try {
+      const r = await fetchWithTimeout(fetchImpl, 'https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }, 4000);
+      if (r.ok) return 'sent';
+    } catch {
+      // fall through to Gmail rather than losing the copy
+    }
   }
+
+  return sendGmail({
+    to: env.LEAD_ALERT_EMAIL_TO || DEFAULT_TO,
+    subject, html, text,
+    replyTo: lead.email || '',        // hit reply and you are talking to the lead
+  }, { env, fetchImpl });
 }
 
 async function sendLeadAlerts(lead, deps) {

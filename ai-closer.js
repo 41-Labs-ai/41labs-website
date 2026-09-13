@@ -225,18 +225,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
                 .then(function (j) { if (j && j.id) partialId = j.id; })
                 .catch(function () {});
 
-            // Email copy of the partial too. Telegram alone means a half-finished form
-            // is lost the moment the notification scrolls off the phone.
-            try {
-                var pc = new FormData();
-                pc.append('_subject', 'PARTIAL 41 Closer lead (did not finish the questions)');
-                pc.append('name', partial.name);
-                pc.append('email', partial.email);
-                pc.append('whatsapp', partial.whatsapp);
-                pc.append('stage', 'contact captured, questions not answered');
-                Object.keys(attr).forEach(function (k) { pc.append(k, attr[k]); });
-                fetch(form.action, { method: 'POST', body: pc, headers: { 'Accept': 'application/json' } }).catch(function () {});
-            } catch (e) {}
             if (window.cl41) window.cl41.mark('form_contact_captured', { variant: variant });
 
             var first = part2.querySelector('select, input');
@@ -304,7 +292,7 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
                 cl.mark('lead_submitted', { tier: data.tier, qualified: data.qualified });
             }
 
-            // CRM record (server-side) and the Formspree email copy, both best-effort.
+            // CRM record, server-side. The email copy is sent from there too.
             // The deal id is what makes the booking match exactly instead of being guessed
             // at by email, so the calendar waits for it. Capped at 2.5s: a visitor staring
             // at a blank slot is worse than a booking we have to match by hand.
@@ -318,11 +306,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
                     .catch(function () {})
                     .then(finish);
             });
-            var copy = new FormData(form);
-            ['qualified', 'tier', 'variant'].forEach(function (k) { copy.append(k, data[k]); });
-            copy.append('fit_reason', data.fitReason);
-            Object.keys(attr).forEach(function (k) { copy.append(k, attr[k]); });
-            fetch(form.action, { method: 'POST', body: copy, headers: { 'Accept': 'application/json' } }).catch(function () {});
 
             pixel('Lead', { content_name: 'ai_closer_form', qualified: data.qualified, tier: data.tier, variant: variant }, { eventID: data.eventId });
             track('generate_lead', { event_category: 'conversion', cta_id: 'ai_closer', qualified: data.qualified, tier: data.tier, variant: variant });
@@ -332,7 +315,10 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
             document.getElementById('cl-step1').hidden = true;
             document.getElementById('cl-step2').hidden = false;
             document.getElementById(qualified ? 'cl-book' : 'cl-notyet').hidden = false;
-            if (qualified) dealReady.then(function () { showCalendar(data); });
+            if (qualified) {
+                showHandoff(data, true);                       // link ready immediately
+                dealReady.then(function () { showCalendar(data); });
+            }
             var anchor = document.getElementById('qualify') || form;
             anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
@@ -417,7 +403,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
         // the page no booking callback, so waiting for one leaves the visitor staring at
         // an unchanged screen after they book. Bookings are caught server-side instead,
         // by api/cron/booking-sync.js.
-        showHandoff(data, true);
         // No calendar configured is fine now: the Closer books the call in chat, so
         // the page never has to apologise for an empty slot.
         if (!url) {

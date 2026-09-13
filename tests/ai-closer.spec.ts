@@ -166,8 +166,6 @@ for (const P of PAGES) {
         utm_campaign: '41closer_lp_2026-09', utm_content: 'ad_stalk1', fbclid: 'abc123',
       });
       expect(sent.api[1].fitReason).toBeTruthy();
-      // one email on the partial, one on the finished lead
-      await expect.poll(() => sent.formspree, { timeout: 3000 }).toBe(2);
       expect(await fbqEvents(page)).toContain('Lead');
     });
 
@@ -663,26 +661,26 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     expect(api.find((e) => e.name === 'Schedule').eventId).toBe(px[3].eventID);
   });
 
-  test('a confirmed booking reveals the Closer handoff', async ({ page }) => {
+  // With Cal.com the handoff no longer waits for a booking: the message is built from
+  // what they typed, so it is ready the moment they qualify. The copy changes on booking.
+  test('the handoff copy changes once the booking is confirmed', async ({ page }) => {
     await setup(page);
     await page.goto('/ai-closer.html');
-    await page.evaluate(() => { (window as any).BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/T?gv=true'; });
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
     await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
-    await page.selectOption('#cl-enquiries', '50to150');
-    await page.selectOption('#cl-sale', '500to2k');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
     await page.check('input[name="challenges"][value="slow"]');
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
 
-    // the calendar is the action; the Closer handoff only appears once they have booked
-    await expect(page.locator('#cl-cal iframe')).toBeVisible();
-    await expect(page.locator('#cl-handoff')).toBeHidden();
+    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+    await expect(page.locator('.handoff-lead')).toContainText(/once you have picked a time/i);
     await page.evaluate(() => (window as any).onCloserBooked());
-    await expect(page.locator('#cl-handoff')).toBeVisible();
+    await expect(page.locator('.handoff-lead')).toContainText(/booked/i);
   });
 
   test('ViewContent fires once the demo has been on screen a while', async ({ page }) => {
@@ -780,7 +778,6 @@ test.describe('a lead always reaches him two ways', () => {
     await page.click('#cl-next');
     await expect.poll(() => sent.api.length).toBe(1);
     expect(sent.api[0].partial).toBe(true);
-    await expect.poll(() => sent.formspree, { timeout: 3000 }).toBe(1);   // the email copy
   });
 
   test('finishing the form sends a second pair, not a silent update', async ({ page }) => {
@@ -797,7 +794,6 @@ test.describe('a lead always reaches him two ways', () => {
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
     await expect.poll(() => sent.api.length).toBe(2);
-    await expect.poll(() => sent.formspree, { timeout: 3000 }).toBe(2);
     expect(sent.api[1].tier).toBe('A');
   });
 });

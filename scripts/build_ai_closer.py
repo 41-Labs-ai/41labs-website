@@ -224,7 +224,7 @@ CHALLENGE_CHIPS = ''.join(
     f'<label class="chip-opt"><input type="checkbox" name="challenges" value="{v}"><span>{html.escape(t)}</span></label>'
     for v, t in CHALLENGES)
 
-FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
+FORM = f'''<form id="cl-form" method="POST">
                     <div id="cl-step1">
                         <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Who you are</span><span class="cl-tab">2. Your business</span></div>
                         <div id="cl-part1">
