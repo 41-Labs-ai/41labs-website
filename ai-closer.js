@@ -3,12 +3,13 @@
 // closer-qualify.js,
 // lead to /api/closer-lead + Formspree copy, Pixel Lead / Schedule, calendar step.
 //
-// Calendar for qualified leads. The '41 Closer' appointment schedule on
-// alexander@41labs.ai. The ?gv=true is what makes it render as the booking widget
-// instead of the whole Google Calendar UI, so do not drop it.
-// api/cron/booking-sync.js matches the booked events by the '41 Closer' in their title.
-// A page can override this before the script loads; empty falls back to the Closer chat.
-window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3iE68ubJkSyNFAaiHyXkE6WRC2dykDqmSTbik9gTn-Q8WrOJEiPfO6JJI4EyiNgjPtpip6Mlq1?gv=true';
+// Booking for qualified leads: Cal.com, event type "41 Closer" (30 min).
+// Deliberately NOT a Google appointment schedule. Google's iframe is cross-origin and
+// gives no booking callback, no prefill and no way to pass an identifier through, which
+// forced a polling endpoint, email matching in the cron, and asking people for details
+// they had already typed. Cal.com fires bookingSuccessful, prefills from what we know,
+// and carries the deal id through as metadata, so the match is exact.
+window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
 
 (function () {
     // ---- Attribution: keep the ad's UTMs and fbclid for this visit ----
@@ -306,7 +307,7 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
             // CRM record (server-side) and the Formspree email copy, both best-effort.
             fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
                 .then(function (r) { return r.json(); })
-                .then(function (j) { if (j && j.id) { data.opportunityId = j.id; watchForBooking(data); } })
+                .then(function (j) { if (j && j.id) data.opportunityId = j.id; })
                 .catch(function () {});
             var copy = new FormData(form);
             ['qualified', 'tier', 'variant'].forEach(function (k) { copy.append(k, data[k]); });
@@ -380,26 +381,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         if (reveal) box.hidden = false;
     }
 
-    // Google's iframe never says a booking happened, so ask our own calendar instead.
-    // Stops on the first hit, and gives up after ten minutes rather than polling forever.
-    function watchForBooking(data) {
-        var oppId = data.opportunityId || '';
-        var email = (data.email || '').trim();
-        if (!oppId || !email) return;
-        var tries = 0;
-        var timer = setInterval(function () {
-            if (++tries > 40 || bookedAlready) { clearInterval(timer); return; }
-            fetch('/api/booking-check?id=' + encodeURIComponent(oppId) + '&email=' + encodeURIComponent(email))
-                .then(function (r) { return r.json(); })
-                .then(function (j) {
-                    if (!j || !j.booked) return;
-                    clearInterval(timer);
-                    showBooked(j, data);
-                })
-                .catch(function () {});
-        }, 15000);
-    }
-
     function showBooked(info, data) {
         var box = document.getElementById('cl-booked');
         var when = document.getElementById('cl-booked-when');
@@ -428,7 +409,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         // an unchanged screen after they book. Bookings are caught server-side instead,
         // by api/cron/booking-sync.js.
         showHandoff(data, true);
-        watchForBooking(data);
         // No calendar configured is fine now: the Closer books the call in chat, so
         // the page never has to apologise for an empty slot.
         if (!url) {
@@ -446,15 +426,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         metaEvent('InitiateCheckout', { content_name: 'ai_closer_calendar', variant: variant });
         track('open_calendar', { event_category: 'conversion', cta_id: 'ai_closer', variant: variant });
 
-        if (/^https:\/\/calendar\.google\.com\//.test(url)) {
-            var f = document.createElement('iframe');
-            f.src = url;
-            f.title = 'Book your call with Alexander';
-            f.loading = 'lazy';
-            holder.appendChild(f);
-            return;
-        }
-
         var CAL_LINK = url.replace(/^https:\/\/cal\.com\//, '');
         (function (C, A, L) { var p = function (a, ar) { a.q.push(ar); }; var d = C.document; C.Cal = C.Cal || function () { var cal = C.Cal; var ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { var api = function () { p(api, arguments); }; var namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
         Cal('init', { origin: 'https://cal.com' });
@@ -463,9 +434,15 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
             calLink: CAL_LINK,
             config: {
                 layout: 'month_view',
+                // Prefilled, so they never retype what they just gave us and the booking
+                // email can never drift from the one on the deal.
                 name: data.name || '',
                 email: data.email || '',
-                notes: ['Website: ' + (data.website || ''), 'Enquiries/week: ' + data.enquiries, 'Avg sale: ' + data.saleValue, 'WhatsApp: ' + data.whatsapp].join(' | ')
+                // Carried through to the webhook: the exact deal this booking belongs to.
+                'metadata[opportunityId]': data.opportunityId || '',
+                'metadata[tier]': data.tier || '',
+                'metadata[utm_content]': attr.utm_content || '',
+                notes: ['Website: ' + (data.website || ''), 'Enquiries/week: ' + (data.enquiries || ''), 'Avg sale: ' + (data.saleValue || ''), 'WhatsApp: ' + (data.whatsapp || '')].join(' | ')
             }
         });
         Cal('on', { action: 'bookingSuccessful', callback: function () { window.onCloserBooked(); } });

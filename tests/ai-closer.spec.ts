@@ -203,16 +203,16 @@ for (const P of PAGES) {
       expect(sent.api[1]).toMatchObject({ qualified: 'yes', tier: 'B' });
     });
 
-    test('qualified + Google booking URL: calendar iframe, no fallback', async ({ page }) => {
+    test('a qualified lead gets the Cal.com embed, not a Google iframe', async ({ page }) => {
       await stubNetwork(page);
-      await page.route('**/calendar.google.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+      await page.route('**/app.cal.com/**', (r) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
       await page.goto(P.path);
-      await page.evaluate(() => { (window as any).BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/TEST?gv=true'; });
       await fillForm(page);
       await page.click('#cl-submit');
-      await expect(page.locator('#cl-book')).toBeVisible();
-      await expect(page.locator('#cl-cal iframe')).toHaveAttribute('src', /appointments\/schedules\/TEST/);
-      await expect(page.locator('#cl-cal-fallback')).toBeHidden();
+      await expect(page.locator('#cl-cal-head')).toBeVisible();
+      await expect(page.locator('#cl-cal iframe[src*="calendar.google.com"]')).toHaveCount(0);
+      const queued = await page.evaluate(() => (((window as any).Cal || {}).q || []).some((a: any) => a[0] === 'inline'));
+      expect(queued, 'the Cal.com inline embed was never requested').toBe(true);
     });
 
     test('qualified + no booking URL: the Closer carries it, no empty calendar', async ({ page }) => {
@@ -462,7 +462,7 @@ test.describe('the prefilled first message to the AI Closer', () => {
   async function qualifyAndRead(page: any) {
     await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
     await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route('**/app.cal.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
     await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
     await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
     await page.goto('/ai-closer.html');
@@ -477,9 +477,7 @@ test.describe('the prefilled first message to the AI Closer', () => {
     await page.check('input[name="challenges"][value="afterhours"]');
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
-    await expect(page.locator('#cl-cal iframe')).toBeVisible();
-    await page.evaluate(() => (window as any).onCloserBooked());   // handoff follows the booking
-    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+    await expect(page.locator('#cl-wa-handoff')).toBeVisible();   // sits with the calendar
     const href = await page.locator('#cl-wa-handoff').getAttribute('href');
     return decodeURIComponent((href || '').split('?text=')[1] || '');
   }
@@ -578,11 +576,11 @@ test.describe('the website field only accepts a website', () => {
 
 // The Closer runs discovery and books the call, so it is the action, not a footnote.
 test.describe('a qualified lead is sent to the calendar', () => {
-  test('the calendar is the action, and the Closer handoff waits for the booking', async ({ page }) => {
-    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+  test('the Cal.com embed is requested and the Closer handoff sits beside it', async ({ page }) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"deal-1"}' }));
     await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
     await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route('**/app.cal.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
     await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
@@ -590,21 +588,16 @@ test.describe('a qualified lead is sent to the calendar', () => {
     await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
-    await page.selectOption('#cl-enquiries', '50to150');
-    await page.selectOption('#cl-sale', '500to2k');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
     await page.check('input[name="challenges"][value="slow"]');
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
 
     await expect(page.locator('#cl-cal-head')).toBeVisible();
-    // Google's iframe never tells us a booking happened, so the handoff cannot wait
-    // for a callback: it sits with the calendar and the copy changes if we ever hear one.
-    await expect(page.locator('#cl-cal iframe')).toBeVisible();
-    await expect(page.locator('#cl-handoff')).toBeVisible();
-    await expect(page.locator('.handoff-lead')).toContainText(/once you have picked a time/i);
-
-    await page.evaluate(() => (window as any).onCloserBooked());
-    await expect(page.locator('.handoff-lead')).toContainText(/booked/i);
+    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+    const queued = await page.evaluate(() => (((window as any).Cal || {}).q || []).some((a: any) => a[0] === 'inline'));
+    expect(queued).toBe(true);
     const msg = decodeURIComponent(((await page.locator('#cl-wa-handoff').getAttribute('href')) || '').split('?text=')[1] || '');
     expect(msg).toContain('tanaircon.sg');
   });
@@ -622,7 +615,7 @@ test.describe('Meta conversions fire from both sides with one id', () => {
       return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
     });
     await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route('**/app.cal.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
     await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
     await page.addInitScript(() => {
       (window as any).__fbq = [];
@@ -705,37 +698,6 @@ test.describe('Meta conversions fire from both sides with one id', () => {
 // The calendar is the conversion. If BOOKING_URL is ever emptied or the ?gv=true is
 // dropped, the page silently stops being able to take a booking and InitiateCheckout
 // and Schedule both stop firing, with no error anywhere.
-test.describe('the booking calendar is actually configured', () => {
-  test('a real Google appointment schedule is set, with the embed parameter', async ({ page }) => {
-    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g|calendar\.google\.com/, (r: any) => r.abort());
-    await page.goto('/ai-closer.html');
-    const url = await page.evaluate(() => (window as any).BOOKING_URL);
-    expect(url).toMatch(/^https:\/\/calendar\.google\.com\/calendar\/appointments\/schedules\//);
-    expect(url, 'without gv=true Google renders the full calendar UI, not the widget').toContain('gv=true');
-  });
-
-  test('a qualified lead is shown that calendar', async ({ page }) => {
-    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
-    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
-    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
-    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
-    await page.goto('/ai-closer.html');
-    await page.fill('#cl-name', 'Tan Wei Ming');
-    await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+6591234567');
-    await page.click('#cl-next');
-    await page.fill('#cl-website', 'tanaircon.sg');
-    await page.selectOption('#cl-enquiries', '50to150');
-    await page.selectOption('#cl-sale', '500to2k');
-    await page.check('input[name="challenges"][value="slow"]');
-    await page.selectOption('#cl-goal', 'recover');
-    await page.click('#cl-submit');
-    const frame = page.locator('#cl-cal iframe');
-    await expect(frame).toBeVisible();
-    await expect(frame).toHaveAttribute('src', /appointments\/schedules\/.*gv=true/);
-  });
-});
 
 // A typo'd email or an invented number costs us the whole lead silently: we build the
 // preview and send it nowhere. type="email" only checks for an @, so these go further.
@@ -869,14 +831,18 @@ test.describe('the call length matches the calendar', () => {
 // Google's appointment iframe is cross-origin and sends the page no booking callback.
 // Waiting for one left the visitor staring at an unchanged screen after booking, which
 // is exactly what Alexander hit on his own test.
-test.describe('after booking, the page does not look frozen', () => {
-  const qualify = async (page: any) => {
-    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+
+// Cal.com replaced the Google appointment schedule. Google gave no booking callback, no
+// prefill and no way to pass an identifier, which is what forced the polling endpoint and
+// the email matching. These pin the three things that made the switch worth it.
+test.describe('the booking step is Cal.com, prefilled and identified', () => {
+  const reach = async (page: any) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"deal-123"}' }));
     await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
     await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route('**/app.cal.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/javascript', body: 'window.__calEmbedLoaded=1;' }));
     await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
-    await page.goto('/ai-closer.html');
+    await page.goto('/ai-closer.html?utm_content=ad_x');
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
     await page.fill('#cl-whatsapp', '+6591234567');
@@ -887,23 +853,44 @@ test.describe('after booking, the page does not look frozen', () => {
     await page.check('input[name="challenges"][value="slow"]');
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
+    await page.waitForTimeout(900);
   };
 
-  test('there is always a next step on screen beside the calendar', async ({ page }) => {
-    await qualify(page);
-    await expect(page.locator('#cl-cal iframe')).toBeVisible();
-    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+  test('points at the 41 Closer event type, not a Google schedule', async ({ page }) => {
+    await reach(page);
+    const url = await page.evaluate(() => (window as any).BOOKING_URL);
+    expect(url).toBe('alexander-lee-41labs/closer-call');
+    expect(url).not.toContain('calendar.google.com');
   });
 
-  test('a Schedule callback is never counted twice', async ({ page }) => {
-    const api: any[] = [];
-    await page.route('**/api/meta-event', (r: any) => {
-      api.push(JSON.parse(r.request().postData() || '{}'));
-      return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+  test('prefills name and email, so the booking email cannot drift from the deal', async ({ page }) => {
+    await reach(page);
+    const cfg = await page.evaluate(() => {
+      const q = (window as any).Cal && (window as any).Cal.q || [];
+      const inline = q.find((a: any) => a[0] === 'inline');
+      return inline && inline[1] && inline[1].config;
     });
-    await qualify(page);
-    await page.evaluate(() => { (window as any).onCloserBooked(); (window as any).onCloserBooked(); (window as any).onCloserBooked(); });
-    await page.waitForTimeout(500);
-    expect(api.filter((e) => e.name === 'Schedule')).toHaveLength(1);
+    expect(cfg.name).toBe('Tan Wei Ming');
+    expect(cfg.email).toBe('wm@tanaircon.sg');
+  });
+
+  test('carries the deal id through, so matching is exact rather than guessed', async ({ page }) => {
+    await reach(page);
+    const cfg = await page.evaluate(() => {
+      const q = (window as any).Cal && (window as any).Cal.q || [];
+      const inline = q.find((a: any) => a[0] === 'inline');
+      return inline && inline[1] && inline[1].config;
+    });
+    expect(cfg['metadata[opportunityId]']).toBe('deal-123');
+    expect(cfg['metadata[tier]']).toBe('A');
+    expect(cfg['metadata[utm_content]']).toBe('ad_x');
+  });
+
+  test('nothing polls a booking-check endpoint any more', async ({ page }) => {
+    let polled = 0;
+    await page.route('**/api/booking-check**', (r: any) => { polled++; return r.fulfill({ status: 404, body: '' }); });
+    await reach(page);
+    await page.waitForTimeout(2500);
+    expect(polled).toBe(0);
   });
 });
