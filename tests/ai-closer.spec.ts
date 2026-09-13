@@ -440,7 +440,7 @@ test.describe('long form follows the event opt-in structure', () => {
     await expect(d).toContainText(/Nothing to learn/i);          // done for you
     await expect(d).toContainText(/S\$20,000 in booked sales/);  // money on the result
     await expect(page.locator('#faq')).toContainText(/different from the WhatsApp tools/i);
-    await expect(page.locator('#hero .hero-sub')).toContainText(/don't hand you a chatbot/i);
+    await expect(page.locator('#hero .hero-sub')).toContainText(/run it for you/i);
   });
 });
 

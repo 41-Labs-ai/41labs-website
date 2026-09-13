@@ -1,7 +1,7 @@
 """Builds the shared pieces of /ai-closer and /ai-closer-sf: the qualify-first form,
 the WhatsApp screens (hero + proof chats) and the homepage 'Seen at' strip.
 Run: python3 scripts/build_ai_closer.py  (idempotent: replaces marked blocks)."""
-import html, json, os, re
+import html, json, os, re, urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHATS = os.path.expanduser('~/Projects/41closer-marketing/assets/landing-proof-2026-09/chats')
@@ -23,16 +23,20 @@ def fmt(t):
     t = t.replace('[secure payment link]', '<span class="wa-link">[secure payment link]</span>')
     return t.replace('\n', '<br>')
 
-def screen(name, initials, msgs, status='online', cls='', label=''):
+AV_COLOURS = ['#075E54', '#1F6FB2', '#8A5A2B', '#6B3FA0', '#0F766E', '#9A3412', '#3F6212', '#7C2D53', '#1E3A8A']
+
+def screen(name, initials, msgs, status='online', cls='', label='', av=0, verified=False):
     rows = []
-    for who, text, time in msgs:
-        if who == 'customer':
-            rows.append(f'<div class="wa-msg wa-out">{fmt(text)}<span class="wa-meta">{time} {I["ticks"]}</span></div>')
-        else:
-            rows.append(f'<div class="wa-msg wa-in">{fmt(text)}<span class="wa-meta">{time}</span></div>')
+    for msg in msgs:
+        who, text, time = msg[0], msg[1], msg[2]
+        img = msg[3] if len(msg) > 3 else None
+        side = 'wa-out' if who == 'customer' else 'wa-in'
+        meta = f'<span class="wa-meta">{time} {I["ticks"]}</span>' if who == 'customer' else f'<span class="wa-meta">{time}</span>'
+        pic = f'<span class="wa-pic" style="--pic:url({img})" aria-hidden="true"></span>' if img else ''
+        rows.append(f'<div class="wa-msg {side}{" wa-has-pic" if img else ""}">{pic}{fmt(text)}{meta}</div>')
     return (f'<div class="wa {cls}" role="img" aria-label="{html.escape(label or ("WhatsApp chat with " + name))}">'
             f'<div class="wa-bar"><span>9:41</span>{I["bar"]}</div>'
-            f'<div class="wa-head">{I["back"]}<div class="wa-av">{initials}</div>'
+            f'<div class="wa-head">{I["back"]}<div class="wa-av" style="background:{AV_COLOURS[av % len(AV_COLOURS)]}">{initials}</div>'
             f'<div class="wa-who"><div class="wa-name">{html.escape(name)}</div><div class="wa-status-line">{status}</div></div>'
             f'{I["video"]}{I["call"]}</div>'
             f'<div class="wa-body"><div class="wa-day">Today</div>{"".join(rows)}</div>'
@@ -92,61 +96,78 @@ def hero_block():
 # Proof gallery: 8 short WhatsApp screens, each proving ONE thing. No scrolling.
 # source: "Demo line" = verbatim from our own demo builds (customer details and
 # product codes redacted, brand-name products avoided). "Example" = written by us.
+# Product shots as inline SVG data URIs: no extra request, nothing to ship, and they
+# read as a real image bubble rather than a grey placeholder box.
+def pic(bg, glyph):
+    svg = f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 60'><rect width='80' height='60' fill='{bg}'/>{glyph}</svg>"
+    return "&quot;data:image/svg+xml," + urllib.parse.quote(svg) + "&quot;"
+
+RING = pic('#f3e7d3', "<circle cx='40' cy='30' r='13' fill='none' stroke='#b9922f' stroke-width='3'/><path d='M40 14l4 6h-8z' fill='#7fb7d9'/>")
+CAR  = pic('#dbe6f0', "<rect x='14' y='28' width='52' height='16' rx='5' fill='#3f6fa0'/><rect x='24' y='20' width='30' height='12' rx='4' fill='#5b8cbe'/><circle cx='26' cy='45' r='5' fill='#1f3b57'/><circle cx='56' cy='45' r='5' fill='#1f3b57'/>")
+PIPE = pic('#e4e7ea', "<rect x='10' y='24' width='60' height='13' rx='2' fill='#8b9298'/><rect x='10' y='24' width='60' height='4' fill='#a9b0b6'/><circle cx='16' cy='30' r='4' fill='#6d747a'/>")
+CAKE = pic('#f6e2e8', "<rect x='20' y='28' width='40' height='18' rx='3' fill='#d98aa4'/><rect x='20' y='24' width='40' height='6' rx='3' fill='#f3c3d1'/><rect x='39' y='14' width='2' height='9' fill='#b9922f'/>")
+
 PROOF_CARDS = [
-    ("Answers in seconds, at 2am", "Example", "CoolAir Services", "CA", [
+    ("Answers in seconds, at 2am", "", "CoolAir Services", "CA", [
         ("customer", "Hi, still open? Need 3 aircon units serviced.", "02:02"),
         ("closer", "Hi! Yes, we can help. Is it a condo or landed, and which area?", "02:02"),
         ("customer", "Condo, Tampines", "02:03"),
         ("closer", "Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?", "02:03"),
     ]),
-    ("Qualifies before it quotes", "Demo line", "Bhutan tours", "BT", [
+    ("Knows the product better than a new hire", "", "Steel supplier", "SS", [
+        ("customer", "whats the difference between the 4mm and the 5mm", "10:41"),
+        ("closer", "Mostly load and price. The 4mm takes about 210kg a span, the 5mm about 340kg, and the 5mm is roughly 22% dearer.\n\nIf it is shelving up to a metre, 4mm is usually enough. Spanning wider than that, I would go 5mm.", "10:41"),
+        ("customer", "1.4m span, storing tiles", "10:43"),
+        ("closer", "Then 5mm. Tiles are dense and 1.4m is past what the 4mm holds comfortably.", "10:43"),
+    ]),
+    ("Qualifies before it quotes", "", "Bhutan tours", "BT", [
         ("customer", "I'm planning to travel with my friends (maybe 3 of us) in December. Is that a good time?", "16:13"),
         ("closer", "December is a lovely time to visit Bhutan! The skies are crystal clear and it's quieter than the peak autumn season.\n\nWhat kind of experience are you hoping for, more culture and monasteries, getting out into nature, or a mix of both?", "16:13"),
         ("customer", "We'd like to experience both", "16:14"),
         ("closer", "That's a great combination. Are you and your friends up for some hiking, like the famous Tiger's Nest climb, or do you prefer scenic drives and gentle walks?", "16:14"),
     ]),
-    ("Quotes from your price list", "Demo line", "Jewellery store", "JS", [
+    ("Quotes from your live price list", "", "Jewellery store", "JS", [
         ("customer", "i want to buy rings", "22:05"),
         ("closer", "Great, rings it is! What is your budget range, and is this for yourself or a gift?", "22:05"),
         ("customer", "anything below 1k sgd", "22:10"),
-        ("closer", "*Diamond Cluster Ring in 18K White Gold* (SKU: JR\u2022\u2022\u2022\u2022\u2022\u2022\u2022) \u2014 S$999\nFour diamonds (0.28ct total) in a diamond-shaped cluster, on a plain polished band.", "22:10"),
+        ("closer", "*Diamond Cluster Ring in 18K White Gold* \u2014 S$999\nFour diamonds, 0.28ct total, on a plain polished band.", "22:10", RING),
     ]),
-    ("Takes the deposit", "Demo line", "Jewellery store", "JS", [
-        ("customer", "go with this JR\u2022\u2022\u2022\u2022\u2022\u2022\u2022, i want to pay", "22:10"),
-        ("closer", "Here is your payment link for the *Heart Diamond Ring in 18K White Gold* \u2014 S$979: [secure payment link]\n\nOnce payment is done, the piece is reserved for you.", "22:10"),
+    ("Checks stock before it promises", "", "Building supplies", "BS", [
+        ("customer", "got 4mm in stock? need 200pcs by friday", "08:12"),
+        ("closer", "Yes. 340 pieces at Woodlands right now, so 200 is fine for Friday.", "08:12", PIPE),
+        ("customer", "price?", "08:13"),
+        ("closer", "At 200 you are on the trade tier: S$4.20 each, S$840 for the lot. Want me to hold them?", "08:13"),
     ]),
-    ("Books the slot", "Demo line", "Baking supplies", "BS", [
-        ("closer", "Which works better for you, Friday 28 August or Monday 31 August?", "14:32"),
-        ("customer", "1 sep", "14:32"),
-        ("closer", "Our weekday window is 12pm to 6pm. Did you want early afternoon or later in the day on Tuesday 1 September?", "14:32"),
-        ("customer", "2pm", "14:33"),
-        ("closer", "Locked in: Tuesday 1 September, 2pm. The team will confirm the order against your account.", "14:33"),
+    ("Books it and takes the deposit", "", "Lion City Rentals", "LC", [
+        ("customer", "Hi need a car from 18 to 21 Dec, 5 pax, going JB", "01:12"),
+        ("closer", "Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day. The permit is included.", "01:13", CAR),
+        ("customer", "Sienta ok. How to confirm?", "01:14"),
+        ("closer", "A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through: [secure payment link]", "01:14"),
     ]),
-    ("Handles \u201ctoo expensive\u201d without discounting", "Example", "Orchard Aesthetics", "OA", [
+    ("Handles \u201ctoo expensive\u201d without discounting", "", "Orchard Aesthetics", "OA", [
         ("customer", "You are very expensive. Others quote me less", "22:38"),
         ("closer", "I understand it feels that way upfront. Ours is a semi-permanent result, so there is nothing to buy monthly after it.", "22:38"),
         ("customer", "Any discount?", "22:47"),
         ("closer", "Pricing is set by our specialist team, so I can't discount here. The honest way to know if it's worth it is a consult, and that fee goes toward your treatment.", "22:47"),
     ]),
-    ("Follows up when they go quiet", "Example", "Meridian Interiors", "MI", [
+    ("Follows up when they go quiet", "", "Meridian Interiors", "MI", [
         ("closer", "Hi Wei, quick one on the kitchen quote I sent Monday. Are you still deciding, or is something in it not quite right?", "10:14"),
         ("customer", "Sorry busy week. Still keen, my wife wants to see other door colours", "12:02"),
         ("closer", "No problem at all. I'll send three colour options in the same price. If one works, our designer can hold Saturday 2pm for the site measure.", "12:02"),
     ]),
-    ("Hands over to your team", "Example", "Lion City Rentals", "LC", [
-        ("customer", "I need the car delivered to Tuas checkpoint at 5am and someone to collect it in JB", "23:51"),
-        ("closer", "That one is outside what I can arrange myself. I'm passing this to our team now with everything you've told me, and they'll come back to you first thing.", "23:51"),
-        ("customer", "Ok thanks", "23:52"),
-        ("closer", "Noted, Marcus. You'll hear from them before 9am. Your dates are held in the meantime.", "23:52"),
+    ("Upsells the way your best seller would", "", "Baking supplies", "BK", [
+        ("customer", "2 x 5kg couverture please", "14:22"),
+        ("closer", "Done, 2 x 5kg. Worth knowing: at 3 bags you cross into the wholesale price, so 3 costs about the same as 2 and a half.", "14:22", CAKE),
+        ("customer", "ok make it 3", "14:23"),
+        ("closer", "Nice one, that saves you S$38. Tuesday delivery or will you collect?", "14:23"),
     ]),
 ]
 
 def proof_cards():
     out = []
-    for label, src, name, ini, msgs in PROOF_CARDS:
-        out.append(f'<figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">{html.escape(label)}'
-                   f'<span class="chat-src">{html.escape(src)}</span></figcaption>'
-                   + screen(name, ini, msgs, cls='wa-card') + '</figure>')
+    for i, (label, src, name, ini, msgs) in enumerate(PROOF_CARDS):
+        out.append(f'<figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">{html.escape(label)}</figcaption>'
+                   + screen(name, ini, msgs, cls='wa-card', av=i) + '</figure>')
     return '\n            '.join(out)
 
 SEEN = '''<p class="seen-label">Proud member of the Singapore A.I. Association &middot; Seen at</p>
