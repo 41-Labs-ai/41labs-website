@@ -89,20 +89,20 @@ test.describe('Lead vs QualifiedLead', () => {
     expect(capi.VALUE_QUALIFIED_LEAD).toBeGreaterThan(0);
   });
 
-  // Modelled, not measured: as of 13 Sep 2026 no ad-attributed lead has ever closed,
-  // so there is no real rate to use. Pinning the derivation means raising these has to
-  // be a deliberate re-derivation once a traced ad-sourced deal exists.
-  test('both values still equal the modelled base-case rate times the S$9,600 build fee', () => {
-    const BUILD_FEE = 9600;
-    const BOOKS = 0.05, CLOSES = 0.20;            // 41-CLOSER-NUMBERS.md section 3, base case
+  // Two different sources of truth, on purpose.
+  // QualifiedLead is MODELLED from our own funnel: as of 13 Sep 2026 no ad-attributed
+  // lead has ever reached a won stage, so there is no measured rate to use.
+  test('QualifiedLead is the modelled base-case rate times the S$9,600 build fee', () => {
+    const BUILD_FEE = 9600, BOOKS = 0.05, CLOSES = 0.20;   // 41-CLOSER-NUMBERS.md section 3
     expect(capi.VALUE_QUALIFIED_LEAD).toBe(Math.round(BOOKS * CLOSES * BUILD_FEE));
-    expect(capi.VALUE_SCHEDULE).toBe(Math.round(CLOSES * BUILD_FEE));
   });
 
-  test('the ratio between them stays near 1:20, which is what actually steers the bidding', () => {
-    const ratio = capi.VALUE_SCHEDULE / capi.VALUE_QUALIFIED_LEAD;
-    expect(ratio).toBeGreaterThan(15);
-    expect(ratio).toBeLessThan(25);
+  // Schedule is SET BY THE ADS CONTRACT, not derived: a flat S$500 to start.
+  // Worth knowing it understates a booked call by roughly 4x against our own funnel
+  // (20% close x S$9,600 is nearer S$1,900), which is safe for bidding and wrong for
+  // reading ROAS. Changing it is an ads-side decision, so the test pins the contract.
+  test('Schedule carries the flat S$500 the tracking spec asks for', () => {
+    expect(capi.VALUE_SCHEDULE).toBe(500);
   });
 
   test('Schedule still carries its value and keeps its opportunity-derived id', () => {

@@ -620,3 +620,95 @@ test.describe('a qualified lead goes straight to the Closer', () => {
     expect(msg).toMatch(/set up a time/i);
   });
 });
+
+// Contract: 41closer-marketing/ads/2026-09-batch/CONVERSION-TRACKING-SPEC.md.
+// Every conversion must fire on BOTH sides with the SAME id. If the ids ever diverge,
+// Meta counts one conversion as two and every cost-per-booked-call figure halves.
+test.describe('Meta conversions fire from both sides with one id', () => {
+  async function setup(page: any) {
+    const api: any[] = [];
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route('**/api/meta-event', (r: any) => {
+      api.push(JSON.parse(r.request().postData() || '{}'));
+      return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    });
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
+    await page.addInitScript(() => {
+      (window as any).__fbq = [];
+      (window as any).fbq = (...a: any[]) => (window as any).__fbq.push(a);
+    });
+    return api;
+  }
+
+  const pixelCall = (page: any, name: string) =>
+    page.evaluate((n: string) => ((window as any).__fbq || []).find((a: any[]) => a[0] === 'track' && a[1] === n), name);
+
+  test('InitiateCheckout fires when the calendar opens, on both sides, same id', async ({ page }) => {
+    const api = await setup(page);
+    await page.goto('/ai-closer.html');
+    await page.evaluate(() => { (window as any).BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/T?gv=true'; });
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '50to150');
+    await page.selectOption('#cl-sale', '500to2k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+
+    await expect(page.locator('#cl-cal iframe')).toBeVisible();
+    const px = await pixelCall(page, 'InitiateCheckout');
+    expect(px, 'pixel InitiateCheckout').toBeTruthy();
+    await expect.poll(() => api.filter((e) => e.name === 'InitiateCheckout').length).toBe(1);
+    const srv = api.find((e) => e.name === 'InitiateCheckout');
+    expect(srv.eventId).toBe(px[3].eventID);              // the dedup key
+    expect(srv.email).toBe('wm@tanaircon.sg');            // advanced matching
+    expect(srv.phone).toBe('+65 9123 4567');
+    expect(srv.sourceUrl).toContain('/ai-closer');
+  });
+
+  test('Schedule fires from the browser too, so it can deduplicate', async ({ page }) => {
+    const api = await setup(page);
+    await page.goto('/ai-closer.html');
+    await page.evaluate(() => (window as any).onCloserBooked());
+    const px = await pixelCall(page, 'Schedule');
+    expect(px).toBeTruthy();
+    await expect.poll(() => api.filter((e) => e.name === 'Schedule').length).toBe(1);
+    expect(api.find((e) => e.name === 'Schedule').eventId).toBe(px[3].eventID);
+  });
+
+  test('a confirmed booking reveals the Closer handoff', async ({ page }) => {
+    await setup(page);
+    await page.goto('/ai-closer.html');
+    await page.evaluate(() => { (window as any).BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/T?gv=true'; });
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '50to150');
+    await page.selectOption('#cl-sale', '500to2k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+
+    // the calendar is the action; the Closer handoff only appears once they have booked
+    await expect(page.locator('#cl-cal iframe')).toBeVisible();
+    await expect(page.locator('#cl-handoff')).toBeHidden();
+    await page.evaluate(() => (window as any).onCloserBooked());
+    await expect(page.locator('#cl-handoff')).toBeVisible();
+  });
+
+  test('ViewContent fires once the demo has been on screen a while', async ({ page }) => {
+    const api = await setup(page);
+    await page.goto('/ai-closer.html');
+    await page.locator('.vbox').scrollIntoViewIfNeeded();
+    await expect.poll(() => api.filter((e) => e.name === 'ViewContent').length, { timeout: 8000 }).toBe(1);
+    const px = await pixelCall(page, 'ViewContent');
+    expect(api.find((e) => e.name === 'ViewContent').eventId).toBe(px[3].eventID);
+  });
+});

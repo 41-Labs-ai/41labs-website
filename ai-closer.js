@@ -24,11 +24,53 @@ window.BOOKING_URL = window.BOOKING_URL || '';
     // api/closer-lead.js is deduped instead of double counted.
     function pixel(name, p, opts) { try { if (window.fbq) window.fbq('track', name, p || {}, opts || {}); } catch (e) {} }
 
-    // ---- Booking complete (called by the Cal.com embed; Google bookings are synced server-side) ----
+    // ---- Meta conversions: every event fires on BOTH sides with one id ----
+    // Contract: 41closer-marketing/ads/2026-09-batch/CONVERSION-TRACKING-SPEC.md.
+    // The pixel dies to ad blockers and iOS; the server copy survives. Sharing the id is
+    // what stops Meta counting the same conversion twice and halving every cost figure.
+    var lastLead = {};                     // what we know about them, for advanced matching
+    function metaEvent(name, extra) {
+        var cl = window.cl41;
+        var id = (cl && cl.newEventId ? cl.newEventId() : name + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8));
+        var ids = cl ? cl.ids() : { fbp: '', fbc: '' };
+        pixel(name, extra || {}, { eventID: id });
+        try {
+            fetch('/api/meta-event', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+                body: JSON.stringify({
+                    name: name, eventId: id, sourceUrl: location.origin + location.pathname,
+                    fbp: ids.fbp, fbc: ids.fbc, fbclid: attr.fbclid || '',
+                    email: lastLead.email || '', phone: lastLead.whatsapp || '',
+                    fullName: lastLead.name || '', tier: lastLead.tier || '',
+                }),
+            }).catch(function () {});
+        } catch (e) {}
+        return id;
+    }
+
+    // Booking confirmed in the browser. Google bookings never reach this, so they are
+    // caught server-side by api/cron/booking-sync.js instead.
     window.onCloserBooked = function () {
-        pixel('Schedule', { content_name: 'ai_closer_call', variant: variant });
+        metaEvent('Schedule', { content_name: 'ai_closer_call', variant: variant });
         track('book_call_complete', { event_category: 'conversion', cta_id: 'ai_closer', variant: variant });
+        var box = document.getElementById('cl-handoff');
+        if (box) box.hidden = false;
     };
+
+    // They reached the demo and stayed on it. Engagement, no value.
+    (function viewContentOnce() {
+        var demo = document.querySelector('.vbox') || document.getElementById('proof-2');
+        if (!demo || !('IntersectionObserver' in window)) return;
+        var fired = false;
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (fired || !en.isIntersecting) return;
+                fired = true; io.disconnect();
+                setTimeout(function () { metaEvent('ViewContent', { content_name: 'ai_closer_demo', variant: variant }); }, 3000);
+            });
+        }, { threshold: 0.5 });
+        io.observe(demo);
+    })();
 
     var form = document.getElementById('cl-form');
     if (form) initForm(form);
@@ -153,6 +195,7 @@ window.BOOKING_URL = window.BOOKING_URL || '';
             // Without it Meta counts the pixel Lead and the Conversions API Lead as
             // two conversions and every cost-per-lead number halves. See api/_lib/meta-capi.js.
             var cl = window.cl41;
+            lastLead = { name: data.name, email: data.email, whatsapp: data.whatsapp, tier: data.tier };
             data.eventId = (cl && cl.newEventId ? cl.newEventId() : 'lead_' + Date.now());
             if (cl) {
                 var ids = cl.ids();
@@ -220,7 +263,9 @@ window.BOOKING_URL = window.BOOKING_URL || '';
 
     // Qualified only. Shown AFTER the calendar: the booking is the commitment, the
     // WhatsApp conversation is what keeps them warm until the call.
-    function showHandoff(data) {
+    // Builds the prefilled link and, only when told to, reveals it. Calendar-first
+    // means the handoff is the reward for booking, not a competing button beside it.
+    function showHandoff(data, reveal) {
         var box = document.getElementById('cl-handoff');
         if (!box) return;
         var link = document.getElementById('cl-wa-handoff');
@@ -231,22 +276,31 @@ window.BOOKING_URL = window.BOOKING_URL || '';
                 if (window.cl41) window.cl41.mark('closer_handoff_click', { tier: data.tier });
             });
         }
-        box.hidden = false;
+        if (reveal) box.hidden = false;
     }
 
     function showCalendar(data) {
         var url = (window.BOOKING_URL || '').trim();
         var holder = document.getElementById('cl-cal');
         var head = document.getElementById('cl-cal-head');
-        showHandoff(data);
+        // prepare the message now, reveal it once they have booked
+        showHandoff(data, !url);
         // No calendar configured is fine now: the Closer books the call in chat, so
         // the page never has to apologise for an empty slot.
         if (!url) {
             if (holder) holder.hidden = true;
             if (head) head.hidden = true;
+            var box = document.getElementById('cl-handoff');
+            if (box) box.hidden = false;
+            var fb = document.getElementById('cl-cal-fallback');
+            if (fb) fb.hidden = false;
             return;
         }
         if (head) head.hidden = false;
+        // The early optimisation proxy: enough volume on day one to train the ad set
+        // before Schedule reaches the ~15-25 a week it needs.
+        metaEvent('InitiateCheckout', { content_name: 'ai_closer_calendar', variant: variant });
+        track('open_calendar', { event_category: 'conversion', cta_id: 'ai_closer', variant: variant });
 
         if (/^https:\/\/calendar\.google\.com\//.test(url)) {
             var f = document.createElement('iframe');

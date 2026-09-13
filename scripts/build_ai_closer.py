@@ -270,17 +270,18 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                     <div id="cl-step2" hidden>
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
-                            <h3>Talk to your Closer now.</h3>
-                            <p class="handoff-lead">Everything you just told us is already in the message. It will ask a few things about how you sell, then put a time in Alexander's calendar for you.</p>
-                            <div id="cl-handoff">
-                                <a class="btn btn-primary btn-block" id="cl-wa-handoff" href="https://wa.me/6580124848" target="_blank" rel="noopener">Message now <span class="arrow">&rarr;</span></a>
-                                <p class="handoff-note">This is the same Closer we would build for you. Watch it work on the way to the call.</p>
-                            </div>
-                            <div id="cl-cal-head" hidden>
-                                <p class="cal-or">Or pick a time yourself</p>
+                            <div id="cl-cal-head">
+                                <h3>Pick a time. We build your Closer before we meet.</h3>
+                                <p>20 minutes on Google Meet with Alexander. Your own products, your own prices, your numbers.</p>
                             </div>
                             <div id="cl-cal"></div>
-                            <div id="cl-cal-fallback" hidden></div>
+                            <div id="cl-handoff" hidden>
+                                <p class="handoff-lead"><b>Booked.</b> One more thing: say hello to your Closer on WhatsApp. Everything you told us is already in the message, and you get to watch it work before the call.</p>
+                                <a class="btn btn-primary btn-block" id="cl-wa-handoff" href="https://wa.me/6580124848" target="_blank" rel="noopener">Message now <span class="arrow">&rarr;</span></a>
+                            </div>
+                            <div id="cl-cal-fallback" hidden>
+                                <p>Thanks, <span class="cl-first"></span>. Message your Closer on WhatsApp and it will put a time in Alexander's calendar for you.</p>
+                            </div>
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>

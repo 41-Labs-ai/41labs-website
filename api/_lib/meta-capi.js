@@ -25,28 +25,20 @@ const DEFAULT_PIXEL = '24659272643698089';
 const SOURCE_URL = 'https://41labs.ai/ai-closer';
 const CURRENCY = 'SGD';
 
-// Expected build revenue sitting behind one event. These are MODELLED, not measured.
-//
-// Checked on 13 Sep 2026: no ad-attributed lead has ever reached a won stage. The
-// one client the July run is credited with (Hertz) has leadSource "WhatsApp inbound"
-// in Twenty, no Hermes lead record, and no ad referral anywhere. The claim that it
-// came from ad_stalk1_notchatbot is not supported by Hermes or Twenty. Only 83 of
-// 1,157 non-demo July leads (7%) carry an ad referral at all, so the funnel below
-// cannot be measured end to end yet.
-//
-// So these use the base case from 41 Labs/41-CLOSER-NUMBERS.md section 3:
-//   qualified lead -> 5% book a call -> 20% of calls close = 1% x S$9,600 = S$96
-//   booked call    -> 20% of calls close                   =       S$1,920
-//
-// Build fee only. The S$1,490/mo retainer is excluded: four clients are signed and
-// none is live, so there are no months of retention to value.
-//
-// Raise these to the measured rate the moment one ad-sourced deal actually closes
-// and can be traced. Until then the ratio (1:20) is the part that steers bidding and
-// it holds across every scenario in the doc; the absolute figures only set how ROAS
-// reads in Ads Manager.
+// Values Meta optimises against. Set by the ads-side contract at
+// 41closer-marketing/ads/2026-09-batch/CONVERSION-TRACKING-SPEC.md: a flat S$500 on
+// Schedule, to be tuned later. Kept deliberately as the spec says rather than as the
+// funnel implies: 20% of calls close x S$9,600 build fee would put a booked call
+// nearer S$2,000, so this UNDERSTATES a booked call by about 4x. That is safe for
+// bidding and wrong for reading ROAS, so raise it once the campaign has data.
+const VALUE_SCHEDULE = 500;
+
+// QualifiedLead is modelled, not measured: as of 13 Sep 2026 no ad-attributed lead has
+// ever reached a won stage. The Hertz deal has leadSource "WhatsApp inbound" in Twenty,
+// no Hermes lead record and no ad referral, and only 83 of 1,157 non-demo July leads
+// (7%) carry an ad referral at all. So this uses the modelled base case from
+// 41 Labs/41-CLOSER-NUMBERS.md section 3: 5% book x 20% close x S$9,600 = S$96.
 const VALUE_QUALIFIED_LEAD = 96;
-const VALUE_SCHEDULE = 1920;
 
 const sha256 = (v) => crypto.createHash('sha256').update(v).digest('hex');
 
@@ -109,10 +101,27 @@ const buildQualifiedLeadEvent = (i) => buildEvent({
   value: VALUE_QUALIFIED_LEAD,
 });
 
+// The visitor opened the booking calendar. The early optimisation proxy: enough volume
+// on day one to train the ad set before Schedule has the ~15-25/week it needs.
+const buildInitiateCheckoutEvent = (i) => buildEvent({
+  ...i,
+  eventName: 'InitiateCheckout',
+  contentName: i.contentName || '41closer-open-calendar',
+});
+
+// They reached the product demo and stayed. Engagement, no value.
+const buildViewContentEvent = (i) => buildEvent({
+  ...i,
+  eventName: 'ViewContent',
+  contentName: i.contentName || '41closer-demo',
+});
+
 const buildScheduleEvent = (i) => buildEvent({
   ...i,
   eventName: 'Schedule',
-  eventId: `schedule_${i.opportunityId}`,
+  // The cron derives the id from the deal; the browser mints its own and sends the
+  // same one to the pixel, so either source can be deduplicated against the other.
+  eventId: i.opportunityId ? `schedule_${i.opportunityId}` : i.eventId,
   contentName: '41closer-demo-call',
   value: VALUE_SCHEDULE,
 });
@@ -141,5 +150,6 @@ async function sendCapiEvent(event, { env, fetchImpl, timeoutMs = 5000 }) {
 module.exports = {
   DEFAULT_PIXEL, CURRENCY, VALUE_QUALIFIED_LEAD, VALUE_SCHEDULE,
   hashEmail, hashPhone, hashName, buildFbc, buildUserData,
-  buildEvent, buildLeadEvent, buildQualifiedLeadEvent, buildScheduleEvent, sendCapiEvent,
+  buildEvent, buildLeadEvent, buildQualifiedLeadEvent, buildScheduleEvent,
+  buildInitiateCheckoutEvent, buildViewContentEvent, sendCapiEvent,
 };
