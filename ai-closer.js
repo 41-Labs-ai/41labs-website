@@ -209,6 +209,19 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
                 .then(function (r) { return r.json(); })
                 .then(function (j) { if (j && j.id) partialId = j.id; })
                 .catch(function () {});
+
+            // Email copy of the partial too. Telegram alone means a half-finished form
+            // is lost the moment the notification scrolls off the phone.
+            try {
+                var pc = new FormData();
+                pc.append('_subject', 'PARTIAL 41 Closer lead (did not finish the questions)');
+                pc.append('name', partial.name);
+                pc.append('email', partial.email);
+                pc.append('whatsapp', partial.whatsapp);
+                pc.append('stage', 'contact captured, questions not answered');
+                Object.keys(attr).forEach(function (k) { pc.append(k, attr[k]); });
+                fetch(form.action, { method: 'POST', body: pc, headers: { 'Accept': 'application/json' } }).catch(function () {});
+            } catch (e) {}
             if (window.cl41) window.cl41.mark('form_contact_captured', { variant: variant });
 
             var first = part2.querySelector('select, input');

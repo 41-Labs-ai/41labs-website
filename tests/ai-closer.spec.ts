@@ -166,7 +166,8 @@ for (const P of PAGES) {
         utm_campaign: '41closer_lp_2026-09', utm_content: 'ad_stalk1', fbclid: 'abc123',
       });
       expect(sent.api[1].fitReason).toBeTruthy();
-      expect(sent.formspree).toBe(1);
+      // one email on the partial, one on the finished lead
+      await expect.poll(() => sent.formspree, { timeout: 3000 }).toBe(2);
       expect(await fbqEvents(page)).toContain('Lead');
     });
 
@@ -801,5 +802,50 @@ test.describe('the form checks the email and the number are real', () => {
     await expect(page.locator('#cl-email-error')).toBeVisible();
     await page.fill('#cl-email', 'wm@tanaircon.sg');
     await expect(page.locator('#cl-email-error')).toBeHidden();
+  });
+});
+
+// Every lead has to reach Alexander twice, finished or not. Telegram alone means a
+// half-filled form is gone the moment the notification scrolls off his phone.
+test.describe('a lead always reaches him two ways', () => {
+  test('a partial sends both the CRM post and an email copy', async ({ page }) => {
+    const sent = await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+6591234567');
+    await page.click('#cl-next');
+    await expect.poll(() => sent.api.length).toBe(1);
+    expect(sent.api[0].partial).toBe(true);
+    await expect.poll(() => sent.formspree, { timeout: 3000 }).toBe(1);   // the email copy
+  });
+
+  test('finishing the form sends a second pair, not a silent update', async ({ page }) => {
+    const sent = await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+6591234567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+    await expect.poll(() => sent.api.length).toBe(2);
+    await expect.poll(() => sent.formspree, { timeout: 3000 }).toBe(2);
+    expect(sent.api[1].tier).toBe('A');
+  });
+});
+
+test.describe('the audience band names who this is for', () => {
+  test('carries the revenue band and the buying behaviour', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    const aud = page.locator('#hero .aud');
+    await expect(aud).toContainText(/S\$300k to S\$5M a year/);
+    await expect(aud).toContainText(/WhatsApp/);
+    await expect(aud).toContainText(/Not just a chatbot/);   // ad message match
   });
 });
