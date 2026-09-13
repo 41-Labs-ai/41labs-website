@@ -182,25 +182,26 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /wa\.me\/6580124848/);
     });
 
-    test('under 50 enquiries a week is held back, and never handed to the AI Closer', async ({ page }) => {
+    // Nobody is turned away any more: everyone books and the tier carries the judgement.
+    test('a small business still books, and is filed as tier C', async ({ page }) => {
       const sent = await stubNetwork(page);
       await page.goto(P.path);
-      await fillForm(page, { enquiries: 'under20' });
+      await fillForm(page, { enquiries: 'under20', saleValue: 'under500' });
       await page.click('#cl-submit');
-      await expect(page.locator('#cl-notyet')).toBeVisible();
-      await expect(page.locator('#cl-book')).toBeHidden();
-      await expect(page.locator('#cl-handoff')).toBeHidden();
-      expect(sent.api[1]).toMatchObject({ qualified: 'no', tier: 'C' });
+      await expect(page.locator('#cl-book')).toBeVisible();
+      await expect(page.locator('#cl-notyet')).toBeHidden();
+      await expect.poll(() => sent.api.length).toBe(2);
+      expect(sent.api[1]).toMatchObject({ qualified: 'yes', tier: 'C' });
     });
 
-    test('under S$500 a sale is held back too, however many enquiries', async ({ page }) => {
+    test('the low-volume, high-ticket business the old rule threw out now books as B', async ({ page }) => {
       const sent = await stubNetwork(page);
       await page.goto(P.path);
-      await fillForm(page, { enquiries: '150plus', saleValue: 'under500' });
+      await fillForm(page, { enquiries: '20to50', saleValue: '2kto10k' });
       await page.click('#cl-submit');
-      await expect(page.locator('#cl-notyet')).toBeVisible();
-      await expect(page.locator('#cl-handoff')).toBeHidden();
-      expect(sent.api[1]).toMatchObject({ qualified: 'no', tier: 'C' });
+      await expect(page.locator('#cl-book')).toBeVisible();
+      await expect.poll(() => sent.api.length).toBe(2);
+      expect(sent.api[1]).toMatchObject({ qualified: 'yes', tier: 'B' });
     });
 
     test('qualified + Google booking URL: calendar iframe, no fallback', async ({ page }) => {

@@ -29,7 +29,7 @@ const GOALS = {
 const NEXT = {
   A: 'TIER A: guarantee-eligible. Call within 1 hour, even if they booked.',
   B: 'TIER B: confirm the call is booked. If not, WhatsApp them within 1 working hour.',
-  C: 'TIER C: HOLD. Did not clear 50 enquiries a week and S$500 a sale. Do NOT hand to the AI Closer. Look properly, then reply within 1 working day.',
+  C: 'TIER C: low enquiry value. They can book like anyone else, but check the maths pays back before you quote a price.',
 };
 // Step 1 only: we have their number but not their answers yet.
 const NEXT_PARTIAL = 'INCOMPLETE FORM: gave contact details, did not finish the questions. WhatsApp them and ask the two questions by hand.';
@@ -270,7 +270,7 @@ module.exports = async (req, res) => {
       twentyUrl: oppId ? `${TWENTY_BASE}/object/opportunity/${oppId}` : '',
       crmError,
     }, deps),
-    (isPartial || tier === 'C') ? Promise.resolve('skipped_not_qualified') : postHermesIntake({
+    isPartial ? Promise.resolve('skipped_partial') : postHermesIntake({
       event: 'lead_created',
       lead: {
         name,
