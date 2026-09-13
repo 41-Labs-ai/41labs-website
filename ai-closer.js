@@ -3,11 +3,12 @@
 // closer-qualify.js,
 // lead to /api/closer-lead + Formspree copy, Pixel Lead / Schedule, calendar step.
 //
-// Calendar for qualified leads. Set ONE of, before this script loads or here:
-//   Google Calendar appointment schedule embed URL (Share > Website embed > iframe src)
-//   or a Cal.com link like '41labs/closer-call'.
-// Empty = qualified leads see the WhatsApp fallback.
-window.BOOKING_URL = window.BOOKING_URL || '';
+// Calendar for qualified leads. The '41 Closer' appointment schedule on
+// alexander@41labs.ai. The ?gv=true is what makes it render as the booking widget
+// instead of the whole Google Calendar UI, so do not drop it.
+// api/cron/booking-sync.js matches the booked events by the '41 Closer' in their title.
+// A page can override this before the script loads; empty falls back to the Closer chat.
+window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3iE68ubJkSyNFAaiHyXkE6WRC2dykDqmSTbik9gTn-Q8WrOJEiPfO6JJI4EyiNgjPtpip6Mlq1?gv=true';
 
 (function () {
     // ---- Attribution: keep the ad's UTMs and fbclid for this visit ----

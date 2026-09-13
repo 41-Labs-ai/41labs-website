@@ -595,11 +595,13 @@ test.describe('the website field only accepts a website', () => {
 });
 
 // The Closer runs discovery and books the call, so it is the action, not a footnote.
-test.describe('a qualified lead goes straight to the Closer', () => {
-  test('the Closer is the primary action, and the calendar is optional', async ({ page }) => {
+test.describe('a qualified lead is sent to the calendar', () => {
+  test('the calendar is the action, and the Closer handoff waits for the booking', async ({ page }) => {
     await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
     await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
+    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
@@ -612,12 +614,14 @@ test.describe('a qualified lead goes straight to the Closer', () => {
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
 
-    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
-    // with no BOOKING_URL the page says nothing about picking a time
-    await expect(page.locator('#cl-cal-head')).toBeHidden();
+    await expect(page.locator('#cl-cal-head')).toBeVisible();
+    await expect(page.locator('#cl-cal iframe')).toBeVisible();
+    await expect(page.locator('#cl-handoff')).toBeHidden();   // the reward for booking
+
+    await page.evaluate(() => (window as any).onCloserBooked());
+    await expect(page.locator('#cl-handoff')).toBeVisible();
     const msg = decodeURIComponent(((await page.locator('#cl-wa-handoff').getAttribute('href')) || '').split('?text=')[1] || '');
     expect(msg).toContain('tanaircon.sg');
-    expect(msg).toMatch(/set up a time/i);
   });
 });
 
@@ -710,5 +714,40 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     await expect.poll(() => api.filter((e) => e.name === 'ViewContent').length, { timeout: 8000 }).toBe(1);
     const px = await pixelCall(page, 'ViewContent');
     expect(api.find((e) => e.name === 'ViewContent').eventId).toBe(px[3].eventID);
+  });
+});
+
+// The calendar is the conversion. If BOOKING_URL is ever emptied or the ?gv=true is
+// dropped, the page silently stops being able to take a booking and InitiateCheckout
+// and Schedule both stop firing, with no error anywhere.
+test.describe('the booking calendar is actually configured', () => {
+  test('a real Google appointment schedule is set, with the embed parameter', async ({ page }) => {
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g|calendar\.google\.com/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    const url = await page.evaluate(() => (window as any).BOOKING_URL);
+    expect(url).toMatch(/^https:\/\/calendar\.google\.com\/calendar\/appointments\/schedules\//);
+    expect(url, 'without gv=true Google renders the full calendar UI, not the widget').toContain('gv=true');
+  });
+
+  test('a qualified lead is shown that calendar', async ({ page }) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '50to150');
+    await page.selectOption('#cl-sale', '500to2k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+    const frame = page.locator('#cl-cal iframe');
+    await expect(frame).toBeVisible();
+    await expect(frame).toHaveAttribute('src', /appointments\/schedules\/.*gv=true/);
   });
 });
