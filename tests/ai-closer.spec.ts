@@ -628,7 +628,6 @@ test.describe('Meta conversions fire from both sides with one id', () => {
   test('InitiateCheckout fires when the calendar opens, on both sides, same id', async ({ page }) => {
     const api = await setup(page);
     await page.goto('/ai-closer.html');
-    await page.evaluate(() => { (window as any).BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/T?gv=true'; });
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
     await page.fill('#cl-whatsapp', '+6591234567');
@@ -640,7 +639,8 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
 
-    await expect(page.locator('#cl-cal iframe')).toBeVisible();
+    await expect.poll(async () => page.evaluate(() =>
+      ((((window as any).Cal || {}).q) || []).some((a: any) => a[0] === 'inline')), { timeout: 8000 }).toBe(true);
     const px = await pixelCall(page, 'InitiateCheckout');
     expect(px, 'pixel InitiateCheckout').toBeTruthy();
     await expect.poll(() => api.filter((e) => e.name === 'InitiateCheckout').length).toBe(1);

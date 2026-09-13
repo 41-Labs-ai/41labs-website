@@ -7,6 +7,7 @@
 // /api/audit already posts website leads (41 Labs group, inbox topic 27).
 
 const { escapeHtml, fetchWithTimeout } = require('./util');
+const { sendGmail } = require('./gmail');
 
 const DEFAULT_FROM = '41 Labs Leads <leads@41labs.ai>';
 const DEFAULT_TO = 'alexander@41labs.ai';
@@ -109,9 +110,13 @@ async function sendEmail(lead, { env, fetchImpl }) {
 }
 
 async function sendLeadAlerts(lead, deps) {
+  // Keep the reason. A bare 'failed' here hid a real Gmail error for an hour, and on
+  // the lead path that is the kind of thing that stays broken for weeks: nothing
+  // throws where anyone can see it, the email just never arrives.
+  const reason = (e) => `failed:${String((e && e.message) || e).slice(0, 140)}`;
   const [telegram, email] = await Promise.all([
-    sendTelegram(lead, deps).catch(() => 'failed'),
-    sendEmail(lead, deps).catch(() => 'failed'),
+    sendTelegram(lead, deps).catch(reason),
+    sendEmail(lead, deps).catch(reason),
   ]);
   return { telegram, email };
 }

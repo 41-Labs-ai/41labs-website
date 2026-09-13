@@ -88,3 +88,37 @@ test.describe('sending', () => {
     expect((await run({ throws: true })).r).toBe('failed');
   });
 });
+
+// The import of sendGmail was missing for three deploys and every lead email failed
+// with "sendGmail is not defined". Nothing threw where anyone could see it, and the
+// alert just reported a bare 'failed'. This proves the wiring, not just the file parsing.
+test.describe('lead-alert really reaches Gmail', () => {
+  const alert = require(path.join(LIB, 'lead-alert.js'));
+
+  test('with no Resend key, the email goes out over Gmail', async () => {
+    const hit: string[] = [];
+    const fetchImpl = async (url: string) => {
+      hit.push(String(url));
+      if (String(url).includes('oauth2')) return { ok: true, status: 200, json: async () => ({ access_token: 'tok' }), text: async () => '' };
+      return { ok: true, status: 200, json: async () => ({ id: 'm1' }), text: async () => '' };
+    };
+    const r = await alert.sendLeadAlerts(
+      { name: 'Tan Wei Ming', tier: 'A', whatsapp: '+6591234567', waDigits: '6591234567', email: 'wm@tanaircon.sg' },
+      { env: { GOOGLE_SERVICE_ACCOUNT_JSON: SA, TELEGRAM_BOT_TOKEN: 't', LEAD_ALERT_CHAT_ID: '-1' }, fetchImpl },
+    );
+    expect(r.email, 'a bare "failed" means the reason was swallowed again').toBe('sent');
+    expect(hit.some((u) => u.includes('gmail.googleapis.com'))).toBe(true);
+  });
+
+  test('a failure keeps its reason instead of collapsing to "failed"', async () => {
+    const fetchImpl = async (url: string) => {
+      if (String(url).includes('oauth2')) return { ok: true, status: 200, json: async () => ({ access_token: 'tok' }), text: async () => '' };
+      return { ok: false, status: 403, json: async () => ({}), text: async () => '{"error":"forbidden"}' };
+    };
+    const r = await alert.sendLeadAlerts(
+      { name: 'Tan', tier: 'A', whatsapp: '+6591234567', waDigits: '6591234567' },
+      { env: { GOOGLE_SERVICE_ACCOUNT_JSON: SA }, fetchImpl },
+    );
+    expect(r.email).toMatch(/^failed:403/);
+  });
+});
