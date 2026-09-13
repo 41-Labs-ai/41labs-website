@@ -620,3 +620,36 @@ test.describe('a company we already know must not kill the lead', () => {
     expect(opp.body.pointOfContactId).toMatch(/^people-id/);
   });
 });
+
+// Alexander wants a ping for every lead, finished or not. A partial is still someone
+// he can call, but the questions are unanswered, so it has to be obvious which is which.
+test.describe('he is notified either way', () => {
+  const partial = { partial: true, name: 'Tan Wei Ming', whatsapp: '+6591234567', email: 'wm@tanaircon.sg' };
+
+  test('a half-finished form still pings Telegram', async () => {
+    const { calls, json } = await run(partial, { env: FULL_ENV });
+    expect(json.ok).toBe(true);
+    expect(tgCall(calls), 'no Telegram alert for a partial').toBeTruthy();
+  });
+
+  test('and the ping says it is a partial, not a finished lead', async () => {
+    const { calls } = await run(partial, { env: FULL_ENV });
+    const text = tgCall(calls)!.body.text;
+    expect(text).toMatch(/PARTIAL/);
+    expect(text).toMatch(/did not finish/i);
+    expect(text).toContain('Tan Wei Ming');
+    expect(text).toContain('9123');           // the number, so he can call straight back
+  });
+
+  test('a finished lead leads with the tier instead', async () => {
+    const { calls } = await run(lead, { env: FULL_ENV });
+    const text = tgCall(calls)!.body.text;
+    expect(text).toMatch(/TIER A/);
+    expect(text).not.toMatch(/PARTIAL/);
+  });
+
+  test('a partial is still never reported to Meta as a conversion', async () => {
+    const { calls } = await run(partial, { env: FULL_ENV });
+    expect(calls.find((c) => c.url.includes('graph.facebook.com'))).toBeUndefined();
+  });
+});

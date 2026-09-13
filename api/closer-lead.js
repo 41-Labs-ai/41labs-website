@@ -249,6 +249,7 @@ module.exports = async (req, res) => {
 
   const [alerts, hermes, meta] = await Promise.all([
     sendLeadAlerts({
+      partial: isPartial,
       tier,
       name,
       company,

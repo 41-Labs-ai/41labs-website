@@ -19,7 +19,13 @@ function alertLines(lead, { html }) {
   const wa = lead.waDigits ? `https://wa.me/${lead.waDigits}` : '';
   const who = [lead.name, lead.role ? `(${lead.role})` : ''].filter(Boolean).join(' ');
   const lines = [
-    html ? `<b>${esc(lead.tier ? `TIER ${lead.tier}` : 'NEW LEAD')}</b> · 41 Closer ad lead` : `${lead.tier ? `TIER ${lead.tier}` : 'NEW LEAD'} · 41 Closer ad lead`,
+    // A partial has to be obvious at a glance: it is someone we can still call, but the
+    // questions are unanswered, so it is a different job from a finished lead.
+    (() => {
+      const badge = lead.partial ? 'PARTIAL' : (lead.tier ? `TIER ${lead.tier}` : 'NEW LEAD');
+      const rest = lead.partial ? ' \u00b7 contact only, did not finish the questions' : ' \u00b7 41 Closer ad lead';
+      return html ? `<b>${esc(badge)}</b>${esc(rest)}` : `${badge}${rest}`;
+    })(),
     html ? `<b>${esc(who)}</b>` : `Name: ${who}`,
     `Company: ${esc(lead.company || '-')}${lead.industry ? ` · ${esc(lead.industry)}` : ''}`,
     lead.website ? `Website: ${esc(lead.website)}` : '',
