@@ -166,6 +166,12 @@
         .seen-row .chip { background: #fff; border-radius: 10px; padding: 10px 18px; display: inline-flex; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #efefef; }
         .seen-row .chip img { height: 28px; width: auto; }
 
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 980px; margin: 0 auto; }
+        .stat { background: #fff; border-radius: 18px; box-shadow: var(--shadow); padding: 20px 18px; text-align: center; }
+        .stat b { display: block; font-size: clamp(26px, 4vw, 34px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; }
+        .stat span { display: block; font-size: 13.5px; color: var(--text-2); margin-top: 6px; }
+        .stats-note { max-width: 820px; margin: 16px auto 0; text-align: center; font-size: 12.5px; color: var(--text-2); }
+        @media (min-width: 760px) { .stats { grid-template-columns: repeat(4, 1fr); } }
         /* what you get */
         .get-grid { display: grid; gap: 24px; align-items: center; margin-top: 26px; }
         .photo-cap { font-size: 12.5px; color: var(--text-2); margin-top: 8px; text-align: center; }
@@ -485,6 +491,20 @@
     </div>
 </section>
 
+
+<!-- 02b NUMBERS -->
+<section id="numbers" class="band" style="padding:44px 0 0">
+    <div class="wrap">
+        <div class="stats reveal">
+            <div class="stat"><b>45,355</b><span>customer messages handled on one client's WhatsApp</span></div>
+            <div class="stat"><b>1 in 4</b><span>of their enquiries arrived outside office hours</span></div>
+            <div class="stat"><b>19 seconds</b><span>median first reply, 9 in 10 under half a minute</span></div>
+            <div class="stat"><b>20</b><span>businesses have had a Closer built on their own data, across 17 industries</span></div>
+        </div>
+        <p class="stats-note">Measured from our own systems on 13 September 2026. The message, after-hours and speed figures come from one Singapore distributor's live line over four and a half months.</p>
+    </div>
+</section>
+
 <!-- 03 WHAT YOU GET (his: "What you'll walk out with") -->
 <section id="get" class="band" style="padding-top:36px">
     <div class="wrap">
@@ -518,10 +538,10 @@
             </div>
             <div class="result reveal">
                 <div class="result-top">
-                    <div class="big"><span>42,000</span></div>
-                    <h3>A hardware distributor, 9 branches</h3>
+                    <div class="big"><span>12,868</span></div>
+                    <h3>A Singapore distributor, 9 branches</h3>
                 </div>
-                <div class="result-body"><span class="result-tag">Products the Closer quotes from</span>About <b>S$300,000 a month</b> comes in over WhatsApp and email. A previous vendor took a setup fee and couldn't handle a catalogue that size. Ours answers from their own pricing system, synced every day.</div>
+                <div class="result-body"><span class="result-tag">Live products the Closer quotes from</span>About <b>S$300,000 a month</b> comes in over WhatsApp and email. A previous vendor took a setup fee and couldn't handle a catalogue that size. Ours answers from their own pricing system, synced every day.</div>
             </div>
         </div>
         

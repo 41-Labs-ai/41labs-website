@@ -274,7 +274,7 @@ test.describe('long form follows the event opt-in structure', () => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
     const ids = await page.locator('main > section[id]').evaluateAll((els) => els.map((e) => e.id));
-    const order = ['hero', 'seen', 'get', 'proof-1', 'letter', 'proof-2', 'why', 'money', 'weeks', 'guarantee', 'fit', 'before-after', 'why-now', 'faq', 'final'];
+    const order = ['hero', 'seen', 'numbers', 'get', 'proof-1', 'letter', 'proof-2', 'why', 'money', 'weeks', 'guarantee', 'fit', 'before-after', 'why-now', 'faq', 'final'];
     const found = order.filter((id) => ids.includes(id));
     expect(found).toEqual(order);
     expect(ids.filter((id) => order.includes(id))).toEqual(order);
@@ -373,5 +373,17 @@ test.describe('long form follows the event opt-in structure', () => {
     const alts = await page.locator('#seen .built img').evaluateAll((els) => els.map((e) => e.getAttribute('alt')));
     expect(alts.join(' ').toLowerCase()).toContain('whatsapp');
     expect(alts.length).toBeGreaterThanOrEqual(4);
+  });
+
+  test('counted proof strip, with the measurement stated and no stale SKU claim', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    expect(await page.locator('#numbers .stat').count()).toBeGreaterThanOrEqual(3);
+    await expect(page.locator('#numbers')).toContainText('45,355');
+    await expect(page.locator('#numbers .stats-note')).toContainText(/measured/i);
+    // 42,000 SKUs was a deprecated index; the live catalogue is 12,868
+    const text = await page.locator('body').innerText();
+    expect(text).not.toContain('42,000');
+    expect(text).toContain('12,868');
   });
 });
