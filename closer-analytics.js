@@ -19,6 +19,7 @@
     var SECTION_TICK = 500;     // how often we sample which section is on screen
     var IDLE_MS = 30000;        // no scroll/click/key for this long = not reading
     var BEACON_GAP = 15000;     // never beacon more often than this
+    var SECTION_SELECTOR = 'section[id], header[id], article[id], main[id]';
     var ATTR_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'msclkid'];
 
     // ---- storage that cannot throw ----
@@ -88,7 +89,7 @@
     var lastActive = Date.now();
     var maxScroll = 0;
     var sectionMs = {};          // id -> ms with at least half the section on screen
-    var onScreen = {};           // id -> true while intersecting
+    var observed = [];           // the landmark elements we credit time to
     var marks = [];              // named funnel events, in order
 
     function visible() { return document.visibilityState !== 'hidden'; }
@@ -124,10 +125,27 @@
         // when the event fires, and reveal-on-scroll keeps growing the page under us.
         noteScroll();
         if (t - lastActive < IDLE_MS) engagedMs += delta;
-        Object.keys(onScreen).forEach(function (id) {
-            if (onScreen[id]) sectionMs[id] = (sectionMs[id] || 0) + delta;
-        });
+        creditSections(delta);
     }, SECTION_TICK);
+
+    // Measured straight off the layout each tick rather than through
+    // IntersectionObserver thresholds. A section taller than the viewport can never
+    // be 50% visible, so on a phone the longest sections scored zero seconds - and
+    // phones are most of the ad traffic. The test is now "half the element, or half
+    // the screen, whichever is smaller", which holds at any section height.
+    function creditSections(delta) {
+        var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+        if (!vh) return;
+        for (var i = 0; i < observed.length; i++) {
+            var el = observed[i];
+            var r = el.getBoundingClientRect();
+            if (r.height <= 0) continue;
+            var shown = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+            if (shown >= Math.min(vh, r.height) * 0.5) {
+                sectionMs[el.id] = (sectionMs[el.id] || 0) + delta;
+            }
+        }
+    }
 
     // This file is loaded from <head> on some pages and from the end of <body> on
     // others, so it must never assume the DOM exists yet. document.body is null in
@@ -137,12 +155,10 @@
         else fn();
     }
 
+    // Landmarks, not just <section>: the ad page opens with a <header> hero, and an
+    // unmeasured block is a hole in the journey data.
     whenReady(function () {
-        if (!('IntersectionObserver' in window)) return;
-        var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) { onScreen[en.target.id] = en.isIntersecting; });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('section[id]').forEach(function (el) { io.observe(el); });
+        observed = [].slice.call(document.querySelectorAll(SECTION_SELECTOR));
     });
 
     function journey() {

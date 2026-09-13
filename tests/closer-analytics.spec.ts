@@ -289,6 +289,30 @@ test.describe('the page the ads actually point at', () => {
     expect(s.journey.ms).toBeGreaterThan(0);
   });
 
+  test('its sections are named, or "which part of the page works" has no answer', async ({ page }) => {
+    await stubGtm(page);
+    await page.goto('/41-closer.html');
+    // must match SECTION_SELECTOR in closer-analytics.js: an unobserved block is a
+    // blind spot in both the journey data and the Clarity heatmap
+    const ids = await page.locator('section[id], header[id], article[id], main[id]')
+      .evaluateAll((els) => els.map((e) => e.id));
+    expect(ids.length).toBeGreaterThanOrEqual(12);
+    expect(ids).toContain('hero');            // the hero is a <header>, not a <section>
+    expect(ids).toContain('guarantee');
+    expect(ids).toContain('plans');           // pre-existing anchor, must not be renamed
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(await page.locator('section:not([id])').count()).toBe(0);
+  });
+
+  test('time is attributed to a named section here too', async ({ page }) => {
+    await stubGtm(page);
+    await page.goto('/41-closer.html');
+    await page.locator('#guarantee').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(2500);
+    const sections: [string, number][] = (await page.evaluate(() => (window as any).cl41.snapshot())).journey.sections;
+    expect(Object.fromEntries(sections).guarantee).toBeGreaterThanOrEqual(1000);
+  });
+
   test('the ad variant in ?v= is what the page reports, or the split test is unreadable', async ({ page }) => {
     await stubGtm(page);
     await page.goto('/41-closer.html?v=industrial&utm_content=ad_stalk2_11pm');
