@@ -259,6 +259,12 @@ def replace_block(s, start, end, new):
 def build(page, hero_chat=True, seen=False, proof=False):
     p = os.path.join(ROOT, page); s = open(p).read()
     s = replace_block(s, '<form id="cl-form"', '</form>', FORM)
+    # replace_block stops at the first </form>, but FORM ends with FORM_CTA which sits
+    # AFTER that tag. So every run used to leave the previous CTA in place and add
+    # another: four builds, four identical "Prefer to just try it?" lines. Collapse any
+    # run of them back to one. Idempotent however many times this script has been run.
+    s = re.sub(r'(?:\s*<p class="wa-cta-line">.*?</p>)+',
+               lambda m: '\n                ' + FORM_CTA, s, flags=re.S)
     if hero_chat:
         s = replace_block(s, '<!-- WA-HERO -->', '<!-- /WA-HERO -->', '<!-- WA-HERO -->' + hero_block() + '<!-- /WA-HERO -->')
     if seen:

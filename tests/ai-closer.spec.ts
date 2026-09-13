@@ -387,6 +387,26 @@ test.describe('long form follows the event opt-in structure', () => {
     expect(text).toContain('12,868');
   });
 
+  // build_ai_closer.py replaces up to the first </form>, but FORM ends with the CTA
+  // AFTER that tag, so every run left the previous copy behind and stacked another.
+  for (const p of ['/ai-closer.html', '/ai-closer-sf.html']) {
+    test(`${p}: the "try it on WhatsApp" line appears once, not once per build run`, async ({ page }) => {
+      await stubNetwork(page);
+      await page.goto(p);
+      expect(await page.locator('.wa-cta-line').count()).toBe(1);
+    });
+  }
+
+  // We build the preview and show it on the call. We do not hand over a working
+  // Closer, so the page must not promise one. What they genuinely keep is the maths.
+  test('the page never promises to hand over the demo itself', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    const text = await page.locator('body').innerText();
+    expect(text).not.toMatch(/keep the demo/i);
+    expect(text).toMatch(/keep the numbers/i);
+  });
+
   test('differentiation block states the three wedges', async ({ page }) => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
