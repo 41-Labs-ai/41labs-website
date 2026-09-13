@@ -51,12 +51,26 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
 
     // Booking confirmed in the browser. Google bookings never reach this, so they are
     // caught server-side by api/cron/booking-sync.js instead.
+    var bookedAlready = false;
     window.onCloserBooked = function () {
+        if (bookedAlready) return;      // Cal.com can fire its callback more than once
+        bookedAlready = true;
         metaEvent('Schedule', { content_name: 'ai_closer_call', variant: variant });
         track('book_call_complete', { event_category: 'conversion', cta_id: 'ai_closer', variant: variant });
         var box = document.getElementById('cl-handoff');
         if (box) box.hidden = false;
+        var lead = box && box.querySelector('.handoff-lead');
+        if (lead) lead.innerHTML = '<b>Booked.</b> Now say hello to your Closer on WhatsApp. Everything you told us is already in the message, and you get to watch it work before the call.';
     };
+
+    // Best effort only. Google does not document a booking message from the appointment
+    // iframe, so this may never fire. If it ever does, we get the browser-side Schedule
+    // and can deduplicate it against the cron's copy. The cron is the one we rely on.
+    window.addEventListener('message', function (e) {
+        if (!/^https:\/\/calendar\.google\.com$/.test(e.origin)) return;
+        var body = typeof e.data === 'string' ? e.data : JSON.stringify(e.data || '');
+        if (/book|confirm|scheduled/i.test(body)) window.onCloserBooked();
+    });
 
     // They reached the demo and stayed on it. Engagement, no value.
     (function viewContentOnce() {
@@ -367,8 +381,11 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         var url = (window.BOOKING_URL || '').trim();
         var holder = document.getElementById('cl-cal');
         var head = document.getElementById('cl-cal-head');
-        // prepare the message now, reveal it once they have booked
-        showHandoff(data, !url);
+        // Show it straight away. Google's appointment iframe is cross-origin and gives
+        // the page no booking callback, so waiting for one leaves the visitor staring at
+        // an unchanged screen after they book. Bookings are caught server-side instead,
+        // by api/cron/booking-sync.js.
+        showHandoff(data, true);
         // No calendar configured is fine now: the Closer books the call in chat, so
         // the page never has to apologise for an empty slot.
         if (!url) {

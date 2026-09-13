@@ -177,9 +177,7 @@ for (const P of PAGES) {
       await fillForm(page);
       await page.click('#cl-submit');
       await expect(page.locator('#cl-book')).toBeVisible();
-      // the handoff is the reward for booking, not a button beside the calendar
-      await expect(page.locator('#cl-handoff')).toBeHidden();
-      await page.evaluate(() => (window as any).onCloserBooked());
+      // the handoff sits with the calendar: Google never tells us the booking happened
       await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /wa\.me\/6580124848/);
     });
 
@@ -599,11 +597,14 @@ test.describe('a qualified lead is sent to the calendar', () => {
     await page.click('#cl-submit');
 
     await expect(page.locator('#cl-cal-head')).toBeVisible();
+    // Google's iframe never tells us a booking happened, so the handoff cannot wait
+    // for a callback: it sits with the calendar and the copy changes if we ever hear one.
     await expect(page.locator('#cl-cal iframe')).toBeVisible();
-    await expect(page.locator('#cl-handoff')).toBeHidden();   // the reward for booking
+    await expect(page.locator('#cl-handoff')).toBeVisible();
+    await expect(page.locator('.handoff-lead')).toContainText(/once you have picked a time/i);
 
     await page.evaluate(() => (window as any).onCloserBooked());
-    await expect(page.locator('#cl-handoff')).toBeVisible();
+    await expect(page.locator('.handoff-lead')).toContainText(/booked/i);
     const msg = decodeURIComponent(((await page.locator('#cl-wa-handoff').getAttribute('href')) || '').split('?text=')[1] || '');
     expect(msg).toContain('tanaircon.sg');
   });
@@ -863,4 +864,46 @@ test.describe('the call length matches the calendar', () => {
       expect(text).toMatch(/30 minutes/);
     });
   }
+});
+
+// Google's appointment iframe is cross-origin and sends the page no booking callback.
+// Waiting for one left the visitor staring at an unchanged screen after booking, which
+// is exactly what Alexander hit on his own test.
+test.describe('after booking, the page does not look frozen', () => {
+  const qualify = async (page: any) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+6591234567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+  };
+
+  test('there is always a next step on screen beside the calendar', async ({ page }) => {
+    await qualify(page);
+    await expect(page.locator('#cl-cal iframe')).toBeVisible();
+    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+  });
+
+  test('a Schedule callback is never counted twice', async ({ page }) => {
+    const api: any[] = [];
+    await page.route('**/api/meta-event', (r: any) => {
+      api.push(JSON.parse(r.request().postData() || '{}'));
+      return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    });
+    await qualify(page);
+    await page.evaluate(() => { (window as any).onCloserBooked(); (window as any).onCloserBooked(); (window as any).onCloserBooked(); });
+    await page.waitForTimeout(500);
+    expect(api.filter((e) => e.name === 'Schedule')).toHaveLength(1);
+  });
 });
