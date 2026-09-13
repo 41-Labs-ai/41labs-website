@@ -2,12 +2,16 @@ import { test, expect } from '@playwright/test';
 import path from 'path';
 import crypto from 'crypto';
 
+const PEM = crypto.generateKeyPairSync('rsa', { modulusLength: 2048 })
+  .privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
+
 // Unit tests for the shared helpers behind the booking pipeline (api/_lib/*).
 // Pure functions: no server, no network.
 
 const LIB = path.join(__dirname, '..', 'api', '_lib');
 const util = require(path.join(LIB, 'util.js'));
 const capi = require(path.join(LIB, 'meta-capi.js'));
+const capi_gcal = require(path.join(LIB, 'google-calendar.js'));
 const gcal = require(path.join(LIB, 'google-calendar.js'));
 const notes = require(path.join(LIB, 'notes.js'));
 
@@ -195,5 +199,48 @@ test.describe('statusNotes parsing and idempotency markers', () => {
     expect(notes.addMarker(a, 'sent:finish_booking')).toBe(a);
     expect(notes.hasMarker(notes.removeMarker(a, 'sent:finish_booking'), 'sent:finish_booking')).toBe(false);
     expect(notes.hasMarker(n, 'sent:finish')).toBe(false);
+  });
+});
+
+// Domain-wide delegation grants an EXACT scope string. The 41labs.ai Workspace
+// delegates 'auth/calendar', so asking only for 'calendar.events.readonly' came
+// back unauthorized_client and the cron silently read nothing at all.
+test.describe('calendar scope negotiation', () => {
+  const saFor = () => ({ client_email: 'x@y.iam.gserviceaccount.com', private_key: PEM });
+
+  test('prefers the narrowest scope, so tightening the delegation needs no code change', async () => {
+    const asked: string[] = [];
+    const f = async (_u: string, init: any) => {
+      const scope = new URLSearchParams(init.body).get('assertion')!;
+      const claims = JSON.parse(Buffer.from(scope.split('.')[1], 'base64').toString());
+      asked.push(claims.scope);
+      return { ok: true, status: 200, json: async () => ({ access_token: 'tok' }), text: async () => '' };
+    };
+    const tok = await capi_gcal.getAccessToken(saFor(), { fetchImpl: f, nowSec: 1_700_000_000 });
+    expect(tok).toBe('tok');
+    expect(asked).toEqual([capi_gcal.SCOPES[0]]);   // stopped at the first, never asked wider
+  });
+
+  test('falls through to the scope that is actually delegated', async () => {
+    const asked: string[] = [];
+    const f = async (_u: string, init: any) => {
+      const assertion = new URLSearchParams(init.body).get('assertion')!;
+      const claims = JSON.parse(Buffer.from(assertion.split('.')[1], 'base64').toString());
+      asked.push(claims.scope);
+      if (claims.scope !== 'https://www.googleapis.com/auth/calendar') {
+        return { ok: false, status: 401, text: async () => '{"error":"unauthorized_client"}', json: async () => ({}) };
+      }
+      return { ok: true, status: 200, json: async () => ({ access_token: 'tok' }), text: async () => '' };
+    };
+    const tok = await capi_gcal.getAccessToken(saFor(), { fetchImpl: f, nowSec: 1_700_000_000 });
+    expect(tok).toBe('tok');
+    expect(asked).toEqual(capi_gcal.SCOPES);        // tried narrow to wide, in order
+  });
+
+  test('a real outage still throws instead of being mistaken for a scope problem', async () => {
+    let n = 0;
+    const f = async () => { n += 1; throw new Error('network down'); };
+    await expect(capi_gcal.getAccessToken(saFor(), { fetchImpl: f, nowSec: 1_700_000_000 })).rejects.toThrow(/network down/);
+    expect(n).toBe(1);                               // no pointless retries across scopes
   });
 });

@@ -6,7 +6,17 @@ const fs = require('fs');
 const { e164Digits, fetchWithTimeout } = require('./util');
 
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
-const SCOPE = 'https://www.googleapis.com/auth/calendar.events.readonly';
+// We only ever READ bookings. Ask for the narrowest scope first and fall back to the
+// broader one, because domain-wide delegation grants an exact scope string: the
+// 41labs.ai Workspace delegates 'auth/calendar', so asking only for
+// 'calendar.events.readonly' returned unauthorized_client and the cron read nothing.
+// Ordered narrowest first, so if the delegation is ever tightened this needs no change.
+const SCOPES = [
+  'https://www.googleapis.com/auth/calendar.events.readonly',
+  'https://www.googleapis.com/auth/calendar.readonly',
+  'https://www.googleapis.com/auth/calendar',
+];
+const SCOPE = SCOPES[0];
 
 // GOOGLE_SERVICE_ACCOUNT_JSON may be the JSON itself (Vercel), base64 of it, or a
 // file path (local dev: ~/.config/41labs/google.env points at a file).
@@ -37,17 +47,41 @@ function signJwt(sa, { scope = SCOPE, nowSec, sub } = {}) {
   return `${unsigned}.${sig}`;
 }
 
-async function getAccessToken(sa, { fetchImpl, nowSec, sub }) {
-  const assertion = signJwt(sa, { nowSec, sub });
+async function requestToken(sa, { fetchImpl, nowSec, sub, scope }) {
+  const assertion = signJwt(sa, { nowSec, sub, scope });
   const r = await fetchWithTimeout(fetchImpl, TOKEN_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion }).toString(),
   }, 8000);
-  if (!r.ok) throw new Error(`calendar token ${r.status}`);
+  if (!r.ok) {
+    // Carry Google's reason, not just the status: 'unauthorized_client' means the
+    // exact scope is not delegated, which the caller retries with a wider one.
+    let why = '';
+    try { why = (await r.text()).slice(0, 200); } catch {}
+    throw new Error(`calendar token ${r.status} ${why}`);
+  }
   const j = await r.json();
   if (!j.access_token) throw new Error('calendar token missing');
   return j.access_token;
+}
+
+
+// Walks SCOPES until one is actually delegated. 'unauthorized_client' means the exact
+// scope string is not on the delegation list, which is a configuration answer, not an
+// outage, so it is worth trying the next one rather than failing the whole run.
+async function getAccessToken(sa, opts = {}) {
+  if (opts.scope) return requestToken(sa, opts);
+  let lastErr;
+  for (const scope of SCOPES) {
+    try {
+      return await requestToken(sa, { ...opts, scope });
+    } catch (e) {
+      lastErr = e;
+      if (!/unauthorized_client|invalid_scope|token 40[13]/i.test(String(e))) throw e;
+    }
+  }
+  throw lastErr;
 }
 
 async function listEvents({ token, calendarId, params, fetchImpl }) {
@@ -94,4 +128,4 @@ function meetLink(ev) {
   return ep ? ep.uri : '';
 }
 
-module.exports = { SCOPE, loadServiceAccount, signJwt, getAccessToken, listEvents, isBookingEvent, extractContacts, meetLink };
+module.exports = { SCOPE, SCOPES, loadServiceAccount, signJwt, getAccessToken, listEvents, isBookingEvent, extractContacts, meetLink };
