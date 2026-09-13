@@ -441,50 +441,42 @@
             <div class="form-card">
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
-                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Check if you qualify</span><span class="cl-tab">2. Your details</span></div>
+                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Your details</span><span class="cl-tab">2. Two quick questions</span></div>
                         <div id="cl-part1">
                             <div class="fields">
-                                <div class="field full"><label for="cl-industry">What does your business do?</label>
-                                    <select id="cl-industry" name="industry" required><option value="" disabled selected>Choose one</option><option value="renovation">Renovation or interior design</option><option value="clinic">Clinic, aesthetics or dental</option><option value="car">Car rental or car dealer</option><option value="property">Property agency</option><option value="education">Education or tuition</option><option value="distributor">Distributor, wholesale or trade supplier</option><option value="servicing">Servicing (aircon, plumbing, pest control, cleaning)</option><option value="travel">Travel or tours</option><option value="retail">Retail or online shop</option><option value="other">Something else</option></select></div>
-                                <div class="field full"><label for="cl-wa">Do customers message you on WhatsApp before they buy?</label>
-                                    <select id="cl-wa" name="whatsappUse" required><option value="" disabled selected>Choose one</option><option value="most">Yes, most sales start on WhatsApp</option><option value="some">Some do</option><option value="no">Not really</option></select></div>
-                                <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
-                                    <select id="cl-enquiries" name="enquiries" required><option value="" disabled selected>Choose one</option><option value="under20">Under 20</option><option value="20to50">20 to 50</option><option value="50to150">50 to 150</option><option value="150plus">Over 150</option></select></div>
-                                <div class="field"><label for="cl-sale">Average sale</label>
-                                    <select id="cl-sale" name="saleValue" required><option value="" disabled selected>Choose one</option><option value="under200">Under S$200</option><option value="200to1k">S$200 to S$1,000</option><option value="1kto5k">S$1,000 to S$5,000</option><option value="5kplus">Over S$5,000</option></select></div>
-                                <fieldset class="field full jobs" id="cl-jobs">
-                                    <legend>What do those chats usually involve? <span class="opt">(pick all that apply)</span></legend>
-                                    <div class="chips">
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
-                                    </div>
-                                    <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
-                                </fieldset>
-                                <div class="field full"><label for="cl-after">What happens to enquiries that come in after hours?</label>
-                                    <select id="cl-after" name="afterHours" required><option value="" disabled selected>Choose one</option><option value="nobody">Nobody sees them until morning</option><option value="late">Someone replies, but late</option><option value="always">We reply any time, day or night</option><option value="rare">We rarely get any after hours</option></select></div>
-                                <div class="field full"><label for="cl-tried">Tried anything for this already?</label>
-                                    <select id="cl-tried" name="tried" required><option value="" disabled selected>Choose one</option><option value="nothing">Not yet</option><option value="chatbot">A chatbot or auto-reply</option><option value="person">Hired someone to answer</option><option value="agency">An agency or software vendor</option></select></div>
-                            </div>
-                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
-                        </div>
-                        <div id="cl-part2" hidden>
-                            <div class="fields">
-                                <div class="field full"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
-                                <div class="field full"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
-                                    <small class="help">This is where our AI Closer will message you to confirm your demo.</small></div>
-                                <div class="field full"><label for="cl-website">Your website</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
-                                    <small class="help">We build your demo on it, so the Closer answers with your own products and prices.</small></div>
-                                <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
+                                <div class="field full"><label for="cl-name">Your name</label>
+                                    <input id="cl-name" name="name" type="text" autocomplete="name" required></div>
+                                <div class="field full"><label for="cl-whatsapp">WhatsApp number</label>
+                                    <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
+                                    <small class="help">This is where your Closer demo arrives.</small></div>
+                                <div class="field full"><label for="cl-website">Your website</label>
+                                    <input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
+                                    <small class="help">We build the demo on it, so the Closer answers with your own products and prices.</small></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
-                            <p class="consent">After you book, our AI Closer messages you on WhatsApp to confirm and prepare your demo. No spam, no lists.</p>
+                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
+                            <p class="consent">Two quick questions after this, then you pick a time. About a minute. We message you on WhatsApp to set up your demo. No spam, no lists.</p>
+                        </div>
+                        <div id="cl-part2" hidden>
+                            <div class="fields">
+                                <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
+                                    <select id="cl-enquiries" name="enquiries" required><option value="" disabled selected>Choose one</option><option value="under20">Under 20</option><option value="20to50">20 to 50</option><option value="50to150">50 to 150</option><option value="150plus">Over 150</option></select></div>
+                                <div class="field"><label for="cl-sale">Average sale</label>
+                                    <select id="cl-sale" name="saleValue" required><option value="" disabled selected>Choose one</option><option value="under500">Under S$500</option><option value="500to2k">S$500 to S$2,000</option><option value="2kto10k">S$2,000 to S$10,000</option><option value="10kplus">Over S$10,000</option></select></div>
+                                <fieldset class="field full jobs" id="cl-jobs">
+                                    <legend>What is costing you most? <span class="opt">(pick all that apply)</span></legend>
+                                    <div class="chips">
+                                        <label class="chip-opt"><input type="checkbox" name="challenges" value="slow"><span>Replies take too long</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="afterhours"><span>Nobody answers after hours</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="followup"><span>We forget to follow up</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="stock"><span>Checking stock or prices is slow</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="quotes"><span>Quoting takes too much time</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="volume"><span>Too many enquiries to handle</span></label>
+                                    </div>
+                                    <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
+                                </fieldset>
+                                <div class="field full"><label for="cl-goal">What would make this worth doing?</label>
+                                    <select id="cl-goal" name="goal" required><option value="" disabled selected>Choose one</option><option value="recover">Stop losing enquiries we already paid for</option><option value="faster">Reply and quote faster</option><option value="scale">Handle more enquiries without hiring</option><option value="freeteam">Free the team from repetitive chats</option><option value="unsure">Not sure yet, want to see what it can do</option></select></div>
+                            </div>
                             <div class="form-foot">
                                 <button class="link-back" id="cl-back" type="button">&larr; Back</button>
-                                <button class="btn btn-primary" id="cl-submit" type="submit">Get my free demo <span class="arrow">&rarr;</span></button>
+                                <button class="btn btn-primary" id="cl-submit" type="submit">See if we can help <span class="arrow">&rarr;</span></button>
                             </div>
                         </div>
                     </div>
@@ -493,13 +485,12 @@
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
                             <h3>Pick a time. We start building your demo today.</h3>
-                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products, and our AI Closer WhatsApps you to confirm.</p>
+                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products.</p>
                             <div id="cl-cal"></div>
-                            <ol class="next-steps">
-                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions.</li>
-                                <li><b>We build your demo</b> on your website and products, and time how fast your WhatsApp replies today.</li>
-                                <li><b>20 minutes on Google Meet.</b> Your Closer, your numbers, and a straight answer on fit.</li>
-                            </ol>
+                            <div id="cl-handoff" hidden>
+                                <p class="handoff-lead"><b>Last step.</b> Say hello to our own AI Closer on WhatsApp. It asks two quick things so your demo is ready before we meet, and you get to watch it work on the way.</p>
+                                <a class="btn btn-primary" id="cl-wa-handoff" href="https://wa.me/6580124848" target="_blank" rel="noopener">Message our AI Closer <span class="arrow">&rarr;</span></a>
+                            </div>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
                                 <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
@@ -507,7 +498,7 @@
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>From your answers, building you a demo may not be worth your time yet. We'll look properly and WhatsApp you within one working day either way.</p>
+                            <p>From your answers, building you a demo may not pay for itself yet. We'll look properly and come back to you within one working day either way, with the numbers we worked out on your business.</p>
                         </div>
                     </div>
                 </form>

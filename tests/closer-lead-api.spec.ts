@@ -96,20 +96,18 @@ const lead = {
   whatsapp: '+65 9123 4567',
   email: 'wm@tanaircon.sg',
   company: 'Tan Aircon Services',
-  role: 'owner',
   enquiries: '50to150',
-  saleValue: '200to1k',
+  saleValue: '500to2k',
   qualified: 'yes',
   tier: 'A',
-  fitReason: 'High enquiry value and real sales work in chat',
-  jobs: ['quotes', 'bookings'],
+  fitReason: 'High enquiry value. Guarantee-eligible once the maths is checked on the call',
+  challenges: ['slow', 'afterhours'],
+  goal: 'recover',
   notes: 'Most chats come in after 9pm',
   utm_source: 'facebook',
   utm_campaign: '41closer_lp_2026-09',
   utm_content: 'ad_stalk1_notchatbot',
   fbclid: 'abc123',
-  industry: 'servicing',
-  whatsappUse: 'most',
   website: 'tanaircon.sg',
 };
 
@@ -172,7 +170,8 @@ test.describe('POST /api/closer-lead', () => {
     expect(opp.body.statusNotes).toContain('50-150');
     expect(opp.body.statusNotes).toContain('Qualified: yes');
     expect(opp.body.statusNotes).toContain('Tier: A');
-    expect(opp.body.statusNotes).toContain('Chats involve: Quotes, Bookings');
+    expect(opp.body.statusNotes).toContain('Costing them most: Replies take too long, Nobody answers after hours');
+    expect(opp.body.statusNotes).toContain('Wants: Stop losing paid-for enquiries');
     expect(opp.body.nextAction).toMatch(/^TIER A/);
     expect(opp.body.statusNotes).toContain('after 9pm');
     expect(opp.body.statusNotes).toContain('fbclid=abc123');
@@ -211,9 +210,9 @@ test.describe('closer-lead: instant Telegram + email alert', () => {
     expect(text).toContain('Tan Aircon Services');
     expect(text).toContain('<a href="https://wa.me/6591234567">+65 9123 4567</a>');
     expect(text).toContain('50-150');
-    expect(text).toContain('S$200-1,000');
-    expect(text).toContain('Quotes, Bookings');
-    expect(text).toContain('High enquiry value and real sales work in chat');
+    expect(text).toContain('S$500-2,000');
+    expect(text).toContain('Replies take too long');
+    expect(text).toContain(lead.fitReason);
     expect(text).toContain('ad_stalk1_notchatbot');
     expect(text).not.toContain('—');
   });
@@ -249,7 +248,7 @@ test.describe('closer-lead: instant Telegram + email alert', () => {
     expect(mail.body.subject).toMatch(/^TIER A/);
     expect(mail.body.subject).toContain('Tan Wei Ming');
     expect(mail.body.text).toContain('https://wa.me/6591234567');
-    expect(mail.body.text).toContain('Quotes, Bookings');
+    expect(mail.body.text).toContain('Replies take too long');
   });
 
   test('alerts are skipped (not failed) when their env is missing', async () => {
@@ -294,17 +293,13 @@ test.describe('closer-lead: Hermes handoff', () => {
       phone: '+6591234567',
       email: 'wm@tanaircon.sg',
       company: 'Tan Aircon Services',
-      role: 'owner',
       enquiries: '50to150',
-      saleValue: '200to1k',
-      jobs: ['quotes', 'bookings'],
+      saleValue: '500to2k',
+      challenges: ['slow', 'afterhours'],
+      goal: 'recover',
       tier: 'A',
-      fitReason: 'High enquiry value and real sales work in chat',
-      industry: 'servicing',
-      whatsappUse: 'most',
+      fitReason: lead.fitReason,
       website: 'tanaircon.sg',
-      afterHours: '',
-      tried: '',
       notes: 'Most chats come in after 9pm',
       utm: { source: 'facebook', campaign: '41closer_lp_2026-09', content: 'ad_stalk1_notchatbot' },
       fbclid: 'abc123',
@@ -354,13 +349,13 @@ test.describe('closer-lead: Hermes handoff', () => {
     expect(json.ok).toBe(true);
   });
 
-  test('industry, WhatsApp use and website land in Twenty; website becomes the company domain', async () => {
+  test('the answers and the website land in Twenty; website becomes the company domain', async () => {
     const { calls } = await run(lead);
     const company = calls.find((c) => c.url.endsWith('/rest/companies'))!;
     const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
     expect(company.body.domainName).toEqual({ primaryLinkUrl: 'https://tanaircon.sg' });
-    expect(opp.body.statusNotes).toContain('Industry: Servicing');
-    expect(opp.body.statusNotes).toContain('WhatsApp: Most sales start on WhatsApp');
+    expect(opp.body.statusNotes).toContain('Wants: Stop losing paid-for enquiries');
+    
     expect(opp.body.statusNotes).toContain('Website: tanaircon.sg');
     expect(opp.body.nextAction).toMatch(/WOW preview/i);
   });
@@ -379,16 +374,16 @@ test.describe('closer-lead: Hermes handoff', () => {
     expect(opp.body.nextAction).not.toMatch(/WOW/i);
   });
 
-  test('the Hermes handoff carries industry, WhatsApp use and website', async () => {
+  test('the Hermes handoff carries the goal, the challenges and the website', async () => {
     const { calls } = await run(lead, { env: FULL_ENV });
     const h = hermesCall(calls)!;
-    expect(h.body.lead).toMatchObject({ industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg' });
+    expect(h.body.lead).toMatchObject({ goal: 'recover', challenges: ['slow', 'afterhours'], website: 'tanaircon.sg' });
   });
 
-  test('the Telegram alert shows industry and website', async () => {
+  test('the Telegram alert shows the goal and website', async () => {
     const { calls } = await run(lead, { env: FULL_ENV });
     const text = tgCall(calls)!.body.text;
-    expect(text).toContain('Servicing');
+    expect(text).toContain('Stop losing paid-for enquiries');
     expect(text).toContain('tanaircon.sg');
   });
 

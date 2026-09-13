@@ -1,53 +1,66 @@
-// Who gets the calendar on /ai-closer. Built from the 41 Closer ICP:
-//   the right industry, sales that start on WhatsApp, enough money walking in
-//   (volume x ticket), and chats that are real sales work (quotes, bookings,
-//   stock checks, orders), not FAQs a cheap bot can answer.
+// Who gets the calendar on /ai-closer.
 //
-// Every submission is saved to Twenty either way. This only decides the NEXT screen:
-//   qualified -> pick a demo time now;  not -> "we'll WhatsApp you within one working day".
+// The rule Alexander set (13 Sep 2026): enough enquiries AND a big enough average
+// sale for the Closer to pay for itself. Everything else is context for the call,
+// not a gate.
 //
-// Thresholds come from our price (S$9,600 build + S$1,490/mo):
-//   S$50k/mo enquiry value  ~ enough for ~10% recovered to earn 3x the monthly fee
-//   S$100k/mo + real complexity ~ enough for ~15% recovered to hit the S$20k guarantee
-// Both recovery rates are assumptions. Recheck against real leads after ~50 submissions.
+//   at least 50 WhatsApp enquiries a week   AND   average sale of at least S$500
+//
+// Why those two and nothing else: volume x ticket is the only thing that decides
+// whether recovering a slice of missed enquiries covers S$9,600 + S$1,490/mo. A
+// business doing 50 enquiries a week at S$500 has roughly S$107k a month walking
+// through WhatsApp, so recovering even 10% pays for the build in the first month.
+// Industry, tooling and what they have tried before change how we SELL, not whether
+// the maths works, so they are no longer asked.
+//
+// Every submission is saved to Twenty either way. This only decides what happens next:
+//   pass -> book a time now, then straight to the AI Closer on WhatsApp
+//   hold -> we look properly and come back. NOT handed to the closer automatically.
 
 (function () {
-  var ENQ_PER_WEEK = { under20: 10, '20to50': 35, '50to150': 100, '150plus': 200 };
-  var AVG_SALE = { under200: 100, '200to1k': 600, '1kto5k': 3000, '5kplus': 8000 };
-  var COMPLEX_JOBS = ['quotes', 'bookings', 'stock', 'orders'];
-  var ICP_INDUSTRIES = ['renovation', 'clinic', 'car', 'property', 'education', 'distributor', 'servicing', 'travel', 'retail'];
-  var CALL_FLOOR = 50000;
-  var GUARANTEE_FLOOR = 100000;
+  // Midpoints, used only to show them a monthly figure and to rank call order.
+  var ENQ_PER_WEEK = { under20: 10, '20to50': 35, '50to150': 100, '150plus': 250 };
+  var AVG_SALE = { under500: 250, '500to2k': 1200, '2kto10k': 5000, '10kplus': 15000 };
 
-  function result(qualified, tier, value, reason) {
-    return { qualified: qualified, tier: tier, value: value, reason: reason };
-  }
+  // The gate itself is bucket membership, not a midpoint, so the threshold is exactly
+  // the one written on the form rather than an artefact of where we put the midpoint.
+  var ENOUGH_ENQUIRIES = ['50to150', '150plus'];
+  var ENOUGH_SALE = ['500to2k', '2kto10k', '10kplus'];
+
+  // Clearly above the floor on both axes: worth calling first, and the tier the
+  // S$20,000 guarantee is offered from once the maths is checked on the call.
+  var STRONG_ENQUIRIES = ['150plus'];
+  var STRONG_SALE = ['2kto10k', '10kplus'];
+
+  function has(list, v) { return list.indexOf(v) !== -1; }
 
   window.qualify41 = function (answers) {
     var a = answers || {};
-    var jobs = Array.isArray(a.jobs) ? a.jobs : [];
-    var value = Math.round((ENQ_PER_WEEK[a.enquiries] || 0) * 4.3 * (AVG_SALE[a.saleValue] || 0));
-    var complex = jobs.filter(function (j) { return COMPLEX_JOBS.indexOf(j) !== -1; }).length;
-    var icp = ICP_INDUSTRIES.indexOf(a.industry) !== -1;
-    var bigAndComplex = value >= GUARANTEE_FLOOR && complex >= 2;
+    var enq = ENQ_PER_WEEK[a.enquiries] || 0;
+    var sale = AVG_SALE[a.saleValue] || 0;
+    var value = Math.round(enq * 4.3 * sale);   // enquiry value a month, rough
 
-    if (a.whatsappUse === 'no') {
-      return result(false, 'C', value, 'Customers do not usually message on WhatsApp, so the Closer has little to work with');
+    var enoughEnquiries = has(ENOUGH_ENQUIRIES, a.enquiries);
+    var enoughSale = has(ENOUGH_SALE, a.saleValue);
+
+    if (!enoughEnquiries && !enoughSale) {
+      return { qualified: false, tier: 'C', value: value,
+               reason: 'Under 50 enquiries a week and under S$500 a sale, so the Closer would not pay for itself yet' };
     }
-    if (value < CALL_FLOOR) {
-      return result(false, 'C', value, 'Low volume and low value for now');
+    if (!enoughEnquiries) {
+      return { qualified: false, tier: 'C', value: value,
+               reason: 'Good ticket size, but under 50 enquiries a week there is not enough volume to recover' };
     }
-    if (complex === 0 && value < GUARANTEE_FLOOR) {
-      return result(false, 'C', value, 'Mostly simple questions, a basic bot may be enough');
+    if (!enoughSale) {
+      return { qualified: false, tier: 'C', value: value,
+               reason: 'Good volume, but under S$500 a sale the recovered enquiries do not cover the fee' };
     }
-    if (!icp) {
-      return bigAndComplex
-        ? result(true, 'B', value, 'Outside our usual industries, but big enough and complex enough to be worth a look')
-        : result(false, 'C', value, 'Industry outside what we usually build for');
-    }
-    if (bigAndComplex && a.whatsappUse === 'most') {
-      return result(true, 'A', value, 'High enquiry value and real sales work in chat. Guarantee-eligible, call first');
-    }
-    return result(true, 'B', value, 'Enough enquiry value for the Closer to pay for itself');
+
+    var strong = has(STRONG_ENQUIRIES, a.enquiries) || has(STRONG_SALE, a.saleValue);
+    return strong
+      ? { qualified: true, tier: 'A', value: value,
+          reason: 'High enquiry value. Guarantee-eligible once the maths is checked on the call' }
+      : { qualified: true, tier: 'B', value: value,
+          reason: 'Enough volume and ticket size for the Closer to pay for itself' };
   };
 })();

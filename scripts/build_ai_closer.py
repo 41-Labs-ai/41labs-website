@@ -173,57 +173,77 @@ SEEN = '''<p class="seen-label">Proud member of the Singapore A.I. Association &
 
 def opt(v, t): return f'<option value="{v}">{t}</option>'
 SELECT_PH = '<option value="" disabled selected>Choose one</option>'
-INDUSTRIES = [('renovation','Renovation or interior design'),('clinic','Clinic, aesthetics or dental'),('car','Car rental or car dealer'),
-              ('property','Property agency'),('education','Education or tuition'),('distributor','Distributor, wholesale or trade supplier'),
-              ('servicing','Servicing (aircon, plumbing, pest control, cleaning)'),('travel','Travel or tours'),('retail','Retail or online shop'),('other','Something else')]
+
+# Contact FIRST, then qualify. Deliberate reversal (13 Sep 2026): capturing the number
+# before the qualifying questions means a half-finished form is still a lead we can
+# message, instead of an anonymous bounce. Industry is not asked at all, because the
+# website tells us. Email is not asked, because the conversation happens on WhatsApp.
+CHALLENGES = [
+    ('slow', 'Replies take too long'),
+    ('afterhours', 'Nobody answers after hours'),
+    ('followup', 'We forget to follow up'),
+    ('stock', 'Checking stock or prices is slow'),
+    ('quotes', 'Quoting takes too much time'),
+    ('volume', 'Too many enquiries to handle'),
+]
+GOALS = [
+    ('recover', 'Stop losing enquiries we already paid for'),
+    ('faster', 'Reply and quote faster'),
+    ('scale', 'Handle more enquiries without hiring'),
+    ('freeteam', 'Free the team from repetitive chats'),
+    ('unsure', 'Not sure yet, want to see what it can do'),
+]
 
 FORM_CTA = '''<p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>'''
+
+ENQ_OPTS = SELECT_PH + ''.join(opt(v, t) for v, t in [
+    ('under20', 'Under 20'), ('20to50', '20 to 50'), ('50to150', '50 to 150'), ('150plus', 'Over 150')])
+SALE_OPTS = SELECT_PH + ''.join(opt(v, t) for v, t in [
+    ('under500', 'Under S$500'), ('500to2k', 'S$500 to S$2,000'),
+    ('2kto10k', 'S$2,000 to S$10,000'), ('10kplus', 'Over S$10,000')])
+GOAL_OPTS = SELECT_PH + ''.join(opt(v, t) for v, t in GOALS)
+CHALLENGE_CHIPS = ''.join(
+    f'<label class="chip-opt"><input type="checkbox" name="challenges" value="{v}"><span>{html.escape(t)}</span></label>'
+    for v, t in CHALLENGES)
+
 FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
-                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Check if you qualify</span><span class="cl-tab">2. Your details</span></div>
+                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Your details</span><span class="cl-tab">2. Two quick questions</span></div>
                         <div id="cl-part1">
                             <div class="fields">
-                                <div class="field full"><label for="cl-industry">What does your business do?</label>
-                                    <select id="cl-industry" name="industry" required>{SELECT_PH}{"".join(opt(v,t) for v,t in INDUSTRIES)}</select></div>
-                                <div class="field full"><label for="cl-wa">Do customers message you on WhatsApp before they buy?</label>
-                                    <select id="cl-wa" name="whatsappUse" required>{SELECT_PH}{opt("most","Yes, most sales start on WhatsApp")}{opt("some","Some do")}{opt("no","Not really")}</select></div>
-                                <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
-                                    <select id="cl-enquiries" name="enquiries" required>{SELECT_PH}{opt("under20","Under 20")}{opt("20to50","20 to 50")}{opt("50to150","50 to 150")}{opt("150plus","Over 150")}</select></div>
-                                <div class="field"><label for="cl-sale">Average sale</label>
-                                    <select id="cl-sale" name="saleValue" required>{SELECT_PH}{opt("under200","Under S$200")}{opt("200to1k","S$200 to S$1,000")}{opt("1kto5k","S$1,000 to S$5,000")}{opt("5kplus","Over S$5,000")}</select></div>
-                                <fieldset class="field full jobs" id="cl-jobs">
-                                    <legend>What do those chats usually involve? <span class="opt">(pick all that apply)</span></legend>
-                                    <div class="chips">
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
-                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
-                                    </div>
-                                    <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
-                                </fieldset>
-                                <div class="field full"><label for="cl-after">What happens to enquiries that come in after hours?</label>
-                                    <select id="cl-after" name="afterHours" required>{SELECT_PH}{opt("nobody","Nobody sees them until morning")}{opt("late","Someone replies, but late")}{opt("always","We reply any time, day or night")}{opt("rare","We rarely get any after hours")}</select></div>
-                                <div class="field full"><label for="cl-tried">Tried anything for this already?</label>
-                                    <select id="cl-tried" name="tried" required>{SELECT_PH}{opt("nothing","Not yet")}{opt("chatbot","A chatbot or auto-reply")}{opt("person","Hired someone to answer")}{opt("agency","An agency or software vendor")}</select></div>
-                            </div>
-                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
-                        </div>
-                        <div id="cl-part2" hidden>
-                            <div class="fields">
-                                <div class="field full"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
-                                <div class="field full"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
-                                    <small class="help">This is where our AI Closer will message you to confirm your demo.</small></div>
-                                <div class="field full"><label for="cl-website">Your website</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
-                                    <small class="help">We build your demo on it, so the Closer answers with your own products and prices.</small></div>
-                                <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
+                                <div class="field full"><label for="cl-name">Your name</label>
+                                    <input id="cl-name" name="name" type="text" autocomplete="name" required></div>
+                                <div class="field full"><label for="cl-whatsapp">WhatsApp number</label>
+                                    <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
+                                    <small class="help">This is where your Closer demo arrives.</small></div>
+                                <div class="field full"><label for="cl-website">Your website</label>
+                                    <input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
+                                    <small class="help">We build the demo on it, so the Closer answers with your own products and prices.</small></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
-                            <p class="consent">After you book, our AI Closer messages you on WhatsApp to confirm and prepare your demo. No spam, no lists.</p>
+                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
+                            <p class="consent">Two quick questions after this, then you pick a time. About a minute. We message you on WhatsApp to set up your demo. No spam, no lists.</p>
+                        </div>
+                        <div id="cl-part2" hidden>
+                            <div class="fields">
+                                <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
+                                    <select id="cl-enquiries" name="enquiries" required>{ENQ_OPTS}</select></div>
+                                <div class="field"><label for="cl-sale">Average sale</label>
+                                    <select id="cl-sale" name="saleValue" required>{SALE_OPTS}</select></div>
+                                <fieldset class="field full jobs" id="cl-jobs">
+                                    <legend>What is costing you most? <span class="opt">(pick all that apply)</span></legend>
+                                    <div class="chips">
+                                        {CHALLENGE_CHIPS}
+                                    </div>
+                                    <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
+                                </fieldset>
+                                <div class="field full"><label for="cl-goal">What would make this worth doing?</label>
+                                    <select id="cl-goal" name="goal" required>{GOAL_OPTS}</select></div>
+                            </div>
                             <div class="form-foot">
                                 <button class="link-back" id="cl-back" type="button">&larr; Back</button>
-                                <button class="btn btn-primary" id="cl-submit" type="submit">Get my free demo <span class="arrow">&rarr;</span></button>
+                                <button class="btn btn-primary" id="cl-submit" type="submit">See if we can help <span class="arrow">&rarr;</span></button>
                             </div>
                         </div>
                     </div>
@@ -232,13 +252,12 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
                             <h3>Pick a time. We start building your demo today.</h3>
-                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products, and our AI Closer WhatsApps you to confirm.</p>
+                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products.</p>
                             <div id="cl-cal"></div>
-                            <ol class="next-steps">
-                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions.</li>
-                                <li><b>We build your demo</b> on your website and products, and time how fast your WhatsApp replies today.</li>
-                                <li><b>20 minutes on Google Meet.</b> Your Closer, your numbers, and a straight answer on fit.</li>
-                            </ol>
+                            <div id="cl-handoff" hidden>
+                                <p class="handoff-lead"><b>Last step.</b> Say hello to our own AI Closer on WhatsApp. It asks two quick things so your demo is ready before we meet, and you get to watch it work on the way.</p>
+                                <a class="btn btn-primary" id="cl-wa-handoff" href="https://wa.me/6580124848" target="_blank" rel="noopener">Message our AI Closer <span class="arrow">&rarr;</span></a>
+                            </div>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
                                 <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
@@ -246,7 +265,7 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>From your answers, building you a demo may not be worth your time yet. We'll look properly and WhatsApp you within one working day either way.</p>
+                            <p>From your answers, building you a demo may not pay for itself yet. We'll look properly and come back to you within one working day either way, with the numbers we worked out on your business.</p>
                         </div>
                     </div>
                 </form>
@@ -263,7 +282,9 @@ def build(page, hero_chat=True, seen=False, proof=False):
     # AFTER that tag. So every run used to leave the previous CTA in place and add
     # another: four builds, four identical "Prefer to just try it?" lines. Collapse any
     # run of them back to one. Idempotent however many times this script has been run.
-    s = re.sub(r'(?:\s*<p class="wa-cta-line">.*?</p>)+',
+    # Also sweeps up any literal {FORM_CTA} left behind by a broken run of this
+    # script: the block replace stops at </form>, so anything after it survives.
+    s = re.sub(r'(?:\s*(?:<p class="wa-cta-line">.*?</p>|\{FORM_CTA\}))+',
                lambda m: '\n                ' + FORM_CTA, s, flags=re.S)
     if hero_chat:
         s = replace_block(s, '<!-- WA-HERO -->', '<!-- /WA-HERO -->', '<!-- WA-HERO -->' + hero_block() + '<!-- /WA-HERO -->')

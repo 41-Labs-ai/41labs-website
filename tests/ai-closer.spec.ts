@@ -32,27 +32,26 @@ async function stubPixel(page: Page) {
   });
 }
 
-async function fillQualify(page: Page, opts: { enquiries?: string; whatsappUse?: string; industry?: string } = {}) {
-  await page.selectOption('#cl-industry', opts.industry || 'servicing');
-  await page.selectOption('#cl-wa', opts.whatsappUse || 'most');
-  await page.selectOption('#cl-enquiries', opts.enquiries || '50to150');
-  await page.selectOption('#cl-sale', '200to1k');
-  await page.check('input[name="jobs"][value="quotes"]');
-  await page.check('input[name="jobs"][value="bookings"]');
-  await page.selectOption('#cl-after', 'nobody');
-  await page.selectOption('#cl-tried', 'chatbot');
-}
-
 async function fillContact(page: Page) {
   await page.fill('#cl-name', 'Tan Wei Ming');
   await page.fill('#cl-whatsapp', '+65 9123 4567');
   await page.fill('#cl-website', 'tanaircon.sg');
 }
 
-async function fillForm(page: Page, opts: { enquiries?: string; whatsappUse?: string; industry?: string } = {}) {
-  await fillQualify(page, opts);
-  await page.click('#cl-next');
+// Step 2. Defaults clear both floors (50 enquiries a week, S$500 a sale) so the
+// happy path is the default and a test has to opt in to being rejected.
+async function fillQualify(page: Page, opts: { enquiries?: string; saleValue?: string } = {}) {
+  await page.selectOption('#cl-enquiries', opts.enquiries || '50to150');
+  await page.selectOption('#cl-sale', opts.saleValue || '500to2k');
+  await page.check('input[name="challenges"][value="slow"]');
+  await page.check('input[name="challenges"][value="afterhours"]');
+  await page.selectOption('#cl-goal', 'recover');
+}
+
+async function fillForm(page: Page, opts: { enquiries?: string; saleValue?: string } = {}) {
   await fillContact(page);
+  await page.click('#cl-next');
+  await fillQualify(page, opts);
 }
 
 const fbqEvents = (page: Page) =>
@@ -95,102 +94,108 @@ for (const P of PAGES) {
       }
     });
 
-    test('step 1 qualifies first: industry, WhatsApp use, volume, ticket, chat jobs before Next', async ({ page }) => {
+    test('step 1 collects their details, so an abandoned form is still a lead we can message', async ({ page }) => {
       const sent = await stubNetwork(page);
       await page.goto(P.path);
-      await expect(page.locator('#cl-part1 #cl-name')).toHaveCount(0);
+      // the qualifying questions are NOT on screen yet
+      await expect(page.locator('#cl-part1 #cl-enquiries')).toHaveCount(0);
       await page.click('#cl-next');
-      await expect(page.locator('#cl-part2')).toBeHidden();
-      await page.selectOption('#cl-industry', 'servicing');
-      await page.selectOption('#cl-wa', 'most');
-      await page.selectOption('#cl-enquiries', '50to150');
-      await page.selectOption('#cl-sale', '200to1k');
-      await page.selectOption('#cl-after', 'nobody');
-      await page.selectOption('#cl-tried', 'chatbot');
-      await page.click('#cl-next');
-      await expect(page.locator('#cl-jobs-error')).toBeVisible();
-      await expect(page.locator('#cl-part2')).toBeHidden();
-      await page.check('input[name="jobs"][value="bookings"]');
+      await expect(page.locator('#cl-part2')).toBeHidden();   // name/number/website are required
+      await fillContact(page);
       await page.click('#cl-next');
       await expect(page.locator('#cl-part2')).toBeVisible();
       await expect(page.locator('#cl-part1')).toBeHidden();
-      expect(sent.api).toHaveLength(0);
+      // and the contact is captured immediately, flagged as incomplete
+      await expect.poll(() => sent.api.length).toBe(1);
+      expect(sent.api[0]).toMatchObject({ partial: true, name: 'Tan Wei Ming', website: 'tanaircon.sg' });
     });
 
-    test('Back returns to the questions with answers kept', async ({ page }) => {
+    test('step 1 asks three things only: name, WhatsApp, website', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
-      await fillQualify(page);
-      await page.click('#cl-next');
-      await page.click('#cl-back');
-      await expect(page.locator('#cl-part1')).toBeVisible();
-      await expect(page.locator('#cl-industry')).toHaveValue('servicing');
-    });
-
-    test('step 2 asks for three things only: name, WhatsApp, website', async ({ page }) => {
-      await stubNetwork(page);
-      await page.goto(P.path);
-      await fillQualify(page);
-      await page.click('#cl-next');
-      for (const gone of ['#cl-company', '#cl-email', '#cl-role']) {
+      for (const gone of ['#cl-company', '#cl-email', '#cl-role', '#cl-industry']) {
         await expect(page.locator(gone)).toHaveCount(0);
       }
       await expect(page.locator('#cl-name')).toBeVisible();
       await expect(page.locator('#cl-whatsapp')).toBeVisible();
-      await expect(page.locator('#cl-website')).toBeVisible();
       await expect(page.locator('#cl-website')).toHaveAttribute('required', /.*/);
-      await expect(page.locator('#cl-part2')).toContainText(/your own products|build your demo|built on/i);
-      await expect(page.locator('#cl-part2')).not.toContainText(/instagram/i);
+      await expect(page.locator('#cl-part1')).not.toContainText(/instagram/i);
     });
 
-    test('step 2 requires name and WhatsApp', async ({ page }) => {
-      const sent = await stubNetwork(page);
+    test('step 2 is the two qualifying questions plus context, and nothing else', async ({ page }) => {
+      await stubNetwork(page);
       await page.goto(P.path);
-      await fillQualify(page);
+      await fillContact(page);
       await page.click('#cl-next');
-      await page.click('#cl-submit');
-      await expect(page.locator('#cl-step2')).toBeHidden();
-      expect(sent.api).toHaveLength(0);
+      await expect(page.locator('#cl-enquiries')).toBeVisible();
+      await expect(page.locator('#cl-sale')).toBeVisible();
+      await expect(page.locator('#cl-goal')).toBeVisible();
+      expect(await page.locator('input[name="challenges"]').count()).toBeGreaterThanOrEqual(4);
+      // the old gates are gone
+      for (const gone of ['#cl-wa', '#cl-after', '#cl-tried']) {
+        await expect(page.locator(gone)).toHaveCount(0);
+      }
     });
 
-    test('submit: lead with UTMs + tier to the CRM, email copy, Lead pixel', async ({ page }) => {
+    test('Back returns to the details with them kept', async ({ page }) => {
+      await stubNetwork(page);
+      await page.goto(P.path);
+      await fillContact(page);
+      await page.click('#cl-next');
+      await page.click('#cl-back');
+      await expect(page.locator('#cl-part1')).toBeVisible();
+      await expect(page.locator('#cl-name')).toHaveValue('Tan Wei Ming');
+    });
+
+    test('submit: the full lead, tier and UTMs to the CRM, updating the step 1 record', async ({ page }) => {
       const sent = await stubNetwork(page);
       await stubPixel(page);
       await page.goto(P.path + QS);
-      await fillForm(page);
+      await fillForm(page, { enquiries: '150plus', saleValue: '2kto10k' });
       await page.click('#cl-submit');
       await expect(page.locator('#cl-step2')).toBeVisible();
-      expect(sent.api).toHaveLength(1);
-      expect(sent.api[0]).toMatchObject({
-        name: 'Tan Wei Ming', whatsapp: '+65 9123 4567',
-        enquiries: '50to150', saleValue: '200to1k', jobs: ['quotes', 'bookings'],
-        industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg', afterHours: 'nobody', tried: 'chatbot',
+      await expect.poll(() => sent.api.length).toBe(2);      // partial, then the full lead
+      expect(sent.api[1]).toMatchObject({
+        name: 'Tan Wei Ming', whatsapp: '+65 9123 4567', website: 'tanaircon.sg',
+        enquiries: '150plus', saleValue: '2kto10k', goal: 'recover',
+        challenges: ['slow', 'afterhours'],
         tier: 'A', qualified: 'yes', variant: P.variant,
         utm_campaign: '41closer_lp_2026-09', utm_content: 'ad_stalk1', fbclid: 'abc123',
       });
-      expect(sent.api[0].fitReason).toBeTruthy();
+      expect(sent.api[1].fitReason).toBeTruthy();
       expect(sent.formspree).toBe(1);
       expect(await fbqEvents(page)).toContain('Lead');
     });
 
-    test('customers not on WhatsApp: triage, never the calendar', async ({ page }) => {
-      const sent = await stubNetwork(page);
+    test('clearing both floors books a time and hands off to the AI Closer', async ({ page }) => {
+      await stubNetwork(page);
       await page.goto(P.path);
-      await fillForm(page, { whatsappUse: 'no' });
+      await fillForm(page);
       await page.click('#cl-submit');
-      await expect(page.locator('#cl-notyet')).toBeVisible();
-      await expect(page.locator('#cl-book')).toBeHidden();
-      expect(sent.api[0]).toMatchObject({ qualified: 'no', tier: 'C', whatsappUse: 'no' });
+      await expect(page.locator('#cl-book')).toBeVisible();
+      await expect(page.locator('#cl-handoff')).toBeVisible();
+      await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /wa\.me\/6580124848/);
     });
 
-    test('low volume + low value goes to WhatsApp triage, not the calendar', async ({ page }) => {
+    test('under 50 enquiries a week is held back, and never handed to the AI Closer', async ({ page }) => {
       const sent = await stubNetwork(page);
       await page.goto(P.path);
       await fillForm(page, { enquiries: 'under20' });
       await page.click('#cl-submit');
       await expect(page.locator('#cl-notyet')).toBeVisible();
       await expect(page.locator('#cl-book')).toBeHidden();
-      expect(sent.api[0]).toMatchObject({ qualified: 'no', tier: 'C' });
+      await expect(page.locator('#cl-handoff')).toBeHidden();
+      expect(sent.api[1]).toMatchObject({ qualified: 'no', tier: 'C' });
+    });
+
+    test('under S$500 a sale is held back too, however many enquiries', async ({ page }) => {
+      const sent = await stubNetwork(page);
+      await page.goto(P.path);
+      await fillForm(page, { enquiries: '150plus', saleValue: 'under500' });
+      await page.click('#cl-submit');
+      await expect(page.locator('#cl-notyet')).toBeVisible();
+      await expect(page.locator('#cl-handoff')).toBeHidden();
+      expect(sent.api[1]).toMatchObject({ qualified: 'no', tier: 'C' });
     });
 
     test('qualified + Google booking URL: calendar iframe, no fallback', async ({ page }) => {
@@ -243,10 +248,9 @@ for (const P of PAGES) {
     test('consent to be contacted on WhatsApp is stated next to the contact details', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
-      await fillQualify(page);
-      await page.click('#cl-next');
-      await expect(page.locator('#cl-part2 .consent')).toBeVisible();
-      await expect(page.locator('#cl-part2 .consent')).toContainText(/WhatsApp/);
+      // consent sits with the number we are asking for, which is now step 1
+      await expect(page.locator('#cl-part1 .consent')).toBeVisible();
+      await expect(page.locator('#cl-part1 .consent')).toContainText(/WhatsApp/);
     });
 
     test('WhatsApp screens look like WhatsApp: customer view, beige wallpaper, green bubbles right, ticks, input bar', async ({ page }) => {
@@ -318,7 +322,7 @@ test.describe('long form follows the event opt-in structure', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' }); // instant jump, no smooth-scroll race under parallel load
     await page.goto('/ai-closer.html');
     await page.locator('#faq a.btn-cta').first().click();
-    await expect(page.locator('#cl-industry')).toBeInViewport();
+    await expect(page.locator('#cl-name')).toBeInViewport();
   });
 
   test('"Seen at" strip reuses the homepage logos, no role captions', async ({ page }) => {
@@ -350,7 +354,7 @@ test.describe('long form follows the event opt-in structure', () => {
     test.skip(!isMobile, 'mobile only');
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
-    const box = await page.locator('#cl-industry').boundingBox();
+    const box = await page.locator('#cl-name').boundingBox();
     const vh = page.viewportSize()!.height;
     expect(box!.y).toBeLessThan(vh * 2);
   });
@@ -406,6 +410,23 @@ test.describe('long form follows the event opt-in structure', () => {
     expect(text).not.toMatch(/keep the demo/i);
     expect(text).toMatch(/keep the numbers/i);
   });
+
+  // scripts/build_ai_closer.py builds the form with an f-string. Over-escaping the
+  // braces once emitted literal {SELECT_PH} and {opt(...)} into two required selects,
+  // which would have made the form unsubmittable. Never again, silently.
+  for (const p of ['/ai-closer.html', '/ai-closer-sf.html']) {
+    test(`${p}: no unrendered generator placeholder reaches the page`, async ({ page }) => {
+      await stubNetwork(page);
+      await page.goto(p);
+      const html = await page.content();
+      for (const ghost of ['SELECT_PH', 'FORM_CTA', 'ENQ_OPTS', 'SALE_OPTS', 'GOAL_OPTS', 'CHALLENGE_CHIPS', '{opt(']) {
+        expect(html, `${ghost} leaked into ${p}`).not.toContain(ghost);
+      }
+      // and the selects really do carry options, not a placeholder string
+      expect(await page.locator('#cl-sale option').count()).toBeGreaterThanOrEqual(5);
+      expect(await page.locator('#cl-enquiries option').count()).toBeGreaterThanOrEqual(5);
+    });
+  }
 
   test('differentiation block states the three wedges', async ({ page }) => {
     await stubNetwork(page);

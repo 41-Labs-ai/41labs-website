@@ -1,5 +1,6 @@
 // Shared funnel logic for /ai-closer (long form) and /ai-closer-sf (short form).
-// Two-step form (qualifying questions first, then contact details), ICP qualify (closer-qualify.js),
+// Two-step form (contact details first, then the qualifying questions), qualify via
+// closer-qualify.js,
 // lead to /api/closer-lead + Formspree copy, Pixel Lead / Schedule, calendar step.
 //
 // Calendar for qualified leads. Set ONE of, before this script loads or here:
@@ -42,13 +43,24 @@ window.BOOKING_URL = window.BOOKING_URL || '';
 
         function setTab(n) { tabs.forEach(function (t, i) { t.classList.toggle('on', i === n - 1); }); }
 
-        // Step 1 = the qualifying questions (industry, WhatsApp use, volume, ticket, chat jobs).
+        // Step 1 is now their DETAILS, step 2 the qualifying questions. Reversed
+        // deliberately: once we hold a WhatsApp number, someone who abandons the
+        // qualifying questions is still a lead we can message, not an anonymous bounce.
+        var partialId = '';      // Twenty opportunity created from step 1, updated on submit
+
         function validPart1() {
             var ok = true;
-            part1.querySelectorAll('select[required], input[required]').forEach(function (el) {
+            part1.querySelectorAll('input[required]').forEach(function (el) {
                 if (ok && !el.checkValidity()) { el.reportValidity(); ok = false; }
             });
-            if (ok && !form.querySelector('input[name="jobs"]:checked')) {
+            return ok;
+        }
+        function validPart2() {
+            var ok = true;
+            part2.querySelectorAll('select[required], input[required]').forEach(function (el) {
+                if (ok && !el.checkValidity()) { el.reportValidity(); ok = false; }
+            });
+            if (ok && !form.querySelector('input[name="challenges"]:checked')) {
                 jobsError.hidden = false;
                 document.getElementById('cl-jobs').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 ok = false;
@@ -59,6 +71,19 @@ window.BOOKING_URL = window.BOOKING_URL || '';
             if (!validPart1()) return;
             part1.hidden = true; part2.hidden = false; setTab(2);
             track('form_step', { step: 2, cta_id: 'ai_closer', variant: variant });
+
+            // Capture the contact now, before the questions they might abandon.
+            var fd = new FormData(form);
+            var partial = { partial: true, variant: variant,
+                            name: fd.get('name') || '', whatsapp: fd.get('whatsapp') || '', website: fd.get('website') || '' };
+            Object.keys(attr).forEach(function (k) { partial[k] = attr[k]; });
+            if (window.cl41) partial.journey = window.cl41.journey();
+            fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(partial) })
+                .then(function (r) { return r.json(); })
+                .then(function (j) { if (j && j.id) partialId = j.id; })
+                .catch(function () {});
+            if (window.cl41) window.cl41.mark('form_contact_captured', { variant: variant });
+
             var first = part2.querySelector('select, input');
             if (first) first.focus({ preventScroll: true });
         }
@@ -66,21 +91,22 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         if (back) back.addEventListener('click', function () { part2.hidden = true; part1.hidden = false; setTab(1); });
 
         form.addEventListener('change', function (e) {
-            if (e.target && e.target.name === 'jobs' && form.querySelector('input[name="jobs"]:checked')) jobsError.hidden = true;
+            if (e.target && e.target.name === 'challenges' && form.querySelector('input[name="challenges"]:checked')) jobsError.hidden = true;
         });
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (part2.hidden) { goPart2(); return; }          // Enter pressed on step 1
             if (!validPart1()) { part2.hidden = true; part1.hidden = false; setTab(1); return; }
-            if (!form.checkValidity()) { form.reportValidity(); return; }
+            if (!validPart2()) return;
 
             var fd = new FormData(form);
             var data = {};
-            fd.forEach(function (v, k) { if (k !== 'jobs') data[k] = v; });
-            data.jobs = fd.getAll('jobs');
+            fd.forEach(function (v, k) { if (k !== 'challenges') data[k] = v; });
+            data.challenges = fd.getAll('challenges');
             data.variant = variant;
-            var answers = { industry: data.industry, whatsappUse: data.whatsappUse, enquiries: data.enquiries, saleValue: data.saleValue, role: data.role, jobs: data.jobs };
+            if (partialId) data.opportunityId = partialId;   // update the step 1 record, never duplicate it
+            var answers = { enquiries: data.enquiries, saleValue: data.saleValue, challenges: data.challenges, goal: data.goal };
 
             // qualify41 returns { qualified, tier, reason } (or a bare boolean). Fail open to the calendar.
             var fit = { qualified: true, tier: 'B', reason: '' };
@@ -129,9 +155,30 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         });
     }
 
+    // Qualified only. The handoff to our own AI Closer is deliberately shown AFTER the
+    // calendar: the booking is the commitment, the WhatsApp conversation is what keeps
+    // them warm until the call. Leads who did not qualify never see it.
+    function showHandoff(data) {
+        var box = document.getElementById('cl-handoff');
+        if (!box) return;
+        var link = document.getElementById('cl-wa-handoff');
+        if (link) {
+            var first = (data.name || '').trim().split(/\s+/)[0] || '';
+            link.href = 'https://wa.me/6580124848?text=' + encodeURIComponent(
+                'Hi, this is ' + (first || 'me') + '. I just booked a 41 Closer demo call'
+                + (data.website ? ' for ' + data.website : '') + '.');
+            link.addEventListener('click', function () {
+                track('closer_handoff_click', { event_category: 'conversion', tier: data.tier, variant: variant });
+                if (window.cl41) window.cl41.mark('closer_handoff_click', { tier: data.tier });
+            });
+        }
+        box.hidden = false;
+    }
+
     function showCalendar(data) {
         var url = (window.BOOKING_URL || '').trim();
         var holder = document.getElementById('cl-cal');
+        showHandoff(data);
         if (!url) { holder.hidden = true; document.getElementById('cl-cal-fallback').hidden = false; return; }
 
         // Google Calendar appointment schedule: plain iframe. It can't tell the page when a

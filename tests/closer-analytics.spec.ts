@@ -35,19 +35,16 @@ async function stub(page: Page): Promise<Sent> {
   return sent;
 }
 
-async function fillAndSubmit(page: Page, opts: { enquiries?: string; whatsappUse?: string } = {}) {
-  await page.selectOption('#cl-industry', 'servicing');
-  await page.selectOption('#cl-wa', opts.whatsappUse || 'most');
-  await page.selectOption('#cl-enquiries', opts.enquiries || '50to150');
-  await page.selectOption('#cl-sale', '200to1k');
-  await page.check('input[name="jobs"][value="quotes"]');
-  await page.check('input[name="jobs"][value="bookings"]');
-  await page.selectOption('#cl-after', 'nobody');
-  await page.selectOption('#cl-tried', 'chatbot');
-  await page.click('#cl-next');
+async function fillAndSubmit(page: Page, opts: { enquiries?: string; saleValue?: string } = {}) {
+  // Contact first, then the two qualifying questions. Defaults clear both floors.
   await page.fill('#cl-name', 'Tan Wei Ming');
   await page.fill('#cl-whatsapp', '+65 9123 4567');
   await page.fill('#cl-website', 'tanaircon.sg');
+  await page.click('#cl-next');
+  await page.selectOption('#cl-enquiries', opts.enquiries || '50to150');
+  await page.selectOption('#cl-sale', opts.saleValue || '500to2k');
+  await page.check('input[name="challenges"][value="slow"]');
+  await page.selectOption('#cl-goal', 'recover');
   await page.click('#cl-submit');
 }
 
@@ -344,8 +341,8 @@ test.describe('what reaches the lead', () => {
     await page.locator('#guarantee').scrollIntoViewIfNeeded();
     await page.waitForTimeout(1200);
     await fillAndSubmit(page);
-    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(1);
-    const j = sent.api[0].journey;
+    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(2);   // partial, then the full lead
+    const j = sent.api[1].journey;
     expect(j.ms).toBeGreaterThan(0);
     expect(j.scroll).toBeGreaterThan(0);
     expect(Array.isArray(j.sections)).toBe(true);
@@ -357,31 +354,31 @@ test.describe('what reaches the lead', () => {
     await context.addCookies([{ name: '_fbp', value: 'fb.1.1757660000000.1234567890', url: 'http://localhost:3000' }]);
     await page.goto('/ai-closer.html' + QS);
     await fillAndSubmit(page);
-    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(1);
-    expect(sent.api[0].fbp).toBe('fb.1.1757660000000.1234567890');
-    expect(sent.api[0].fbc).toMatch(/^fb\.1\.\d{13}\.abc123$/);
+    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(2);   // partial, then the full lead
+    expect(sent.api[1].fbp).toBe('fb.1.1757660000000.1234567890');
+    expect(sent.api[1].fbc).toMatch(/^fb\.1\.\d{13}\.abc123$/);
   });
 
   test('one event id goes to both the pixel and the server, or Meta counts the lead twice', async ({ page }) => {
     const sent = await stub(page);
     await page.goto('/ai-closer.html' + QS);
     await fillAndSubmit(page);
-    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(1);
+    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(2);   // partial, then the full lead
 
     const pixelCalls = await page.evaluate(() => (window as any).__fbq.filter((a: any[]) => a[0] === 'track' && a[1] === 'Lead'));
     expect(pixelCalls).toHaveLength(1);
     const eventID = pixelCalls[0][3]?.eventID;
     expect(eventID).toBeTruthy();
-    expect(sent.api[0].eventId).toBe(eventID);
+    expect(sent.api[1].eventId).toBe(eventID);
   });
 
   test('a lead that does not qualify still reports, so we can see what the ads are buying', async ({ page }) => {
     const sent = await stub(page);
     await page.goto('/ai-closer.html' + QS);
-    await fillAndSubmit(page, { whatsappUse: 'no', enquiries: 'under20' });
-    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(1);
-    expect(sent.api[0].qualified).toBe('no');
-    expect(sent.api[0].tier).toBe('C');
-    expect(sent.api[0].eventId).toBeTruthy();
+    await fillAndSubmit(page, { enquiries: 'under20' });
+    await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(2);   // partial, then the full lead
+    expect(sent.api[1].qualified).toBe('no');
+    expect(sent.api[1].tier).toBe('C');
+    expect(sent.api[1].eventId).toBeTruthy();
   });
 });
