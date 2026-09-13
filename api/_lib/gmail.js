@@ -84,12 +84,17 @@ async function sendGmail({ to, from, subject, html, text, replyTo }, { env, fetc
         body: JSON.stringify({ raw: buildRaw({ to: recipient, from: sender, subject, html, text, replyTo }) }),
         signal: ctrl.signal,
       });
-      return r.ok ? 'sent' : 'failed';
+      if (r.ok) return 'sent';
+      // Say WHY. A silent 'failed' on the lead path is the kind of thing that sits
+      // broken for weeks: nothing errors, the email just never arrives.
+      let why = '';
+      try { why = (await r.text()).slice(0, 120); } catch {}
+      return `failed:${r.status}:${why}`;
     } finally {
       clearTimeout(timer);
     }
-  } catch {
-    return 'failed';
+  } catch (e) {
+    return `failed:${String(e && e.message || e).slice(0, 120)}`;
   }
 }
 
