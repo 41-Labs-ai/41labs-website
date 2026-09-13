@@ -211,6 +211,51 @@ test.describe('the beacon', () => {
   });
 });
 
+// Everything the recorder measures is worthless if GA never loads. /ai-closer
+// shipped for weeks with track.js (which only defines a gtag STUB that queues
+// into dataLayer) and no loader for the real gtag.js, so the queue was never
+// flushed and the page was invisible in GA4.
+test.describe('reaching GA4', () => {
+  async function stubGtm(page: Page) {
+    const asked: string[] = [];
+    await page.route(/googletagmanager\.com/, (route) => {
+      asked.push(route.request().url());
+      return route.fulfill({ status: 200, contentType: 'application/javascript', body: '' });
+    });
+    await page.route('**/api/track', (r) => r.fulfill({ status: 204, body: '' }));
+    await page.route(/connect\.facebook\.net|fonts\.g/, (r) => r.abort());
+    return asked;
+  }
+
+  for (const path of ['/ai-closer.html', '/ai-closer-sf.html']) {
+    test(`${path} loads real GA, not just the queueing stub`, async ({ page }) => {
+      const asked = await stubGtm(page);
+      await page.goto(path);
+      await page.mouse.click(200, 300);      // the loader waits for first interaction
+      await expect.poll(() => asked.join(' '), { timeout: 8000 }).toContain('gtag/js');
+    });
+  }
+
+  test('the first mark survives script order instead of being dropped', async ({ page }) => {
+    await stubGtm(page);
+    await page.goto('/ai-closer.html');
+    // closer-analytics.js runs before track.js defines window.track41. The opening
+    // page_view_closer must still reach dataLayer, or every session is missing its start.
+    const names = await page.evaluate(() =>
+      (window as any).dataLayer.map((a: any) => Array.from(a)).filter((a: any) => a[0] === 'event').map((a: any) => a[1]));
+    expect(names).toContain('page_view_closer');
+  });
+
+  test('a mark carries its parameters through to GA', async ({ page }) => {
+    await stubGtm(page);
+    await page.goto('/ai-closer.html?utm_content=ad_stalk1');
+    const ev = await page.evaluate(() =>
+      (window as any).dataLayer.map((a: any) => Array.from(a))
+        .filter((a: any) => a[0] === 'event' && a[1] === 'page_view_closer')[0]);
+    expect(ev[2]).toMatchObject({ variant: 'long', visit: 1 });
+  });
+});
+
 test.describe('what reaches the lead', () => {
   test('the lead carries the journey, so the call knows what they actually read', async ({ page }) => {
     const sent = await stub(page);

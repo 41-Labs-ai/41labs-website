@@ -166,10 +166,30 @@
     }
 
     // ---- named funnel events: GA4 now, and kept for the beacon ----
+    // track.js is loaded with defer, so window.track41 does not exist yet when this
+    // file runs. Without the queue the opening page_view_closer was silently dropped
+    // and every session in GA4 was missing its own start.
+    var pending = [];
+    function flush() {
+        if (!window.track41) return;
+        while (pending.length) {
+            var m = pending.shift();
+            try { window.track41(m[0], m[1]); } catch (e) {}
+        }
+    }
     function mark(name, params) {
         marks.push([name, Math.round((Date.now() - t0) / 1000)]);
-        try { if (window.track41) window.track41(name, params || {}); } catch (e) {}
+        pending.push([name, params || {}]);
+        flush();
     }
+    // track.js may land after DOMContentLoaded, so try again on both.
+    document.addEventListener('DOMContentLoaded', flush);
+    window.addEventListener('load', flush);
+    var flushTries = 0;
+    var flushTimer = setInterval(function () {
+        flush();
+        if (!pending.length || ++flushTries > 40) clearInterval(flushTimer);
+    }, 250);
 
     // ---- beacon ----
     var lastBeacon = 0;
