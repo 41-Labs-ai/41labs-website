@@ -54,3 +54,7 @@
 .built-item img { width: auto; opacity: .78; filter: grayscale(1); }
 .built-item figcaption { font-size: 11px; font-weight: 600; color: #8a8a90; letter-spacing: .02em; }
 .built-word { font-weight: 800; font-size: 17px; letter-spacing: -0.02em; color: #6b6b70; line-height: 24px; }
+
+/* proof gallery: short screens, no scrolling */
+.wa-card .wa-body { min-height: 430px; }
+.wa-card { max-width: 330px; }

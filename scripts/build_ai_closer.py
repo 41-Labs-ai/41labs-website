@@ -89,19 +89,64 @@ def hero_block():
     return ('<div class="wa-tabs" role="tablist" aria-label="Pick your kind of business">' + ''.join(tabs) + '</div>'
             + ''.join(screens))
 
-PROOF = [
-    ('jewellery-ring-to-payment.json', 'Jewellery store', 'JS', 'Ring chosen and paid for by payment link, 10pm.'),
-    ('fnb-wholesale-reorder-delivery.json', 'Baking supplies', 'BS', 'Trade reorder confirmed with a delivery slot.'),
-    ('travel-bhutan-trip-planning.json', 'Bhutan tours', 'BT', 'Trip matched to the right package in 3 minutes.'),
+# Proof gallery: 8 short WhatsApp screens, each proving ONE thing. No scrolling.
+# source: "Demo line" = verbatim from our own demo builds (customer details and
+# product codes redacted, brand-name products avoided). "Example" = written by us.
+PROOF_CARDS = [
+    ("Answers in seconds, at 2am", "Example", "CoolAir Services", "CA", [
+        ("customer", "Hi, still open? Need 3 aircon units serviced.", "02:02"),
+        ("closer", "Hi! Yes, we can help. Is it a condo or landed, and which area?", "02:02"),
+        ("customer", "Condo, Tampines", "02:03"),
+        ("closer", "Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?", "02:03"),
+    ]),
+    ("Qualifies before it quotes", "Demo line", "Bhutan tours", "BT", [
+        ("customer", "I'm planning to travel with my friends (maybe 3 of us) in December. Is that a good time?", "16:13"),
+        ("closer", "December is a lovely time to visit Bhutan! The skies are crystal clear and it's quieter than the peak autumn season.\n\nWhat kind of experience are you hoping for, more culture and monasteries, getting out into nature, or a mix of both?", "16:13"),
+        ("customer", "We'd like to experience both", "16:14"),
+        ("closer", "That's a great combination. Are you and your friends up for some hiking, like the famous Tiger's Nest climb, or do you prefer scenic drives and gentle walks?", "16:14"),
+    ]),
+    ("Quotes from your price list", "Demo line", "Jewellery store", "JS", [
+        ("customer", "i want to buy rings", "22:05"),
+        ("closer", "Great, rings it is! What is your budget range, and is this for yourself or a gift?", "22:05"),
+        ("customer", "anything below 1k sgd", "22:10"),
+        ("closer", "*Diamond Cluster Ring in 18K White Gold* (SKU: JR\u2022\u2022\u2022\u2022\u2022\u2022\u2022) \u2014 S$999\nFour diamonds (0.28ct total) in a diamond-shaped cluster, on a plain polished band.", "22:10"),
+    ]),
+    ("Takes the deposit", "Demo line", "Jewellery store", "JS", [
+        ("customer", "go with this JR\u2022\u2022\u2022\u2022\u2022\u2022\u2022, i want to pay", "22:10"),
+        ("closer", "Here is your payment link for the *Heart Diamond Ring in 18K White Gold* \u2014 S$979: [secure payment link]\n\nOnce payment is done, the piece is reserved for you.", "22:10"),
+    ]),
+    ("Books the slot", "Demo line", "Baking supplies", "BS", [
+        ("closer", "Which works better for you, Friday 28 August or Monday 31 August?", "14:32"),
+        ("customer", "1 sep", "14:32"),
+        ("closer", "Our weekday window is 12pm to 6pm. Did you want early afternoon or later in the day on Tuesday 1 September?", "14:32"),
+        ("customer", "2pm", "14:33"),
+        ("closer", "Locked in: Tuesday 1 September, 2pm. The team will confirm the order against your account.", "14:33"),
+    ]),
+    ("Handles \u201ctoo expensive\u201d without discounting", "Example", "Orchard Aesthetics", "OA", [
+        ("customer", "You are very expensive. Others quote me less", "22:38"),
+        ("closer", "I understand it feels that way upfront. Ours is a semi-permanent result, so there is nothing to buy monthly after it.", "22:38"),
+        ("customer", "Any discount?", "22:47"),
+        ("closer", "Pricing is set by our specialist team, so I can't discount here. The honest way to know if it's worth it is a consult, and that fee goes toward your treatment.", "22:47"),
+    ]),
+    ("Follows up when they go quiet", "Example", "Meridian Interiors", "MI", [
+        ("closer", "Hi Wei, quick one on the kitchen quote I sent Monday. Are you still deciding, or is something in it not quite right?", "10:14"),
+        ("customer", "Sorry busy week. Still keen, my wife wants to see other door colours", "12:02"),
+        ("closer", "No problem at all. I'll send three colour options in the same price. If one works, our designer can hold Saturday 2pm for the site measure.", "12:02"),
+    ]),
+    ("Hands over to your team", "Example", "Lion City Rentals", "LC", [
+        ("customer", "I need the car delivered to Tuas checkpoint at 5am and someone to collect it in JB", "23:51"),
+        ("closer", "That one is outside what I can arrange myself. I'm passing this to our team now with everything you've told me, and they'll come back to you first thing.", "23:51"),
+        ("customer", "Ok thanks", "23:52"),
+        ("closer", "Noted, Marcus. You'll hear from them before 9am. Your dates are held in the meantime.", "23:52"),
+    ]),
 ]
 
 def proof_cards():
     out = []
-    for f, name, ini, cap in PROOF:
-        d = json.load(open(os.path.join(CHATS, f)))
-        msgs = [(m['from'], m['text'], m.get('time', '')) for m in d['messages'][:11]]
-        out.append(f'<figure class="chatfig reveal">{screen(name, ini, msgs, cls="wa-scroll")}'
-                   f'<figcaption class="chatcap">{cap} Demo line, customer details removed.</figcaption></figure>')
+    for label, src, name, ini, msgs in PROOF_CARDS:
+        out.append(f'<figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">{html.escape(label)}'
+                   f'<span class="chat-src">{html.escape(src)}</span></figcaption>'
+                   + screen(name, ini, msgs, cls='wa-card') + '</figure>')
     return '\n            '.join(out)
 
 SEEN = '''<p class="seen-label">Proud member of the Singapore A.I. Association &middot; Seen at</p>

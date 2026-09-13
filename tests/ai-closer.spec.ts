@@ -329,10 +329,21 @@ test.describe('long form follows the event opt-in structure', () => {
     await expect(page.locator('#seen')).not.toContainText(/chair|day 3|pitch/i);
   });
 
-  test('proof chats are WhatsApp screens too', async ({ page }) => {
+  test('proof gallery: 6 to 9 short WhatsApp screens, each labelled, none scrolling', async ({ page }) => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
-    expect(await page.locator('#proof-2 .wa').count()).toBe(3);
+    const cards = page.locator('#proof-2 .wa');
+    const n = await cards.count();
+    expect(n).toBeGreaterThanOrEqual(6);
+    expect(n).toBeLessThanOrEqual(9);
+    expect(await page.locator('#proof-2 .chatcap-top').count()).toBe(n);
+    // every screen fits without an inner scrollbar
+    const scrolls = await page.locator('#proof-2 .wa-body').evaluateAll((els) =>
+      els.map((e) => e.scrollHeight - e.clientHeight));
+    expect(Math.max(...scrolls)).toBeLessThanOrEqual(1);
+    // each card says where it came from
+    const srcs = await page.locator('#proof-2 .chat-src').allInnerTexts();
+    expect(srcs.every((t) => /demo line|example/i.test(t))).toBe(true);
   });
 
   test('mobile: the first form question is reachable within two screens', async ({ page, isMobile }) => {
