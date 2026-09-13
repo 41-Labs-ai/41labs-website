@@ -133,3 +133,24 @@ test('form submit fires form_submit', async ({ page }) => {
   expect(ev).toBeTruthy();
   expect(ev!.params.event_label).toBe('lead-form');
 });
+
+// track.js configures GA early with send_page_view:false so click events queue
+// safely before gtag.js loads. The deferred loader then configs the SAME id, and
+// gtag keeps the first config's setting, so no page_view was ever sent. GA4's
+// Pages and screens report was empty site-wide. The loader now sends one explicitly.
+test.describe('GA4 page_view', () => {
+  for (const path of ['/index.html', '/ai-closer.html', '/41-closer.html']) {
+    test(`${path} sends exactly one page_view to GA4`, async ({ page }) => {
+      await page.route(/googletagmanager\.com/, (r) =>
+        r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+      await page.route(/connect\.facebook\.net|clarity\.ms|fonts\.g/, (r) => r.abort());
+      await page.goto(path);
+      await page.mouse.click(200, 300);          // the loader waits for first interaction
+      await page.waitForTimeout(600);
+      const events = await page.evaluate(() =>
+        (window as any).dataLayer.map((a: any) => Array.from(a))
+          .filter((a: any) => a[0] === 'event' && a[1] === 'page_view'));
+      expect(events.length, `page_view count on ${path}`).toBe(1);
+    });
+  }
+});

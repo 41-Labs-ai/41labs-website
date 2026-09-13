@@ -22,8 +22,17 @@
     // beacon transport so events survive the tab backgrounding when WhatsApp
     // opens. This queues only — it does NOT load gtag.js early (CWV preserved).
     var GA_MEASUREMENT_ID = 'G-VQQ49H8N1L';
+    // Google Ads conversion tracking. Fill AW_ID + WA_CONVERSION_LABEL from the
+    // conversion action you create in Google Ads (Goals → Conversions → Website).
+    // Leaving these as the REPLACE_ placeholders is safe: the guarded block in the
+    // WhatsApp handler simply no-ops until real values are pasted in.
+    var AW_ID = 'AW-REPLACE_WITH_CONVERSION_ID';        // e.g. 'AW-123456789'
+    var WA_CONVERSION_LABEL = 'REPLACE_WITH_LABEL';     // e.g. 'abcDeFgh12'
+    var ADS_READY = AW_ID.indexOf('REPLACE_') === -1 && WA_CONVERSION_LABEL.indexOf('REPLACE_') === -1;
+
     window.gtag('js', new Date());
     window.gtag('config', GA_MEASUREMENT_ID, { send_page_view: false, transport_type: 'beacon' });
+    if (ADS_READY) { window.gtag('config', AW_ID); }
 
     function track(name, params) {
         try { window.gtag('event', name, params || {}); } catch (e) {}
@@ -66,6 +75,17 @@
                 link_url: href,
                 page_path: page
             });
+            // Google Ads conversion (separate destination from GA4 above).
+            // No-ops until AW_ID + label are filled in. beacon transport so it
+            // survives the tab backgrounding when WhatsApp opens.
+            if (ADS_READY) {
+                track('conversion', {
+                    send_to: AW_ID + '/' + WA_CONVERSION_LABEL,
+                    value: 50.0,
+                    currency: 'SGD',
+                    transport_type: 'beacon'
+                });
+            }
             return;
         }
 

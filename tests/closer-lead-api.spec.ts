@@ -540,3 +540,83 @@ test.describe('what the visitor did before they filled the form', () => {
     expect(hermesCall(calls)!.body.lead.journey).toMatchObject({ scroll: 86, visits: 2 });
   });
 });
+
+// Twenty rejects a company whose name already exists. create() ran people ->
+// companies -> opportunities with no recovery, so the SECOND lead from any domain
+// we already know died after the Person was written, leaving an orphan contact and
+// no deal. Telegram was the only thing that still fired.
+test.describe('a company we already know must not kill the lead', () => {
+  const dupCompany = async (body: any) => {
+    const calls: Call[] = [];
+    const origFetch = globalThis.fetch;
+    const saved: Record<string, string | undefined> = {};
+    for (const k of ENV_KEYS) { saved[k] = process.env[k]; delete process.env[k]; }
+    Object.assign(process.env, { TWENTY_API_KEY: 'test-key' });
+    let n = 0;
+    (globalThis as any).fetch = async (url: string, init: any) => {
+      calls.push({ url, method: init?.method, headers: init?.headers || {}, body: init?.body ? JSON.parse(init.body) : null });
+      if (url.includes('/rest/companies') && init?.method === 'POST') {
+        return { ok: false, status: 400, text: async () => '{"messages":["A duplicate entry was detected"]}', json: async () => ({}) };
+      }
+      if (url.includes('/rest/companies') && (!init?.method || init.method === 'GET')) {
+        return { ok: true, status: 200, json: async () => ({ data: { companies: [{ id: 'existing-company-id', name: 'Tan Aircon Services' }] } }), text: async () => '' };
+      }
+      if (url.includes('/rest/')) {
+        n += 1;
+        const obj = url.split('/rest/')[1].split('?')[0];
+        return { ok: true, status: 201, json: async () => ({ data: { [obj]: { id: `${obj}-id-${n}` } } }), text: async () => '' };
+      }
+      return { ok: true, status: 200, json: async () => ({ ok: true }), text: async () => '{}' };
+    };
+    delete require.cache[require.resolve(HANDLER)];
+    const handler = require(HANDLER);
+    const res = fakeRes();
+    try { await handler({ method: 'POST', body, headers: {} }, res); }
+    finally {
+      (globalThis as any).fetch = origFetch;
+      for (const k of ENV_KEYS) { if (saved[k] === undefined) delete process.env[k]; else process.env[k] = saved[k]; }
+    }
+    return { json: JSON.parse(res.body || '{}'), calls };
+  };
+
+  test('the deal is still created, linked to the company that already exists', async () => {
+    const { json, calls } = await dupCompany(lead);
+    expect(json.ok).toBe(true);
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp).toBeTruthy();
+    expect(opp.body.companyId).toBe('existing-company-id');
+    expect(opp.body.pointOfContactId).toMatch(/^people-id/);
+  });
+
+  test('and the lead is never lost just because the company lookup also fails', async () => {
+    const calls: Call[] = [];
+    const origFetch = globalThis.fetch;
+    const saved: Record<string, string | undefined> = {};
+    for (const k of ENV_KEYS) { saved[k] = process.env[k]; delete process.env[k]; }
+    Object.assign(process.env, { TWENTY_API_KEY: 'test-key' });
+    let n = 0;
+    (globalThis as any).fetch = async (url: string, init: any) => {
+      calls.push({ url, method: init?.method, headers: init?.headers || {}, body: init?.body ? JSON.parse(init.body) : null });
+      if (url.includes('/rest/companies')) return { ok: false, status: 500, text: async () => 'boom', json: async () => ({}) };
+      if (url.includes('/rest/')) {
+        n += 1;
+        const obj = url.split('/rest/')[1].split('?')[0];
+        return { ok: true, status: 201, json: async () => ({ data: { [obj]: { id: `${obj}-id-${n}` } } }), text: async () => '' };
+      }
+      return { ok: true, status: 200, json: async () => ({ ok: true }), text: async () => '{}' };
+    };
+    delete require.cache[require.resolve(HANDLER)];
+    const handler = require(HANDLER);
+    const res = fakeRes();
+    try { await handler({ method: 'POST', body: lead, headers: {} }, res); }
+    finally {
+      (globalThis as any).fetch = origFetch;
+      for (const k of ENV_KEYS) { if (saved[k] === undefined) delete process.env[k]; else process.env[k] = saved[k]; }
+    }
+    const json = JSON.parse(res.body || '{}');
+    expect(json.ok).toBe(true);                       // a deal with no company beats no deal
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp.body.companyId).toBeUndefined();
+    expect(opp.body.pointOfContactId).toMatch(/^people-id/);
+  });
+});

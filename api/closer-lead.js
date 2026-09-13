@@ -58,6 +58,23 @@ function send(res, status, obj) {
   res.end(JSON.stringify(obj));
 }
 
+// Twenty rejects a company whose name already exists. Falling over at that point
+// used to abandon the whole write, leaving an orphan Person and no deal, so the
+// SECOND lead from any domain we already knew never reached the pipeline.
+async function findCompanyId(key, name) {
+  try {
+    const r = await fetch(`${TWENTY_BASE}/rest/companies?filter=name[eq]:${encodeURIComponent(name)}&limit=1`, {
+      headers: { Authorization: `Bearer ${key}` },
+    });
+    if (!r.ok) return null;
+    const d = await r.json();
+    const rows = (d && d.data && d.data.companies) || [];
+    return rows.length && rows[0].id ? rows[0].id : null;
+  } catch {
+    return null;
+  }
+}
+
 async function patch(key, object, id, record) {
   const r = await fetch(`${TWENTY_BASE}/rest/${object}/${id}`, {
     method: 'PATCH',
@@ -181,7 +198,14 @@ module.exports = async (req, res) => {
           phones: { primaryPhoneNumber: whatsapp.replace(/[^\d+]/g, '') },
           ...(email ? { emails: { primaryEmail: email } } : {}),
         });
-        const companyId = await create(key, 'companies', { name: company, ...(domain ? { domainName: { primaryLinkUrl: domain } } : {}) });
+        // A company we already have is the normal case for a repeat domain, not an error.
+        let companyId = null;
+        try {
+          companyId = await create(key, 'companies', { name: company, ...(domain ? { domainName: { primaryLinkUrl: domain } } : {}) });
+        } catch (companyErr) {
+          companyId = await findCompanyId(key, company);
+          if (!companyId) crmError = `company not linked: ${String(companyErr).slice(0, 120)}`;
+        }
         oppId = await create(key, 'opportunities', {
           name: `${company} - 41 Closer (ad landing page)`,
           stage: 'SCREENING',
@@ -192,7 +216,7 @@ module.exports = async (req, res) => {
           nextAction: nextAction,
           firstContactAt: new Date().toISOString(),
           pointOfContactId: personId,
-          companyId,
+          ...(companyId ? { companyId } : {}),   // a deal with no company beats no deal
         });
       }
       result = { ok: true, id: oppId };

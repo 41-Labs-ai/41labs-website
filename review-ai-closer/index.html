@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>41 Closer Landing Page Review</title>
+    <meta name="description" content="Not just a chatbot. See how 41 Closer replies, quotes and closes every WhatsApp enquiry in seconds, even at 2am. Free leak audit and live demo with Alexander Lee.">
+    <!-- Ad-only landing page. Kept out of search so it never competes with /41-closer. -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Free WhatsApp Leak Audit + 41 Closer Demo">
+    <meta property="og:description" content="Not just a chatbot. A salesperson on your WhatsApp that never sleeps. Free leak audit and live demo.">
+    <meta property="og:image" content="https://41labs.ai/og-image.jpg?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo-icon.png">
+
+    <!-- Meta Pixel -->
+    <script>
+        window.FB_PIXEL_ID = '24659272643698089';
+        (function(){
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', window.FB_PIXEL_ID);
+            fbq('track', 'PageView');
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="wa.css">
+    <style>
+        :root {
+            --accent: #4ade80;
+            --accent-hover: #22c55e;
+            --accent-deep: #166534;
+            --accent-soft: #dcfce7;
+            --dark: #1a1a1a;
+            --ink: #0f1311;
+            --bg: #f5f5f7;
+            --white: #ffffff;
+            --text: #1a1a1a;
+            --text-2: #5f5f64;
+            --line: rgba(0,0,0,0.09);
+            --radius-card: 24px;
+            --radius-pill: 999px;
+            --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 14px 44px rgba(0,0,0,0.08);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body { margin: 0; font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; }
+        .wrap { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 18px; }
+        .narrow { max-width: 820px; }
+        .center { text-align: center; }
+
+        /* ---------- Direct-response type ---------- */
+        .caps { text-transform: uppercase; letter-spacing: -0.01em; }
+        h1, h2, h3 { font-weight: 900; letter-spacing: -0.025em; line-height: 1.08; margin: 0; }
+        h2 { font-size: clamp(28px, 4.6vw, 44px); }
+        h2.caps { font-size: clamp(26px, 4.2vw, 40px); }
+        .hl { color: var(--accent); }
+                .mark { background: linear-gradient(transparent 58%, var(--accent) 58%); padding: 0 3px; }
+        .sub { color: var(--text-2); font-size: 18px; margin: 16px auto 0; max-width: 700px; }
+
+        /* ---------- Buttons ---------- */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 0 30px; border-radius: var(--radius-pill); font-weight: 800; font-size: 17px; text-decoration: none; border: 0; cursor: pointer; transition: transform .2s ease, background .2s ease; font-family: inherit; }
+        .btn-primary, .btn-cta { background: var(--accent); color: var(--ink); box-shadow: 0 10px 30px rgba(74,222,128,0.35); }
+        .btn-primary:hover, .btn-cta:hover { background: var(--accent-hover); transform: translateY(-2px); }
+        .btn-cta { text-transform: uppercase; letter-spacing: 0.01em; min-height: 62px; padding: 0 34px; font-size: 17px; border: 3px solid var(--ink); }
+        .btn .arrow { transition: transform .2s ease; }
+        .btn:hover .arrow { transform: translateX(3px); }
+        .btn-ghost { background: transparent; color: var(--dark); border: 1.5px solid #dcdce0; }
+        .btn-block { width: 100%; margin-top: 18px; }
+        .cta-row { text-align: center; margin-top: 36px; }
+        :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+        /* ---------- Header: logo only ---------- */
+        .top { position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
+        .top .wrap { display: flex; align-items: center; height: 64px; }
+        .brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; letter-spacing: -0.02em; font-size: 17px; }
+        .brand img { width: 30px; height: 30px; border-radius: 9px; background: #fff; padding: 4px; }
+        .brand span { color: rgba(255,255,255,0.55); font-weight: 500; }
+
+        /* ---------- HERO (his: audience bar, pre-head, caps headline, video + form) ---------- */
+        #hero { position: relative; background: var(--ink); color: #fff; padding: 76px 0 48px; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+        .hero-bg img { position: absolute; top: 0; height: 100%; width: 34%; max-width: none; object-fit: cover; filter: grayscale(0.4) brightness(0.5); opacity: .8; }
+        .hero-bg .bg-left { left: 0; object-position: 55% 30%; }
+        .hero-bg .bg-right { right: 0; object-position: 50% 20%; }
+        .hero-bg::after { content: ""; position: absolute; inset: 0; background:
+            linear-gradient(90deg, rgba(15,19,17,0.2) 0%, rgba(15,19,17,0.96) 30%, rgba(15,19,17,0.96) 70%, rgba(15,19,17,0.2) 100%),
+            linear-gradient(180deg, rgba(15,19,17,0.6), rgba(15,19,17,0.2) 40%, rgba(15,19,17,0.85)); }
+        #hero > .wrap { position: relative; z-index: 1; }
+        .aud { display: block; max-width: 760px; margin: 0 auto; background: var(--accent); color: var(--ink); font-style: italic; font-weight: 800; font-size: clamp(13px, 1.9vw, 16px); text-align: center; padding: 8px 16px; border-radius: 8px; }
+        .prehead { text-align: center; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: clamp(13px, 1.8vw, 16px); margin: 22px 0 10px; }
+        #hero h1 { text-align: center; text-transform: uppercase; font-size: clamp(23px, 3.6vw, 42px); line-height: 1.1; max-width: 960px; margin: 0 auto; }
+        .hero-sub { text-align: center; color: rgba(255,255,255,0.72); font-size: clamp(16px, 2vw, 19px); max-width: 760px; margin: 18px auto 0; }
+        .hero-grid { display: grid; gap: 22px; margin-top: 26px; align-items: start; }
+
+        .vbox { background: #0b0f0d; border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; overflow: hidden; }
+        .vbox-title { background: #fff; color: var(--ink); font-weight: 800; text-align: center; padding: 11px 14px; font-size: 15px; }
+        .vbox-body { padding: 26px 18px 30px; display: grid; place-items: center; background: radial-gradient(closest-side at 50% 40%, rgba(74,222,128,0.14), transparent); }
+        .vnote { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: rgba(255,255,255,0.75); padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+        /* form card */
+        .fcard { background: #fff; color: var(--text); border-radius: 20px; padding: 22px 20px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+        .fcard-head { text-align: center; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 16px; }
+        .fcard-head .free { display: inline-block; background: var(--ink); color: var(--accent); font-weight: 900; font-size: 13px; letter-spacing: .06em; padding: 5px 12px; border-radius: 6px; }
+        .fcard-head h2 { font-size: 21px; margin: 10px 0 4px; }
+        .fcard-head p { margin: 0; font-size: 14px; color: var(--text-2); }
+        .cl-tabs { display: flex; gap: 6px; margin: 0 0 16px; }
+        .cl-tab { flex: 1; text-align: center; font-size: 12.5px; font-weight: 800; padding: 9px 6px; border-radius: 10px; background: #f0f0f3; color: var(--text-2); }
+        .cl-tab.on { background: var(--ink); color: #fff; }
+        .fields { display: grid; gap: 14px; }
+        .field label, fieldset.jobs legend { display: block; font-size: 13.5px; font-weight: 700; margin: 0 0 6px; padding: 0; }
+        .opt { color: var(--text-2); font-weight: 500; }
+        .field input, .field select, .field textarea { width: 100%; font: inherit; font-size: 16px; padding: 13px 14px; border-radius: 12px; border: 1.5px solid #e1e1e6; background: #fafafb; color: var(--text); appearance: none; -webkit-appearance: none; }
+        .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%235f5f64' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent-hover); background: #fff; outline: none; }
+        .field textarea { min-height: 80px; resize: vertical; }
+        fieldset.jobs { border: 0; padding: 0; margin: 0; min-width: 0; }
+        .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+        .chip-opt { position: relative; cursor: pointer; }
+        .chip-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+        .chip-opt span { display: inline-block; font-size: 14px; padding: 9px 13px; border-radius: var(--radius-pill); border: 1.5px solid #e1e1e6; background: #fafafb; transition: background .15s ease, color .15s ease; }
+        .chip-opt input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+        .chip-opt input:checked + span::before { content: "\2713  "; color: var(--accent); font-weight: 900; }
+        .chip-opt input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+        .jobs-error { color: #dc2626; font-size: 13px; font-weight: 700; margin: 8px 0 0; }
+        .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+        .help { display: block; font-size: 12.5px; color: var(--text-2); margin-top: 6px; }
+        .consent { font-size: 12.5px; color: var(--text-2); text-align: center; margin: 10px 0 0; }
+        .form-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
+        .link-back { background: none; border: 0; font: inherit; font-weight: 700; color: var(--text-2); cursor: pointer; padding: 8px 0; }
+        #cl-step2 h3 { font-size: 24px; margin: 0 0 8px; }
+        #cl-step2 p { color: var(--text-2); margin: 0 0 16px; }
+        #cl-cal iframe { width: 100%; height: 640px; border: 0; }
+        .next-steps { counter-reset: ns; list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
+        .next-steps li { counter-increment: ns; display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-size: 14.5px; color: var(--text-2); }
+        .next-steps li::before { content: counter(ns); width: 26px; height: 26px; border-radius: 8px; background: var(--accent-soft); color: var(--accent-deep); display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+        .next-steps b { color: var(--text); }
+        .ok-badge { display: inline-flex; gap: 8px; font-size: 13px; font-weight: 800; color: var(--accent-deep); background: var(--accent-soft); padding: 6px 12px; border-radius: var(--radius-pill); margin-bottom: 12px; }
+        .promise { display: flex; gap: 12px; align-items: center; margin-top: 16px; padding: 14px; border-radius: 14px; background: #f6fbf7; border: 1.5px dashed #86efac; }
+        .seal { flex: 0 0 58px; height: 58px; border-radius: 50%; background: var(--ink); color: var(--accent); display: grid; place-items: center; text-align: center; font-weight: 900; font-size: 10px; line-height: 1.1; letter-spacing: .03em; }
+        .promise p { margin: 0; font-size: 13px; color: var(--text-2); }
+        .promise b { color: var(--text); }
+
+        /* ---------- Section shells ---------- */
+        section.band { padding: 72px 0; }
+        section.dark { background: var(--ink); color: #fff; }
+        section.dark .sub { color: rgba(255,255,255,0.7); }
+        .card { background: #fff; border-radius: var(--radius-card); box-shadow: var(--shadow); padding: 30px 24px; }
+        .panel { background: #fff; border-radius: 28px; box-shadow: var(--shadow); padding: 36px 22px; max-width: 980px; margin: 0 auto; }
+        .kicker { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-deep); margin: 0 0 10px; }
+        section.dark .kicker { color: var(--accent); }
+        .chev { text-align: center; color: #b9b9c0; letter-spacing: 12px; font-size: 20px; margin: 18px 0 0; }
+
+        /* as seen at */
+        #seen { padding: 0; margin-top: -30px; position: relative; z-index: 2; }
+        .seen { background: #fff; border-radius: 20px; box-shadow: var(--shadow); padding: 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+        .seen-label { text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700; color: #6b6b6b; margin: 0 0 16px; }
+        .seen-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; align-items: center; }
+        .seen-row .chip { background: #fff; border-radius: 10px; padding: 10px 18px; display: inline-flex; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #efefef; }
+        .seen-row .chip img { height: 28px; width: auto; }
+
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 980px; margin: 0 auto; }
+        .stat { background: #fff; border-radius: 18px; box-shadow: var(--shadow); padding: 20px 18px; text-align: center; }
+        .stat b { display: block; font-size: clamp(26px, 4vw, 34px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; }
+        .stat span { display: block; font-size: 13.5px; color: var(--text-2); margin-top: 6px; }
+        .stats-note { max-width: 820px; margin: 16px auto 0; text-align: center; font-size: 12.5px; color: var(--text-2); }
+        @media (min-width: 760px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+        /* what you get */
+        .get-grid { display: grid; gap: 24px; align-items: center; margin-top: 26px; }
+        .photo-cap { font-size: 12.5px; color: var(--text-2); margin-top: 8px; text-align: center; }
+        .get-photo img { max-height: 560px; object-fit: cover; border-radius: 18px; }
+        .why-photo { margin: 28px auto 0; max-width: 460px; }
+        .why-photo img { width: 100%; height: auto; max-height: 520px; object-fit: cover; object-position: center 40%; border-radius: 20px; box-shadow: var(--shadow); }
+        .get-photo { border-radius: 18px; overflow: hidden; }
+        .get-photo img { width: 100%; height: auto; }
+        .numlist { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; counter-reset: n; }
+        .numlist li { counter-increment: n; display: grid; grid-template-columns: 40px 1fr; gap: 14px; font-size: 16.5px; }
+        .numlist li::before { content: counter(n); width: 40px; height: 40px; border-radius: 12px; background: var(--ink); color: var(--accent); display: grid; place-items: center; font-weight: 900; font-family: var(--mono); }
+        .numlist b { display: block; font-size: 18px; }
+
+        /* results cards */
+        .results { display: grid; gap: 18px; margin-top: 34px; }
+        .result { background: #fff; color: var(--text); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+        .result-top { background: var(--ink); color: #fff; padding: 22px; }
+        .result-top .big { font-family: var(--mono); font-weight: 700; font-size: clamp(30px, 5vw, 42px); line-height: 1; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .result-top .late { color: #f87171; }
+        .result-top .pill { font-family: var(--font); font-size: 12px; font-weight: 800; background: #7f1d1d; color: #fecaca; padding: 5px 10px; border-radius: 99px; }
+        .result-top h3 { font-size: 20px; margin: 12px 0 0; text-transform: uppercase; }
+        .result-body { padding: 20px 22px 24px; color: var(--text-2); font-size: 15.5px; }
+        .result-body b { color: var(--text); }
+        .result-tag { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-deep); margin-bottom: 8px; display: block; }
+
+        /* chat proof (WhatsApp screens) */
+        .chats { display: grid; gap: 30px 24px; margin-top: 40px; align-items: start; }
+        .chatfig { margin: 0; }
+        .chatcap { color: rgba(255,255,255,0.6); font-size: 12.5px; padding: 18px 8px 0; text-align: center; }
+        .chatcap-top { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #fff; font-weight: 800; font-size: 16px; padding: 0 0 14px; letter-spacing: -0.01em; }
+        .chat-src { font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: rgba(74,222,128,0.12); padding: 4px 10px; border-radius: 999px; }
+
+        /* letter */
+        #letter .panel { padding: 40px 22px; }
+        .letter-head { text-align: center; }
+        .letter-head h2 { text-transform: uppercase; }
+        .letter-head p { font-weight: 700; margin: 8px 0 0; color: var(--text-2); }
+        .letter-grid { display: grid; gap: 26px; margin-top: 28px; }
+        .letter-photo img { border-radius: 16px; width: 100%; height: auto; }
+        .letter-photo figcaption { font-size: 12.5px; color: var(--text-2); margin-top: 8px; text-align: center; }
+        .letter-body { font-size: 17.5px; line-height: 1.7; }
+        .letter-body p { margin: 0 0 16px; }
+        .letter-body h3 { font-size: 22px; text-transform: uppercase; margin: 26px 0 12px; }
+        .sig { margin-top: 20px; }
+        .sig .name { font-family: 'Brush Script MT', 'Segoe Script', cursive; font-size: 34px; line-height: 1; }
+        .sig small { display: block; color: var(--text-2); margin-top: 6px; font-size: 14px; }
+
+        .hero-sub-2 { display: inline-block; margin-top: 8px; color: rgba(255,255,255,0.58); font-size: 0.92em; }
+        .diff-line { text-align: center; font-weight: 800; font-size: clamp(17px, 2.4vw, 21px); margin: 30px auto 0; max-width: 680px; letter-spacing: -0.01em; }
+        /* three-up reasons */
+        .three { display: grid; gap: 16px; margin-top: 30px; }
+        .three .card h3 { font-size: 19px; margin: 12px 0 8px; }
+        .three .card p { color: var(--text-2); margin: 0; }
+        .tagnum { font-family: var(--mono); font-weight: 700; color: var(--accent-deep); background: var(--accent-soft); display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 13px; }
+
+        /* weeks */
+        .weeks { display: grid; gap: 16px; margin-top: 30px; }
+        .week { background: #fff; color: var(--text); border-radius: 20px; overflow: hidden; }
+        .week-head { background: var(--accent); color: var(--ink); padding: 14px 20px; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; }
+        .week ul { margin: 0; padding: 18px 20px 22px 40px; display: grid; gap: 8px; color: var(--text-2); }
+        .week ul b { color: var(--text); }
+
+        /* guarantee */
+        .gbox { background: var(--accent); color: var(--ink); border-radius: 28px; padding: 40px 24px; text-align: center; max-width: 900px; margin: 0 auto; border: 4px solid var(--ink); }
+        .gbox .seal { width: 92px; height: 92px; flex: none; margin: 0 auto 16px; font-size: 13px; }
+        .gbox h2 { text-transform: uppercase; }
+        .gbox p { font-size: 17px; max-width: 660px; margin: 14px auto 0; }
+        .gbox .fine { font-size: 13px; opacity: .75; }
+
+        /* stack */
+        .stack { max-width: 820px; margin: 30px auto 0; background: #fff; border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; }
+        .stack-row { display: flex; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid var(--line); align-items: flex-start; }
+        .stack-row b { display: block; font-size: 17px; }
+        .stack-row span { color: var(--text-2); font-size: 14.5px; }
+        .stack-row em { font-style: normal; font-weight: 900; color: var(--accent-deep); background: var(--accent-soft); padding: 4px 10px; border-radius: 8px; white-space: nowrap; }
+        .stack-total { background: var(--ink); color: #fff; text-align: center; padding: 24px; }
+        .stack-total .t { font-size: 15px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+        .stack-total .p { font-size: 42px; font-weight: 900; color: var(--accent); line-height: 1.1; }
+
+        /* fit tiles */
+        .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 30px; }
+        .tile { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 16px; padding: 18px; }
+        .tile b { display: block; font-size: 16px; margin-bottom: 4px; }
+        .tile span { font-size: 13.5px; color: rgba(255,255,255,0.65); }
+        .fitnote { background: var(--accent-soft); color: var(--ink); border-left: 5px solid var(--accent-deep); border-radius: 12px; padding: 16px 18px; margin-top: 22px; font-size: 16px; font-weight: 600; }
+        .notfor { margin-top: 26px; }
+        .notfor h3 { font-size: 22px; text-transform: uppercase; }
+        .notfor ul { padding: 0; list-style: none; margin: 14px 0 0; display: grid; gap: 10px; }
+        .notfor li { display: flex; gap: 10px; }
+        .notfor li::before { content: "\2715"; color: #dc2626; font-weight: 900; }
+
+        /* before / after */
+        .ba { display: grid; gap: 0; margin-top: 30px; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); }
+        .ba > div { padding: 24px 22px; }
+        .ba .before { background: #fff; }
+        .ba .after { background: var(--ink); color: #fff; }
+        .ba h3 { font-size: 18px; text-transform: uppercase; margin-bottom: 14px; }
+        .ba ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; font-size: 15.5px; }
+        .ba li { display: flex; gap: 10px; }
+        .ba .before li::before { content: "\2715"; color: #dc2626; font-weight: 900; }
+        .ba .after li::before { content: "\2713"; color: var(--accent); font-weight: 900; }
+
+        /* leak calc */
+        .calc { display: grid; gap: 18px; margin-top: 28px; }
+        .calc-in { display: grid; gap: 14px; }
+        .calc-in label { font-weight: 700; font-size: 14.5px; display: grid; gap: 6px; }
+        .calc-in input { font: inherit; font-size: 18px; font-weight: 700; padding: 12px 14px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.15); background: #fff; color: var(--ink); width: 100%; }
+        .calc-out { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #fff; border-radius: 22px; padding: 30px 26px; text-align: center; }
+        .calc-out .lab { color: rgba(255,255,255,0.65); font-size: 14px; }
+        .calc-out .num { font-size: clamp(36px, 7vw, 54px); font-weight: 900; color: #f87171; line-height: 1.05; margin: 4px 0 10px; }
+        .calc-out .row { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; font-size: 14.5px; color: rgba(255,255,255,0.75); }
+        .calc-out .row b { color: #fff; font-size: 18px; display: block; }
+        .red-bar { background: #b91c1c; color: #fff; text-align: center; font-weight: 800; padding: 14px 18px; border-radius: 12px; margin-top: 22px; }
+
+        /* faq */
+        .faq { margin-top: 30px; display: grid; gap: 10px; }
+        .faq details { background: #fff; border-radius: 16px; box-shadow: var(--shadow); padding: 0 20px; }
+        .faq summary { cursor: pointer; list-style: none; padding: 18px 32px 18px 0; font-weight: 800; font-size: 16.5px; position: relative; }
+        .faq summary::-webkit-details-marker { display: none; }
+        .faq summary::after { content: "+"; position: absolute; right: 0; top: 13px; font-size: 26px; font-weight: 500; color: var(--text-2); transition: transform .2s ease; }
+        .faq details[open] summary::after { transform: rotate(45deg); }
+        .faq details p { margin: 0 0 18px; color: var(--text-2); }
+
+        footer { background: var(--ink); color: rgba(255,255,255,0.55); font-size: 13px; padding: 26px 0 90px; }
+        footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+        footer a { color: rgba(255,255,255,0.7); }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.in-view { opacity: 1; transform: none; }
+        .sticky { position: fixed; left: 10px; right: 10px; bottom: 10px; z-index: 20; transform: translateY(150%); transition: transform .3s ease; }
+        .sticky.show { transform: none; }
+        .sticky .btn { width: 100%; }
+
+        @media (max-width: 979px) {
+            .hero-grid .fcard { order: -1; }
+            .hero-bg img { width: 50%; opacity: .5; }
+            .prehead { margin-top: 16px; }
+            .hero-sub { font-size: 15.5px; margin-top: 12px; }
+            .vbox-title { font-size: 14px; }
+        }
+        @media (min-width: 760px) {
+            .fields { grid-template-columns: 1fr 1fr; }
+            .fields.one { grid-template-columns: 1fr; }
+            .field.full { grid-column: 1 / -1; }
+            .results, .three, .weeks { grid-template-columns: repeat(2, 1fr); }
+            .ba { grid-template-columns: 1fr 1fr; }
+            .tiles { grid-template-columns: repeat(4, 1fr); }
+            .calc { grid-template-columns: 1fr 1fr; align-items: center; }
+            .panel, #letter .panel { padding: 48px 44px; }
+            .gbox { padding: 52px 48px; }
+            .sticky { display: none; }
+        }
+        @media (min-width: 980px) {
+            #hero { padding: 84px 0 80px; }
+            .hero-grid { grid-template-columns: 1.1fr 0.9fr; gap: 28px; }
+            body.cl-booking .hero-grid { grid-template-columns: 1fr; max-width: 820px; margin-left: auto; margin-right: auto; }
+            body.cl-booking .hero-grid > .vcol { display: none; }
+            .get-grid { grid-template-columns: 1fr 1fr; }
+            .letter-grid { grid-template-columns: 0.42fr 1fr; }
+            .chats { grid-template-columns: repeat(3, 1fr); }
+            .hero-grid .vcol .wa { max-width: 340px; }
+            .three { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal, .msg { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body data-variant="long">
+<div class="rv-bar">REVIEW COPY v4 &middot; comment on anything. Blocks are numbered, so "block 7: change the headline" works.</div>
+<style>
+.rv-bar { position: sticky; top: 0; z-index: 50; background: #facc15; color: #1a1a1a; font: 700 13px/1.4 Inter, sans-serif; text-align: center; padding: 9px 14px; }
+.rv-num { position: absolute; left: 10px; margin-top: -6px; background: #facc15; color: #1a1a1a; font: 800 12px/1 Inter, sans-serif; padding: 6px 9px; border-radius: 8px; z-index: 5; }
+main > section { position: relative; }
+</style>
+
+
+<header class="top">
+    <div class="wrap"><div class="brand"><img src="logo-icon.png" alt="" width="30" height="30">41 Closer <span>by 41 Labs</span></div></div>
+</header>
+
+<main>
+<!-- 01 HERO: laid out like his opt-in: photos on both edges, audience bar, pre-head, caps headline, demo + form -->
+<section data-block="1" id="hero" class="hero"><span class="rv-num">1. Hero + form</span>
+    <div class="hero-bg" aria-hidden="true">
+        <img class="bg-left" src="assets/closer/stage-smeicc-2026-pitch.webp" alt="">
+        <img class="bg-right" src="assets/closer/lp-founder-letter.webp" alt="">
+    </div>
+    <div class="wrap">
+        <span class="aud">For Singapore businesses where customers ask, quote and book on WhatsApp</span>
+        <p class="prehead">Not just a chatbot. Give me 20 minutes and I'll show you...</p>
+        <h1>Every WhatsApp enquiry <span class="hl">answered, quoted and booked in seconds</span>, even at 2am</h1>
+        <p class="hero-sub">We don't hand you a chatbot. We connect a closer to your prices, stock and calendar, and run it for you.<br><span class="hero-sub-2">Free: we build it on your own products first, then show you the numbers.</span></p>
+
+        <div class="hero-grid">
+            <div class="vcol">
+                <div class="vbox">
+                    <div class="vbox-title">See it work: a real after-hours enquiry, handled on WhatsApp in minutes</div>
+                    <div class="vbox-body"><!-- WA-HERO --><div class="wa-tabs" role="tablist" aria-label="Pick your kind of business"><button type="button" class="wa-tab on" data-chat="servicing">Aircon</button><button type="button" class="wa-tab" data-chat="renovation">Renovation</button><button type="button" class="wa-tab" data-chat="clinic">Clinic</button><button type="button" class="wa-tab" data-chat="car">Car rental</button></div><div class="wa-slot on" data-chat="servicing"><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a aircon business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">CA</div><div class="wa-who"><div class="wa-name">CoolAir Services</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, still open? Need 3 aircon units serviced.<span class="wa-meta">02:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes, we can help. Is it a condo or landed, and which area?<span class="wa-meta">02:02</span></div><div class="wa-msg wa-out">Condo, Tampines<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<span class="wa-meta">02:03</span></div><div class="wa-msg wa-out">10am please<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Done. You&#x27;re booked for Saturday 10am. I&#x27;ll send a reminder the day before.<span class="wa-meta">02:03</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot" data-chat="renovation" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a renovation business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">MI</div><div class="wa-who"><div class="wa-name">Meridian Interiors</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, how much to redo a 4 room HDB kitchen?<span class="wa-meta">23:41 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Evening! Happy to help. Are you keeping the current layout, or moving the sink and hob?<span class="wa-meta">23:41</span></div><div class="wa-msg wa-out">Keeping layout. Just cabinets and countertop<span class="wa-meta">23:42 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That helps. Quartz or sintered stone for the top, and are you after laminate or spray paint carpentry?<span class="wa-meta">23:42</span></div><div class="wa-msg wa-out">Quartz, laminate is fine<span class="wa-meta">23:43 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted. Our designer can do a site measure this week. Thursday 11am or Saturday 2pm?<span class="wa-meta">23:43</span></div><div class="wa-msg wa-out">Saturday<span class="wa-meta">23:44 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Booked for Saturday 2pm. I have sent the details here and our designer will bring samples.<span class="wa-meta">23:44</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot" data-chat="clinic" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a clinic business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">OA</div><div class="wa-who"><div class="wa-name">Orchard Aesthetics</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Do you have any slots this week for a consult?<span class="wa-meta">21:18 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes. Is this your first visit with us, and what would you like to treat?<span class="wa-meta">21:18</span></div><div class="wa-msg wa-out">First time. Acne scars<span class="wa-meta">21:19 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Thanks. Our doctor will assess the scar type first, then recommend the right treatment. The consult is S$55 and goes toward your treatment if you proceed.<span class="wa-meta">21:19</span></div><div class="wa-msg wa-out">Ok can. Thursday evening?<span class="wa-meta">21:20 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Thursday 7pm or 7.30pm are open. Which suits you?<span class="wa-meta">21:20</span></div><div class="wa-msg wa-out">7pm<span class="wa-meta">21:20 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Booked for Thursday 7pm. Our clinic is at Orchard, and I have sent the address here.<span class="wa-meta">21:21</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot" data-chat="car" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a car rental business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">LC</div><div class="wa-who"><div class="wa-name">Lion City Rentals</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi need a car from 18 to 21 Dec<span class="wa-meta">01:12 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Sure. How many passengers, and are you driving into Malaysia?<span class="wa-meta">01:12</span></div><div class="wa-msg wa-out">5 pax, yes going JB<span class="wa-meta">01:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day, and a Honda Stepwagon at S$135 a day. Both include the Malaysia permit.<span class="wa-meta">01:13</span></div><div class="wa-msg wa-out">Sienta ok. How to confirm?<span class="wa-meta">01:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through.<span class="wa-meta">01:14</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><!-- /WA-HERO --></div>
+                    <div class="vnote">Example chat. On your demo it answers enquiries like the ones your business gets.</div>
+                </div>
+            </div>
+
+            <div class="fcard" id="qualify">
+                <span id="book" aria-hidden="true"></span>
+                <div class="fcard-head">
+                    <span class="free">FREE</span>
+                    <h2>Your Closer, built on your business</h2>
+                    <p>Free. Then 20 minutes on Google Meet with Alexander Lee</p>
+                </div>
+                <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
+                    <div id="cl-step1">
+                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Check if you qualify</span><span class="cl-tab">2. Your details</span></div>
+                        <div id="cl-part1">
+                            <div class="fields">
+                                <div class="field full"><label for="cl-industry">What does your business do?</label>
+                                    <select id="cl-industry" name="industry" required><option value="" disabled selected>Choose one</option><option value="renovation">Renovation or interior design</option><option value="clinic">Clinic, aesthetics or dental</option><option value="car">Car rental or car dealer</option><option value="property">Property agency</option><option value="education">Education or tuition</option><option value="distributor">Distributor, wholesale or trade supplier</option><option value="servicing">Servicing (aircon, plumbing, pest control, cleaning)</option><option value="travel">Travel or tours</option><option value="retail">Retail or online shop</option><option value="other">Something else</option></select></div>
+                                <div class="field full"><label for="cl-wa">Do customers message you on WhatsApp before they buy?</label>
+                                    <select id="cl-wa" name="whatsappUse" required><option value="" disabled selected>Choose one</option><option value="most">Yes, most sales start on WhatsApp</option><option value="some">Some do</option><option value="no">Not really</option></select></div>
+                                <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
+                                    <select id="cl-enquiries" name="enquiries" required><option value="" disabled selected>Choose one</option><option value="under20">Under 20</option><option value="20to50">20 to 50</option><option value="50to150">50 to 150</option><option value="150plus">Over 150</option></select></div>
+                                <div class="field"><label for="cl-sale">Average sale</label>
+                                    <select id="cl-sale" name="saleValue" required><option value="" disabled selected>Choose one</option><option value="under200">Under S$200</option><option value="200to1k">S$200 to S$1,000</option><option value="1kto5k">S$1,000 to S$5,000</option><option value="5kplus">Over S$5,000</option></select></div>
+                                <fieldset class="field full jobs" id="cl-jobs">
+                                    <legend>What do those chats usually involve? <span class="opt">(pick all that apply)</span></legend>
+                                    <div class="chips">
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="answers"><span>Answering simple questions</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="quotes"><span>Giving quotes or recommending options</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="bookings"><span>Booking appointments, viewings or site visits</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="stock"><span>Checking stock or prices across many products</span></label>
+                                        <label class="chip-opt"><input type="checkbox" name="jobs" value="orders"><span>Taking orders, deposits or payments</span></label>
+                                    </div>
+                                    <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
+                                </fieldset>
+                                <div class="field full"><label for="cl-after">What happens to enquiries that come in after hours?</label>
+                                    <select id="cl-after" name="afterHours" required><option value="" disabled selected>Choose one</option><option value="nobody">Nobody sees them until morning</option><option value="late">Someone replies, but late</option><option value="always">We reply any time, day or night</option><option value="rare">We rarely get any after hours</option></select></div>
+                                <div class="field full"><label for="cl-tried">Tried anything for this already?</label>
+                                    <select id="cl-tried" name="tried" required><option value="" disabled selected>Choose one</option><option value="nothing">Not yet</option><option value="chatbot">A chatbot or auto-reply</option><option value="person">Hired someone to answer</option><option value="agency">An agency or software vendor</option></select></div>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
+                        </div>
+                        <div id="cl-part2" hidden>
+                            <div class="fields">
+                                <div class="field full"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
+                                <div class="field full"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
+                                    <small class="help">This is where our AI Closer will message you to confirm your demo.</small></div>
+                                <div class="field full"><label for="cl-website">Your website</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
+                                    <small class="help">We build your demo on it, so the Closer answers with your own products and prices.</small></div>
+                                <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
+                                <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
+                                <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
+                            </div>
+                            <p class="consent">After you book, our AI Closer messages you on WhatsApp to confirm and prepare your demo. No spam, no lists.</p>
+                            <div class="form-foot">
+                                <button class="link-back" id="cl-back" type="button">&larr; Back</button>
+                                <button class="btn btn-primary" id="cl-submit" type="submit">Get my free demo <span class="arrow">&rarr;</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cl-step2" hidden>
+                        <div id="cl-book" hidden>
+                            <span class="ok-badge">&#10003; You qualify</span>
+                            <h3>Pick a time. We start building your demo today.</h3>
+                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products, and our AI Closer WhatsApps you to confirm.</p>
+                            <div id="cl-cal"></div>
+                            <ol class="next-steps">
+                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions.</li>
+                                <li><b>We build your demo</b> on your website and products, and time how fast your WhatsApp replies today.</li>
+                                <li><b>20 minutes on Google Meet.</b> Your Closer, your numbers, and a straight answer on fit.</li>
+                            </ol>
+                            <div id="cl-cal-fallback" hidden>
+                                <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
+                                <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
+                            </div>
+                        </div>
+                        <div id="cl-notyet" hidden>
+                            <h3>Thanks, <span class="cl-first"></span>.</h3>
+                            <p>From your answers, building you a demo may not be worth your time yet. We'll look properly and WhatsApp you within one working day either way.</p>
+                        </div>
+                    </div>
+                </form>
+                <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
+                <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
+                <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
+                <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
+                <div class="promise">
+                    <div class="seal">NO&#8209;PITCH<br>PROMISE</div>
+                    <p><b>If it isn't a fit, we'll say so on the call.</b> You keep the demo we built either way.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 02 AS SEEN AT -->
+<section data-block="2" id="seen"><span class="rv-num">2. Logos</span>
+    <div class="wrap">
+        <div class="seen">
+            <!-- SEEN -->
+            <p class="seen-label">Proud member of the Singapore A.I. Association &middot; Seen at</p>
+            <div class="seen-row">
+                <span class="chip"><img src="logos/saia.png" alt="Singapore A.I. Association" height="28" loading="lazy"></span>
+                <span class="chip"><img src="logos/nrf.jpg" alt="NRF Big Show APAC" height="28" loading="lazy"></span>
+                <span class="chip"><img src="logos/superai.jpg" alt="SuperAI" height="28" loading="lazy"></span>
+                <span class="chip"><img src="logos/stripe.png" alt="Stripe" height="28" loading="lazy"></span>
+            </div>
+            <div class="built">
+                <p class="built-label">Built on</p>
+                <div class="built-row">
+                    <figure class="built-item"><img src="logos/whatsapp.svg" alt="WhatsApp" height="24" loading="lazy"><figcaption>WhatsApp Business Platform</figcaption></figure>
+                    <figure class="built-item"><img src="logos/meta.svg" alt="Meta" height="20" loading="lazy"><figcaption>Meta</figcaption></figure>
+                    <figure class="built-item"><img src="logos/anthropic.svg" alt="Anthropic" height="20" loading="lazy"><figcaption>Anthropic Claude</figcaption></figure>
+                    <figure class="built-item"><img src="logos/googlegemini.svg" alt="Google Gemini" height="20" loading="lazy"><figcaption>Google</figcaption></figure>
+                </div>
+                <p class="built-label built-label-2">Partners</p>
+                <div class="built-row">
+                    <figure class="built-item"><img src="logos/stripe.svg" alt="Stripe" height="20" loading="lazy"><figcaption>Stripe</figcaption></figure>
+                    <figure class="built-item"><span class="built-word">airwallex</span><figcaption>Airwallex</figcaption></figure>
+                </div>
+            </div>
+            <!-- /SEEN -->
+        </div>
+        <p class="chev" aria-hidden="true">&#8964; &#8964; &#8964;</p>
+    </div>
+</section>
+
+
+<!-- 02b NUMBERS -->
+<section data-block="3" id="numbers" class="band" style="padding:44px 0 0"><span class="rv-num">3. The numbers</span>
+    <div class="wrap">
+        <div class="stats reveal">
+            <div class="stat"><b>45,355</b><span>customer messages handled on one client's WhatsApp</span></div>
+            <div class="stat"><b>1 in 4</b><span>of their enquiries arrived outside office hours</span></div>
+            <div class="stat"><b>19 seconds</b><span>median first reply, 9 in 10 under half a minute</span></div>
+            <div class="stat"><b>20</b><span>businesses have had a Closer built on their own data, across 17 industries</span></div>
+        </div>
+        <p class="stats-note">Measured from our own systems on 13 September 2026. The message, after-hours and speed figures come from one Singapore distributor's live line over four and a half months.</p>
+    </div>
+</section>
+
+<!-- 03 WHAT YOU GET (his: "What you'll walk out with") -->
+<section data-block="4" id="get" class="band" style="padding-top:36px"><span class="rv-num">4. On this call we'll</span>
+    <div class="wrap">
+        <div class="panel reveal">
+            <h2 class="caps center">On this call we'll</h2>
+            <div class="get-grid">
+                <figure class="get-photo" style="margin:0"><img src="assets/closer/stage-smeicc-2026-pitch.webp" alt="Alexander Lee presenting 41 Closer on stage" width="1500" height="2000" loading="lazy"><figcaption class="photo-cap">Alexander showing 41 Closer on stage</figcaption></figure>
+                <ol class="numlist">
+                    <li><div><b>Show you your own Closer.</b>Built on your website and products before we meet. Your items, your prices, your kind of customer. Not a demo of someone else's business.</div></li>
+                    <li><div><b>Show you your numbers.</b>How fast your WhatsApp replies today, how many enquiries you are likely losing, what they are worth a month, and what we would realistically recover.</div></li>
+                    <li><div><b>Give you a straight answer.</b>If the Closer pays for itself in your business, we'll show the maths and what it costs. If it doesn't, we'll tell you and you keep the demo.</div></li>
+                </ol>
+            </div>
+            <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+        </div>
+    </div>
+</section>
+
+<!-- 04 PROOF WALL 1 (his: "What happens when it's implemented properly") -->
+<section data-block="5" id="proof-1" class="band dark"><span class="rv-num">5. What it costs</span>
+    <div class="wrap">
+        <h2 class="caps center">What a slow WhatsApp reply really costs</h2>
+        <p class="sub center">From the chat records of two businesses we work with. We don't name clients without their permission, so these stay anonymous.</p>
+        <div class="results">
+            <div class="result reveal">
+                <div class="result-top">
+                    <div class="big"><span>02:02</span><span class="pill">7 hours</span><span class="late">09:03</span></div>
+                    <h3>A car rental company in Singapore</h3>
+                </div>
+                <div class="result-body"><span class="result-tag">Their own chat logs</span>An enquiry at <b>2:02am</b> got its first reply at <b>9:03am</b>. Another waited <b>23 hours</b>, and the customer had already booked elsewhere. About <b>a third</b> of their enquiries arrive when the office is closed.</div>
+            </div>
+            <div class="result reveal">
+                <div class="result-top">
+                    <div class="big"><span>12,868</span></div>
+                    <h3>A Singapore distributor, 9 branches</h3>
+                </div>
+                <div class="result-body"><span class="result-tag">Live products the Closer quotes from</span>About <b>S$300,000 a month</b> comes in over WhatsApp and email. A previous vendor took a setup fee and couldn't handle a catalogue that size. Ours answers from their own pricing system, synced every day.</div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- 05 FOUNDER LETTER (his: "From Caleb Sim / Dear fellow business owner") -->
+<section data-block="6" id="letter" class="band"><span class="rv-num">6. Founder letter</span>
+    <div class="wrap">
+        <div class="panel reveal">
+            <div class="letter-head">
+                <h2>From Alexander Lee</h2>
+                <p>Founder of 41 Labs. We build AI salespeople for Singapore businesses, and we run them.</p>
+            </div>
+            <div class="letter-grid">
+                <figure class="letter-photo" style="margin:0"><img src="assets/closer/lp-founder-letter.webp" alt="Alexander Lee, founder of 41 Labs" width="720" height="1024" loading="lazy"><figcaption>Alexander Lee, founder of 41 Labs</figcaption></figure>
+                <div class="letter-body">
+                    <p><b>Dear fellow business owner,</b></p>
+                    <p>I didn't believe how big this was until we read one car rental company's chat logs. A customer messaged at 2:02am. The first reply went out at 9:03am. Another waited 23 hours and booked somewhere else. Nobody there was lazy. They were asleep, or busy with the customer in front of them.</p>
+                    <p>Most owners try one of two fixes. Hire another salesperson, who goes home at 6pm. Or install a chatbot, which answers the same three questions and hands every real sale back to you.</p>
+                    <p>So we built something else, and we run it for you. It replies in seconds, quotes from your own price list, follows up, and books the job. When it isn't sure, your team gets the chat with the full history.</p>
+                    <p>I'd rather show you than tell you. Give me your website and I'll build it on your business, free.</p>
+                    <div class="sig"><div class="name">Alexander Lee</div><small>Founder, 41 Labs</small></div>
+                </div>
+            </div>
+            <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+        </div>
+    </div>
+</section>
+
+<!-- 06 PROOF WALL 2: real conversations -->
+<section data-block="7" id="proof-2" class="band dark"><span class="rv-num">7. 8 proof screens</span>
+    <div class="wrap">
+        <h2 class="caps center">What it does, one screen at a time</h2>
+        <p class="sub center">Each one is a real screen from a WhatsApp chat. Demo-line chats are word for word, with customer details removed.</p>
+        <div class="chats" id="proof-chats">
+            <!-- PROOF-CHATS -->
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Answers in seconds, at 2am<span class="chat-src">Example</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with CoolAir Services"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">CA</div><div class="wa-who"><div class="wa-name">CoolAir Services</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, still open? Need 3 aircon units serviced.<span class="wa-meta">02:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes, we can help. Is it a condo or landed, and which area?<span class="wa-meta">02:02</span></div><div class="wa-msg wa-out">Condo, Tampines<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<span class="wa-meta">02:03</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Qualifies before it quotes<span class="chat-src">Demo line</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Bhutan tours"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">BT</div><div class="wa-who"><div class="wa-name">Bhutan tours</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">I&#x27;m planning to travel with my friends (maybe 3 of us) in December. Is that a good time?<span class="wa-meta">16:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">December is a lovely time to visit Bhutan! The skies are crystal clear and it&#x27;s quieter than the peak autumn season.<br><br>What kind of experience are you hoping for, more culture and monasteries, getting out into nature, or a mix of both?<span class="wa-meta">16:13</span></div><div class="wa-msg wa-out">We&#x27;d like to experience both<span class="wa-meta">16:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That&#x27;s a great combination. Are you and your friends up for some hiking, like the famous Tiger&#x27;s Nest climb, or do you prefer scenic drives and gentle walks?<span class="wa-meta">16:14</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Quotes from your price list<span class="chat-src">Demo line</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Jewellery store"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">JS</div><div class="wa-who"><div class="wa-name">Jewellery store</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">i want to buy rings<span class="wa-meta">22:05 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Great, rings it is! What is your budget range, and is this for yourself or a gift?<span class="wa-meta">22:05</span></div><div class="wa-msg wa-out">anything below 1k sgd<span class="wa-meta">22:10 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in"><b>Diamond Cluster Ring in 18K White Gold</b> (SKU: JR•••••••) — S$999<br>Four diamonds (0.28ct total) in a diamond-shaped cluster, on a plain polished band.<span class="wa-meta">22:10</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Takes the deposit<span class="chat-src">Demo line</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Jewellery store"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">JS</div><div class="wa-who"><div class="wa-name">Jewellery store</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">go with this JR•••••••, i want to pay<span class="wa-meta">22:10 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Here is your payment link for the <b>Heart Diamond Ring in 18K White Gold</b> — S$979: <span class="wa-link">[secure payment link]</span><br><br>Once payment is done, the piece is reserved for you.<span class="wa-meta">22:10</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Books the slot<span class="chat-src">Demo line</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Baking supplies"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">BS</div><div class="wa-who"><div class="wa-name">Baking supplies</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-in">Which works better for you, Friday 28 August or Monday 31 August?<span class="wa-meta">14:32</span></div><div class="wa-msg wa-out">1 sep<span class="wa-meta">14:32 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Our weekday window is 12pm to 6pm. Did you want early afternoon or later in the day on Tuesday 1 September?<span class="wa-meta">14:32</span></div><div class="wa-msg wa-out">2pm<span class="wa-meta">14:33 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Locked in: Tuesday 1 September, 2pm. The team will confirm the order against your account.<span class="wa-meta">14:33</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Handles “too expensive” without discounting<span class="chat-src">Example</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Orchard Aesthetics"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">OA</div><div class="wa-who"><div class="wa-name">Orchard Aesthetics</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">You are very expensive. Others quote me less<span class="wa-meta">22:38 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">I understand it feels that way upfront. Ours is a semi-permanent result, so there is nothing to buy monthly after it.<span class="wa-meta">22:38</span></div><div class="wa-msg wa-out">Any discount?<span class="wa-meta">22:47 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Pricing is set by our specialist team, so I can&#x27;t discount here. The honest way to know if it&#x27;s worth it is a consult, and that fee goes toward your treatment.<span class="wa-meta">22:47</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Follows up when they go quiet<span class="chat-src">Example</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Meridian Interiors"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">MI</div><div class="wa-who"><div class="wa-name">Meridian Interiors</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-in">Hi Wei, quick one on the kitchen quote I sent Monday. Are you still deciding, or is something in it not quite right?<span class="wa-meta">10:14</span></div><div class="wa-msg wa-out">Sorry busy week. Still keen, my wife wants to see other door colours<span class="wa-meta">12:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">No problem at all. I&#x27;ll send three colour options in the same price. If one works, our designer can hold Saturday 2pm for the site measure.<span class="wa-meta">12:02</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Hands over to your team<span class="chat-src">Example</span></figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Lion City Rentals"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">LC</div><div class="wa-who"><div class="wa-name">Lion City Rentals</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">I need the car delivered to Tuas checkpoint at 5am and someone to collect it in JB<span class="wa-meta">23:51 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That one is outside what I can arrange myself. I&#x27;m passing this to our team now with everything you&#x27;ve told me, and they&#x27;ll come back to you first thing.<span class="wa-meta">23:51</span></div><div class="wa-msg wa-out">Ok thanks<span class="wa-meta">23:52 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted, Marcus. You&#x27;ll hear from them before 9am. Your dates are held in the meantime.<span class="wa-meta">23:52</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <!-- /PROOF-CHATS -->
+        </div>
+        
+    </div>
+</section>
+
+
+<!-- 06b WHY WE ARE DIFFERENT -->
+<section data-block="8" id="different" class="band"><span class="rv-num">8. Why we are different</span>
+    <div class="wrap">
+        <h2 class="caps center">Why this isn't the WhatsApp tools you've seen</h2>
+        <p class="sub center">Most of them are software you set up and run. They answer questions. This one sells, and we run it.</p>
+        <div class="three">
+            <div class="card reveal">
+                <span class="tagnum">01 &middot; CONNECTED</span>
+                <h3>Plugged into the systems that hold your prices</h3>
+                <p>Most tools answer from a document. Ours reads your live price list, your stock by branch and your calendar. One client's agent quotes from <b>12,868 live products</b>. Their previous vendor took a setup fee and couldn't handle the catalogue at all.</p>
+            </div>
+            <div class="card reveal">
+                <span class="tagnum">02 &middot; DONE FOR YOU</span>
+                <h3>Nothing to learn, nothing to change</h3>
+                <p>No new app for your team. No new number for your customers. No dashboard to manage. We build it, tune it every week and send you the numbers. Your team keeps working exactly the way it does today.</p>
+            </div>
+            <div class="card reveal">
+                <span class="tagnum">03 &middot; ON THE HOOK</span>
+                <h3>We put money on the result</h3>
+                <p>Software charges you a subscription and hopes it works. When your numbers support it, we guarantee <b>S$20,000 in booked sales within six weeks of go-live</b>, checked every Friday against your own receipts.</p>
+            </div>
+        </div>
+        <p class="diff-line">That is the difference between a bot that answers and a closer that sells.</p>
+    </div>
+</section>
+
+<!-- 07 THE REAL REASON (his: "The real reason premium prospects say let me think about it") -->
+<section data-block="9" id="why" class="band"><span class="rv-num">9. Why they go cold</span>
+    <div class="wrap">
+        <h2 class="caps center">The real reason WhatsApp enquiries go cold</h2>
+        <p class="sub center">It's rarely the price. A customer who messages you is ready to talk right now. What happens in the next few minutes decides it.</p>
+        <figure class="why-photo reveal"><img src="assets/closer/talk-mandala-club-2026-05-13-close.webp" alt="Alexander Lee presenting at a 41 Labs talk, slide reads: every SME loses revenue in the same 4 places" width="1333" height="2000" loading="lazy"><figcaption class="photo-cap">"Every SME loses revenue in the same 4 places: speed, coverage, follow-up, qualification."</figcaption></figure>
+        <div class="three">
+            <div class="card reveal"><span class="tagnum">01 &middot; SPEED</span><h3>Whoever replies first usually wins</h3><p>The customer who messages at 11pm has messaged two other businesses too. The first real answer gets the booking.</p></div>
+            <div class="card reveal"><span class="tagnum">02 &middot; CERTAINTY</span><h3>"Let me check" loses to a clear answer</h3><p>A reply with a real price, a real slot and a next step lets them say yes in the chat. A vague reply sends them back to shopping.</p></div>
+            <div class="card reveal"><span class="tagnum">03 &middot; FOLLOW-UP</span><h3>Quiet isn't the same as no</h3><p>Plenty of buyers go quiet because life got busy. One polite follow-up at the right time brings a lot of them back.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- 08 WHERE IT MAKES MONEY (his: "And this is where AI can actually make you money") -->
+<section data-block="10" id="money" class="band" style="padding-top:0"><span class="rv-num">10. Where it makes money</span>
+    <div class="wrap">
+        <div class="panel reveal">
+            <h2 class="caps center">And this is where the Closer makes you money</h2>
+            <ol class="numlist" style="margin-top:26px">
+                <li><div><b>Nights, weekends and public holidays.</b>Every enquiry gets a proper answer in seconds, so the 11pm customer books with you, not the next business on their list.</div></li>
+                <li><div><b>Quotes and bookings inside the chat.</b>It works from your own price list, stock and calendar, so the customer can say yes without waiting for your team.</div></li>
+                <li><div><b>Every open quote followed up.</b>It chases politely until they answer, and hands your team a warm lead with the whole conversation, not a cold "hi".</div></li>
+            </ol>
+            
+        </div>
+    </div>
+</section>
+
+<!-- 09 BREAKDOWN (his: day-by-day) -->
+<section data-block="11" id="weeks" class="band dark"><span class="rv-num">11. 6-week plan</span>
+    <div class="wrap">
+        <h2 class="caps center">If it's a fit: the six-week breakdown</h2>
+        <p class="sub center">You don't learn a new tool or manage an AI.</p>
+        <div class="weeks">
+            <div class="week reveal"><div class="week-head">Weeks 1 to 2: We build it</div><ul><li>We connect your WhatsApp, price list and booking or stock system, and train it on your real past chats.</li></ul></div>
+            <div class="week reveal"><div class="week-head">Weeks 3 to 4: Your team tests it</div><ul><li>Your team throws real customer scenarios at it. We tune it daily until it answers like your best salesperson.</li></ul></div>
+            <div class="week reveal"><div class="week-head">Weeks 5 to 6: It goes live</div><ul><li>Phased go-live, warm leads land with your team, and the guarantee clock starts.</li></ul></div>
+            <div class="week reveal"><div class="week-head">Every week after: We run it</div><ul><li>We watch every conversation, keep improving it, and send you the numbers each week.</li></ul></div>
+        </div>
+        </div>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </div>
+</section>
+
+<!-- 10 GUARANTEE (matches the SOW) -->
+<section data-block="12" id="guarantee" class="band"><span class="rv-num">12. Guarantee</span>
+    <div class="wrap">
+        <div class="gbox reveal">
+            <div class="seal">S$20K<br>GUARANTEE</div>
+            <h2>S$20,000 in booked sales within six weeks of go-live</h2>
+            <p>Every Friday we check the running total against your own receipts, so there's no argument at week six. If it falls short, we keep working on it free for up to six more weeks.</p>
+            <p>We only offer this after we've looked at your numbers on the demo. If the maths isn't there for your business, we'll tell you.</p>
+            <p class="fine">Full terms are in your agreement.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 12 WHO IT'S FOR / NOT FOR -->
+<section data-block="13" id="fit" class="band dark"><span class="rv-num">13. Who it is for</span>
+    <div class="wrap narrow">
+        <h2 class="caps center">Who this is for</h2>
+        <div class="tiles">
+            <div class="tile"><b>Renovation &amp; interior design</b><span>Quotes and site visits over WhatsApp</span></div>
+            <div class="tile"><b>Clinics &amp; aesthetics</b><span>Enquiries after hours, bookings, packages</span></div>
+            <div class="tile"><b>Car rental &amp; dealers</b><span>Availability, pricing, deposits</span></div>
+            <div class="tile"><b>Property agencies</b><span>Viewings and fast follow-up</span></div>
+            <div class="tile"><b>Education &amp; tuition</b><span>Trial classes and enrolment</span></div>
+            <div class="tile"><b>Distributors &amp; suppliers</b><span>Stock, price and reorder questions</span></div>
+            <div class="tile"><b>Servicing trades</b><span>Aircon, plumbing, pest control, cleaning</span></div>
+            <div class="tile"><b>Travel &amp; tours</b><span>Itineraries, quotes and deposits</span></div>
+        </div>
+        <p class="fitnote">If your customers message you on WhatsApp to ask, get a quote, order or book, and some of those chats get answered late or not at all, this is for you. Whether that's 20 enquiries a week or 500.</p>
+        <div class="notfor">
+            <h3>This is NOT for you if</h3>
+            <ul>
+                <li>You get a handful of enquiries a week and each one is small.</li>
+                <li>Your sales happen in person or through long tenders, not chat.</li>
+                <li>You don't get enquiries yet. We work on the ones you already get. We don't create them.</li>
+                <li>You want a tool to set up and manage yourself. We build it and run it with you.</li>
+            </ul>
+        </div>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </div>
+</section>
+
+<!-- 13 BEFORE vs AFTER -->
+<section data-block="14" id="before-after" class="band"><span class="rv-num">14. Before / after</span>
+    <div class="wrap">
+        <h2 class="caps center">Before vs after 41 Closer</h2>
+        <div class="ba reveal">
+            <div class="before"><h3>Before</h3><ul>
+                <li>The 11pm enquiry waits until morning</li>
+                <li>Quotes go out hours later, or never</li>
+                <li>Nobody chases the customers who go quiet</li>
+                <li>Your best salesperson answers the same questions all day</li>
+                <li>Weekends and public holidays go unanswered</li>
+                <li>You can't tell which chats turned into money</li>
+                <li>More sales means hiring another person</li>
+            </ul></div>
+            <div class="after"><h3>After</h3><ul>
+                <li>Every enquiry answered in seconds, day or night</li>
+                <li>Quotes from your real price list, inside the chat</li>
+                <li>Every open quote followed up until they answer</li>
+                <li>Your team only picks up warm, qualified leads</li>
+                <li>Weekends covered without a roster</li>
+                <li>Weekly numbers on what came in and what it booked</li>
+                <li>More sales without another hire, and we run it</li>
+            </ul></div>
+        </div>
+    </div>
+</section>
+
+<!-- 14 WHY NOW (honest: the leak calculator, no fake seat counts) -->
+<section data-block="15" id="why-now" class="band dark"><span class="rv-num">15. Leak calculator</span>
+    <div class="wrap narrow">
+        <h2 class="caps center">Why look at this now</h2>
+        <p class="sub center">The enquiries you missed last night aren't coming back. Tonight's still can. Put in your own rough numbers.</p>
+        <div class="calc" id="leak-calc">
+            <div class="calc-in">
+                <label>WhatsApp enquiries a week<input name="lc-enq" type="number" inputmode="numeric" min="0" value="60"></label>
+                <label>% that arrive after hours or get a late reply<input name="lc-late" type="number" inputmode="numeric" min="0" max="100" value="30"></label>
+                <label>Average sale (S$)<input name="lc-sale" type="number" inputmode="numeric" min="0" value="800"></label>
+                <label>% of good enquiries that normally buy<input name="lc-close" type="number" inputmode="numeric" min="0" max="100" value="20"></label>
+            </div>
+            <div class="calc-out">
+                <div class="lab">Sales at risk every month</div>
+                <div class="num" data-out="lost">S$0</div>
+                <div class="row"><div><b data-out="late">0</b>late or missed chats a month</div><div><b data-out="year">S$0</b>a year</div></div>
+            </div>
+        </div>
+        <p class="red-bar">Your rough numbers, not a promise. On the demo we work them out properly with you.</p>
+        
+    </div>
+</section>
+
+<!-- 15 FAQ -->
+<section data-block="16" id="faq" class="band"><span class="rv-num">16. FAQ</span>
+    <div class="wrap narrow">
+        <h2 class="caps center">Frequently asked questions</h2>
+        <div class="faq">
+                <details><summary>What happens on the call?</summary><p>20 minutes on Google Meet. You see the Closer running on your own products, your numbers worked out, and an honest answer on whether it fits.</p></details>
+                <details><summary>What do you build before the call?</summary><p>We take your website and build the Closer on your real products and prices, so it answers the kind of enquiry your business actually gets. We also message your business like a customer, to time how fast you reply today.</p></details>
+                <details><summary>Is this a sales pitch?</summary><p>Partly, and we'll be upfront. You keep the demo either way. If it pays for itself we'll show the maths and the price. If it doesn't, we'll say so.</p></details>
+                <details><summary>I've been burned by an agency before.</summary><p>Fair. Two differences: you see it working on your own products before you pay anything, and we run it every week instead of handing you software to manage.</p></details>
+                <details><summary>How is this different from the WhatsApp tools I've seen?</summary><p>Those are software you set up and run: flows, menus, a shared inbox. They answer. This is built on your own prices, stock and calendar, it sells, and our team runs it for you. And once your numbers support it, we put money on the result.</p></details>
+                <details><summary>Is it just a chatbot?</summary><p>No. A chatbot answers questions. This one qualifies the buyer, quotes from your prices, follows up, and books the job or takes the deposit. When it isn't sure, your team gets the chat with the full history.</p></details>
+                <details><summary>What if it says something wrong?</summary><p>It only works from what you give it: your prices, stock and policies. Your team tests it for two weeks before any customer sees it.</p></details>
+                <details><summary>Does it use my own WhatsApp number?</summary><p>Yes, on the WhatsApp Business API under your own account. The account stays yours.</p></details>
+            </div>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </div>
+</section>
+
+<!-- 16 FINAL -->
+<section data-block="17" id="final" class="band dark center"><span class="rv-num">17. Final CTA</span>
+    <div class="wrap narrow">
+        <h2 class="caps">Find out what your WhatsApp is costing you</h2>
+        <p class="sub">A free leak audit and a 20-minute demo. If it isn't a fit, we'll tell you.</p>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </div>
+</section>
+</main>
+
+<footer>
+    <div class="wrap"><span>&copy; 2026 41 Labs Pte. Ltd. Singapore.</span><a href="/41-closer-terms">Terms</a></div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn btn-primary" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+
+<script src="closer-qualify.js"></script>
+
+<script src="ai-closer.js"></script>
+</body>
+</html>

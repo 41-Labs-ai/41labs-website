@@ -45,11 +45,20 @@ Do not name the client, their brand, or any identifying product line. "Industria
 
 ## Page structure (`/41-closer`)
 
-1. **Hero.** Headline: "Your sales team sleeps. 41 Closer doesn't." Subline in plain words: a WhatsApp salesperson we build and tune for your business. Not a chatbot. Not a subscription. Primary action: scan to chat (desktop QR) or tap to chat (mobile), both to `wa.me/6580124848`. One quiet line of exclusivity: we build these for a handful of businesses at a time.
-2. **Problem (real example).** The after-hours message that sits unanswered. Written as the hardware distributor scenario or the reader's own version of it.
-3. **Agitate (the cost in numbers).** What unanswered and slow replies cost per week, in real dollars. Buyers go to whoever replies first.
-4. **Solve + live demo.** What 41 Closer does, in outcomes. Then a large scan to chat block: "Do not take our word for it. Message one now." This is the high-status lead magnet. The chat is the proof.
-5. **Proof.** The anonymized distributor story with the staff-time-saved and seconds-versus-hours numbers.
+1. **Hero.** Headline: "Your sales team stops at 5pm. Your customers don't." Subline: "Nights, weekends, public holidays. 41 Closer answers every message in seconds, follows up every lead, and closes the sale while your team is off. You do nothing. You make more money." Primary action: scan to chat (desktop QR) or tap to chat (mobile), both to `wa.me/6580124848`. One quiet line of exclusivity: we build these for a handful of businesses at a time.
+2. **Problem (real example).** "It is Saturday afternoon. A buyer messages your WhatsApp: how much for 200 of these, and do you have stock. Your sales team went home Friday. The message just sits there. Nobody replies. Nobody follows up."
+3. **Agitate (the cost).** "By Monday they have bought from whoever answered first. This happens every night after 5pm, every weekend, every public holiday. That is more than half the week your business is shut to people who are ready to spend. Over a month, that is real money gone."
+4. **Solve + benefit table + live demo.** State the benefit hard and plain with a two-column contrast table:
+
+   | Your sales team | 41 Closer |
+   |---|---|
+   | Stops at 5pm | Answers 24 hours, 7 days |
+   | Off on weekends and holidays | Never takes a day off |
+   | Forgets to follow up | Follows up every single lead |
+   | Replies in hours | Replies in 5 seconds |
+
+   Closing line: "More replies. More follow ups. More sales. You do nothing. We build it, we run it, we tune it." Then a large scan to chat block: "Do not take our word for it. Scan this and talk to one right now." The chat is the proof and the lead capture.
+5. **Proof.** The anonymized distributor story: more than 40,000 products, replies in seconds instead of hours, about 5 hours of staff time saved every day. Numbers confirmed with Alexander before go-live.
 6. **Who this is for, and who it is not.** Repel minnows. For businesses doing real WhatsApp volume where one sale is worth thousands. Not for someone who wants a cheap chatbot.
 7. **Price.** No price tag. We price on what we make you. If the numbers do not work for you, we say so. White-glove framing. Quiet line: we handle the EDG grant paperwork for you.
 8. **Founder note.** Signed by Alexander. Why 41 Labs builds these and who it is for.
