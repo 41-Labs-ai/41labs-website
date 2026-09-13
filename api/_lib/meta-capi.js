@@ -25,21 +25,28 @@ const DEFAULT_PIXEL = '24659272643698089';
 const SOURCE_URL = 'https://41labs.ai/ai-closer';
 const CURRENCY = 'SGD';
 
-// Expected build revenue sitting behind one event. Taken from what the July 2026
-// Meta run ACTUALLY did, not from the modelled base case (41-CLOSER-NUMBERS.md):
-//   84 leads -> 4 booked calls -> 1 client (Hertz), build fee S$9,600
-//   qualified lead: 1 in 84  = 1.19% x S$9,600 = S$114
-//   booked call:    1 in 4   =   25%  x S$9,600 = S$2,400
+// Expected build revenue sitting behind one event. These are MODELLED, not measured.
 //
-// Build fee only. The S$1,490/mo retainer is deliberately excluded: four clients are
-// signed and none is live yet, so there are zero months of real retention to value.
+// Checked on 13 Sep 2026: no ad-attributed lead has ever reached a won stage. The
+// one client the July run is credited with (Hertz) has leadSource "WhatsApp inbound"
+// in Twenty, no Hermes lead record, and no ad referral anywhere. The claim that it
+// came from ad_stalk1_notchatbot is not supported by Hermes or Twenty. Only 83 of
+// 1,157 non-demo July leads (7%) carry an ad referral at all, so the funnel below
+// cannot be measured end to end yet.
 //
-// Caveat worth keeping in view: this is a ONE client sample, so a single deal either
-// way moves it a lot. The ratio between the two (about 1:21) is what actually steers
-// Meta's bidding, and that is stable across every scenario in the doc. The absolute
-// figures only change how ROAS reads in Ads Manager. Revisit at 30+ closed deals.
-const VALUE_QUALIFIED_LEAD = 114;
-const VALUE_SCHEDULE = 2400;
+// So these use the base case from 41 Labs/41-CLOSER-NUMBERS.md section 3:
+//   qualified lead -> 5% book a call -> 20% of calls close = 1% x S$9,600 = S$96
+//   booked call    -> 20% of calls close                   =       S$1,920
+//
+// Build fee only. The S$1,490/mo retainer is excluded: four clients are signed and
+// none is live, so there are no months of retention to value.
+//
+// Raise these to the measured rate the moment one ad-sourced deal actually closes
+// and can be traced. Until then the ratio (1:20) is the part that steers bidding and
+// it holds across every scenario in the doc; the absolute figures only set how ROAS
+// reads in Ads Manager.
+const VALUE_QUALIFIED_LEAD = 96;
+const VALUE_SCHEDULE = 1920;
 
 const sha256 = (v) => crypto.createHash('sha256').update(v).digest('hex');
 

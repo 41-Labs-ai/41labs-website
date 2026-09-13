@@ -144,10 +144,17 @@ The ad account can only optimise for what we report. Three events, deepest last:
 | Event | Fires | Value | Why |
 |---|---|---|---|
 | `Lead` | every form submit, including tier C | none | Volume, so the pixel keeps learning. No value, so Meta never bids to buy more tier C. |
-| `QualifiedLead` | tier A and B only | S$114 | **This is the event ad sets should optimise on.** From what July 2026 actually did: 84 leads produced 1 client, so 1.19% x S$9,600 build fee. Build fee only, retainer excluded (four clients signed, none live, so no retention data to value). |
-| `Schedule` | a call lands on the calendar | S$2,400 | July actual: 4 booked calls produced 1 client, so 25% x S$9,600. Sent by the cron, because the Google booking iframe cannot report back. |
+| `QualifiedLead` | tier A and B only | S$96 | **This is the event ad sets should optimise on.** MODELLED, not measured: base case 5% book x 20% close x S$9,600 build fee. See the warning below. |
+| `Schedule` | a call lands on the calendar | S$1,920 | Modelled: 20% close x S$9,600. Sent by the cron, because the Google booking iframe cannot report back. |
 
-The two values are a ONE client sample, so treat them as direction not law. What actually
+⚠️ **No ad-sourced client has ever been traced.** Checked 13 Sep 2026 against Hermes and
+Twenty: no lead carrying an ad referral has reached a won stage, the Hertz deal has
+leadSource "WhatsApp inbound" with no Hermes lead record and no ad referral, and only
+83 of 1,157 non-demo July leads (7%) carry an ad referral at all. The line in
+41-CLOSER-NUMBERS.md saying "Hertz came from this one" is not supported by either system.
+Raise these values to a measured rate only once a traced ad-sourced deal closes.
+
+The two values are therefore modelled, so treat them as direction not law. What actually
 steers Meta's bidding is the ratio between them (about 1:21), and that holds across every
 scenario in the numbers doc. The absolute figures only change how ROAS reads in Ads Manager.
 The value lives in `VALUE_QUALIFIED_LEAD` in code and is deliberately NOT set on the Meta

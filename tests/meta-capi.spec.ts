@@ -89,14 +89,14 @@ test.describe('Lead vs QualifiedLead', () => {
     expect(capi.VALUE_QUALIFIED_LEAD).toBeGreaterThan(0);
   });
 
-  // The values are not arbitrary: they are the July 2026 funnel times the build fee.
-  // Pinning the derivation means a future edit has to be a deliberate re-derivation,
-  // not someone nudging a number that quietly changes what Meta buys.
-  test('both values still equal the July funnel rate times the S$9,600 build fee', () => {
+  // Modelled, not measured: as of 13 Sep 2026 no ad-attributed lead has ever closed,
+  // so there is no real rate to use. Pinning the derivation means raising these has to
+  // be a deliberate re-derivation once a traced ad-sourced deal exists.
+  test('both values still equal the modelled base-case rate times the S$9,600 build fee', () => {
     const BUILD_FEE = 9600;
-    const LEADS = 84, BOOKED = 4, CLIENTS = 1;     // July 2026, 41-CLOSER-NUMBERS.md
-    expect(capi.VALUE_QUALIFIED_LEAD).toBe(Math.round((CLIENTS / LEADS) * BUILD_FEE));
-    expect(capi.VALUE_SCHEDULE).toBe(Math.round((CLIENTS / BOOKED) * BUILD_FEE));
+    const BOOKS = 0.05, CLOSES = 0.20;            // 41-CLOSER-NUMBERS.md section 3, base case
+    expect(capi.VALUE_QUALIFIED_LEAD).toBe(Math.round(BOOKS * CLOSES * BUILD_FEE));
+    expect(capi.VALUE_SCHEDULE).toBe(Math.round(CLOSES * BUILD_FEE));
   });
 
   test('the ratio between them stays near 1:20, which is what actually steers the bidding', () => {
