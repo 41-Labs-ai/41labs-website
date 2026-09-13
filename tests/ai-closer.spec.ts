@@ -471,3 +471,64 @@ test.describe('the qualified screen when no calendar is configured', () => {
     await expect(page.locator('#cl-handoff')).toBeVisible();      // and something to do now
   });
 });
+
+// The handoff is INBOUND on purpose: the visitor sends the first message, which
+// opens WhatsApp's 24-hour service window, so the Closer can reply freely with no
+// approved template and no server-to-server send. That only works if the message
+// they send actually carries their answers.
+test.describe('the prefilled first message to the AI Closer', () => {
+  async function qualifyAndRead(page: any) {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.click('#cl-next');
+    await page.selectOption('#cl-enquiries', '50to150');
+    await page.selectOption('#cl-sale', '500to2k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.check('input[name="challenges"][value="afterhours"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+    const href = await page.locator('#cl-wa-handoff').getAttribute('href');
+    return decodeURIComponent((href || '').split('?text=')[1] || '');
+  }
+
+  test('carries their name, site, volume, ticket, pains and goal', async ({ page }) => {
+    const msg = await qualifyAndRead(page);
+    expect(msg).toContain('Tan');
+    expect(msg).toContain('tanaircon.sg');
+    expect(msg).toContain('50 to 150');
+    expect(msg).toContain('S$500 to S$2,000');
+    expect(msg).toContain('replies take too long');
+    expect(msg).toContain('nobody answers after hours');
+    expect(msg).toContain('stop losing enquiries we already paid for');
+  });
+
+  test('reads as a person wrote it, not as a form dump', async ({ page }) => {
+    const msg = await qualifyAndRead(page);
+    expect(msg.startsWith('Hi,')).toBe(true);
+    expect(msg).not.toMatch(/\b(50to150|500to2k|afterhours|undefined|null)\b/);
+    expect(msg.length).toBeLessThan(700);   // wa.me prefill has to survive the URL
+  });
+
+  test('goes to the Closer line', async ({ page }) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.click('#cl-next');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
+    await page.check('input[name="challenges"][value="stock"]');
+    await page.selectOption('#cl-goal', 'scale');
+    await page.click('#cl-submit');
+    await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /^https:\/\/wa\.me\/6580124848\?text=/);
+  });
+});

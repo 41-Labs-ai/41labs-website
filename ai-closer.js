@@ -158,15 +158,45 @@ window.BOOKING_URL = window.BOOKING_URL || '';
     // Qualified only. The handoff to our own AI Closer is deliberately shown AFTER the
     // calendar: the booking is the commitment, the WhatsApp conversation is what keeps
     // them warm until the call. Leads who did not qualify never see it.
+    // Labels for the prefilled first message. The visitor sends it themselves, which
+    // is the whole point: an inbound message opens WhatsApp's 24-hour service window,
+    // so the Closer can just talk. No approved template, no server-to-server send.
+    var SAY_ENQ = { under20: 'under 20', '20to50': '20 to 50', '50to150': '50 to 150', '150plus': 'over 150' };
+    var SAY_SALE = { under500: 'under S$500', '500to2k': 'S$500 to S$2,000', '2kto10k': 'S$2,000 to S$10,000', '10kplus': 'over S$10,000' };
+    var SAY_CHALLENGE = { slow: 'replies take too long', afterhours: 'nobody answers after hours',
+        followup: 'we forget to follow up', stock: 'checking stock or prices is slow',
+        quotes: 'quoting takes too long', volume: 'too many enquiries to handle' };
+    var SAY_GOAL = { recover: 'stop losing enquiries we already paid for', faster: 'reply and quote faster',
+        scale: 'handle more enquiries without hiring', freeteam: 'free the team from repetitive chats',
+        unsure: 'see what it can do' };
+
+    // Everything they just typed, in their own words, so the Closer never asks twice.
+    function handoffMessage(data) {
+        var first = (data.name || '').trim().split(/\s+/)[0];
+        var lines = ['Hi, I just asked for a free 41 Closer demo on your site.'];
+        if (first) lines.push('I am ' + first + (data.website ? ' from ' + data.website : '') + '.');
+        else if (data.website) lines.push('My site is ' + data.website + '.');
+
+        var vol = SAY_ENQ[data.enquiries], sale = SAY_SALE[data.saleValue];
+        if (vol || sale) {
+            lines.push('We get ' + (vol || 'a number of') + ' WhatsApp enquiries a week'
+                + (sale ? ', average sale ' + sale : '') + '.');
+        }
+        var pains = (data.challenges || []).map(function (c) { return SAY_CHALLENGE[c]; }).filter(Boolean);
+        if (pains.length) lines.push('What costs us most: ' + pains.join(', ') + '.');
+        if (SAY_GOAL[data.goal]) lines.push('What I want: ' + SAY_GOAL[data.goal] + '.');
+        lines.push('Can you show me what you would do for us?');
+        return lines.join('\n');
+    }
+
+    // Qualified only. Shown AFTER the calendar: the booking is the commitment, the
+    // WhatsApp conversation is what keeps them warm until the call.
     function showHandoff(data) {
         var box = document.getElementById('cl-handoff');
         if (!box) return;
         var link = document.getElementById('cl-wa-handoff');
         if (link) {
-            var first = (data.name || '').trim().split(/\s+/)[0] || '';
-            link.href = 'https://wa.me/6580124848?text=' + encodeURIComponent(
-                'Hi, this is ' + (first || 'me') + '. I just booked a 41 Closer demo call'
-                + (data.website ? ' for ' + data.website : '') + '.');
+            link.href = 'https://wa.me/6580124848?text=' + encodeURIComponent(handoffMessage(data));
             link.addEventListener('click', function () {
                 track('closer_handoff_click', { event_category: 'conversion', tier: data.tier, variant: variant });
                 if (window.cl41) window.cl41.mark('closer_handoff_click', { tier: data.tier });
