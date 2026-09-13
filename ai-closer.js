@@ -19,7 +19,9 @@ window.BOOKING_URL = window.BOOKING_URL || '';
 
     var variant = document.body.getAttribute('data-variant') || 'long';
     function track(name, p) { try { if (window.track41) window.track41(name, p || {}); } catch (e) {} }
-    function pixel(name, p) { try { if (window.fbq) window.fbq('track', name, p || {}); } catch (e) {} }
+    // opts carries { eventID } so the same conversion sent server-side by
+    // api/closer-lead.js is deduped instead of double counted.
+    function pixel(name, p, opts) { try { if (window.fbq) window.fbq('track', name, p || {}, opts || {}); } catch (e) {} }
 
     // ---- Booking complete (called by the Cal.com embed; Google bookings are synced server-side) ----
     window.onCloserBooked = function () {
@@ -92,6 +94,19 @@ window.BOOKING_URL = window.BOOKING_URL || '';
             data.fitReason = fit.reason || '';
             Object.keys(attr).forEach(function (k) { data[k] = attr[k]; });
 
+            // One id for this submit, sent to BOTH the browser pixel and our server.
+            // Without it Meta counts the pixel Lead and the Conversions API Lead as
+            // two conversions and every cost-per-lead number halves. See api/_lib/meta-capi.js.
+            var cl = window.cl41;
+            data.eventId = (cl && cl.newEventId ? cl.newEventId() : 'lead_' + Date.now());
+            if (cl) {
+                var ids = cl.ids();
+                data.fbp = ids.fbp;
+                data.fbc = ids.fbc;
+                data.journey = cl.journey();
+                cl.mark('lead_submitted', { tier: data.tier, qualified: data.qualified });
+            }
+
             // CRM record (server-side) and the Formspree email copy, both best-effort.
             fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(function () {});
             var copy = new FormData(form);
@@ -100,7 +115,7 @@ window.BOOKING_URL = window.BOOKING_URL || '';
             Object.keys(attr).forEach(function (k) { copy.append(k, attr[k]); });
             fetch(form.action, { method: 'POST', body: copy, headers: { 'Accept': 'application/json' } }).catch(function () {});
 
-            pixel('Lead', { content_name: 'ai_closer_form', qualified: data.qualified, tier: data.tier, variant: variant });
+            pixel('Lead', { content_name: 'ai_closer_form', qualified: data.qualified, tier: data.tier, variant: variant }, { eventID: data.eventId });
             track('generate_lead', { event_category: 'conversion', cta_id: 'ai_closer', qualified: data.qualified, tier: data.tier, variant: variant });
 
             var first = (data.name || '').trim().split(/\s+/)[0] || 'there';

@@ -11,6 +11,8 @@
 const { sendLeadAlerts } = require('./_lib/lead-alert');
 const { postHermesIntake } = require('./_lib/hermes');
 const { e164Digits } = require('./_lib/util');
+const { cleanJourney, journeyNote } = require('./_lib/journey');
+const { buildLeadEvent, buildQualifiedLeadEvent, sendCapiEvent } = require('./_lib/meta-capi');
 
 const TWENTY_BASE = process.env.TWENTY_BASE_URL || 'https://twenty-server-production-bb71.up.railway.app';
 
@@ -115,6 +117,9 @@ module.exports = async (req, res) => {
     ? (website.startsWith('http') ? website : `https://${website}`) : '';
   const headers = req.headers || {};
   const userAgent = clean(headers['user-agent'], 300);
+  // x-forwarded-for is "<visitor>, <proxy>, <proxy>". Meta wants the visitor.
+  const clientIp = clean(String(headers['x-forwarded-for'] || '').split(',')[0], 60);
+  const journey = cleanJourney(body.journey);
 
   // Short lines first: the cron (api/cron/booking-sync.js) parses Tier, fbclid and
   // UA back out of statusNotes, so they must survive the 2,500-char cap.
@@ -134,6 +139,7 @@ module.exports = async (req, res) => {
     utm.length ? `UTM: ${utm.join(' ')}` : '',
     fbclid ? `fbclid=${fbclid}` : '',
     userAgent ? `UA: ${userAgent}` : '',
+    journeyNote(journey),
     leadNotes ? `Notes: ${leadNotes}` : '',
   ].filter(Boolean).join('\n');
 
@@ -176,7 +182,24 @@ module.exports = async (req, res) => {
 
   const waDigits = e164Digits(whatsapp);
   const deps = { env, fetchImpl };
-  const [alerts, hermes] = await Promise.all([
+
+  // Back to Meta. Lead for everyone so the pixel keeps learning, QualifiedLead
+  // only for the tiers we want more of: that is the event the ad sets optimise
+  // on, so a Tier C form-fill must never look like a Tier A. The event_id comes
+  // from the browser pixel (ai-closer.js) so the same submit is not counted twice.
+  const { firstName, lastName } = splitName(name);
+  const capiInput = {
+    eventId: clean(body.eventId, 80) || `lead_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`,
+    eventTimeSec: Math.floor(Date.now() / 1000),
+    sourceUrl: `https://41labs.ai/ai-closer${body.variant === 'sf' ? '-sf' : ''}`,
+    email, phone: whatsapp, firstName, lastName,
+    fbp: clean(body.fbp, 120), fbc: clean(body.fbc, 300), fbclid, clickMs: Date.now(),
+    clientIp, userAgent, tier,
+  };
+  const capiEvents = [buildLeadEvent(capiInput)];
+  if (tier === 'A' || tier === 'B') capiEvents.push(buildQualifiedLeadEvent(capiInput));
+
+  const [alerts, hermes, meta] = await Promise.all([
     sendLeadAlerts({
       tier,
       name,
@@ -220,10 +243,12 @@ module.exports = async (req, res) => {
         notes: leadNotes,
         utm: utmObj,
         fbclid,
+        ...(journey ? { journey } : {}),
         twentyOpportunityId: oppId,
       },
     }, deps),
+    sendCapiEvent(capiEvents, deps),
   ]);
 
-  return send(res, 200, { ...result, alerts, hermes });
+  return send(res, 200, { ...result, alerts, hermes, meta });
 };

@@ -5,7 +5,10 @@ What happens between a Meta ad click and a demo call, and which piece does what.
 ```mermaid
 flowchart TD
   A[Meta ad click<br/>utm_* + fbclid] --> B[/ai-closer form/]
-  B -->|POST /api/closer-lead| C[Twenty: Person + Company<br/>Opportunity SCREENING, CLOSER_41<br/>statusNotes: tier, UTM, fbclid, UA]
+  B --> M[closer-analytics.js<br/>visitor id, first/last touch,<br/>section dwell, scroll, engaged time]
+  M -->|sendBeacon /api/track| N[GA4 Measurement Protocol<br/>event: closer_journey]
+  B -->|POST /api/closer-lead| C[Twenty: Person + Company<br/>Opportunity SCREENING, CLOSER_41<br/>statusNotes: tier, UTM, fbclid, UA, journey]
+  C --> P[Meta CAPI: Lead always<br/>+ QualifiedLead when tier A/B]
   C --> D[Telegram alert to Alexander<br/>TIER first, wa.me link]
   C --> E[Resend email copy<br/>to alexander@41labs.ai]
   C --> F[Hermes intake<br/>event: lead_created]
@@ -21,8 +24,11 @@ flowchart TD
 Plain text version:
 
 ```
-ad click -> /ai-closer form -> /api/closer-lead
+ad click -> /ai-closer page -> closer-analytics.js records the visit
+                                 |-> sendBeacon /api/track -> GA4 closer_journey   [where they went, how long]
+         -> /ai-closer form -> /api/closer-lead
                                  |-> Twenty (SCREENING deal)            [the record]
+                                 |-> Meta CAPI Lead (+ QualifiedLead if tier A/B)  [what the ads optimise on]
                                  |-> Telegram + Resend email            [speed to lead, backup]
                                  |-> Hermes  lead_created               [41 Closer takes over on WhatsApp]
             tier A/B -> Google Calendar booking (iframe, can't report back)
@@ -43,7 +49,10 @@ every 5 min: /api/cron/booking-sync
 | `api/cron/booking-sync.js` | The 5-minute cron. `runBookingSync()` is exported for tests. |
 | `api/_lib/lead-alert.js` | Telegram + Resend formatting and sending. |
 | `api/_lib/hermes.js` | Hermes intake call (3s timeout, skip when env missing). |
-| `api/_lib/meta-capi.js` | SHA-256 hashing, `fbc`, Schedule payload, send. |
+| `api/_lib/meta-capi.js` | SHA-256 hashing, `fbp`/`fbc`, Lead / QualifiedLead / Schedule payloads, batched send. |
+| `closer-analytics.js` | Browser journey recorder. Loads before `ai-closer.js`, exposes `window.cl41`. |
+| `api/track.js` | Journey beacon sink. Clamps the payload, forwards `closer_journey` to GA4. |
+| `api/_lib/journey.js` | Clamps an untrusted journey payload and turns it into one CRM line. |
 | `api/_lib/google-calendar.js` | Service-account JWT (node crypto, no SDK), event listing, booking detection. |
 | `api/_lib/twenty.js` | Candidate search + PATCH. |
 | `api/_lib/notes.js` | Parses statusNotes, owns the idempotency markers. |
@@ -120,9 +129,38 @@ Checked against `~/.config/41labs/*.env` and `vercel env ls` for `41labs/41labs-
 | `BOOKING_CALENDAR_ID` | cron | no | default `alexander@41labs.ai` | not needed |
 | `BOOKING_CALENDAR_IMPERSONATE` | cron | no | only for domain-wide delegation. Tested 2026-09-11: the SA is **not** delegated the Calendar scope, so leave unset and share the calendar instead | not needed |
 | `BOOKING_EVENT_MATCH` | cron | no | default `41 Closer`. Comma-separated, case-insensitive, matched on event title + description | not needed if the schedule title contains "41 Closer" |
-| `META_CAPI_TOKEN` | cron | yes for CAPI | `META_ACCESS_TOKEN` in `meta.env` already works: system-user token, never expires, `ads_management`, can read pixel `24659272643698089` (checked 2026-09-11) | no (new name). Value exists as `META_ACCESS_TOKEN` |
+| `META_CAPI_TOKEN` | lead, cron | yes for CAPI | `META_ACCESS_TOKEN` in `meta.env` already works: system-user token, never expires, `ads_management`, can read pixel `24659272643698089` (checked 2026-09-11) | no (new name). Value exists as `META_ACCESS_TOKEN` |
 | `META_CAPI_PIXEL_ID` | cron | no | default `24659272643698089` (same as `META_PIXEL_ID` in `meta.env`) | not needed |
-| `META_CAPI_TEST_EVENT_CODE` | cron | no | Events Manager, dataset, Test events tab. When set, every CAPI event goes to Test Events only | set only while testing |
+| `META_CAPI_TEST_EVENT_CODE` | lead, cron | no | Events Manager, dataset, Test events tab. When set, every CAPI event goes to Test Events only | set only while testing |
+
+
+| `GA4_API_SECRET` | `/api/track` | no (beacons are dropped without it) | GA4 Admin > Data Streams > the 41labs.ai stream > Measurement Protocol API secrets | not set yet |
+| `GA4_MEASUREMENT_ID` | `/api/track` | no | defaults to `G-VQQ49H8N1L` | not needed |
+
+## What Meta gets back, and why
+
+The ad account can only optimise for what we report. Three events, deepest last:
+
+| Event | Fires | Value | Why |
+|---|---|---|---|
+| `Lead` | every form submit, including tier C | none | Volume, so the pixel keeps learning. No value, so Meta never bids to buy more tier C. |
+| `QualifiedLead` | tier A and B only | S$96 | **This is the event ad sets should optimise on.** S$96 = 5% of qualified leads book a call x 20% of calls close x S$9,600 build fee (`41 Labs/41-CLOSER-NUMBERS.md`, 11 Sep 2026). Build fee only, retainer deliberately excluded to stay conservative. |
+| `Schedule` | a call lands on the calendar | S$1,920 | 20% of calls close x S$9,600. Sent by the cron, because the Google booking iframe cannot report back. |
+
+Both halves of the loop run: the browser pixel AND the Conversions API. They share an
+`event_id` minted per submit in `ai-closer.js`, so Meta deduplicates instead of double
+counting. **If you ever change how that id is generated, change it in both places or every
+cost-per-lead number in Ads Manager silently halves.**
+
+Server-side is not optional here. Ad blockers and iOS strip the browser pixel, and the
+server holds what Meta matches best on: the phone number they typed, their IP, their user
+agent, and the `_fbp` / `_fbc` cookies the page read for us.
+
+### Switching the campaign over
+
+Once `QualifiedLead` has ~50 events in a week, move the ad set's optimisation event from
+`Lead` to `QualifiedLead`. Below that volume Meta cannot exit the learning phase, so leave
+it on `Lead` and just watch the qualified rate in Events Manager.
 
 ### Telegram routing
 

@@ -1,10 +1,21 @@
-// Meta Conversions API: the "Schedule" event for a booked 41 Closer demo call,
-// sent server-side because the Google Calendar booking iframe can't tell the
-// page (or the pixel) that a booking happened.
+// Meta Conversions API: what we send back to Meta so the ad account learns to
+// find buyers instead of form-fillers.
 //
-// Payload shape follows hermes/src/lib/marketing/meta-conversions.ts (Schedule,
-// Bearer token in the header, never in the URL) with action_source 'website',
-// since the conversion happens on the /ai-closer page's calendar.
+// Three events, deepest last:
+//   Lead           every form submit. No value: it is only a signal that someone filled in the form.
+//   QualifiedLead  Tier A and B only, with a value. THIS is the event ad sets should optimise on.
+//   Schedule       a call actually booked, with a bigger value. Sent by the booking cron.
+//
+// Every event must carry an event_id that the browser pixel also sends, or Meta
+// counts the same conversion twice. See ai-closer.js (mints the id) and
+// api/closer-lead.js (sends it server-side).
+//
+// Server-side matters because ad blockers and iOS strip the browser pixel. The
+// server has the things Meta matches best on: the phone number they typed, their
+// IP, their user agent, and the _fbp / _fbc cookies the page read for us.
+//
+// Payload shape follows hermes/src/lib/marketing/meta-conversions.ts (Bearer token
+// in the header, never in the URL) with action_source 'website'.
 
 const crypto = require('crypto');
 const { e164Digits, fetchWithTimeout } = require('./util');
@@ -12,6 +23,16 @@ const { e164Digits, fetchWithTimeout } = require('./util');
 const GRAPH = 'https://graph.facebook.com/v21.0';
 const DEFAULT_PIXEL = '24659272643698089';
 const SOURCE_URL = 'https://41labs.ai/ai-closer';
+const CURRENCY = 'SGD';
+
+// Expected build revenue sitting behind one event, from 41-CLOSER-NUMBERS.md
+// (worked out 11 Sep 2026 on the July ad funnel):
+//   qualified lead -> 5% book a call -> 20% of calls close  = 1% x S$9,600 = S$96
+//   booked call    -> 20% of calls close                    =      20% x S$9,600 = S$1,920
+// Build fee only. The S$1,490/mo retainer is deliberately left out so the number
+// stays conservative. Revisit once we have 30+ closed deals rather than 1.
+const VALUE_QUALIFIED_LEAD = 96;
+const VALUE_SCHEDULE = 1920;
 
 const sha256 = (v) => crypto.createHash('sha256').update(v).digest('hex');
 
@@ -32,31 +53,64 @@ const hashName = (v) => {
 // fbc = fb.<subdomainIndex>.<creationTimeMs>.<fbclid>; subdomain index 1 = 41labs.ai.
 const buildFbc = (fbclid, clickMs) => (fbclid ? `fb.1.${Math.floor(clickMs)}.${fbclid}` : '');
 
-function buildScheduleEvent(i) {
-  const user_data = {};
-  const em = hashEmail(i.email); if (em) user_data.em = [em];
-  const ph = hashPhone(i.phone); if (ph) user_data.ph = [ph];
-  const fn = hashName(i.firstName); if (fn) user_data.fn = [fn];
-  const ln = hashName(i.lastName); if (ln) user_data.ln = [ln];
-  const fbc = buildFbc(i.fbclid, i.clickMs); if (fbc) user_data.fbc = fbc;
-  if (i.userAgent) user_data.client_user_agent = i.userAgent;
+// Everything Meta can match a person on. The real _fbc cookie beats one we rebuild
+// from the fbclid, because the cookie carries the true click time.
+function buildUserData(i) {
+  const u = {};
+  const em = hashEmail(i.email); if (em) u.em = [em];
+  const ph = hashPhone(i.phone); if (ph) u.ph = [ph];
+  const fn = hashName(i.firstName); if (fn) u.fn = [fn];
+  const ln = hashName(i.lastName); if (ln) u.ln = [ln];
+  const fbc = i.fbc || buildFbc(i.fbclid, i.clickMs); if (fbc) u.fbc = fbc;
+  if (i.fbp) u.fbp = i.fbp;
+  if (i.clientIp) u.client_ip_address = i.clientIp;
+  if (i.userAgent) u.client_user_agent = i.userAgent;
+  return u;
+}
+
+function buildEvent(i) {
+  const custom = { content_name: i.contentName || '41closer', ...(i.tier ? { tier: i.tier } : {}), ...(i.custom || {}) };
+  if (i.value != null) { custom.value = i.value; custom.currency = i.currency || CURRENCY; }
   return {
-    event_name: 'Schedule',
+    event_name: i.eventName,
     event_time: i.eventTimeSec,
-    event_id: `schedule_${i.opportunityId}`,
+    event_id: i.eventId,
     action_source: 'website',
-    event_source_url: SOURCE_URL,
-    user_data,
-    custom_data: { content_name: '41closer-demo-call', ...(i.tier ? { tier: i.tier } : {}) },
+    event_source_url: i.sourceUrl || SOURCE_URL,
+    user_data: buildUserData(i),
+    custom_data: custom,
   };
 }
 
-// 'sent' | 'skipped' (not configured) | 'failed'. Never throws.
+// Every form submit. No value on purpose: bidding on this would buy us Tier C.
+const buildLeadEvent = (i) => buildEvent({ ...i, eventName: 'Lead', contentName: i.contentName || '41closer-form' });
+
+// Tier A and B only. The event to optimise ad sets on. The '_q' suffix keeps it
+// distinct from the Lead that fires on the same submit.
+const buildQualifiedLeadEvent = (i) => buildEvent({
+  ...i,
+  eventName: 'QualifiedLead',
+  eventId: `${i.eventId}_q`,
+  contentName: i.contentName || '41closer-qualified',
+  value: VALUE_QUALIFIED_LEAD,
+});
+
+const buildScheduleEvent = (i) => buildEvent({
+  ...i,
+  eventName: 'Schedule',
+  eventId: `schedule_${i.opportunityId}`,
+  contentName: '41closer-demo-call',
+  value: VALUE_SCHEDULE,
+});
+
+// Takes one event or a list. 'sent' | 'skipped' (nothing to send, or not
+// configured) | 'failed'. Never throws: a Meta outage must not cost us the lead.
 async function sendCapiEvent(event, { env, fetchImpl, timeoutMs = 5000 }) {
+  const events = (Array.isArray(event) ? event : [event]).filter(Boolean);
   const token = env.META_CAPI_TOKEN;
   const pixel = env.META_CAPI_PIXEL_ID || DEFAULT_PIXEL;
-  if (!token) return 'skipped';
-  const body = { data: [event] };
+  if (!token || !events.length) return 'skipped';
+  const body = { data: events };
   if (env.META_CAPI_TEST_EVENT_CODE) body.test_event_code = env.META_CAPI_TEST_EVENT_CODE;
   try {
     const r = await fetchWithTimeout(fetchImpl, `${GRAPH}/${pixel}/events`, {
@@ -70,4 +124,8 @@ async function sendCapiEvent(event, { env, fetchImpl, timeoutMs = 5000 }) {
   }
 }
 
-module.exports = { DEFAULT_PIXEL, hashEmail, hashPhone, hashName, buildFbc, buildScheduleEvent, sendCapiEvent };
+module.exports = {
+  DEFAULT_PIXEL, CURRENCY, VALUE_QUALIFIED_LEAD, VALUE_SCHEDULE,
+  hashEmail, hashPhone, hashName, buildFbc, buildUserData,
+  buildEvent, buildLeadEvent, buildQualifiedLeadEvent, buildScheduleEvent, sendCapiEvent,
+};

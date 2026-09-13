@@ -15,6 +15,7 @@ const ENV_KEYS = [
   'TWENTY_API_KEY', 'TWENTY_BASE_URL', 'TELEGRAM_BOT_TOKEN', 'TELEGRAM_GROUP_ID', 'TELEGRAM_INBOX_THREAD_ID',
   'LEAD_ALERT_CHAT_ID', 'LEAD_ALERT_THREAD_ID', 'RESEND_API_KEY', 'RESEND_FROM', 'LEAD_ALERT_EMAIL_TO',
   'HERMES_BASE_URL', 'HERMES_INTAKE_KEY',
+  'META_CAPI_TOKEN', 'META_CAPI_PIXEL_ID', 'META_CAPI_TEST_EVENT_CODE',
 ];
 
 const FULL_ENV = {
@@ -25,6 +26,7 @@ const FULL_ENV = {
   RESEND_API_KEY: 're_test',
   HERMES_BASE_URL: 'https://hermes.example.com/',
   HERMES_INTAKE_KEY: 'intake-secret',
+  META_CAPI_TOKEN: 'EAAmetatoken',
 };
 
 function fakeRes() {
@@ -402,5 +404,144 @@ test.describe('closer-lead: Hermes handoff', () => {
     const company = calls.find((c) => c.url.endsWith('/rest/companies'))!;
     expect(company.body.name).toBe('Tan Wei Ming');
     expect(company.body.domainName).toBeUndefined();
+  });
+});
+
+// What Meta gets back. The point of all of this is that the ad account optimises
+// for leads we actually want, so a Tier C form-fill and a Tier A must not look
+// the same to Meta.
+const capiCall = (calls: Call[]) => calls.find((c) => c.url.includes('graph.facebook.com'));
+const capiEvents = (calls: Call[]) => capiCall(calls)?.body?.data ?? [];
+const eventNames = (calls: Call[]) => capiEvents(calls).map((e: any) => e.event_name);
+
+const browser = {
+  eventId: 'evt-abc-123',
+  fbp: 'fb.1.1757660000000.1234567890',
+  fbc: 'fb.1.1757660400123.abc123',
+};
+
+test.describe('Meta Conversions API', () => {
+  test('a Tier A lead sends both Lead and QualifiedLead, in one request', async () => {
+    const { calls } = await run({ ...lead, ...browser }, { env: FULL_ENV });
+    expect(calls.filter((c) => c.url.includes('graph.facebook.com'))).toHaveLength(1);
+    expect(eventNames(calls)).toEqual(['Lead', 'QualifiedLead']);
+  });
+
+  test('a Tier B lead is still one we want, so it qualifies too', async () => {
+    const { calls } = await run({ ...lead, ...browser, tier: 'B' }, { env: FULL_ENV });
+    expect(eventNames(calls)).toEqual(['Lead', 'QualifiedLead']);
+  });
+
+  test('a Tier C lead sends Lead only: Meta must not learn to buy more of these', async () => {
+    const { calls } = await run({ ...lead, ...browser, tier: 'C', qualified: 'no' }, { env: FULL_ENV });
+    expect(eventNames(calls)).toEqual(['Lead']);
+  });
+
+  test('the browser pixel event id is reused so the same lead is not counted twice', async () => {
+    const { calls } = await run({ ...lead, ...browser }, { env: FULL_ENV });
+    const [leadEv, qualEv] = capiEvents(calls);
+    expect(leadEv.event_id).toBe('evt-abc-123');
+    expect(qualEv.event_id).toBe('evt-abc-123_q');
+  });
+
+  test('with no id from the browser it still sends, rather than losing the conversion', async () => {
+    const { calls } = await run({ ...lead, fbp: browser.fbp }, { env: FULL_ENV });
+    expect(eventNames(calls)).toEqual(['Lead', 'QualifiedLead']);
+    expect(capiEvents(calls)[0].event_id).toMatch(/^lead_/);
+  });
+
+  test('carries the identifiers the browser pixel cannot: typed phone, cookies, IP, UA', async () => {
+    const { calls } = await run({ ...lead, ...browser }, {
+      env: FULL_ENV,
+      headers: { 'x-forwarded-for': '203.0.113.9, 70.41.3.18', 'user-agent': 'Mozilla/5.0 test' },
+    });
+    const u = capiEvents(calls)[0].user_data;
+    expect(u.ph).toHaveLength(1);            // hashed, from the number they typed
+    expect(u.em).toHaveLength(1);
+    expect(u.fn).toHaveLength(1);
+    expect(u.fbp).toBe(browser.fbp);
+    expect(u.fbc).toBe(browser.fbc);
+    expect(u.client_ip_address).toBe('203.0.113.9');   // the visitor, not the proxy
+    expect(u.client_user_agent).toBe('Mozilla/5.0 test');
+  });
+
+  test('only the qualified event carries a value, and it says which tier', async () => {
+    const { calls } = await run({ ...lead, ...browser }, { env: FULL_ENV });
+    const [leadEv, qualEv] = capiEvents(calls);
+    expect(leadEv.custom_data.value).toBeUndefined();
+    expect(qualEv.custom_data.value).toBeGreaterThan(0);
+    expect(qualEv.custom_data.currency).toBe('SGD');
+    expect(qualEv.custom_data.tier).toBe('A');
+  });
+
+  test('the short-form variant reports its own page as the source url', async () => {
+    const { calls } = await run({ ...lead, ...browser, variant: 'sf' }, { env: FULL_ENV });
+    expect(capiEvents(calls)[0].event_source_url).toBe('https://41labs.ai/ai-closer-sf');
+  });
+
+  test('no token configured: no call to Meta, and the lead is still saved', async () => {
+    const { calls, json } = await run({ ...lead, ...browser }, { env: { TWENTY_API_KEY: 'test-key' } });
+    expect(capiCall(calls)).toBeUndefined();
+    expect(json.ok).toBe(true);
+    expect(json.meta).toBe('skipped');
+  });
+
+  test('Meta being down never costs us the lead', async () => {
+    const { json } = await run({ ...lead, ...browser }, { env: FULL_ENV, throwHosts: ['graph.facebook.com'] });
+    expect(json.ok).toBe(true);
+    expect(json.id).toBe('opportunities-id-3');
+    expect(json.meta).toBe('failed');
+  });
+
+  test('a bot caught by the honeypot is never reported to Meta as a lead', async () => {
+    const { calls } = await run({ ...lead, ...browser, url_hp: 'http://spam.example' }, { env: FULL_ENV });
+    expect(capiCall(calls)).toBeUndefined();
+  });
+});
+
+test.describe('what the visitor did before they filled the form', () => {
+  const journey = {
+    ms: 251000,
+    engagedMs: 170000,
+    scroll: 86,
+    visits: 2,
+    landing: '/ai-closer',
+    referrer: 'https://l.facebook.com/',
+    sections: [['proof-2', 52000], ['hero', 41000], ['guarantee', 30000]],
+  };
+
+  test('the journey is written on the deal, so the call starts knowing what they read', async () => {
+    const { calls } = await run({ ...lead, journey });
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp.body.statusNotes).toContain('4m 11s on page');
+    expect(opp.body.statusNotes).toContain('2m 50s engaged');
+    expect(opp.body.statusNotes).toContain('86%');
+    expect(opp.body.statusNotes).toContain('proof-2');
+  });
+
+  test('a second visit is called out, because it means they came back', async () => {
+    const { calls } = await run({ ...lead, journey });
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp.body.statusNotes).toMatch(/visit 2/i);
+  });
+
+  test('no journey data at all is fine: the note simply leaves it out', async () => {
+    const { calls } = await run(lead);
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp.body.statusNotes).not.toContain('on page');
+    expect(opp.body.statusNotes).toContain('Tier: A');
+  });
+
+  test('a hostile journey payload cannot blow up the handler or the note size', async () => {
+    const nasty = { ms: 'x', engagedMs: -5, scroll: 9999, visits: 1e9, sections: 'not-an-array' };
+    const { json, calls } = await run({ ...lead, journey: nasty });
+    expect(json.ok).toBe(true);
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp.body.statusNotes.length).toBeLessThanOrEqual(2500);
+  });
+
+  test('the journey goes to Hermes too, so the bot knows what they already read', async () => {
+    const { calls } = await run({ ...lead, journey }, { env: FULL_ENV });
+    expect(hermesCall(calls)!.body.lead.journey).toMatchObject({ scroll: 86, visits: 2 });
   });
 });
