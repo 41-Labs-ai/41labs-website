@@ -894,3 +894,57 @@ test.describe('the booking step is Cal.com, prefilled and identified', () => {
     expect(polled).toBe(0);
   });
 });
+
+// The deal id is what makes a booking match its deal exactly instead of being guessed at
+// by email. It arrives from the lead POST, so the calendar has to wait for it: building
+// the embed first sent Cal.com an empty opportunityId, which is the one field that matters.
+test.describe('the booking carries the deal id', () => {
+  test('waits for the lead response before building the embed', async ({ page }) => {
+    await page.route('**/api/closer-lead', async (r: any) => {
+      await new Promise((res) => setTimeout(res, 400));          // a realistically slow API
+      return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"deal-xyz"}' });
+    });
+    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route('**/app.cal.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+6591234567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+
+    await expect.poll(async () => page.evaluate(() => {
+      const q = (((window as any).Cal || {}).q) || [];
+      const i = q.find((a: any) => a[0] === 'inline');
+      return i && i[1] && i[1].config && i[1].config['metadata[opportunityId]'];
+    }), { timeout: 6000 }).toBe('deal-xyz');
+  });
+
+  test('a hanging CRM never leaves them staring at no calendar', async ({ page }) => {
+    await page.route('**/api/closer-lead', () => {});             // never answers
+    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route('**/app.cal.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+6591234567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+    // the 2.5s cap fires and the calendar appears anyway, just unmatched
+    await expect(page.locator('#cl-cal-head')).toBeVisible({ timeout: 6000 });
+  });
+});

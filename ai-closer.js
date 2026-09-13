@@ -305,10 +305,19 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
             }
 
             // CRM record (server-side) and the Formspree email copy, both best-effort.
-            fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-                .then(function (r) { return r.json(); })
-                .then(function (j) { if (j && j.id) data.opportunityId = j.id; })
-                .catch(function () {});
+            // The deal id is what makes the booking match exactly instead of being guessed
+            // at by email, so the calendar waits for it. Capped at 2.5s: a visitor staring
+            // at a blank slot is worse than a booking we have to match by hand.
+            var dealReady = new Promise(function (resolve) {
+                var done = false;
+                var finish = function () { if (!done) { done = true; resolve(); } };
+                setTimeout(finish, 2500);
+                fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+                    .then(function (r) { return r.json(); })
+                    .then(function (j) { if (j && j.id) data.opportunityId = j.id; })
+                    .catch(function () {})
+                    .then(finish);
+            });
             var copy = new FormData(form);
             ['qualified', 'tier', 'variant'].forEach(function (k) { copy.append(k, data[k]); });
             copy.append('fit_reason', data.fitReason);
@@ -323,7 +332,7 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
             document.getElementById('cl-step1').hidden = true;
             document.getElementById('cl-step2').hidden = false;
             document.getElementById(qualified ? 'cl-book' : 'cl-notyet').hidden = false;
-            if (qualified) showCalendar(data);
+            if (qualified) dealReady.then(function () { showCalendar(data); });
             var anchor = document.getElementById('qualify') || form;
             anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
