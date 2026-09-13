@@ -32,7 +32,7 @@ def screen(name, initials, msgs, status='online', cls='', label='', av=0, verifi
         img = msg[3] if len(msg) > 3 else None
         side = 'wa-out' if who == 'customer' else 'wa-in'
         meta = f'<span class="wa-meta">{time} {I["ticks"]}</span>' if who == 'customer' else f'<span class="wa-meta">{time}</span>'
-        pic = f'<span class="wa-pic" style="--pic:url({img})" aria-hidden="true"></span>' if img else ''
+        pic = (f'<img class="wa-pic" src="{img}" alt="" width="520" height="390" loading="lazy">' if img else '')
         rows.append(f'<div class="wa-msg {side}{" wa-has-pic" if img else ""}">{pic}{fmt(text)}{meta}</div>')
     return (f'<div class="wa {cls}" role="img" aria-label="{html.escape(label or ("WhatsApp chat with " + name))}">'
             f'<div class="wa-bar"><span>9:41</span>{I["bar"]}</div>'
@@ -96,16 +96,12 @@ def hero_block():
 # Proof gallery: 8 short WhatsApp screens, each proving ONE thing. No scrolling.
 # source: "Demo line" = verbatim from our own demo builds (customer details and
 # product codes redacted, brand-name products avoided). "Example" = written by us.
-# Product shots as inline SVG data URIs: no extra request, nothing to ship, and they
-# read as a real image bubble rather than a grey placeholder box.
-def pic(bg, glyph):
-    svg = f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 60'><rect width='80' height='60' fill='{bg}'/>{glyph}</svg>"
-    return "&quot;data:image/svg+xml," + urllib.parse.quote(svg) + "&quot;"
-
-RING = pic('#f3e7d3', "<circle cx='40' cy='30' r='13' fill='none' stroke='#b9922f' stroke-width='3'/><path d='M40 14l4 6h-8z' fill='#7fb7d9'/>")
-CAR  = pic('#dbe6f0', "<rect x='14' y='28' width='52' height='16' rx='5' fill='#3f6fa0'/><rect x='24' y='20' width='30' height='12' rx='4' fill='#5b8cbe'/><circle cx='26' cy='45' r='5' fill='#1f3b57'/><circle cx='56' cy='45' r='5' fill='#1f3b57'/>")
-PIPE = pic('#e4e7ea', "<rect x='10' y='24' width='60' height='13' rx='2' fill='#8b9298'/><rect x='10' y='24' width='60' height='4' fill='#a9b0b6'/><circle cx='16' cy='30' r='4' fill='#6d747a'/>")
-CAKE = pic('#f6e2e8', "<rect x='20' y='28' width='40' height='18' rx='3' fill='#d98aa4'/><rect x='20' y='24' width='40' height='6' rx='3' fill='#f3c3d1'/><rect x='39' y='14' width='2' height='9' fill='#b9922f'/>")
+# Real product photos, from the catalogue images we generated ourselves for the
+# ValueMax enrichment pipeline. Names and prices below are the real catalogue rows,
+# so the chat quotes a product that actually exists at the price it actually is.
+RING = 'assets/closer/chat/ring.webp'
+NECKLACE = 'assets/closer/chat/necklace.webp'
+BANGLE = 'assets/closer/chat/bangle.webp'
 
 PROOF_CARDS = [
     ("Answers in seconds, at 2am", "", "CoolAir Services", "CA", [
@@ -130,17 +126,17 @@ PROOF_CARDS = [
         ("customer", "i want to buy rings", "22:05"),
         ("closer", "Great, rings it is! What is your budget range, and is this for yourself or a gift?", "22:05"),
         ("customer", "anything below 1k sgd", "22:10"),
-        ("closer", "*Diamond Cluster Ring in 18K White Gold* \u2014 S$999\nFour diamonds, 0.28ct total, on a plain polished band.", "22:10", RING),
+        ("closer", "*18K White Gold Diamond Ring* \u2014 S$949\nFour diamonds, 0.14ct total, square set. In stock at two branches.", "22:10", RING),
     ]),
     ("Checks stock before it promises", "", "Building supplies", "BS", [
         ("customer", "got 4mm in stock? need 200pcs by friday", "08:12"),
-        ("closer", "Yes. 340 pieces at Woodlands right now, so 200 is fine for Friday.", "08:12", PIPE),
+        ("closer", "Yes. 340 pieces at Woodlands right now, so 200 is fine for Friday.", "08:12"),
         ("customer", "price?", "08:13"),
         ("closer", "At 200 you are on the trade tier: S$4.20 each, S$840 for the lot. Want me to hold them?", "08:13"),
     ]),
     ("Books it and takes the deposit", "", "Lion City Rentals", "LC", [
         ("customer", "Hi need a car from 18 to 21 Dec, 5 pax, going JB", "01:12"),
-        ("closer", "Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day. The permit is included.", "01:13", CAR),
+        ("closer", "Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day. The permit is included.", "01:13"),
         ("customer", "Sienta ok. How to confirm?", "01:14"),
         ("closer", "A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through: [secure payment link]", "01:14"),
     ]),
@@ -150,16 +146,16 @@ PROOF_CARDS = [
         ("customer", "Any discount?", "22:47"),
         ("closer", "Pricing is set by our specialist team, so I can't discount here. The honest way to know if it's worth it is a consult, and that fee goes toward your treatment.", "22:47"),
     ]),
+    ("Recommends from the whole catalogue", "", "Jewellery store", "JS", [
+        ("customer", "anniversary gift, around 2k, she already has rings", "19:31"),
+        ("closer", "Then a necklace is the safer call.\n\n*18K White Gold Diamond Necklace* \u2014 S$2,189\n0.68ct, floral cluster. It sits well with the white gold she already wears.", "19:31", NECKLACE),
+        ("customer", "anything under 2k?", "19:33"),
+        ("closer", "There is, but at this size the drop in stone quality shows. If 2,189 is close enough I would stay with this one.", "19:33"),
+    ]),
     ("Follows up when they go quiet", "", "Meridian Interiors", "MI", [
         ("closer", "Hi Wei, quick one on the kitchen quote I sent Monday. Are you still deciding, or is something in it not quite right?", "10:14"),
         ("customer", "Sorry busy week. Still keen, my wife wants to see other door colours", "12:02"),
         ("closer", "No problem at all. I'll send three colour options in the same price. If one works, our designer can hold Saturday 2pm for the site measure.", "12:02"),
-    ]),
-    ("Upsells the way your best seller would", "", "Baking supplies", "BK", [
-        ("customer", "2 x 5kg couverture please", "14:22"),
-        ("closer", "Done, 2 x 5kg. Worth knowing: at 3 bags you cross into the wholesale price, so 3 costs about the same as 2 and a half.", "14:22", CAKE),
-        ("customer", "ok make it 3", "14:23"),
-        ("closer", "Nice one, that saves you S$38. Tuesday delivery or will you collect?", "14:23"),
     ]),
 ]
 

@@ -60,6 +60,6 @@
 .wa-card { max-width: 330px; }
 
 /* image bubble inside a chat: a product shot the Closer sent */
-.wa-pic { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 5px; margin-bottom: 5px;
-  background-image: var(--pic); background-size: cover; background-position: center; }
+.wa-pic { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: 5px; margin-bottom: 5px; }
 .wa-has-pic { max-width: 72%; }
