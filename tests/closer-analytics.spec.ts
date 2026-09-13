@@ -256,6 +256,63 @@ test.describe('reaching GA4', () => {
   });
 });
 
+// /41-closer is where the live Meta ads actually send people (with ?v=ecom,
+// ?v=industrial, ?v=services). It had the same missing-GA bug and no journey
+// recorder at all, so the page spending the ad budget was the one we could see
+// least. Every CTA on it is a click to WhatsApp, so whatsapp_click by ad variant
+// is the whole scoreboard.
+test.describe('the page the ads actually point at', () => {
+  async function stubGtm(page: Page) {
+    const asked: string[] = [];
+    await page.route(/googletagmanager\.com/, (route) => {
+      asked.push(route.request().url());
+      return route.fulfill({ status: 200, contentType: 'application/javascript', body: '' });
+    });
+    await page.route('**/api/track', (r) => r.fulfill({ status: 204, body: '' }));
+    await page.route(/connect\.facebook\.net|fonts\.g/, (r) => r.abort());
+    return asked;
+  }
+
+  test('loads real GA, not just the queueing stub', async ({ page }) => {
+    const asked = await stubGtm(page);
+    await page.goto('/41-closer.html');
+    await page.mouse.click(200, 300);
+    await expect.poll(() => asked.join(' '), { timeout: 8000 }).toContain('gtag/js');
+  });
+
+  test('records the journey, so we can see which part of the page works', async ({ page }) => {
+    await stubGtm(page);
+    await page.goto('/41-closer.html');
+    await page.waitForTimeout(1200);
+    const s = await page.evaluate(() => (window as any).cl41?.snapshot());
+    expect(s).toBeTruthy();
+    expect(s.journey.ms).toBeGreaterThan(0);
+  });
+
+  test('the ad variant in ?v= is what the page reports, or the split test is unreadable', async ({ page }) => {
+    await stubGtm(page);
+    await page.goto('/41-closer.html?v=industrial&utm_content=ad_stalk2_11pm');
+    const s = await page.evaluate(() => (window as any).cl41.snapshot());
+    expect(s.variant).toBe('industrial');
+    expect(s.attr.first.utm_content).toBe('ad_stalk2_11pm');
+  });
+
+  test('a WhatsApp click is attributed to the ad variant that paid for it', async ({ page }) => {
+    await stubGtm(page);
+    await page.goto('/41-closer.html?v=ecom');
+    // Stop the navigation to WhatsApp but let the event keep bubbling, so track.js's
+    // delegated listener still sees the click exactly as it would in the wild.
+    await page.evaluate(() => document.addEventListener('click', (e) => e.preventDefault(), true));
+    // on mobile the first wa.me link is the nav CTA, hidden behind the menu toggle
+    await page.locator('a[href*="wa.me"]:visible').first().click({ force: true, noWaitAfter: true });
+    const ev = await page.evaluate(() =>
+      (window as any).dataLayer.map((a: any) => Array.from(a))
+        .filter((a: any) => a[0] === 'event' && a[1] === 'whatsapp_click')[0]);
+    expect(ev).toBeTruthy();
+    expect(ev[2].cta_id).toBeTruthy();
+  });
+});
+
 test.describe('what reaches the lead', () => {
   test('the lead carries the journey, so the call knows what they actually read', async ({ page }) => {
     const sent = await stub(page);

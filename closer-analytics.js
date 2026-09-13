@@ -129,12 +129,21 @@
         });
     }, SECTION_TICK);
 
-    if ('IntersectionObserver' in window) {
+    // This file is loaded from <head> on some pages and from the end of <body> on
+    // others, so it must never assume the DOM exists yet. document.body is null in
+    // head, and reading it there threw and took the whole recorder down with it.
+    function whenReady(fn) {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+        else fn();
+    }
+
+    whenReady(function () {
+        if (!('IntersectionObserver' in window)) return;
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) { onScreen[en.target.id] = en.isIntersecting; });
         }, { threshold: 0.5 });
         document.querySelectorAll('section[id]').forEach(function (el) { io.observe(el); });
-    }
+    });
 
     function journey() {
         return {
@@ -160,8 +169,15 @@
         return m ? m[1] : '';
     }
 
+    // ?v= is how the live Meta ads split /41-closer (ecom / industrial / services).
+    // It has to win over the page's own label, or the split test cannot be read.
+    function variantName() {
+        var b = document.body;
+        return (params.get('v') || (b && b.getAttribute('data-variant')) || 'long').slice(0, 20);
+    }
+
     function snapshot() {
-        return { v: 1, vid: vid, sid: sid, page: location.pathname, variant: document.body.getAttribute('data-variant') || 'long',
+        return { v: 1, vid: vid, sid: sid, page: location.pathname, variant: variantName(),
                  ga: gaClientId(), ids: metaIds(), attr: { first: first, last: last }, journey: journey() };
     }
 
@@ -213,7 +229,7 @@
     window.addEventListener('pagehide', function () { beacon(true); });
 
     noteScroll();
-    mark('page_view_closer', { variant: document.body.getAttribute('data-variant') || 'long', visit: visits });
+    mark('page_view_closer', { variant: variantName(), visit: visits });
 
     window.cl41 = { snapshot: snapshot, journey: journey, ids: metaIds, mark: mark, beacon: beacon, vid: vid, sid: sid, newEventId: uid };
 })();
