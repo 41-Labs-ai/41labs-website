@@ -274,7 +274,7 @@ test.describe('long form follows the event opt-in structure', () => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
     const ids = await page.locator('main > section[id]').evaluateAll((els) => els.map((e) => e.id));
-    const order = ['hero', 'seen', 'numbers', 'get', 'proof-1', 'letter', 'proof-2', 'why', 'money', 'weeks', 'guarantee', 'fit', 'before-after', 'why-now', 'faq', 'final'];
+    const order = ['hero', 'seen', 'numbers', 'get', 'proof-1', 'letter', 'proof-2', 'different', 'why', 'money', 'weeks', 'guarantee', 'fit', 'before-after', 'why-now', 'faq', 'final'];
     const found = order.filter((id) => ids.includes(id));
     expect(found).toEqual(order);
     expect(ids.filter((id) => order.includes(id))).toEqual(order);
@@ -385,5 +385,16 @@ test.describe('long form follows the event opt-in structure', () => {
     const text = await page.locator('body').innerText();
     expect(text).not.toContain('42,000');
     expect(text).toContain('12,868');
+  });
+
+  test('differentiation block states the three wedges', async ({ page }) => {
+    await stubNetwork(page);
+    await page.goto('/ai-closer.html');
+    const d = page.locator('#different');
+    await expect(d).toContainText(/12,868 live products/);      // connected to their systems
+    await expect(d).toContainText(/Nothing to learn/i);          // done for you
+    await expect(d).toContainText(/S\$20,000 in booked sales/);  // money on the result
+    await expect(page.locator('#faq')).toContainText(/different from the WhatsApp tools/i);
+    await expect(page.locator('#hero .hero-sub')).toContainText(/don't hand you a chatbot/i);
   });
 });

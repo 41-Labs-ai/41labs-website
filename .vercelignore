@@ -11,3 +11,6 @@ docs-site
 assets/closer/chats
 assets/closer/*.json
 assets/closer/*.md
+
+# local review copy published as a Claude artifact, never on the live site
+review-ai-closer
