@@ -205,6 +205,11 @@
         .letter-body p { margin: 0 0 14px; }
         .letter-body .sig { font-weight: 800; margin-top: 20px; }
         .letter-body .sig span { display: block; font-weight: 500; color: var(--text-2); font-size: 14px; }
+        .fcard-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 7px; text-align: left; }
+        .fcard-list li { position: relative; padding-left: 24px; font-size: 14.5px; color: var(--text-2); line-height: 1.4; }
+        .fcard-list li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 11px; height: 6px;
+            border-left: 2.4px solid var(--accent-deep); border-bottom: 2.4px solid var(--accent-deep);
+            transform: rotate(-45deg); }
         .leaks { display: grid; gap: 16px; margin-top: 34px; }
         @media (min-width: 900px) { .leaks { grid-template-columns: repeat(3, 1fr); } }
         .leak { margin: 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -459,8 +464,12 @@
                 <span id="book" aria-hidden="true"></span>
                 <div class="fcard-head">
                     <span class="free">FREE</span>
-                    <h2>Your Closer, built on your business</h2>
-                    <p>Free. Then 30 minutes on Google Meet with Alexander Lee</p>
+                    <h2>On this call you'll see</h2>
+                    <ul class="fcard-list">
+                        <li>Your Closer working on your own products</li>
+                        <li>What your late replies are costing you</li>
+                        <li>What we'd realistically recover, worst case and best case</li>
+                    </ul>
                 </div>
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
@@ -518,6 +527,11 @@
                             <div id="cl-handoff">
                                 <p class="handoff-lead"><b>Once you have picked a time,</b> say hello to your Closer on WhatsApp. Everything you told us is already in the message, and you get to watch it work before the call.</p>
                                 <a class="btn btn-primary btn-block" id="cl-wa-handoff" href="https://wa.me/6580124848" target="_blank" rel="noopener">Message now <span class="arrow">&rarr;</span></a>
+                            </div>
+                            <div id="cl-booked" hidden>
+                                <span class="ok-badge">&#10003; You are booked</span>
+                                <h3>See you on <span id="cl-booked-when"></span>.</h3>
+                                <p>The invite and the Google Meet link are in your email. Before we meet we build your Closer on your own products, so you see it answering as your business.</p>
                             </div>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. Message your Closer on WhatsApp and it will put a time in Alexander's calendar for you.</p>

@@ -30,9 +30,9 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
     // The pixel dies to ad blockers and iOS; the server copy survives. Sharing the id is
     // what stops Meta counting the same conversion twice and halving every cost figure.
     var lastLead = {};                     // what we know about them, for advanced matching
-    function metaEvent(name, extra) {
+    function metaEvent(name, extra, forcedId) {
         var cl = window.cl41;
-        var id = (cl && cl.newEventId ? cl.newEventId() : name + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8));
+        var id = forcedId || (cl && cl.newEventId ? cl.newEventId() : name + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8));
         var ids = cl ? cl.ids() : { fbp: '', fbc: '' };
         pixel(name, extra || {}, { eventID: id });
         try {
@@ -52,10 +52,10 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
     // Booking confirmed in the browser. Google bookings never reach this, so they are
     // caught server-side by api/cron/booking-sync.js instead.
     var bookedAlready = false;
-    window.onCloserBooked = function () {
+    window.onCloserBooked = function (sharedId) {
         if (bookedAlready) return;      // Cal.com can fire its callback more than once
         bookedAlready = true;
-        metaEvent('Schedule', { content_name: 'ai_closer_call', variant: variant });
+        metaEvent('Schedule', { content_name: 'ai_closer_call', variant: variant }, sharedId);
         track('book_call_complete', { event_category: 'conversion', cta_id: 'ai_closer', variant: variant });
         var box = document.getElementById('cl-handoff');
         if (box) box.hidden = false;
@@ -304,7 +304,10 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
             }
 
             // CRM record (server-side) and the Formspree email copy, both best-effort.
-            fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(function () {});
+            fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+                .then(function (r) { return r.json(); })
+                .then(function (j) { if (j && j.id) { data.opportunityId = j.id; watchForBooking(data); } })
+                .catch(function () {});
             var copy = new FormData(form);
             ['qualified', 'tier', 'variant'].forEach(function (k) { copy.append(k, data[k]); });
             copy.append('fit_reason', data.fitReason);
@@ -377,6 +380,45 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         if (reveal) box.hidden = false;
     }
 
+    // Google's iframe never says a booking happened, so ask our own calendar instead.
+    // Stops on the first hit, and gives up after ten minutes rather than polling forever.
+    function watchForBooking(data) {
+        var oppId = data.opportunityId || '';
+        var email = (data.email || '').trim();
+        if (!oppId || !email) return;
+        var tries = 0;
+        var timer = setInterval(function () {
+            if (++tries > 40 || bookedAlready) { clearInterval(timer); return; }
+            fetch('/api/booking-check?id=' + encodeURIComponent(oppId) + '&email=' + encodeURIComponent(email))
+                .then(function (r) { return r.json(); })
+                .then(function (j) {
+                    if (!j || !j.booked) return;
+                    clearInterval(timer);
+                    showBooked(j, data);
+                })
+                .catch(function () {});
+        }, 15000);
+    }
+
+    function showBooked(info, data) {
+        var box = document.getElementById('cl-booked');
+        var when = document.getElementById('cl-booked-when');
+        if (when && info.start) {
+            try {
+                when.textContent = new Date(info.start).toLocaleString('en-SG',
+                    { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' });
+            } catch (e) { when.textContent = 'your booked time'; }
+        }
+        var head = document.getElementById('cl-cal-head');
+        var cal = document.getElementById('cl-cal');
+        if (head) head.hidden = true;
+        if (cal) cal.hidden = true;           // the calendar has done its job
+        if (box) box.hidden = false;
+        // event_id matches exactly what api/cron/booking-sync.js will send for this deal,
+        // so the pixel copy and the server copy deduplicate instead of counting twice.
+        onCloserBooked('schedule_' + (data.opportunityId || ''));
+    }
+
     function showCalendar(data) {
         var url = (window.BOOKING_URL || '').trim();
         var holder = document.getElementById('cl-cal');
@@ -386,6 +428,7 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         // an unchanged screen after they book. Bookings are caught server-side instead,
         // by api/cron/booking-sync.js.
         showHandoff(data, true);
+        watchForBooking(data);
         // No calendar configured is fine now: the Closer books the call in chat, so
         // the page never has to apologise for an empty slot.
         if (!url) {
