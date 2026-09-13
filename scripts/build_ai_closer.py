@@ -102,6 +102,7 @@ def hero_block():
 RING = 'assets/closer/chat/ring.webp'
 NECKLACE = 'assets/closer/chat/necklace.webp'
 BANGLE = 'assets/closer/chat/bangle.webp'
+CAR = 'assets/closer/chat/car.webp'
 
 PROOF_CARDS = [
     ("Answers in seconds, at 2am", "", "CoolAir Services", "CA", [
@@ -136,7 +137,7 @@ PROOF_CARDS = [
     ]),
     ("Books it and takes the deposit", "", "Lion City Rentals", "LC", [
         ("customer", "Hi need a car from 18 to 21 Dec, 5 pax, going JB", "01:12"),
-        ("closer", "Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day. The permit is included.", "01:13"),
+        ("closer", "Noted. For 5 with Malaysia use I have a *Toyota Sienta* at S$105 a day. The permit is included.", "01:13", CAR),
         ("customer", "Sienta ok. How to confirm?", "01:14"),
         ("closer", "A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through: [secure payment link]", "01:14"),
     ]),
@@ -239,7 +240,6 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
                             <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
-                            <p class="consent">Three quick questions after this. About a minute. We message you on WhatsApp, no spam, no lists.</p>
                         </div>
                         <div id="cl-part2" hidden>
                             <div class="fields">
@@ -288,8 +288,7 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                             <p>From your answers, building you a Closer may not pay for itself yet. We'll look properly and come back to you within one working day either way, with the numbers we worked out on your business.</p>
                         </div>
                     </div>
-                </form>
-                {FORM_CTA}'''
+                </form>'''
 
 def replace_block(s, start, end, new):
     a = s.index(start); b = s.index(end, a) + len(end)
@@ -298,14 +297,10 @@ def replace_block(s, start, end, new):
 def build(page, hero_chat=True, seen=False, proof=False):
     p = os.path.join(ROOT, page); s = open(p).read()
     s = replace_block(s, '<form id="cl-form"', '</form>', FORM)
-    # replace_block stops at the first </form>, but FORM ends with FORM_CTA which sits
-    # AFTER that tag. So every run used to leave the previous CTA in place and add
-    # another: four builds, four identical "Prefer to just try it?" lines. Collapse any
-    # run of them back to one. Idempotent however many times this script has been run.
-    # Also sweeps up any literal {FORM_CTA} left behind by a broken run of this
-    # script: the block replace stops at </form>, so anything after it survives.
-    s = re.sub(r'(?:\s*(?:<p class="wa-cta-line">.*?</p>|\{FORM_CTA\}))+',
-               lambda m: '\n                ' + FORM_CTA, s, flags=re.S)
+    # The "Prefer to just try it?" line is gone: it offered an escape route at the exact
+    # moment we want their details. This sweeps up every copy, including the duplicates an
+    # earlier bug left behind, and any stale {FORM_CTA} placeholder.
+    s = re.sub(r'\s*(?:<p class="wa-cta-line">.*?</p>|\{FORM_CTA\})', '', s, flags=re.S)
     if hero_chat:
         s = replace_block(s, '<!-- WA-HERO -->', '<!-- /WA-HERO -->', '<!-- WA-HERO -->' + hero_block() + '<!-- /WA-HERO -->')
     if seen:

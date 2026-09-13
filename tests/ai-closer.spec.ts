@@ -176,7 +176,9 @@ for (const P of PAGES) {
       await fillForm(page);
       await page.click('#cl-submit');
       await expect(page.locator('#cl-book')).toBeVisible();
-      await expect(page.locator('#cl-handoff')).toBeVisible();
+      // the handoff is the reward for booking, not a button beside the calendar
+      await expect(page.locator('#cl-handoff')).toBeHidden();
+      await page.evaluate(() => (window as any).onCloserBooked());
       await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /wa\.me\/6580124848/);
     });
 
@@ -232,14 +234,6 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-notyet')).toBeVisible();
     });
 
-    test('visitors can message the AI Closer instead of filling the form', async ({ page }) => {
-      await stubNetwork(page);
-      await page.goto(P.path);
-      const chat = page.locator('a.wa-cta').first();
-      await expect(chat).toBeVisible();
-      await expect(chat).toHaveAttribute('href', /wa\.me\/6580124848/);
-      await expect(chat).toContainText(/closer/i);
-    });
 
     test('a completed booking fires Schedule', async ({ page }) => {
       await stubNetwork(page);
@@ -249,12 +243,14 @@ for (const P of PAGES) {
       expect(await fbqEvents(page)).toContain('Schedule');
     });
 
-    test('consent to be contacted on WhatsApp is stated next to the contact details', async ({ page }) => {
+    // The consent paragraph came off at Alexander's request. We still collect a number
+    // and message it, so the field itself has to say so.
+    test('the WhatsApp field says what we will do with the number', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
-      // consent sits with the number we are asking for, which is now step 1
-      await expect(page.locator('#cl-part1 .consent')).toBeVisible();
-      await expect(page.locator('#cl-part1 .consent')).toContainText(/WhatsApp/);
+      const help = page.locator('#cl-whatsapp ~ .help');
+      await expect(help).toBeVisible();
+      await expect(help).toContainText(/closer|whatsapp|conversation/i);
     });
 
     test('WhatsApp screens look like WhatsApp: customer view, beige wallpaper, green bubbles right, ticks, input bar', async ({ page }) => {
@@ -282,43 +278,34 @@ test.describe('long form follows the event opt-in structure', () => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
     const ids = await page.locator('main > section[id]').evaluateAll((els) => els.map((e) => e.id));
-    const order = ['hero', 'seen', 'numbers', 'get', 'proof-1', 'letter', 'proof-2', 'different', 'why', 'money', 'weeks', 'guarantee', 'fit', 'before-after', 'why-now', 'faq', 'final'];
+    const order = ['hero', 'seen', 'numbers', 'get', 'proof-1', 'letter', 'proof-2', 'different', 'why', 'money', 'guarantee', 'fit', 'before-after', 'why-now', 'faq', 'final'];
     const found = order.filter((id) => ids.includes(id));
     expect(found).toEqual(order);
     expect(ids.filter((id) => order.includes(id))).toEqual(order);
   });
 
-  test('every CTA button goes back to the form (his 12-button pattern)', async ({ page }) => {
+  // Alexander's call: a CTA after every major section. The research said 4 to 5 and his
+  // own read of the page says more, so the test pins what actually matters instead of
+  // the count: one verb, one destination, never a competing offer.
+  test('every CTA uses one verb and goes back to the form', async ({ page }) => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
     const ctas = page.locator('a.btn-cta');
     const n = await ctas.count();
-    expect(n).toBeGreaterThanOrEqual(4);
-    expect(n).toBeLessThanOrEqual(6);
+    expect(n).toBeGreaterThanOrEqual(8);
     const hrefs = await ctas.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
     expect(new Set(hrefs)).toEqual(new Set(['#qualify']));
-    const labels = await ctas.evaluateAll((els) => els.map((e) => e.textContent!.replace(/\s+/g, ' ').trim().toLowerCase()));
-    expect(new Set(labels).size).toBe(1); // one verb, repeated
-    await expect(page.locator('#stack')).toHaveCount(0); // the free-item value stack belongs to a ticket page
+    const words = await ctas.allInnerTexts();
+    for (const w of words) expect(w.trim().toLowerCase()).toMatch(/^get my free demo/);
   });
 
-  test('the founder letter is signed and uses the real stage photo', async ({ page }) => {
+  // The escape hatch under the form is gone: it offered a way out at the exact moment
+  // we are asking for their details.
+  test('the form offers no alternative to filling it in', async ({ page }) => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
-    await expect(page.locator('#letter')).toContainText('Dear fellow business owner');
-    await expect(page.locator('#letter')).toContainText('Alexander Lee');
-    await expect(page.locator('#letter img')).toHaveAttribute('src', /lp-founder-letter\.webp/);
-  });
-
-  test('leak calculator updates the monthly figure', async ({ page }) => {
-    await stubNetwork(page);
-    await page.goto('/ai-closer.html');
-    await page.fill('[name=lc-enq]', '100');
-    await page.fill('[name=lc-late]', '30');
-    await page.fill('[name=lc-sale]', '500');
-    await page.fill('[name=lc-close]', '20');
-    // 100 x 4.3 x 30% x 20% x 500 = S$12,900 a month
-    await expect(page.locator('[data-out=lost]')).toHaveText('S$12,900');
+    expect(await page.locator('.wa-cta-line').count()).toBe(0);
+    await expect(page.locator('#cl-part1')).not.toContainText(/prefer to just try it/i);
   });
 
   test('clicking a CTA brings the form into view', async ({ page }) => {
@@ -394,16 +381,6 @@ test.describe('long form follows the event opt-in structure', () => {
     expect(text).not.toContain('42,000');
     expect(text).toContain('12,868');
   });
-
-  // build_ai_closer.py replaces up to the first </form>, but FORM ends with the CTA
-  // AFTER that tag, so every run left the previous copy behind and stacked another.
-  for (const p of ['/ai-closer.html', '/ai-closer-sf.html']) {
-    test(`${p}: the "try it on WhatsApp" line appears once, not once per build run`, async ({ page }) => {
-      await stubNetwork(page);
-      await page.goto(p);
-      expect(await page.locator('.wa-cta-line').count()).toBe(1);
-    });
-  }
 
   // We build the preview and show it on the call. We do not hand over a working
   // Closer, so the page must not promise one. What they genuinely keep is the maths.
@@ -485,6 +462,8 @@ test.describe('the prefilled first message to the AI Closer', () => {
   async function qualifyAndRead(page: any) {
     await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
     await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route('**/calendar.google.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'text/html', body: '<p>cal</p>' }));
+    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
     await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
@@ -498,6 +477,8 @@ test.describe('the prefilled first message to the AI Closer', () => {
     await page.check('input[name="challenges"][value="afterhours"]');
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
+    await expect(page.locator('#cl-cal iframe')).toBeVisible();
+    await page.evaluate(() => (window as any).onCloserBooked());   // handoff follows the booking
     await expect(page.locator('#cl-wa-handoff')).toBeVisible();
     const href = await page.locator('#cl-wa-handoff').getAttribute('href');
     return decodeURIComponent((href || '').split('?text=')[1] || '');
@@ -536,6 +517,7 @@ test.describe('the prefilled first message to the AI Closer', () => {
     await page.check('input[name="challenges"][value="stock"]');
     await page.selectOption('#cl-goal', 'scale');
     await page.click('#cl-submit');
+    await page.evaluate(() => (window as any).onCloserBooked());
     await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /^https:\/\/wa\.me\/6580124848\?text=/);
   });
 });

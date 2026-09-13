@@ -184,6 +184,13 @@
             line-height: 1; color: var(--accent); }
         .hero-wins span { font-size: 12.5px; color: rgba(255,255,255,0.62); letter-spacing: .01em; }
         @media (max-width: 560px) { .hero-wins { gap: 14px 20px; } .hero-wins li { flex: 1 1 40%; } }
+        .leak-pair { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 6px 0 2px; }
+        .leak-side { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; flex: 1; }
+        .leak-side b { font-size: clamp(22px, 3.4vw, 30px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; }
+        .leak-side b.was { color: #f8a5a5; }
+        .leak-side b.now { color: var(--accent); }
+        .leak-side span { font-size: 11.5px; color: rgba(255,255,255,0.5); }
+        .leak-arrow { color: rgba(255,255,255,0.32); font-size: 20px; flex: none; }
         .leaks { display: grid; gap: 16px; margin-top: 34px; }
         @media (min-width: 900px) { .leaks { grid-template-columns: repeat(3, 1fr); } }
         .leak { margin: 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -457,7 +464,6 @@
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
                             <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
-                            <p class="consent">Three quick questions after this. About a minute. We message you on WhatsApp, no spam, no lists.</p>
                         </div>
                         <div id="cl-part2" hidden>
                             <div class="fields">
@@ -507,7 +513,6 @@
                         </div>
                     </div>
                 </form>
-                <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
                 <div class="promise">
                     <div class="seal">NO&#8209;PITCH<br>PROMISE</div>
                     <p><b>If it isn't a fit, we'll say so on the call.</b> You keep the numbers we worked out on your business either way.</p>
@@ -590,17 +595,13 @@
         <div class="leaks">
             <figure class="leak reveal">
                 <figcaption class="leak-cap">A customer messaged at 2:02am</figcaption>
-                <svg class="leak-svg" viewBox="0 0 300 96" role="img" aria-label="First reply took 7 hours before, 19 seconds with a Closer">
-                    <text x="0" y="14" class="lk-lbl">Before</text>
-                    <rect x="0" y="20" width="300" height="18" rx="4" class="lk-bad"/>
-                    <text x="292" y="33" class="lk-val lk-end">7 hours</text>
-                    <text x="0" y="62" class="lk-lbl">With a Closer</text>
-                    <rect x="0" y="68" width="5" height="18" rx="2.5" class="lk-good"/>
-                    <text x="13" y="81" class="lk-val">19 seconds</text>
-                </svg>
+                <div class="leak-pair">
+                    <div class="leak-side"><b class="was">7 hours</b><span>before</span></div>
+                    <span class="leak-arrow" aria-hidden="true">&rarr;</span>
+                    <div class="leak-side"><b class="now">19 sec</b><span>with a Closer</span></div>
+                </div>
                 <p class="leak-note">By 9:03am when someone replied, they had messaged two competitors. Another enquiry waited 23 hours and had already booked elsewhere.</p>
             </figure>
-
             <figure class="leak reveal">
                 <figcaption class="leak-cap">When the enquiries actually arrive</figcaption>
                 <svg class="leak-svg leak-ring" viewBox="0 0 120 120" role="img" aria-label="One in four enquiries arrive outside office hours">
@@ -614,21 +615,17 @@
 
             <figure class="leak reveal">
                 <figcaption class="leak-cap">How long a stock check takes</figcaption>
-                <svg class="leak-svg" viewBox="0 0 300 96" role="img" aria-label="A salesperson takes minutes to check stock, the Closer answers instantly">
-                    <text x="0" y="14" class="lk-lbl">Salesperson checks the system</text>
-                    <rect x="0" y="20" width="264" height="18" rx="4" class="lk-bad"/>
-                    <text x="256" y="33" class="lk-val lk-end">minutes, per question</text>
-                    <text x="0" y="62" class="lk-lbl">Closer, connected to the same system</text>
-                    <rect x="0" y="68" width="5" height="18" rx="2.5" class="lk-good"/>
-                    <text x="13" y="81" class="lk-val">12,868 products, instant</text>
-                </svg>
+                <div class="leak-pair">
+                    <div class="leak-side"><b class="was">Minutes</b><span>salesperson looks it up</span></div>
+                    <span class="leak-arrow" aria-hidden="true">&rarr;</span>
+                    <div class="leak-side"><b class="now">Instant</b><span>12,868 products</span></div>
+                </div>
                 <p class="leak-note">Their salespeople left customers waiting while they looked up stock and compared options. The Closer reads the same pricing system and answers in the same breath.</p>
             </figure>
         </div>
-
-        <p class="leak-foot">About <b>S$300,000 a month</b> reaches that distributor over WhatsApp and email. A previous vendor took a setup fee and could not handle a catalogue that size.</p>
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 <!-- 05 FOUNDER LETTER (his: "From Caleb Sim / Dear fellow business owner") -->
 <section id="letter" class="band">
@@ -666,7 +663,7 @@
             <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Qualifies before it quotes</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Bhutan tours"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#8A5A2B">BT</div><div class="wa-who"><div class="wa-name">Bhutan tours</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">I&#x27;m planning to travel with my friends (maybe 3 of us) in December. Is that a good time?<span class="wa-meta">16:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">December is a lovely time to visit Bhutan! The skies are crystal clear and it&#x27;s quieter than the peak autumn season.<br><br>What kind of experience are you hoping for, more culture and monasteries, getting out into nature, or a mix of both?<span class="wa-meta">16:13</span></div><div class="wa-msg wa-out">We&#x27;d like to experience both<span class="wa-meta">16:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That&#x27;s a great combination. Are you and your friends up for some hiking, like the famous Tiger&#x27;s Nest climb, or do you prefer scenic drives and gentle walks?<span class="wa-meta">16:14</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
             <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Quotes from your live price list</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Jewellery store"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#6B3FA0">JS</div><div class="wa-who"><div class="wa-name">Jewellery store</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">i want to buy rings<span class="wa-meta">22:05 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Great, rings it is! What is your budget range, and is this for yourself or a gift?<span class="wa-meta">22:05</span></div><div class="wa-msg wa-out">anything below 1k sgd<span class="wa-meta">22:10 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in wa-has-pic"><img class="wa-pic" src="assets/closer/chat/ring.webp" alt="" width="520" height="390" loading="lazy"><b>18K White Gold Diamond Ring</b> — S$949<br>Four diamonds, 0.14ct total, square set. In stock at two branches.<span class="wa-meta">22:10</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
             <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Checks stock before it promises</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Building supplies"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#0F766E">BS</div><div class="wa-who"><div class="wa-name">Building supplies</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">got 4mm in stock? need 200pcs by friday<span class="wa-meta">08:12 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Yes. 340 pieces at Woodlands right now, so 200 is fine for Friday.<span class="wa-meta">08:12</span></div><div class="wa-msg wa-out">price?<span class="wa-meta">08:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">At 200 you are on the trade tier: S$4.20 each, S$840 for the lot. Want me to hold them?<span class="wa-meta">08:13</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
-            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Books it and takes the deposit</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Lion City Rentals"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#9A3412">LC</div><div class="wa-who"><div class="wa-name">Lion City Rentals</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi need a car from 18 to 21 Dec, 5 pax, going JB<span class="wa-meta">01:12 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day. The permit is included.<span class="wa-meta">01:13</span></div><div class="wa-msg wa-out">Sienta ok. How to confirm?<span class="wa-meta">01:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through: <span class="wa-link">[secure payment link]</span><span class="wa-meta">01:14</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
+            <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Books it and takes the deposit</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Lion City Rentals"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#9A3412">LC</div><div class="wa-who"><div class="wa-name">Lion City Rentals</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi need a car from 18 to 21 Dec, 5 pax, going JB<span class="wa-meta">01:12 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in wa-has-pic"><img class="wa-pic" src="assets/closer/chat/car.webp" alt="" width="520" height="390" loading="lazy">Noted. For 5 with Malaysia use I have a <b>Toyota Sienta</b> at S$105 a day. The permit is included.<span class="wa-meta">01:13</span></div><div class="wa-msg wa-out">Sienta ok. How to confirm?<span class="wa-meta">01:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through: <span class="wa-link">[secure payment link]</span><span class="wa-meta">01:14</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
             <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Handles “too expensive” without discounting</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Orchard Aesthetics"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#3F6212">OA</div><div class="wa-who"><div class="wa-name">Orchard Aesthetics</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">You are very expensive. Others quote me less<span class="wa-meta">22:38 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">I understand it feels that way upfront. Ours is a semi-permanent result, so there is nothing to buy monthly after it.<span class="wa-meta">22:38</span></div><div class="wa-msg wa-out">Any discount?<span class="wa-meta">22:47 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Pricing is set by our specialist team, so I can&#x27;t discount here. The honest way to know if it&#x27;s worth it is a consult, and that fee goes toward your treatment.<span class="wa-meta">22:47</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
             <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Recommends from the whole catalogue</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Jewellery store"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#7C2D53">JS</div><div class="wa-who"><div class="wa-name">Jewellery store</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">anniversary gift, around 2k, she already has rings<span class="wa-meta">19:31 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in wa-has-pic"><img class="wa-pic" src="assets/closer/chat/necklace.webp" alt="" width="520" height="390" loading="lazy">Then a necklace is the safer call.<br><br><b>18K White Gold Diamond Necklace</b> — S$2,189<br>0.68ct, floral cluster. It sits well with the white gold she already wears.<span class="wa-meta">19:31</span></div><div class="wa-msg wa-out">anything under 2k?<span class="wa-meta">19:33 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">There is, but at this size the drop in stone quality shows. If 2,189 is close enough I would stay with this one.<span class="wa-meta">19:33</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
             <figure class="chatfig reveal"><figcaption class="chatcap chatcap-top">Follows up when they go quiet</figcaption><div class="wa wa-card" role="img" aria-label="WhatsApp chat with Meridian Interiors"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#1E3A8A">MI</div><div class="wa-who"><div class="wa-name">Meridian Interiors</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-in">Hi Wei, quick one on the kitchen quote I sent Monday. Are you still deciding, or is something in it not quite right?<span class="wa-meta">10:14</span></div><div class="wa-msg wa-out">Sorry busy week. Still keen, my wife wants to see other door colours<span class="wa-meta">12:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">No problem at all. I&#x27;ll send three colour options in the same price. If one works, our designer can hold Saturday 2pm for the site measure.<span class="wa-meta">12:02</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></figure>
@@ -674,7 +671,8 @@
         </div>
         
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 
 <!-- 06b WHY WE ARE DIFFERENT: expertise + what we connect to -->
@@ -731,7 +729,8 @@
         </div>
         <p class="diff-line">We are not selling you software. We are selling you a salesperson we train, tune and stand behind.</p>
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 <!-- 07 THE REAL REASON (his: "The real reason premium prospects say let me think about it") -->
 <section id="why" class="band">
@@ -745,7 +744,8 @@
             <div class="card reveal"><span class="tagnum">03 &middot; FOLLOW-UP</span><h3>Quiet isn't the same as no</h3><p>Plenty of buyers go quiet because life got busy. One polite follow-up at the right time brings a lot of them back.</p></div>
         </div>
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 <!-- 08 WHERE IT MAKES MONEY (his: "And this is where AI can actually make you money") -->
 <section id="money" class="band" style="padding-top:0">
@@ -760,25 +760,10 @@
             
         </div>
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 <!-- 09 BREAKDOWN (his: day-by-day) -->
-<section id="weeks" class="band dark">
-    <div class="wrap">
-        <h2 class="caps center">If it's a fit: the six-week breakdown</h2>
-        <p class="sub center">You don't learn a new tool or manage an AI.</p>
-        <div class="weeks">
-            <div class="week reveal"><div class="week-head">Weeks 1 to 2: We build it</div><ul><li>We connect your WhatsApp, price list and booking or stock system, and train it on your real past chats.</li></ul></div>
-            <div class="week reveal"><div class="week-head">Weeks 3 to 4: Your team tests it</div><ul><li>Your team throws real customer scenarios at it. We tune it daily until it answers like your best salesperson.</li></ul></div>
-            <div class="week reveal"><div class="week-head">Weeks 5 to 6: It goes live</div><ul><li>Phased go-live, warm leads land with your team, and the guarantee clock starts.</li></ul></div>
-            <div class="week reveal"><div class="week-head">Every week after: We run it</div><ul><li>We watch every conversation, keep improving it, and send you the numbers each week.</li></ul></div>
-        </div>
-        </div>
-        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
-    </div>
-</section>
-
-<!-- 10 GUARANTEE (matches the SOW) -->
 <section id="guarantee" class="band">
     <div class="wrap">
         <div class="gbox reveal">
@@ -789,7 +774,8 @@
             <p class="fine">Full terms are in your agreement.</p>
         </div>
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 <!-- 12 WHO IT'S FOR / NOT FOR -->
 <section id="fit" class="band dark">
@@ -844,7 +830,8 @@
             </ul></div>
         </div>
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 <!-- 14 WHY NOW (honest: the leak calculator, no fake seat counts) -->
 <section id="why-now" class="band dark">
@@ -867,7 +854,8 @@
         <p class="red-bar">Your rough numbers, not a promise. On the demo we work them out properly with you.</p>
         
     </div>
-</section>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+    </section>
 
 <!-- 15 FAQ -->
 <section id="faq" class="band">
