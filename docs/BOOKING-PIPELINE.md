@@ -144,8 +144,14 @@ The ad account can only optimise for what we report. Three events, deepest last:
 | Event | Fires | Value | Why |
 |---|---|---|---|
 | `Lead` | every form submit, including tier C | none | Volume, so the pixel keeps learning. No value, so Meta never bids to buy more tier C. |
-| `QualifiedLead` | tier A and B only | S$96 | **This is the event ad sets should optimise on.** S$96 = 5% of qualified leads book a call x 20% of calls close x S$9,600 build fee (`41 Labs/41-CLOSER-NUMBERS.md`, 11 Sep 2026). Build fee only, retainer deliberately excluded to stay conservative. |
-| `Schedule` | a call lands on the calendar | S$1,920 | 20% of calls close x S$9,600. Sent by the cron, because the Google booking iframe cannot report back. |
+| `QualifiedLead` | tier A and B only | S$114 | **This is the event ad sets should optimise on.** From what July 2026 actually did: 84 leads produced 1 client, so 1.19% x S$9,600 build fee. Build fee only, retainer excluded (four clients signed, none live, so no retention data to value). |
+| `Schedule` | a call lands on the calendar | S$2,400 | July actual: 4 booked calls produced 1 client, so 25% x S$9,600. Sent by the cron, because the Google booking iframe cannot report back. |
+
+The two values are a ONE client sample, so treat them as direction not law. What actually
+steers Meta's bidding is the ratio between them (about 1:21), and that holds across every
+scenario in the numbers doc. The absolute figures only change how ROAS reads in Ads Manager.
+The value lives in `VALUE_QUALIFIED_LEAD` in code and is deliberately NOT set on the Meta
+custom conversion: a fixed value there would override what we send and freeze it.
 
 Both halves of the loop run: the browser pixel AND the Conversions API. They share an
 `event_id` minted per submit in `ai-closer.js`, so Meta deduplicates instead of double

@@ -89,6 +89,22 @@ test.describe('Lead vs QualifiedLead', () => {
     expect(capi.VALUE_QUALIFIED_LEAD).toBeGreaterThan(0);
   });
 
+  // The values are not arbitrary: they are the July 2026 funnel times the build fee.
+  // Pinning the derivation means a future edit has to be a deliberate re-derivation,
+  // not someone nudging a number that quietly changes what Meta buys.
+  test('both values still equal the July funnel rate times the S$9,600 build fee', () => {
+    const BUILD_FEE = 9600;
+    const LEADS = 84, BOOKED = 4, CLIENTS = 1;     // July 2026, 41-CLOSER-NUMBERS.md
+    expect(capi.VALUE_QUALIFIED_LEAD).toBe(Math.round((CLIENTS / LEADS) * BUILD_FEE));
+    expect(capi.VALUE_SCHEDULE).toBe(Math.round((CLIENTS / BOOKED) * BUILD_FEE));
+  });
+
+  test('the ratio between them stays near 1:20, which is what actually steers the bidding', () => {
+    const ratio = capi.VALUE_SCHEDULE / capi.VALUE_QUALIFIED_LEAD;
+    expect(ratio).toBeGreaterThan(15);
+    expect(ratio).toBeLessThan(25);
+  });
+
   test('Schedule still carries its value and keeps its opportunity-derived id', () => {
     const ev = capi.buildScheduleEvent({ opportunityId: 'opp-1', phone: '91234567', eventTimeSec: 1, tier: 'A' });
     expect(ev.event_name).toBe('Schedule');

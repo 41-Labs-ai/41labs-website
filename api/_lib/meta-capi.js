@@ -25,14 +25,21 @@ const DEFAULT_PIXEL = '24659272643698089';
 const SOURCE_URL = 'https://41labs.ai/ai-closer';
 const CURRENCY = 'SGD';
 
-// Expected build revenue sitting behind one event, from 41-CLOSER-NUMBERS.md
-// (worked out 11 Sep 2026 on the July ad funnel):
-//   qualified lead -> 5% book a call -> 20% of calls close  = 1% x S$9,600 = S$96
-//   booked call    -> 20% of calls close                    =      20% x S$9,600 = S$1,920
-// Build fee only. The S$1,490/mo retainer is deliberately left out so the number
-// stays conservative. Revisit once we have 30+ closed deals rather than 1.
-const VALUE_QUALIFIED_LEAD = 96;
-const VALUE_SCHEDULE = 1920;
+// Expected build revenue sitting behind one event. Taken from what the July 2026
+// Meta run ACTUALLY did, not from the modelled base case (41-CLOSER-NUMBERS.md):
+//   84 leads -> 4 booked calls -> 1 client (Hertz), build fee S$9,600
+//   qualified lead: 1 in 84  = 1.19% x S$9,600 = S$114
+//   booked call:    1 in 4   =   25%  x S$9,600 = S$2,400
+//
+// Build fee only. The S$1,490/mo retainer is deliberately excluded: four clients are
+// signed and none is live yet, so there are zero months of real retention to value.
+//
+// Caveat worth keeping in view: this is a ONE client sample, so a single deal either
+// way moves it a lot. The ratio between the two (about 1:21) is what actually steers
+// Meta's bidding, and that is stable across every scenario in the doc. The absolute
+// figures only change how ROAS reads in Ads Manager. Revisit at 30+ closed deals.
+const VALUE_QUALIFIED_LEAD = 114;
+const VALUE_SCHEDULE = 2400;
 
 const sha256 = (v) => crypto.createHash('sha256').update(v).digest('hex');
 
