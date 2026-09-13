@@ -179,7 +179,16 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         var url = (window.BOOKING_URL || '').trim();
         var holder = document.getElementById('cl-cal');
         showHandoff(data);
-        if (!url) { holder.hidden = true; document.getElementById('cl-cal-fallback').hidden = false; return; }
+        if (!url) {
+            // No calendar configured. Hide the invitation to pick a time as well as the
+            // empty slot, or the highest-intent screen in the funnel reads "Pick a time"
+            // with nothing to pick from, directly above "we'll WhatsApp you instead".
+            holder.hidden = true;
+            var head = document.getElementById('cl-cal-head');
+            if (head) head.hidden = true;
+            document.getElementById('cl-cal-fallback').hidden = false;
+            return;
+        }
 
         // Google Calendar appointment schedule: plain iframe. It can't tell the page when a
         // booking lands, so booked calls are picked up by the server-side booking sync.

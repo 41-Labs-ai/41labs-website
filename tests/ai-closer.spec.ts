@@ -439,3 +439,35 @@ test.describe('long form follows the event opt-in structure', () => {
     await expect(page.locator('#hero .hero-sub')).toContainText(/don't hand you a chatbot/i);
   });
 });
+
+// With no BOOKING_URL the qualified screen used to read "Pick a time" above an
+// empty space and then "we'll WhatsApp you instead". That is the single
+// highest-intent moment in the funnel; it must not contradict itself.
+test.describe('the qualified screen when no calendar is configured', () => {
+  test('does not invite them to pick a time when there is nothing to pick', async ({ page }) => {
+    const sent = { api: [] as any[] };
+    await page.route('**/api/closer-lead', (r) => {
+      sent.api.push(JSON.parse(r.request().postData() || '{}'));
+      return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    });
+    await page.route('**/formspree.io/**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.evaluate(() => { (window as any).BOOKING_URL = ''; });
+
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.click('#cl-next');
+    await page.selectOption('#cl-enquiries', '50to150');
+    await page.selectOption('#cl-sale', '500to2k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+
+    await expect(page.locator('#cl-book')).toBeVisible();
+    await expect(page.locator('#cl-cal-head')).toBeHidden();     // no "Pick a time"
+    await expect(page.locator('#cl-cal-fallback')).toBeVisible(); // we'll WhatsApp you
+    await expect(page.locator('#cl-handoff')).toBeVisible();      // and something to do now
+  });
+});
