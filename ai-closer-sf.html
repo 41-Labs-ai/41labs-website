@@ -447,10 +447,12 @@
                                 <div class="field full"><label for="cl-name">Your name</label>
                                     <input id="cl-name" name="name" type="text" autocomplete="name" required></div>
                                 <div class="field full"><label for="cl-email">Email</label>
-                                    <input id="cl-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required></div>
+                                    <input id="cl-email" name="email" type="text" inputmode="email" autocomplete="email" placeholder="you@company.com" required aria-describedby="cl-email-error">
+                                    <p class="jobs-error" id="cl-email-error" hidden></p></div>
                                 <div class="field full"><label for="cl-whatsapp">WhatsApp number</label>
-                                    <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
-                                    <small class="help">Your Closer picks up the conversation here.</small></div>
+                                    <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65 9123 4567" required aria-describedby="cl-whatsapp-help cl-whatsapp-error">
+                                    <small class="help" id="cl-whatsapp-help">Your Closer picks up the conversation here.</small>
+                                    <p class="jobs-error" id="cl-whatsapp-error" hidden></p></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>

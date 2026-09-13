@@ -191,6 +191,20 @@
         .leak-side b.now { color: var(--accent); }
         .leak-side span { font-size: 11.5px; color: rgba(255,255,255,0.5); }
         .leak-arrow { color: rgba(255,255,255,0.32); font-size: 20px; flex: none; }
+        .track { max-width: 980px; margin: 28px auto 0; }
+        .track-lead { text-align: center; font: 800 11.5px/1 Inter, sans-serif; letter-spacing: .13em;
+            text-transform: uppercase; color: var(--text-2); margin: 0 0 16px; }
+        .track-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        .track-item { background: var(--ink); color: #fff; border-radius: 16px; padding: 20px 18px;
+            display: flex; flex-direction: column; gap: 6px; }
+        .track-item b { font-size: clamp(28px, 4.2vw, 38px); font-weight: 900; letter-spacing: -0.035em;
+            line-height: 1; color: var(--accent); }
+        .track-item span { font-size: 13px; color: rgba(255,255,255,0.68); line-height: 1.4; }
+        .track-note { text-align: center; font-size: 12.5px; color: var(--text-2); max-width: 640px;
+            margin: 14px auto 0; }
+        .letter-body p { margin: 0 0 14px; }
+        .letter-body .sig { font-weight: 800; margin-top: 20px; }
+        .letter-body .sig span { display: block; font-weight: 500; color: var(--text-2); font-size: 14px; }
         .leaks { display: grid; gap: 16px; margin-top: 34px; }
         @media (min-width: 900px) { .leaks { grid-template-columns: repeat(3, 1fr); } }
         .leak { margin: 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -456,10 +470,12 @@
                                 <div class="field full"><label for="cl-name">Your name</label>
                                     <input id="cl-name" name="name" type="text" autocomplete="name" required></div>
                                 <div class="field full"><label for="cl-email">Email</label>
-                                    <input id="cl-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required></div>
+                                    <input id="cl-email" name="email" type="text" inputmode="email" autocomplete="email" placeholder="you@company.com" required aria-describedby="cl-email-error">
+                                    <p class="jobs-error" id="cl-email-error" hidden></p></div>
                                 <div class="field full"><label for="cl-whatsapp">WhatsApp number</label>
-                                    <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
-                                    <small class="help">Your Closer picks up the conversation here.</small></div>
+                                    <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65 9123 4567" required aria-describedby="cl-whatsapp-help cl-whatsapp-error">
+                                    <small class="help" id="cl-whatsapp-help">Your Closer picks up the conversation here.</small>
+                                    <p class="jobs-error" id="cl-whatsapp-error" hidden></p></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
@@ -635,23 +651,40 @@
                 <h2>From Alexander Lee</h2>
                 <p>Founder of 41 Labs. We build AI salespeople for Singapore businesses, and we run them.</p>
             </div>
-            <div class="letter-grid">
-                <figure class="letter-photo" style="margin:0"><img src="assets/closer/lp-founder-letter.webp" alt="Alexander Lee, founder of 41 Labs" width="720" height="1024" loading="lazy"><figcaption>Alexander Lee, founder of 41 Labs</figcaption></figure>
-                <div class="letter-body">
-                    <p><b>Dear fellow business owner,</b></p>
-                    <p>I didn't believe how big this was until we read one car rental company's chat logs. A customer messaged at 2:02am. The first reply went out at 9:03am. Another waited 23 hours and booked somewhere else. Nobody there was lazy. They were asleep, or busy with the customer in front of them.</p>
-                    <p>Most owners try one of two fixes. Hire another salesperson, who goes home at 6pm. Or install a chatbot, which answers the same three questions and hands every real sale back to you.</p>
-                    <p>So we built something else, and we run it for you. It replies in seconds, quotes from your own price list, follows up, and books the job. When it isn't sure, your team gets the chat with the full history.</p>
-                    <p>I'd rather show you than tell you. Give me your website and I'll build it on your business, free.</p>
-                    <div class="sig"><div class="name">Alexander Lee</div><small>Founder, 41 Labs</small></div>
-                </div>
+            <figure class="letter-photo"><img src="assets/closer/lp-founder-letter.webp" alt="Alexander Lee, founder of 41 Labs" width="1200" height="1600" loading="lazy"></figure>
+            <div class="letter-body">
+                <p>Dear fellow business owner,</p>
+
+                <p>I didn't believe how big this was until we sat down with one car rental company's chat logs. A customer messaged at <b>2:02am</b>. The first reply went out at <b>9:03am</b>. Another waited <b>23 hours</b> and had already booked somewhere else by the time anyone opened the app.</p>
+
+                <p>Nobody there was lazy. They were asleep, or busy with the customer standing in front of them. That is the whole problem. The enquiries do not stop when your people go home, and you have already paid for every one of them.</p>
+
+                <p>So we started reading other people's chats. Then more of them. We have now been through <b>45,355 customer messages</b> on one distributor's WhatsApp line, and the same four things leak money in every single business: nobody answers after hours, the reply takes too long, checking stock or price takes minutes the customer will not wait, and nobody follows up when someone goes quiet.</p>
+
+                <p>Most owners try one of two fixes. Hire another salesperson, who also goes home at 6pm. Or install a chatbot, which answers the same three questions and hands every real sale straight back to you. One of our clients had already paid a vendor a setup fee before us. That vendor could not load their catalogue at all. It is <b>12,868 products</b>. Ours quotes from it, synced daily.</p>
+
+                <p><b>Here is what I have learned that I did not expect.</b> The software is almost never the hard part. Making one sell like your best closer is. It means reading your real conversations, sitting with whoever closes best in your business, working out what they ask and in what order and what they say when someone pushes back on price, and then tuning it week after week until it does that. That is the work. It is also the part nobody else wants to do, which is why most of these things end up answering three questions and stopping.</p>
+
+                <p>I would rather show you than argue with you. Give me your website and I will build it on your own business, with your products and your prices, before we ever speak. If the maths does not work for you, I will say so on the call.</p>
+
+                <p class="sig">Alexander Lee<span>Founder, 41 Labs</span></p>
             </div>
-            <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
         </div>
+
+        <div class="track reveal">
+            <p class="track-lead">Where that experience comes from</p>
+            <div class="track-grid">
+                <div class="track-item"><b>20</b><span>businesses have had a Closer built on their own data, across 17 industries</span></div>
+                <div class="track-item"><b>45,355</b><span>real customer messages handled on one client's live WhatsApp line</span></div>
+                <div class="track-item"><b>12,868</b><span>live products one agent quotes from, synced from their own system every day</span></div>
+                <div class="track-item"><b>19 sec</b><span>median first reply, nine in ten under half a minute</span></div>
+            </div>
+            <p class="track-note">Measured from our own systems on 13 September 2026. We do not name clients without their permission, so the businesses behind these numbers stay anonymous until they tell us otherwise.</p>
+        </div>
+        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
     </div>
 </section>
 
-<!-- 06 PROOF WALL 2: real conversations -->
 <section id="proof-2" class="band dark">
     <div class="wrap">
         <h2 class="caps center">What it does, one screen at a time</h2>

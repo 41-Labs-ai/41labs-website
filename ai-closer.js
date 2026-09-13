@@ -91,12 +91,73 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         // qualifying questions is still a lead we can message, not an anonymous bounce.
         var partialId = '';      // Twenty opportunity created from step 1, updated on submit
 
+        // A typo'd email or a made-up number costs us the lead silently: the demo is built
+        // and sent nowhere. type="email" only checks for an @, so these go further.
+        var EMAIL_RE = /^[^\s@,;:<>()\[\]\\]+@[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,24}$/i;
+        // Throwaway inboxes: they will never read the confirmation, so the build is wasted.
+        var BURNER = /(^|\.)(mailinator|guerrillamail|10minutemail|tempmail|temp-mail|yopmail|trashmail|sharklasers|dispostable|maildrop|throwaway|fakeinbox|getnada)\./i;
+        // The common near-misses. We suggest rather than reject: they might be real.
+        var TYPOS = { 'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gmail.co': 'gmail.com',
+            'gmail.con': 'gmail.com', 'hotmial.com': 'hotmail.com', 'hotmail.co': 'hotmail.com',
+            'yahooo.com': 'yahoo.com', 'yaho.com': 'yahoo.com', 'outlok.com': 'outlook.com' };
+
+        function fieldError(id, msg) {
+            var el = document.getElementById(id);
+            var err = document.getElementById(id + '-error');
+            if (err) { err.textContent = msg || ''; err.hidden = !msg; }
+            if (el) el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+            if (msg && el) el.focus({ preventScroll: false });
+            return !msg;
+        }
+
+        function validEmail() {
+            var el = document.getElementById('cl-email');
+            if (!el) return true;
+            var v = el.value.trim().replace(/^mailto:/i, '');
+            if (v !== el.value) el.value = v;
+            if (!EMAIL_RE.test(v)) return fieldError('cl-email', 'That email does not look right. Check for a typo.');
+            var domain = v.split('@')[1].toLowerCase();
+            if (BURNER.test(domain + '.')) return fieldError('cl-email', 'Please use an email you actually read. Your demo goes there.');
+            if (TYPOS[domain]) return fieldError('cl-email', 'Did you mean ' + v.split('@')[0] + '@' + TYPOS[domain] + '?');
+            return fieldError('cl-email', '');
+        }
+
+        // Singapore mobiles are 8 digits starting 8 or 9. Anything else has to look like a
+        // real international number, and obvious filler (11111111, 12345678) is refused.
+        function validPhone() {
+            var el = document.getElementById('cl-whatsapp');
+            if (!el) return true;
+            var raw = el.value.trim().replace(/[\s()\-.]/g, '');
+            if (raw !== el.value) el.value = raw;
+            if (!/^\+?\d+$/.test(raw)) return fieldError('cl-whatsapp', 'Digits only, with the country code if you are outside Singapore.');
+            var digits = raw.replace(/^\+/, '');
+            if (/^65/.test(digits) && digits.length === 10) digits = digits.slice(2);
+            if (digits.length === 8 && !/^[89]/.test(digits)) {
+                return fieldError('cl-whatsapp', 'A Singapore mobile starts with 8 or 9.');
+            }
+            if (digits.length < 8 || digits.length > 15) {
+                return fieldError('cl-whatsapp', 'That number looks too ' + (digits.length < 8 ? 'short' : 'long') + '. Include the country code.');
+            }
+            if (/^(\d)\1+$/.test(digits) || /^(012345678|123456789|12345678)/.test(digits)) {
+                return fieldError('cl-whatsapp', 'That is not a real number. Your Closer messages you here.');
+            }
+            return fieldError('cl-whatsapp', '');
+        }
+
         function validPart1() {
+            // Our own checks run FIRST. The browser's native email bubble fires on things
+            // like "wm at tanaircon.sg" and replaces our message with a generic one, so the
+            // visitor gets a different explanation depending on how wrong they were.
             var ok = true;
             part1.querySelectorAll('input[required]').forEach(function (el) {
-                if (ok && !el.checkValidity()) { el.reportValidity(); ok = false; }
+                if (ok && el.id !== 'cl-email' && el.id !== 'cl-whatsapp' && !el.checkValidity()) {
+                    el.reportValidity(); ok = false;
+                }
             });
-            return ok;
+            if (!ok) return false;
+            if (!document.getElementById('cl-email').value.trim()) return fieldError('cl-email', 'We need an email to send your demo to.');
+            if (!document.getElementById('cl-whatsapp').value.trim()) return fieldError('cl-whatsapp', 'We need a number for your Closer to message.');
+            return validEmail() && validPhone();
         }
         // "random words" get typed here constantly. A real domain or nothing: we build
         // the preview off this, so a bad value costs us a build, not just a bad record.
@@ -155,6 +216,15 @@ window.BOOKING_URL = window.BOOKING_URL || 'https://calendar.google.com/calendar
         }
         if (next) next.addEventListener('click', goPart2);
         if (back) back.addEventListener('click', function () { part2.hidden = true; part1.hidden = false; setTab(1); });
+
+        [['cl-email', validEmail], ['cl-whatsapp', validPhone]].forEach(function (pair) {
+            var el = document.getElementById(pair[0]);
+            if (!el) return;
+            el.addEventListener('input', function () {
+                var err = document.getElementById(pair[0] + '-error');
+                if (err && !err.hidden) pair[1]();
+            });
+        });
 
         var websiteEl = document.getElementById('cl-website');
         if (websiteEl) websiteEl.addEventListener('input', function () {

@@ -35,7 +35,7 @@ async function stubPixel(page: Page) {
 async function fillContact(page: Page) {
   await page.fill('#cl-name', 'Tan Wei Ming');
   await page.fill('#cl-email', 'wm@tanaircon.sg');
-  await page.fill('#cl-whatsapp', '+65 9123 4567');
+  await page.fill('#cl-whatsapp', '+6591234567');
 }
 
 // Step 2. Defaults clear both floors (50 enquiries a week, S$500 a sale) so the
@@ -159,7 +159,7 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-step2')).toBeVisible();
       await expect.poll(() => sent.api.length).toBe(2);      // partial, then the full lead
       expect(sent.api[1]).toMatchObject({
-        name: 'Tan Wei Ming', whatsapp: '+65 9123 4567', website: 'tanaircon.sg',
+        name: 'Tan Wei Ming', whatsapp: '+6591234567', website: 'tanaircon.sg',
         enquiries: '150plus', saleValue: '2kto10k', goal: 'recover',
         challenges: ['slow', 'afterhours'],
         tier: 'A', qualified: 'yes', variant: P.variant,
@@ -438,7 +438,7 @@ test.describe('the qualified screen when no calendar is configured', () => {
 
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
@@ -468,7 +468,7 @@ test.describe('the prefilled first message to the AI Closer', () => {
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
@@ -509,7 +509,7 @@ test.describe('the prefilled first message to the AI Closer', () => {
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '150plus');
@@ -531,7 +531,7 @@ test.describe('the website field only accepts a website', () => {
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
   };
 
@@ -587,7 +587,7 @@ test.describe('a qualified lead is sent to the calendar', () => {
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
@@ -637,7 +637,7 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     await page.evaluate(() => { (window as any).BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/T?gv=true'; });
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
@@ -653,7 +653,7 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     const srv = api.find((e) => e.name === 'InitiateCheckout');
     expect(srv.eventId).toBe(px[3].eventID);              // the dedup key
     expect(srv.email).toBe('wm@tanaircon.sg');            // advanced matching
-    expect(srv.phone).toBe('+65 9123 4567');
+    expect(srv.phone).toBe('+6591234567');
     expect(srv.sourceUrl).toContain('/ai-closer');
   });
 
@@ -673,7 +673,7 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     await page.evaluate(() => { (window as any).BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/T?gv=true'; });
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
@@ -720,7 +720,7 @@ test.describe('the booking calendar is actually configured', () => {
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
     await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.fill('#cl-whatsapp', '+6591234567');
     await page.click('#cl-next');
     await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
@@ -731,5 +731,74 @@ test.describe('the booking calendar is actually configured', () => {
     const frame = page.locator('#cl-cal iframe');
     await expect(frame).toBeVisible();
     await expect(frame).toHaveAttribute('src', /appointments\/schedules\/.*gv=true/);
+  });
+});
+
+// A typo'd email or an invented number costs us the whole lead silently: we build the
+// preview and send it nowhere. type="email" only checks for an @, so these go further.
+test.describe('the form checks the email and the number are real', () => {
+  const open1 = async (page: any) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g|calendar\.google\.com/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+  };
+  const tryIt = async (page: any, email: string, phone: string) => {
+    await page.fill('#cl-email', email);
+    await page.fill('#cl-whatsapp', phone);
+    await page.click('#cl-next');
+  };
+
+  for (const bad of ['wm@tanaircon', 'wm at tanaircon.sg', 'wm@.sg', '@tanaircon.sg', 'wm@tanaircon..sg']) {
+    test(`rejects the email "${bad}"`, async ({ page }) => {
+      await open1(page);
+      await tryIt(page, bad, '+6591234567');
+      await expect(page.locator('#cl-email-error')).toBeVisible();
+      await expect(page.locator('#cl-part2')).toBeHidden();
+    });
+  }
+
+  test('refuses a throwaway inbox, because the demo goes there', async ({ page }) => {
+    await open1(page);
+    await tryIt(page, 'someone@mailinator.com', '+6591234567');
+    await expect(page.locator('#cl-email-error')).toContainText(/actually read/i);
+  });
+
+  test('suggests the fix for a near-miss domain instead of just refusing', async ({ page }) => {
+    await open1(page);
+    await tryIt(page, 'wm@gmial.com', '+6591234567');
+    await expect(page.locator('#cl-email-error')).toContainText('wm@gmail.com');
+  });
+
+  for (const [phone, why] of [['9123', 'too short'], ['11111111', 'repeated'], ['12345678', 'sequential'], ['71234567', 'SG must start 8 or 9'], ['abc12345', 'letters']] as [string, string][]) {
+    test(`rejects the number "${phone}" (${why})`, async ({ page }) => {
+      await open1(page);
+      await tryIt(page, 'wm@tanaircon.sg', phone);
+      await expect(page.locator('#cl-whatsapp-error')).toBeVisible();
+      await expect(page.locator('#cl-part2')).toBeHidden();
+    });
+  }
+
+  for (const good of ['+65 9123 4567', '91234567', '6591234567', '+44 7700 900123', '(65) 8123-4567']) {
+    test(`accepts the number "${good}"`, async ({ page }) => {
+      await open1(page);
+      await tryIt(page, 'wm@tanaircon.sg', good);
+      await expect(page.locator('#cl-whatsapp-error')).toBeHidden();
+      await expect(page.locator('#cl-part2')).toBeVisible();
+    });
+  }
+
+  test('tidies the number in place rather than scolding them', async ({ page }) => {
+    await open1(page);
+    await tryIt(page, 'wm@tanaircon.sg', '+65 9123-4567');
+    await expect(page.locator('#cl-whatsapp')).toHaveValue('+6591234567');
+  });
+
+  test('the error clears as soon as they fix it', async ({ page }) => {
+    await open1(page);
+    await tryIt(page, 'wm@tanaircon', '+6591234567');
+    await expect(page.locator('#cl-email-error')).toBeVisible();
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await expect(page.locator('#cl-email-error')).toBeHidden();
   });
 });
