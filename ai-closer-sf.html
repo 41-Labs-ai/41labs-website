@@ -452,6 +452,10 @@
                                     </div>
                                     <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
                                 </fieldset>
+                                <div class="field full"><label for="cl-after">What happens to enquiries that come in after hours?</label>
+                                    <select id="cl-after" name="afterHours" required><option value="" disabled selected>Choose one</option><option value="nobody">Nobody sees them until morning</option><option value="late">Someone replies, but late</option><option value="always">We reply any time, day or night</option><option value="rare">We rarely get any after hours</option></select></div>
+                                <div class="field full"><label for="cl-tried">Tried anything for this already?</label>
+                                    <select id="cl-tried" name="tried" required><option value="" disabled selected>Choose one</option><option value="nothing">Not yet</option><option value="chatbot">A chatbot or auto-reply</option><option value="person">Hired someone to answer</option><option value="agency">An agency or software vendor</option></select></div>
                             </div>
                             <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
                         </div>
@@ -460,8 +464,8 @@
                                 <div class="field full"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
                                 <div class="field full"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
                                     <small class="help">This is where our AI Closer will message you to confirm your demo.</small></div>
-                                <div class="field full"><label for="cl-website">Your website <span class="opt">(optional)</span></label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com">
-                                    <small class="help">We look at it before the call, so your demo uses your own products and prices.</small></div>
+                                <div class="field full"><label for="cl-website">Your website</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
+                                    <small class="help">We build your demo on it, so the Closer answers with your own products and prices.</small></div>
                                 <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
@@ -477,13 +481,13 @@
                     <div id="cl-step2" hidden>
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
-                            <h3>Pick a time for your free demo.</h3>
-                            <p>20 minutes on Google Meet with Alexander. Our AI Closer will WhatsApp you to confirm and ask a few questions so we come prepared.</p>
+                            <h3>Pick a time. We start building your demo today.</h3>
+                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products, and our AI Closer WhatsApps you to confirm.</p>
                             <div id="cl-cal"></div>
                             <ol class="next-steps">
-                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions, so Alexander comes prepared.</li>
-                                <li><b>We run your leak audit</b> before the call: we message your business like a customer and time the reply.</li>
-                                <li><b>20 minutes on Google Meet.</b> Your numbers, your audit result, and the Closer handling an enquiry like yours.</li>
+                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions.</li>
+                                <li><b>We build your demo</b> on your website and products, and time how fast your WhatsApp replies today.</li>
+                                <li><b>20 minutes on Google Meet.</b> Your Closer, your numbers, and a straight answer on fit.</li>
                             </ol>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
@@ -492,10 +496,11 @@
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>From your answers, a demo may not be worth your time yet. We'll look at your details and WhatsApp you within one working day either way.</p>
+                            <p>From your answers, building you a demo may not be worth your time yet. We'll look properly and WhatsApp you within one working day either way.</p>
                         </div>
                     </div>
                 </form>
+                <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
                 <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
                 <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
             </div>

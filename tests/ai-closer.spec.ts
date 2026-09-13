@@ -39,6 +39,8 @@ async function fillQualify(page: Page, opts: { enquiries?: string; whatsappUse?:
   await page.selectOption('#cl-sale', '200to1k');
   await page.check('input[name="jobs"][value="quotes"]');
   await page.check('input[name="jobs"][value="bookings"]');
+  await page.selectOption('#cl-after', 'nobody');
+  await page.selectOption('#cl-tried', 'chatbot');
 }
 
 async function fillContact(page: Page) {
@@ -103,6 +105,8 @@ for (const P of PAGES) {
       await page.selectOption('#cl-wa', 'most');
       await page.selectOption('#cl-enquiries', '50to150');
       await page.selectOption('#cl-sale', '200to1k');
+      await page.selectOption('#cl-after', 'nobody');
+      await page.selectOption('#cl-tried', 'chatbot');
       await page.click('#cl-next');
       await expect(page.locator('#cl-jobs-error')).toBeVisible();
       await expect(page.locator('#cl-part2')).toBeHidden();
@@ -134,7 +138,8 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-name')).toBeVisible();
       await expect(page.locator('#cl-whatsapp')).toBeVisible();
       await expect(page.locator('#cl-website')).toBeVisible();
-      await expect(page.locator('#cl-website')).not.toHaveAttribute('required', /.*/);
+      await expect(page.locator('#cl-website')).toHaveAttribute('required', /.*/);
+      await expect(page.locator('#cl-part2')).toContainText(/your own products|build your demo|built on/i);
       await expect(page.locator('#cl-part2')).not.toContainText(/instagram/i);
     });
 
@@ -159,7 +164,7 @@ for (const P of PAGES) {
       expect(sent.api[0]).toMatchObject({
         name: 'Tan Wei Ming', whatsapp: '+65 9123 4567',
         enquiries: '50to150', saleValue: '200to1k', jobs: ['quotes', 'bookings'],
-        industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg',
+        industry: 'servicing', whatsappUse: 'most', website: 'tanaircon.sg', afterHours: 'nobody', tried: 'chatbot',
         tier: 'A', qualified: 'yes', variant: P.variant,
         utm_campaign: '41closer_lp_2026-09', utm_content: 'ad_stalk1', fbclid: 'abc123',
       });
@@ -269,7 +274,7 @@ test.describe('long form follows the event opt-in structure', () => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
     const ids = await page.locator('main > section[id]').evaluateAll((els) => els.map((e) => e.id));
-    const order = ['hero', 'seen', 'get', 'proof-1', 'letter', 'proof-2', 'why', 'money', 'weeks', 'guarantee', 'stack', 'fit', 'before-after', 'why-now', 'faq', 'final'];
+    const order = ['hero', 'seen', 'get', 'proof-1', 'letter', 'proof-2', 'why', 'money', 'weeks', 'guarantee', 'fit', 'before-after', 'why-now', 'faq', 'final'];
     const found = order.filter((id) => ids.includes(id));
     expect(found).toEqual(order);
     expect(ids.filter((id) => order.includes(id))).toEqual(order);
@@ -279,9 +284,14 @@ test.describe('long form follows the event opt-in structure', () => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
     const ctas = page.locator('a.btn-cta');
-    expect(await ctas.count()).toBeGreaterThanOrEqual(9);
+    const n = await ctas.count();
+    expect(n).toBeGreaterThanOrEqual(4);
+    expect(n).toBeLessThanOrEqual(6);
     const hrefs = await ctas.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
     expect(new Set(hrefs)).toEqual(new Set(['#qualify']));
+    const labels = await ctas.evaluateAll((els) => els.map((e) => e.textContent!.replace(/\s+/g, ' ').trim().toLowerCase()));
+    expect(new Set(labels).size).toBe(1); // one verb, repeated
+    await expect(page.locator('#stack')).toHaveCount(0); // the free-item value stack belongs to a ticket page
   });
 
   test('the founder letter is signed and uses the real stage photo', async ({ page }) => {

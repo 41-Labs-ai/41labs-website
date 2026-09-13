@@ -301,6 +301,8 @@ test.describe('closer-lead: Hermes handoff', () => {
       industry: 'servicing',
       whatsappUse: 'most',
       website: 'tanaircon.sg',
+      afterHours: '',
+      tried: '',
       notes: 'Most chats come in after 9pm',
       utm: { source: 'facebook', campaign: '41closer_lp_2026-09', content: 'ad_stalk1_notchatbot' },
       fbclid: 'abc123',

@@ -19,6 +19,8 @@ const SALE = { under200: 'Under S$200', '200to1k': 'S$200-1,000', '1kto5k': 'S$1
 const ROLE = { owner: 'Owner', sales_head: 'Head of sales', manager: 'Manager', other: 'Other' };
 const INDUSTRY = { renovation: 'Renovation / interior', clinic: 'Clinic / aesthetics / dental', car: 'Car rental / dealer', property: 'Property', education: 'Education / tuition', distributor: 'Distributor / wholesale', servicing: 'Servicing', travel: 'Travel / tours', retail: 'Retail / online shop', other: 'Other' };
 const WA_USE = { most: 'Most sales start on WhatsApp', some: 'Some customers use WhatsApp', no: 'Not really on WhatsApp' };
+const AFTER = { nobody: 'Nobody sees them until morning', late: 'Someone replies, but late', always: 'They reply any time', rare: 'Rarely gets any after hours' };
+const TRIED = { nothing: 'Not yet', chatbot: 'A chatbot or auto-reply', person: 'Hired someone to answer', agency: 'An agency or software vendor' };
 const JOBS = { answers: 'Simple questions', quotes: 'Quotes', bookings: 'Bookings', stock: 'Stock/price checks', orders: 'Orders/payments' };
 const NEXT = {
   A: 'TIER A: guarantee-eligible. Call within 1 hour, even if they booked.',
@@ -122,6 +124,8 @@ module.exports = async (req, res) => {
     industry ? `Industry: ${industry.split(' / ')[0]}` : '',
     whatsappUse ? `WhatsApp: ${WA_USE[whatsappUse]}` : '',
     website ? `Website: ${website}` : '',
+    AFTER[body.afterHours] ? `After hours: ${AFTER[body.afterHours]}` : '',
+    TRIED[body.tried] ? `Tried already: ${TRIED[body.tried]}` : '',
     `WhatsApp enquiries/week: ${ENQUIRIES[body.enquiries] || clean(body.enquiries, 40) || '-'}`,
     `Average sale: ${SALE[body.saleValue] || clean(body.saleValue, 40) || '-'}`,
     `Chats involve: ${jobs.length ? jobs.join(', ') : '-'}`,
@@ -211,6 +215,8 @@ module.exports = async (req, res) => {
         industry: industryKey,
         whatsappUse,
         website,
+        afterHours: AFTER[body.afterHours] ? body.afterHours : '',
+        tried: TRIED[body.tried] ? body.tried : '',
         notes: leadNotes,
         utm: utmObj,
         fbclid,

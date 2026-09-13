@@ -118,6 +118,9 @@ SEEN = '''<p class="seen-label">Proud member of the Singapore A.I. Association &
                     <figure class="built-item"><img src="logos/meta.svg" alt="Meta" height="20" loading="lazy"><figcaption>Meta</figcaption></figure>
                     <figure class="built-item"><img src="logos/anthropic.svg" alt="Anthropic" height="20" loading="lazy"><figcaption>Anthropic Claude</figcaption></figure>
                     <figure class="built-item"><img src="logos/googlegemini.svg" alt="Google Gemini" height="20" loading="lazy"><figcaption>Google</figcaption></figure>
+                </div>
+                <p class="built-label built-label-2">Partners</p>
+                <div class="built-row">
                     <figure class="built-item"><img src="logos/stripe.svg" alt="Stripe" height="20" loading="lazy"><figcaption>Stripe</figcaption></figure>
                     <figure class="built-item"><span class="built-word">airwallex</span><figcaption>Airwallex</figcaption></figure>
                 </div>
@@ -154,6 +157,10 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                                     </div>
                                     <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
                                 </fieldset>
+                                <div class="field full"><label for="cl-after">What happens to enquiries that come in after hours?</label>
+                                    <select id="cl-after" name="afterHours" required>{SELECT_PH}{opt("nobody","Nobody sees them until morning")}{opt("late","Someone replies, but late")}{opt("always","We reply any time, day or night")}{opt("rare","We rarely get any after hours")}</select></div>
+                                <div class="field full"><label for="cl-tried">Tried anything for this already?</label>
+                                    <select id="cl-tried" name="tried" required>{SELECT_PH}{opt("nothing","Not yet")}{opt("chatbot","A chatbot or auto-reply")}{opt("person","Hired someone to answer")}{opt("agency","An agency or software vendor")}</select></div>
                             </div>
                             <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
                         </div>
@@ -162,8 +169,8 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                                 <div class="field full"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
                                 <div class="field full"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
                                     <small class="help">This is where our AI Closer will message you to confirm your demo.</small></div>
-                                <div class="field full"><label for="cl-website">Your website <span class="opt">(optional)</span></label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com">
-                                    <small class="help">We look at it before the call, so your demo uses your own products and prices.</small></div>
+                                <div class="field full"><label for="cl-website">Your website</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
+                                    <small class="help">We build your demo on it, so the Closer answers with your own products and prices.</small></div>
                                 <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
@@ -179,13 +186,13 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                     <div id="cl-step2" hidden>
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
-                            <h3>Pick a time for your free demo.</h3>
-                            <p>20 minutes on Google Meet with Alexander. Our AI Closer will WhatsApp you to confirm and ask a few questions so we come prepared.</p>
+                            <h3>Pick a time. We start building your demo today.</h3>
+                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products, and our AI Closer WhatsApps you to confirm.</p>
                             <div id="cl-cal"></div>
                             <ol class="next-steps">
-                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions, so Alexander comes prepared.</li>
-                                <li><b>We run your leak audit</b> before the call: we message your business like a customer and time the reply.</li>
-                                <li><b>20 minutes on Google Meet.</b> Your numbers, your audit result, and the Closer handling an enquiry like yours.</li>
+                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions.</li>
+                                <li><b>We build your demo</b> on your website and products, and time how fast your WhatsApp replies today.</li>
+                                <li><b>20 minutes on Google Meet.</b> Your Closer, your numbers, and a straight answer on fit.</li>
                             </ol>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
@@ -194,7 +201,7 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>From your answers, a demo may not be worth your time yet. We'll look at your details and WhatsApp you within one working day either way.</p>
+                            <p>From your answers, building you a demo may not be worth your time yet. We'll look properly and WhatsApp you within one working day either way.</p>
                         </div>
                     </div>
                 </form>

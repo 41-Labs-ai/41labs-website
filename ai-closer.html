@@ -345,10 +345,10 @@
         <img class="bg-right" src="assets/closer/lp-founder-letter.webp" alt="">
     </div>
     <div class="wrap">
-        <span class="aud">For Singapore businesses whose customers enquire, get quotes and book on WhatsApp</span>
+        <span class="aud">For Singapore businesses where customers ask, quote and book on WhatsApp</span>
         <p class="prehead">Not just a chatbot. Give me 20 minutes and I'll show you...</p>
-        <h1>How to reply, quote and close <span class="hl">every WhatsApp enquiry in seconds</span>, even at 2am, <span class="hl">without hiring another salesperson</span></h1>
-        <p class="hero-sub">A salesperson on your WhatsApp that never sleeps. Built on your real chats and prices, and run by our team.</p>
+        <h1>Every WhatsApp enquiry <span class="hl">answered, quoted and booked in seconds</span>, even at 2am</h1>
+        <p class="hero-sub">We build it on your own products first and show you the numbers. Free. If it won't pay for itself in your business, we'll say so.</p>
 
         <div class="hero-grid">
             <div class="vcol">
@@ -363,8 +363,8 @@
                 <span id="book" aria-hidden="true"></span>
                 <div class="fcard-head">
                     <span class="free">FREE</span>
-                    <h2>WhatsApp Leak Audit + Live Demo</h2>
-                    <p>20 minutes on Google Meet with Alexander Lee</p>
+                    <h2>Your Closer, built on your business</h2>
+                    <p>Free. Then 20 minutes on Google Meet with Alexander Lee</p>
                 </div>
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
@@ -390,6 +390,10 @@
                                     </div>
                                     <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
                                 </fieldset>
+                                <div class="field full"><label for="cl-after">What happens to enquiries that come in after hours?</label>
+                                    <select id="cl-after" name="afterHours" required><option value="" disabled selected>Choose one</option><option value="nobody">Nobody sees them until morning</option><option value="late">Someone replies, but late</option><option value="always">We reply any time, day or night</option><option value="rare">We rarely get any after hours</option></select></div>
+                                <div class="field full"><label for="cl-tried">Tried anything for this already?</label>
+                                    <select id="cl-tried" name="tried" required><option value="" disabled selected>Choose one</option><option value="nothing">Not yet</option><option value="chatbot">A chatbot or auto-reply</option><option value="person">Hired someone to answer</option><option value="agency">An agency or software vendor</option></select></div>
                             </div>
                             <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
                         </div>
@@ -398,8 +402,8 @@
                                 <div class="field full"><label for="cl-name">Your name</label><input id="cl-name" name="name" type="text" autocomplete="name" required></div>
                                 <div class="field full"><label for="cl-whatsapp">WhatsApp number</label><input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
                                     <small class="help">This is where our AI Closer will message you to confirm your demo.</small></div>
-                                <div class="field full"><label for="cl-website">Your website <span class="opt">(optional)</span></label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com">
-                                    <small class="help">We look at it before the call, so your demo uses your own products and prices.</small></div>
+                                <div class="field full"><label for="cl-website">Your website</label><input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
+                                    <small class="help">We build your demo on it, so the Closer answers with your own products and prices.</small></div>
                                 <div class="field full"><label for="cl-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="cl-notes" name="notes" placeholder="For example: most chats come in after 9pm"></textarea></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
@@ -415,13 +419,13 @@
                     <div id="cl-step2" hidden>
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
-                            <h3>Pick a time for your free demo.</h3>
-                            <p>20 minutes on Google Meet with Alexander. Our AI Closer will WhatsApp you to confirm and ask a few questions so we come prepared.</p>
+                            <h3>Pick a time. We start building your demo today.</h3>
+                            <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products, and our AI Closer WhatsApps you to confirm.</p>
                             <div id="cl-cal"></div>
                             <ol class="next-steps">
-                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions, so Alexander comes prepared.</li>
-                                <li><b>We run your leak audit</b> before the call: we message your business like a customer and time the reply.</li>
-                                <li><b>20 minutes on Google Meet.</b> Your numbers, your audit result, and the Closer handling an enquiry like yours.</li>
+                                <li><b>Our AI Closer WhatsApps you</b> to confirm the time and ask two quick questions.</li>
+                                <li><b>We build your demo</b> on your website and products, and time how fast your WhatsApp replies today.</li>
+                                <li><b>20 minutes on Google Meet.</b> Your Closer, your numbers, and a straight answer on fit.</li>
                             </ol>
                             <div id="cl-cal-fallback" hidden>
                                 <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
@@ -430,15 +434,16 @@
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>From your answers, a demo may not be worth your time yet. We'll look at your details and WhatsApp you within one working day either way.</p>
+                            <p>From your answers, building you a demo may not be worth your time yet. We'll look properly and WhatsApp you within one working day either way.</p>
                         </div>
                     </div>
                 </form>
                 <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
                 <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
+                <p class="wa-cta-line">Prefer to just try it? <a class="wa-cta" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%2041%20Closer%20handle%20my%20kind%20of%20enquiry.">Chat with our own AI Closer on WhatsApp</a></p>
                 <div class="promise">
                     <div class="seal">NO&#8209;PITCH<br>PROMISE</div>
-                    <p><b>If it isn't a fit, we'll say so on the call.</b> You keep your leak audit either way.</p>
+                    <p><b>If it isn't a fit, we'll say so on the call.</b> You keep the demo we built either way.</p>
                 </div>
             </div>
         </div>
@@ -464,6 +469,9 @@
                     <figure class="built-item"><img src="logos/meta.svg" alt="Meta" height="20" loading="lazy"><figcaption>Meta</figcaption></figure>
                     <figure class="built-item"><img src="logos/anthropic.svg" alt="Anthropic" height="20" loading="lazy"><figcaption>Anthropic Claude</figcaption></figure>
                     <figure class="built-item"><img src="logos/googlegemini.svg" alt="Google Gemini" height="20" loading="lazy"><figcaption>Google</figcaption></figure>
+                </div>
+                <p class="built-label built-label-2">Partners</p>
+                <div class="built-row">
                     <figure class="built-item"><img src="logos/stripe.svg" alt="Stripe" height="20" loading="lazy"><figcaption>Stripe</figcaption></figure>
                     <figure class="built-item"><span class="built-word">airwallex</span><figcaption>Airwallex</figcaption></figure>
                 </div>
@@ -478,13 +486,13 @@
 <section id="get" class="band" style="padding-top:36px">
     <div class="wrap">
         <div class="panel reveal">
-            <h2 class="caps center">What you walk away with in 20 minutes</h2>
+            <h2 class="caps center">On this call we'll</h2>
             <div class="get-grid">
                 <figure class="get-photo" style="margin:0"><img src="assets/closer/stage-smeicc-2026-pitch.webp" alt="Alexander Lee presenting 41 Closer on stage" width="1500" height="2000" loading="lazy"><figcaption class="photo-cap">Alexander showing 41 Closer on stage</figcaption></figure>
                 <ol class="numlist">
-                    <li><div><b>Your WhatsApp leak audit.</b>Before the call we message your business like a real customer. We time the first reply, check what happens after hours, and see if anyone follows up.</div></li>
-                    <li><div><b>A live demo on an enquiry like yours.</b>You watch the Closer answer, recommend, quote and book, using the kind of question your customers actually ask.</div></li>
-                    <li><div><b>Your numbers, worked out.</b>How many enquiries go unanswered, what they're worth, and what the Closer would realistically recover. Worst case and best case.</div></li>
+                    <li><div><b>Show you your own Closer.</b>Built on your website and products before we meet. Your items, your prices, your kind of customer. Not a demo of someone else's business.</div></li>
+                    <li><div><b>Show you your numbers.</b>How fast your WhatsApp replies today, how many enquiries you are likely losing, what they are worth a month, and what we would realistically recover.</div></li>
+                    <li><div><b>Give you a straight answer.</b>If the Closer pays for itself in your business, we'll show the maths and what it costs. If it doesn't, we'll tell you and you keep the demo.</div></li>
                 </ol>
             </div>
             <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
@@ -513,7 +521,7 @@
                 <div class="result-body"><span class="result-tag">Products the Closer quotes from</span>About <b>S$300,000 a month</b> comes in over WhatsApp and email. A previous vendor took a setup fee and couldn't handle a catalogue that size. Ours answers from their own pricing system, synced every day.</div>
             </div>
         </div>
-        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+        
     </div>
 </section>
 
@@ -529,18 +537,10 @@
                 <figure class="letter-photo" style="margin:0"><img src="assets/closer/lp-founder-letter.webp" alt="Alexander Lee, founder of 41 Labs" width="720" height="1024" loading="lazy"><figcaption>Alexander Lee, founder of 41 Labs</figcaption></figure>
                 <div class="letter-body">
                     <p><b>Dear fellow business owner,</b></p>
-                    <p>If your WhatsApp is busy but sales aren't growing, it's almost always one of three things.</p>
-                    <p>1. Enquiries come in when nobody's there. After 9pm, on Sundays, over lunch.</p>
-                    <p>2. Someone replies, but late, or with "let me check and get back to you", so the customer keeps shopping.</p>
-                    <p>3. The customer goes quiet, and nobody follows up.</p>
-                    <p>I didn't fully believe how big this was until we read one car rental company's chat logs. A customer messaged at 2:02am. The first reply went out at 9:03am. Another waited 23 hours and booked somewhere else. Nobody at that company was lazy. They were asleep, or busy with the customer in front of them.</p>
-                    <h3>It was never a leads problem</h3>
-                    <p>Most owners try one of two fixes. Hire another salesperson, who goes home at 6pm. Or install a chatbot, which answers the same few questions and hands every real sale back to you.</p>
-                    <p>So we built something else. 41 Closer is trained on your real past chats, connected to your price list and your bookings, and looked after by our team every week. It replies in seconds, quotes properly, follows up, and books the sale. When it isn't sure, it hands the chat to your team with the full history.</p>
-                    <p>A hardware distributor we work with has 42,000 products. Their last vendor couldn't handle it. Ours answers from their pricing system every day.</p>
-                    <h3>I'd rather show you than tell you</h3>
-                    <p>Give me 20 minutes. Before we talk, we'll message your business the way a customer would and time your reply. On the call I'll show you that result, then show you the Closer handling the same enquiry.</p>
-                    <p>If it isn't a fit for your business, I'll tell you. You keep the audit either way.</p>
+                    <p>I didn't believe how big this was until we read one car rental company's chat logs. A customer messaged at 2:02am. The first reply went out at 9:03am. Another waited 23 hours and booked somewhere else. Nobody there was lazy. They were asleep, or busy with the customer in front of them.</p>
+                    <p>Most owners try one of two fixes. Hire another salesperson, who goes home at 6pm. Or install a chatbot, which answers the same three questions and hands every real sale back to you.</p>
+                    <p>So we built something else, and we run it for you. It replies in seconds, quotes from your own price list, follows up, and books the job. When it isn't sure, your team gets the chat with the full history.</p>
+                    <p>I'd rather show you than tell you. Give me your website and I'll build it on your business, free.</p>
                     <div class="sig"><div class="name">Alexander Lee</div><small>Founder, 41 Labs</small></div>
                 </div>
             </div>
@@ -561,7 +561,7 @@
             <figure class="chatfig reveal"><div class="wa wa-scroll" role="img" aria-label="WhatsApp chat with Bhutan tours"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av">BT</div><div class="wa-who"><div class="wa-name">Bhutan tours</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-in">Hi Mei! Welcome to [Business] 🙏 We&#x27;re a Bhutan travel specialist based in Singapore, and we&#x27;d love to help you plan the perfect trip.<br><br>To point you in the right direction, what draws you to Bhutan, and who are you thinking of travelling with?<span class="wa-meta">16:12</span></div><div class="wa-msg wa-out">I&#x27;m planning to travel with my friends (maybe 3 of us) in December. Is that a good time?<span class="wa-meta">16:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">December is a lovely time to visit Bhutan! The skies are crystal clear, the mountains are stunning, and it&#x27;s quieter than the peak autumn season, great for a small group of friends.<br><br>A couple of festivals also fall in that window depending on exact dates. What kind of experience are you hoping for, more culture and monasteries, getting out into nature, or a mix of both?<span class="wa-meta">16:13</span></div><div class="wa-msg wa-out">We&#x27;d like to experience both<span class="wa-meta">16:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That&#x27;s a great combination, and Bhutan does both really well. A mix of culture and nature is actually the sweet spot for most trips.<br><br>Are you and your friends up for some hiking, like the famous Tiger&#x27;s Nest climb, or do you prefer a more relaxed pace with scenic drives and gentle walks?<span class="wa-meta">16:14</span></div><div class="wa-msg wa-out">Yes, we&#x27;d love to see the Tiger&#x27;s nest. What&#x27;s the ideal number of days for first time travellers<span class="wa-meta">16:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Tiger&#x27;s Nest is an absolute must, and a great anchor for the trip!<br><br>For first-timers, most of our guests find 7 to 10 days to be the sweet spot. Seven days covers the highlights beautifully (Paro, Thimphu, Punakha), while 10 days lets you go deeper into a third or fourth region and really soak it in without feeling rushed.<br><br>Do you have a rough idea of how many days you&#x27;re thinking, or would you like me to suggest what works best for a December trip?<span class="wa-meta">16:14</span></div><div class="wa-msg wa-out">Maybe 7 days should be fine<span class="wa-meta">16:15 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Perfect, 7 days is a great shape for a first visit and works really well in December.<br><br>One last thing to help me point you to the right option, are you thinking comfortable 3-star hotels, or would you prefer something more boutique and upscale?<span class="wa-meta">16:15</span></div><div class="wa-msg wa-out">3-star will do<span class="wa-meta">16:15 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">So, Mei, three friends, 7 days in December, Tiger&#x27;s Nest, culture and nature, 3-star. I have a great match for you.<br><br>The <b>7-Day All-Inclusive Essential Bhutan Package</b> at US$2,388 per person covers exactly this: Paro, Thimphu, and Punakha, with Tiger&#x27;s Nest built in. Everything is included, visa, 3-star hotels, all meals, licensed guide, private vehicle, entry fees, and the SDF (sustainable development fee). No hidden costs.<br><br>It&#x27;s rated 4.89/5 from 253 travellers, and there&#x27;s a group departure on 3 Dec and 24 Dec 2026 from Singapore, which fits your December plan perfectly.<br><br>We also have the <b>7 Days Bhutan Tour with Haa Valley</b> (rated 5.0/5 from 60 reviews) if you&#x27;d like to add a more off-the-beaten-path valley to the mix.<br><br>Which sounds more like your kind of trip?<span class="wa-meta">16:15</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div><figcaption class="chatcap">Trip matched to the right package in 3 minutes. Demo line, customer details removed.</figcaption></figure>
             <!-- /PROOF-CHATS -->
         </div>
-        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+        
     </div>
 </section>
 
@@ -589,7 +589,7 @@
                 <li><div><b>Quotes and bookings inside the chat.</b>It works from your own price list, stock and calendar, so the customer can say yes without waiting for your team.</div></li>
                 <li><div><b>Every open quote followed up.</b>It chases politely until they answer, and hands your team a warm lead with the whole conversation, not a cold "hi".</div></li>
             </ol>
-            <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+            
         </div>
     </div>
 </section>
@@ -598,12 +598,13 @@
 <section id="weeks" class="band dark">
     <div class="wrap">
         <h2 class="caps center">If it's a fit: the six-week breakdown</h2>
-        <p class="sub center">You don't learn a new tool or manage an AI. We build it on your business, then run it with you.</p>
+        <p class="sub center">You don't learn a new tool or manage an AI.</p>
         <div class="weeks">
-            <div class="week reveal"><div class="week-head">Weeks 1 to 2: We build it</div><ul><li><b>Connect</b> your WhatsApp Business account, price list, stock or booking system</li><li><b>Train</b> it on your real past chats, so it sounds like your business</li><li><b>Set the rules</b>: what it can quote, when it hands over to your team</li></ul></div>
-            <div class="week reveal"><div class="week-head">Weeks 3 to 4: Your team tests it</div><ul><li><b>Your team throws real scenarios</b> at it before any customer sees it</li><li><b>We tune it every day</b> until it answers like your best salesperson</li><li><b>You sign off</b> on how it handles price questions and complaints</li></ul></div>
-            <div class="week reveal"><div class="week-head">Weeks 5 to 6: It goes live</div><ul><li><b>Phased go-live</b>, starting with nights and weekends if you prefer</li><li><b>Warm leads</b> land with your team with the full chat attached</li><li><b>The guarantee clock starts</b> on go-live day</li></ul></div>
-            <div class="week reveal"><div class="week-head">Every week after: We run it</div><ul><li><b>We watch every conversation</b> and keep improving it</li><li><b>You get the numbers every week</b>: what came in and what it booked</li><li><b>Your team steps in</b> whenever a customer needs a person</li></ul></div>
+            <div class="week reveal"><div class="week-head">Weeks 1 to 2: We build it</div><ul><li>We connect your WhatsApp, price list and booking or stock system, and train it on your real past chats.</li></ul></div>
+            <div class="week reveal"><div class="week-head">Weeks 3 to 4: Your team tests it</div><ul><li>Your team throws real customer scenarios at it. We tune it daily until it answers like your best salesperson.</li></ul></div>
+            <div class="week reveal"><div class="week-head">Weeks 5 to 6: It goes live</div><ul><li>Phased go-live, warm leads land with your team, and the guarantee clock starts.</li></ul></div>
+            <div class="week reveal"><div class="week-head">Every week after: We run it</div><ul><li>We watch every conversation, keep improving it, and send you the numbers each week.</li></ul></div>
+        </div>
         </div>
         <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
     </div>
@@ -619,21 +620,6 @@
             <p>We only offer this after we've looked at your numbers on the demo. If the maths isn't there for your business, we'll tell you.</p>
             <p class="fine">Full terms are in your agreement.</p>
         </div>
-    </div>
-</section>
-
-<!-- 11 EVERYTHING YOU GET (his: value stack) -->
-<section id="stack" class="band" style="padding-top:0">
-    <div class="wrap">
-        <h2 class="caps center">Everything you get on the free demo</h2>
-        <div class="stack reveal">
-            <div class="stack-row"><div><b>WhatsApp leak audit</b><span>We message your business as a customer and report the reply time, after-hours reply and follow-up.</span></div><em>FREE</em></div>
-            <div class="stack-row"><div><b>Live demo on your kind of enquiry</b><span>Watch the Closer qualify, quote and book, live on the call.</span></div><em>FREE</em></div>
-            <div class="stack-row"><div><b>Your leak numbers, worst to best case</b><span>What your unanswered enquiries are worth each month.</span></div><em>FREE</em></div>
-            <div class="stack-row"><div><b>A straight answer on fit</b><span>If the Closer won't pay for itself in your business, we'll say so.</span></div><em>FREE</em></div>
-            <div class="stack-total"><div class="t">What it costs you today</div><div class="p">S$0</div><div class="t" style="margin-top:6px">20 minutes of your time</div></div>
-        </div>
-        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
     </div>
 </section>
 
@@ -711,7 +697,7 @@
             </div>
         </div>
         <p class="red-bar">Your rough numbers, not a promise. On the demo we work them out properly with you.</p>
-        <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
+        
     </div>
 </section>
 
@@ -720,18 +706,14 @@
     <div class="wrap narrow">
         <h2 class="caps center">Frequently asked questions</h2>
         <div class="faq">
-            <details><summary>What happens on the free demo?</summary><p>20 minutes on Google Meet with Alexander. We show you your leak audit, work out what your unanswered enquiries are worth, and show you the Closer handling an enquiry like the ones your business gets.</p></details>
-            <details><summary>What's the WhatsApp leak audit?</summary><p>Before the call, we send your business a real enquiry the way a customer would. We time the first reply, check what happens after hours, and see whether anyone follows up. You'll see the results on the call.</p></details>
-            <details><summary>Is the demo a sales pitch?</summary><p>Partly, and we'll be upfront about it. You get the audit and the demo either way. If the Closer fits your business, we'll tell you what it costs. If it doesn't, we'll say so.</p></details>
-            <details><summary>Is this a chatbot?</summary><p>No. A chatbot answers questions and sends menus. 41 Closer sells. It qualifies the buyer, recommends, quotes from your prices, follows up, and books the sale or takes the deposit.</p></details>
-            <details><summary>Will it work for my business?</summary><p>If your customers ask, get quotes, order or book on WhatsApp, very likely. That's what the demo is for. We'll look at your chats and your numbers and tell you honestly.</p></details>
-            <details><summary>What if it says something wrong?</summary><p>It only works from what you give it: your prices, stock and policies. When it isn't sure, it hands the chat to your team with the full history. Your team tests it for two weeks before any customer sees it.</p></details>
-            <details><summary>How long does it take to go live?</summary><p>Six weeks from go-ahead. We build it in the first two, your team tests it in weeks 3 and 4, and it goes live in phases after that.</p></details>
-            <details><summary>What does it cost?</summary><p>It depends on your chat volume, your systems and what the Closer needs to do. There's a one-time build, then a monthly fee once it's live that covers us running it. On the demo we look at your numbers first and give you an exact figure. If it won't pay for itself, we'll tell you.</p></details>
-            <details><summary>Does it use my WhatsApp number?</summary><p>Yes. It runs on the WhatsApp Business API under your own business account, and that account stays yours.</p></details>
-            <details><summary>Who runs it day to day?</summary><p>We do. We watch it, tune it and send you the numbers every week. Your team steps in when a customer needs a person.</p></details>
-            <details><summary>Can I bring my sales manager to the demo?</summary><p>Please do. It helps to have whoever answers your WhatsApp today on the call.</p></details>
-        </div>
+                <details><summary>What happens on the call?</summary><p>20 minutes on Google Meet. You see the Closer running on your own products, your numbers worked out, and an honest answer on whether it fits.</p></details>
+                <details><summary>What do you build before the call?</summary><p>We take your website and build the Closer on your real products and prices, so it answers the kind of enquiry your business actually gets. We also message your business like a customer, to time how fast you reply today.</p></details>
+                <details><summary>Is this a sales pitch?</summary><p>Partly, and we'll be upfront. You keep the demo either way. If it pays for itself we'll show the maths and the price. If it doesn't, we'll say so.</p></details>
+                <details><summary>I've been burned by an agency before.</summary><p>Fair. Two differences: you see it working on your own products before you pay anything, and we run it every week instead of handing you software to manage.</p></details>
+                <details><summary>Is it just a chatbot?</summary><p>No. A chatbot answers questions. This one qualifies the buyer, quotes from your prices, follows up, and books the job or takes the deposit. When it isn't sure, your team gets the chat with the full history.</p></details>
+                <details><summary>What if it says something wrong?</summary><p>It only works from what you give it: your prices, stock and policies. Your team tests it for two weeks before any customer sees it.</p></details>
+                <details><summary>Does it use my own WhatsApp number?</summary><p>Yes, on the WhatsApp Business API under your own account. The account stays yours.</p></details>
+            </div>
         <div class="cta-row"><a class="btn btn-cta" href="#qualify">Get my free demo <span class="arrow">&rarr;</span></a></div>
     </div>
 </section>
