@@ -274,7 +274,7 @@ FORM = f'''<form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="P
                             <span class="ok-badge">&#10003; You qualify</span>
                             <div id="cl-cal-head">
                                 <h3>Pick a time. We build your Closer before we meet.</h3>
-                                <p>20 minutes on Google Meet with Alexander. Your own products, your own prices, your numbers.</p>
+                                <p>30 minutes on Google Meet with Alexander. Your own products, your own prices, your numbers.</p>
                             </div>
                             <div id="cl-cal"></div>
                             <div id="cl-handoff" hidden>

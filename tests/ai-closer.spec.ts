@@ -849,3 +849,18 @@ test.describe('the audience band names who this is for', () => {
     await expect(aud).toContainText(/Not just a chatbot/);   // ad message match
   });
 });
+
+// The Google appointment schedule is set to 30 minutes. If the page ever promises a
+// different length, the visitor books expecting one thing and gets another, and the
+// mismatch is invisible until someone complains on the call.
+test.describe('the call length matches the calendar', () => {
+  for (const path of ['/ai-closer.html', '/ai-closer-sf.html']) {
+    test(`${path} promises 30 minutes, nothing else`, async ({ page }) => {
+      await stubNetwork(page);
+      await page.goto(path);
+      const text = await page.locator('body').innerText();
+      expect(text, 'a stale call length is still on the page').not.toMatch(/\b20[- ]minute|\b20 minutes\b/i);
+      expect(text).toMatch(/30 minutes/);
+    });
+  }
+});
