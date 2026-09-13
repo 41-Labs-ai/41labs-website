@@ -55,10 +55,33 @@ window.BOOKING_URL = window.BOOKING_URL || '';
             });
             return ok;
         }
+        // "random words" get typed here constantly. A real domain or nothing: we build
+        // the preview off this, so a bad value costs us a build, not just a bad record.
+        var WEBSITE_RE = /^(https?:\/\/)?([a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,24}(\/\S*)?$/i;
+        function cleanWebsite(v) {
+            // Trim the edges and a stray leading @ only. NEVER strip inner spaces:
+            // "tan aircon .sg" would become "tanaircon.sg", a domain they never typed
+            // and possibly someone else's.
+            return String(v || '').trim().replace(/^@+/, '');
+        }
+        function validWebsite() {
+            var el = document.getElementById('cl-website');
+            var err = document.getElementById('cl-website-error');
+            if (!el) return true;
+            var v = cleanWebsite(el.value);
+            if (v && v !== el.value) el.value = v;        // tidy it in place rather than scold them
+            var ok = WEBSITE_RE.test(v);
+            if (err) err.hidden = ok;
+            el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+            if (!ok) el.focus({ preventScroll: false });
+            return ok;
+        }
+
         function validPart2() {
-            var ok = true;
+            var ok = validWebsite();
+            if (!ok) return false;
             part2.querySelectorAll('select[required], input[required]').forEach(function (el) {
-                if (ok && !el.checkValidity()) { el.reportValidity(); ok = false; }
+                if (ok && el.id !== 'cl-website' && !el.checkValidity()) { el.reportValidity(); ok = false; }
             });
             if (ok && !form.querySelector('input[name="challenges"]:checked')) {
                 jobsError.hidden = false;
@@ -74,8 +97,8 @@ window.BOOKING_URL = window.BOOKING_URL || '';
 
             // Capture the contact now, before the questions they might abandon.
             var fd = new FormData(form);
-            var partial = { partial: true, variant: variant,
-                            name: fd.get('name') || '', whatsapp: fd.get('whatsapp') || '', website: fd.get('website') || '' };
+            var partial = { partial: true, variant: variant, name: fd.get('name') || '',
+                            email: fd.get('email') || '', whatsapp: fd.get('whatsapp') || '' };
             Object.keys(attr).forEach(function (k) { partial[k] = attr[k]; });
             if (window.cl41) partial.journey = window.cl41.journey();
             fetch('/api/closer-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(partial) })
@@ -89,6 +112,12 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         }
         if (next) next.addEventListener('click', goPart2);
         if (back) back.addEventListener('click', function () { part2.hidden = true; part1.hidden = false; setTab(1); });
+
+        var websiteEl = document.getElementById('cl-website');
+        if (websiteEl) websiteEl.addEventListener('input', function () {
+            var err = document.getElementById('cl-website-error');
+            if (err && !err.hidden && WEBSITE_RE.test(cleanWebsite(websiteEl.value))) err.hidden = true;
+        });
 
         form.addEventListener('change', function (e) {
             if (e.target && e.target.name === 'challenges' && form.querySelector('input[name="challenges"]:checked')) jobsError.hidden = true;
@@ -185,7 +214,7 @@ window.BOOKING_URL = window.BOOKING_URL || '';
         var pains = (data.challenges || []).map(function (c) { return SAY_CHALLENGE[c]; }).filter(Boolean);
         if (pains.length) lines.push('What costs us most: ' + pains.join(', ') + '.');
         if (SAY_GOAL[data.goal]) lines.push('What I want: ' + SAY_GOAL[data.goal] + '.');
-        lines.push('Can you show me what you would do for us?');
+        lines.push('Can we set up a time to go through it?');
         return lines.join('\n');
     }
 
@@ -208,30 +237,26 @@ window.BOOKING_URL = window.BOOKING_URL || '';
     function showCalendar(data) {
         var url = (window.BOOKING_URL || '').trim();
         var holder = document.getElementById('cl-cal');
+        var head = document.getElementById('cl-cal-head');
         showHandoff(data);
+        // No calendar configured is fine now: the Closer books the call in chat, so
+        // the page never has to apologise for an empty slot.
         if (!url) {
-            // No calendar configured. Hide the invitation to pick a time as well as the
-            // empty slot, or the highest-intent screen in the funnel reads "Pick a time"
-            // with nothing to pick from, directly above "we'll WhatsApp you instead".
-            holder.hidden = true;
-            var head = document.getElementById('cl-cal-head');
+            if (holder) holder.hidden = true;
             if (head) head.hidden = true;
-            document.getElementById('cl-cal-fallback').hidden = false;
             return;
         }
+        if (head) head.hidden = false;
 
-        // Google Calendar appointment schedule: plain iframe. It can't tell the page when a
-        // booking lands, so booked calls are picked up by the server-side booking sync.
         if (/^https:\/\/calendar\.google\.com\//.test(url)) {
             var f = document.createElement('iframe');
             f.src = url;
-            f.title = 'Book your free demo with Alexander';
+            f.title = 'Book your call with Alexander';
             f.loading = 'lazy';
             holder.appendChild(f);
             return;
         }
 
-        // Cal.com: inline embed with prefill and a booking callback (fires Schedule).
         var CAL_LINK = url.replace(/^https:\/\/cal\.com\//, '');
         (function (C, A, L) { var p = function (a, ar) { a.q.push(ar); }; var d = C.document; C.Cal = C.Cal || function () { var cal = C.Cal; var ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { var api = function () { p(api, arguments); }; var namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
         Cal('init', { origin: 'https://cal.com' });
@@ -242,7 +267,7 @@ window.BOOKING_URL = window.BOOKING_URL || '';
                 layout: 'month_view',
                 name: data.name || '',
                 email: data.email || '',
-                notes: [data.company, 'Enquiries/week: ' + data.enquiries, 'Avg sale: ' + data.saleValue, 'WhatsApp: ' + data.whatsapp].join(' | ')
+                notes: ['Website: ' + (data.website || ''), 'Enquiries/week: ' + data.enquiries, 'Avg sale: ' + data.saleValue, 'WhatsApp: ' + data.whatsapp].join(' | ')
             }
         });
         Cal('on', { action: 'bookingSuccessful', callback: function () { window.onCloserBooked(); } });

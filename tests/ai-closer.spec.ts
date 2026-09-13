@@ -34,13 +34,14 @@ async function stubPixel(page: Page) {
 
 async function fillContact(page: Page) {
   await page.fill('#cl-name', 'Tan Wei Ming');
+  await page.fill('#cl-email', 'wm@tanaircon.sg');
   await page.fill('#cl-whatsapp', '+65 9123 4567');
-  await page.fill('#cl-website', 'tanaircon.sg');
 }
 
 // Step 2. Defaults clear both floors (50 enquiries a week, S$500 a sale) so the
 // happy path is the default and a test has to opt in to being rejected.
-async function fillQualify(page: Page, opts: { enquiries?: string; saleValue?: string } = {}) {
+async function fillQualify(page: Page, opts: { enquiries?: string; saleValue?: string; website?: string } = {}) {
+  await page.fill('#cl-website', opts.website ?? 'tanaircon.sg');
   await page.selectOption('#cl-enquiries', opts.enquiries || '50to150');
   await page.selectOption('#cl-sale', opts.saleValue || '500to2k');
   await page.check('input[name="challenges"][value="slow"]');
@@ -48,7 +49,7 @@ async function fillQualify(page: Page, opts: { enquiries?: string; saleValue?: s
   await page.selectOption('#cl-goal', 'recover');
 }
 
-async function fillForm(page: Page, opts: { enquiries?: string; saleValue?: string } = {}) {
+async function fillForm(page: Page, opts: { enquiries?: string; saleValue?: string; website?: string } = {}) {
   await fillContact(page);
   await page.click('#cl-next');
   await fillQualify(page, opts);
@@ -99,6 +100,7 @@ for (const P of PAGES) {
       await page.goto(P.path);
       // the qualifying questions are NOT on screen yet
       await expect(page.locator('#cl-part1 #cl-enquiries')).toHaveCount(0);
+      await expect(page.locator('#cl-email')).toBeVisible();
       await page.click('#cl-next');
       await expect(page.locator('#cl-part2')).toBeHidden();   // name/number/website are required
       await fillContact(page);
@@ -107,18 +109,19 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-part1')).toBeHidden();
       // and the contact is captured immediately, flagged as incomplete
       await expect.poll(() => sent.api.length).toBe(1);
-      expect(sent.api[0]).toMatchObject({ partial: true, name: 'Tan Wei Ming', website: 'tanaircon.sg' });
+      expect(sent.api[0]).toMatchObject({ partial: true, name: 'Tan Wei Ming', email: 'wm@tanaircon.sg' });
     });
 
-    test('step 1 asks three things only: name, WhatsApp, website', async ({ page }) => {
+    test('step 1 asks who they are: name, email, number, and nothing else', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
-      for (const gone of ['#cl-company', '#cl-email', '#cl-role', '#cl-industry']) {
+      for (const gone of ['#cl-company', '#cl-role', '#cl-industry']) {
         await expect(page.locator(gone)).toHaveCount(0);
       }
       await expect(page.locator('#cl-name')).toBeVisible();
+      await expect(page.locator('#cl-email')).toBeVisible();
       await expect(page.locator('#cl-whatsapp')).toBeVisible();
-      await expect(page.locator('#cl-website')).toHaveAttribute('required', /.*/);
+      await expect(page.locator('#cl-part1 #cl-website')).toHaveCount(0);   // the business comes in step 2
       await expect(page.locator('#cl-part1')).not.toContainText(/instagram/i);
     });
 
@@ -210,13 +213,14 @@ for (const P of PAGES) {
       await expect(page.locator('#cl-cal-fallback')).toBeHidden();
     });
 
-    test('qualified + no booking URL: WhatsApp fallback', async ({ page }) => {
+    test('qualified + no booking URL: the Closer carries it, no empty calendar', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
       await page.evaluate(() => { (window as any).BOOKING_URL = ''; });
       await fillForm(page);
       await page.click('#cl-submit');
-      await expect(page.locator('#cl-cal-fallback')).toBeVisible();
+      await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+      await expect(page.locator('#cl-cal-head')).toBeHidden();
     });
 
     test('qualify41 override returning a boolean still routes correctly', async ({ page }) => {
@@ -456,9 +460,10 @@ test.describe('the qualified screen when no calendar is configured', () => {
     await page.evaluate(() => { (window as any).BOOKING_URL = ''; });
 
     await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
     await page.fill('#cl-whatsapp', '+65 9123 4567');
-    await page.fill('#cl-website', 'tanaircon.sg');
     await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
     await page.selectOption('#cl-sale', '500to2k');
     await page.check('input[name="challenges"][value="slow"]');
@@ -467,7 +472,7 @@ test.describe('the qualified screen when no calendar is configured', () => {
 
     await expect(page.locator('#cl-book')).toBeVisible();
     await expect(page.locator('#cl-cal-head')).toBeHidden();     // no "Pick a time"
-    await expect(page.locator('#cl-cal-fallback')).toBeVisible(); // we'll WhatsApp you
+    await expect(page.locator('#cl-wa-handoff')).toBeVisible();   // the Closer carries it
     await expect(page.locator('#cl-handoff')).toBeVisible();      // and something to do now
   });
 });
@@ -483,9 +488,10 @@ test.describe('the prefilled first message to the AI Closer', () => {
     await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
     await page.fill('#cl-whatsapp', '+65 9123 4567');
-    await page.fill('#cl-website', 'tanaircon.sg');
     await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '50to150');
     await page.selectOption('#cl-sale', '500to2k');
     await page.check('input[name="challenges"][value="slow"]');
@@ -521,14 +527,96 @@ test.describe('the prefilled first message to the AI Closer', () => {
     await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
     await page.fill('#cl-whatsapp', '+65 9123 4567');
-    await page.fill('#cl-website', 'tanaircon.sg');
     await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
     await page.selectOption('#cl-enquiries', '150plus');
     await page.selectOption('#cl-sale', '2kto10k');
     await page.check('input[name="challenges"][value="stock"]');
     await page.selectOption('#cl-goal', 'scale');
     await page.click('#cl-submit');
     await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /^https:\/\/wa\.me\/6580124848\?text=/);
+  });
+});
+
+// The website drives the preview build, so free text here costs a real build.
+test.describe('the website field only accepts a website', () => {
+  const open2 = async (page: any) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.click('#cl-next');
+  };
+
+  for (const bad of ['my company', 'aircon servicing singapore', 'facebook', '@tanaircon', 'https://', 'tan aircon .sg']) {
+    test(`rejects "${bad}"`, async ({ page }) => {
+      await open2(page);
+      await page.fill('#cl-website', bad);
+      await page.selectOption('#cl-enquiries', '50to150');
+      await page.selectOption('#cl-sale', '500to2k');
+      await page.check('input[name="challenges"][value="slow"]');
+      await page.selectOption('#cl-goal', 'recover');
+      await page.click('#cl-submit');
+      await expect(page.locator('#cl-website-error')).toBeVisible();
+      await expect(page.locator('#cl-step2')).toBeHidden();
+    });
+  }
+
+  for (const good of ['tanaircon.sg', 'www.tanaircon.sg', 'https://tanaircon.sg', 'https://tanaircon.com.sg/aircon-servicing']) {
+    test(`accepts "${good}"`, async ({ page }) => {
+      await open2(page);
+      await page.fill('#cl-website', good);
+      await page.selectOption('#cl-enquiries', '50to150');
+      await page.selectOption('#cl-sale', '500to2k');
+      await page.check('input[name="challenges"][value="slow"]');
+      await page.selectOption('#cl-goal', 'recover');
+      await page.click('#cl-submit');
+      await expect(page.locator('#cl-website-error')).toBeHidden();
+      await expect(page.locator('#cl-book')).toBeVisible();
+    });
+  }
+
+  test('tidies a stray @ or spaces instead of scolding them', async ({ page }) => {
+    await open2(page);
+    await page.fill('#cl-website', '  @tanaircon.sg ');
+    await page.selectOption('#cl-enquiries', '50to150');
+    await page.selectOption('#cl-sale', '500to2k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+    await expect(page.locator('#cl-website')).toHaveValue('tanaircon.sg');
+    await expect(page.locator('#cl-book')).toBeVisible();
+  });
+});
+
+// The Closer runs discovery and books the call, so it is the action, not a footnote.
+test.describe('a qualified lead goes straight to the Closer', () => {
+  test('the Closer is the primary action, and the calendar is optional', async ({ page }) => {
+    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
+    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+    await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+65 9123 4567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '50to150');
+    await page.selectOption('#cl-sale', '500to2k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+
+    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+    // with no BOOKING_URL the page says nothing about picking a time
+    await expect(page.locator('#cl-cal-head')).toBeHidden();
+    const msg = decodeURIComponent(((await page.locator('#cl-wa-handoff').getAttribute('href')) || '').split('?text=')[1] || '');
+    expect(msg).toContain('tanaircon.sg');
+    expect(msg).toMatch(/set up a time/i);
   });
 });

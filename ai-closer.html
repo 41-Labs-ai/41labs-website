@@ -389,34 +389,36 @@
                 </div>
                 <form id="cl-form" action="https://formspree.io/f/mvzrzryw" method="POST">
                     <div id="cl-step1">
-                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Your details</span><span class="cl-tab">2. Two quick questions</span></div>
+                        <div class="cl-tabs" aria-hidden="true"><span class="cl-tab on">1. Who you are</span><span class="cl-tab">2. Your business</span></div>
                         <div id="cl-part1">
                             <div class="fields">
                                 <div class="field full"><label for="cl-name">Your name</label>
                                     <input id="cl-name" name="name" type="text" autocomplete="name" required></div>
+                                <div class="field full"><label for="cl-email">Email</label>
+                                    <input id="cl-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required></div>
                                 <div class="field full"><label for="cl-whatsapp">WhatsApp number</label>
                                     <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65" required>
-                                    <small class="help">This is where your Closer demo arrives.</small></div>
-                                <div class="field full"><label for="cl-website">Your website</label>
-                                    <input id="cl-website" name="website" type="text" autocomplete="url" placeholder="yourcompany.com" required>
-                                    <small class="help">We build the demo on it, so the Closer answers with your own products and prices.</small></div>
+                                    <small class="help">Your Closer picks up the conversation here.</small></div>
                                 <div class="hp" aria-hidden="true"><label>Website URL <input type="text" name="url_hp" tabindex="-1" autocomplete="off"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
                             </div>
                             <button class="btn btn-primary btn-block" id="cl-next" type="button">Next <span class="arrow">&rarr;</span></button>
-                            <p class="consent">Two quick questions after this, then you pick a time. About a minute. We message you on WhatsApp to set up your demo. No spam, no lists.</p>
+                            <p class="consent">Three quick questions after this. About a minute. We message you on WhatsApp, no spam, no lists.</p>
                         </div>
                         <div id="cl-part2" hidden>
                             <div class="fields">
+                                <div class="field full"><label for="cl-website">Your website</label>
+                                    <input id="cl-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourcompany.com" required
+                                           aria-describedby="cl-website-help cl-website-error">
+                                    <small class="help" id="cl-website-help">We build your Closer on it, so it answers with your own products and prices.</small>
+                                    <p class="jobs-error" id="cl-website-error" hidden>That does not look like a website. Try something like yourcompany.com</p></div>
                                 <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
                                     <select id="cl-enquiries" name="enquiries" required><option value="" disabled selected>Choose one</option><option value="under20">Under 20</option><option value="20to50">20 to 50</option><option value="50to150">50 to 150</option><option value="150plus">Over 150</option></select></div>
                                 <div class="field"><label for="cl-sale">Average sale</label>
                                     <select id="cl-sale" name="saleValue" required><option value="" disabled selected>Choose one</option><option value="under500">Under S$500</option><option value="500to2k">S$500 to S$2,000</option><option value="2kto10k">S$2,000 to S$10,000</option><option value="10kplus">Over S$10,000</option></select></div>
                                 <fieldset class="field full jobs" id="cl-jobs">
                                     <legend>What is costing you most? <span class="opt">(pick all that apply)</span></legend>
-                                    <div class="chips">
-                                        <label class="chip-opt"><input type="checkbox" name="challenges" value="slow"><span>Replies take too long</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="afterhours"><span>Nobody answers after hours</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="followup"><span>We forget to follow up</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="stock"><span>Checking stock or prices is slow</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="quotes"><span>Quoting takes too much time</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="volume"><span>Too many enquiries to handle</span></label>
-                                    </div>
+                                    <div class="chips"><label class="chip-opt"><input type="checkbox" name="challenges" value="slow"><span>Replies take too long</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="afterhours"><span>Nobody answers after hours</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="followup"><span>We forget to follow up</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="stock"><span>Checking stock or prices is slow</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="quotes"><span>Quoting takes too much time</span></label><label class="chip-opt"><input type="checkbox" name="challenges" value="volume"><span>Too many enquiries to handle</span></label></div>
                                     <p class="jobs-error" id="cl-jobs-error" hidden>Pick at least one.</p>
                                 </fieldset>
                                 <div class="field full"><label for="cl-goal">What would make this worth doing?</label>
@@ -432,23 +434,21 @@
                     <div id="cl-step2" hidden>
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
-                            <div id="cl-cal-head">
-                                <h3>Pick a time. We start building your demo today.</h3>
-                                <p>20 minutes on Google Meet with Alexander. Before the call we build the Closer on your own products.</p>
+                            <h3>Talk to your Closer now.</h3>
+                            <p class="handoff-lead">Everything you just told us is already in the message. It will ask a few things about how you sell, then put a time in Alexander's calendar for you.</p>
+                            <div id="cl-handoff">
+                                <a class="btn btn-primary btn-block" id="cl-wa-handoff" href="https://wa.me/6580124848" target="_blank" rel="noopener">Message now <span class="arrow">&rarr;</span></a>
+                                <p class="handoff-note">This is the same Closer we would build for you. Watch it work on the way to the call.</p>
+                            </div>
+                            <div id="cl-cal-head" hidden>
+                                <p class="cal-or">Or pick a time yourself</p>
                             </div>
                             <div id="cl-cal"></div>
-                            <div id="cl-handoff" hidden>
-                                <p class="handoff-lead"><b>Last step.</b> Message our own AI Closer. Your answers are already in the message, so it picks up from there. You get to watch it work on your way to the call.</p>
-                                <a class="btn btn-primary" id="cl-wa-handoff" href="https://wa.me/6580124848" target="_blank" rel="noopener">Message now <span class="arrow">&rarr;</span></a>
-                            </div>
-                            <div id="cl-cal-fallback" hidden>
-                                <p>Thanks, <span class="cl-first"></span>. We'll WhatsApp you within one working hour to lock in a time.</p>
-                                <a class="btn btn-ghost" href="https://wa.me/6580124848?text=Hi%2C%20I%20just%20asked%20for%20the%20free%2041%20Closer%20demo.%20When%20can%20we%20talk%3F">Or message us now</a>
-                            </div>
+                            <div id="cl-cal-fallback" hidden></div>
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>From your answers, building you a demo may not pay for itself yet. We'll look properly and come back to you within one working day either way, with the numbers we worked out on your business.</p>
+                            <p>From your answers, building you a Closer may not pay for itself yet. We'll look properly and come back to you within one working day either way, with the numbers we worked out on your business.</p>
                         </div>
                     </div>
                 </form>

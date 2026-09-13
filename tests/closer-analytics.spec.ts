@@ -38,9 +38,10 @@ async function stub(page: Page): Promise<Sent> {
 async function fillAndSubmit(page: Page, opts: { enquiries?: string; saleValue?: string } = {}) {
   // Contact first, then the two qualifying questions. Defaults clear both floors.
   await page.fill('#cl-name', 'Tan Wei Ming');
+  await page.fill('#cl-email', 'wm@tanaircon.sg');
   await page.fill('#cl-whatsapp', '+65 9123 4567');
-  await page.fill('#cl-website', 'tanaircon.sg');
   await page.click('#cl-next');
+  await page.fill('#cl-website', 'tanaircon.sg');
   await page.selectOption('#cl-enquiries', opts.enquiries || '50to150');
   await page.selectOption('#cl-sale', opts.saleValue || '500to2k');
   await page.check('input[name="challenges"][value="slow"]');
