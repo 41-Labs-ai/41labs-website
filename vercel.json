@@ -64,6 +64,26 @@
       ],
       "destination": "/case-studies/:slug",
       "permanent": true
+    },
+    {
+      "source": "/blog/ai-roi-calculator-guide",
+      "destination": "/blog/roi-of-ai-automation-real-numbers",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rpa-vs-ai-automation-difference",
+      "destination": "/blog/ai-vs-automation",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-new-distribution-channel",
+      "destination": "/blog/ai-for-sales",
+      "permanent": true
+    },
+    {
+      "source": "/blog/saas-founders-entering-singapore",
+      "destination": "/locations/singapore",
+      "permanent": true
     }
   ],
   "rewrites": [

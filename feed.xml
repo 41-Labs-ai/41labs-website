@@ -8,7 +8,7 @@
     <link>https://41labs.ai/blog</link>
     <description>Practical insights on AI systems, automation, and operational efficiency for B2B businesses in Southeast Asia.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2026 11:35:42 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2026 11:49:49 GMT</lastBuildDate>
     <atom:link href="https://41labs.ai/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://41labs.ai/logo-full.png</url>
@@ -417,26 +417,6 @@
     </item>
 
     <item>
-      <title>AI Is the New Distribution Channel: How to Get Recommended by ChatGPT (2026)</title>
-      <link>https://41labs.ai/blog/ai-new-distribution-channel</link>
-      <guid isPermaLink="true">https://41labs.ai/blog/ai-new-distribution-channel</guid>
-      <pubDate>Mon, 15 Jun 2026 00:00:00 GMT</pubDate>
-      <dc:creator>Alexander Lee</dc:creator>
-      <category>Insights</category>
-      <description>Your customers are asking ChatGPT and Perplexity for recommendations instead of Googling. If AI doesn't know your business, you're invisible. How the new distribution channel works — and how to be the one it recommends.</description>
-    </item>
-
-    <item>
-      <title>India vs Vietnam: Why SaaS Founders Get Singapore Wrong (2026)</title>
-      <link>https://41labs.ai/blog/saas-founders-entering-singapore</link>
-      <guid isPermaLink="true">https://41labs.ai/blog/saas-founders-entering-singapore</guid>
-      <pubDate>Mon, 15 Jun 2026 00:00:00 GMT</pubDate>
-      <dc:creator>Alexander Lee</dc:creator>
-      <category>Insights</category>
-      <description>Indian founders overestimate speed. Vietnamese founders underestimate positioning. Both assume their home playbook works in Singapore — it doesn't. What actually works when entering the Singapore/ASEAN market.</description>
-    </item>
-
-    <item>
       <title>10 Best AI Companies in Singapore (July 2026)</title>
       <link>https://41labs.ai/blog/best-ai-companies-singapore</link>
       <guid isPermaLink="true">https://41labs.ai/blog/best-ai-companies-singapore</guid>
@@ -627,16 +607,6 @@
     </item>
 
     <item>
-      <title>RPA vs AI Automation: What's the Difference and Which Do You Need?</title>
-      <link>https://41labs.ai/blog/rpa-vs-ai-automation-difference</link>
-      <guid isPermaLink="true">https://41labs.ai/blog/rpa-vs-ai-automation-difference</guid>
-      <pubDate>Thu, 12 Feb 2026 00:00:00 GMT</pubDate>
-      <dc:creator>Alexander Lee</dc:creator>
-      <category>Insights</category>
-      <description>RPA follows scripts. AI learns patterns. Here's a clear comparison of Robotic Process Automation vs AI automation — when to use each, and when to combine them.</description>
-    </item>
-
-    <item>
       <title>AI and PDPA Compliance in Singapore: What Businesses Need to Know</title>
       <link>https://41labs.ai/blog/ai-pdpa-compliance-singapore</link>
       <guid isPermaLink="true">https://41labs.ai/blog/ai-pdpa-compliance-singapore</guid>
@@ -664,16 +634,6 @@
       <dc:creator>Alexander Lee</dc:creator>
       <category>Insights</category>
       <description>Custom AI projects typically take 6-16 weeks from kickoff to production. Here's a detailed breakdown of each phase and what happens at every stage.</description>
-    </item>
-
-    <item>
-      <title>AI ROI Calculator: How to Measure and Predict AI Automation Returns</title>
-      <link>https://41labs.ai/blog/ai-roi-calculator-guide</link>
-      <guid isPermaLink="true">https://41labs.ai/blog/ai-roi-calculator-guide</guid>
-      <pubDate>Sat, 07 Feb 2026 00:00:00 GMT</pubDate>
-      <dc:creator>Alexander Lee</dc:creator>
-      <category>Insights</category>
-      <description>Calculate the real ROI of AI automation before you invest. This guide provides formulas, benchmarks, and a framework for building your AI business case.</description>
     </item>
 
     <item>
