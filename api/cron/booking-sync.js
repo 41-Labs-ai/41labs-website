@@ -154,8 +154,17 @@ async function runBookingSync({ env, fetchImpl, now }) {
 
   // Claim -> send -> release on failure. 'already' | 'skipped' | 'sent' | 'failed'.
   const once = async (opp, key, configured, send) => {
-    if (notesLib.hasMarker(opp.statusNotes, key)) return 'already';
-    if (!configured) return 'skipped';
+    // Record the early exits too. An empty sends[] used to be unreadable: it meant
+    // "nothing this run", which covers both "already sent" and "not configured", and
+    // that ambiguity cost an hour working out whether a booking had reached Meta.
+    if (notesLib.hasMarker(opp.statusNotes, key)) {
+      summary.sends.push({ opportunityId: opp.id, key, status: 'already' });
+      return 'already';
+    }
+    if (!configured) {
+      summary.sends.push({ opportunityId: opp.id, key, status: 'skipped' });
+      return 'skipped';
+    }
     await patch(opp, { statusNotes: notesLib.addMarker(opp.statusNotes, key) });
     let status;
     try { status = await send(); } catch { status = 'failed'; }
