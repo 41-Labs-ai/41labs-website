@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      # Regenerate the sitemap, blog grid and feed, then fail if they differ
+      # from what was committed. Vercel rebuilds these at deploy time anyway,
+      # so a diff here means the committed copies are stale and someone is
+      # reviewing a sitemap that is not the one that will ship.
+      - name: Generated files are up to date
+        run: |
+          npm run rebuild
+          if ! git diff --quiet -- sitemap.xml blog.html feed.xml; then
+            echo "::error::sitemap.xml / blog.html / feed.xml are stale. Run 'npm run rebuild' and commit."
+            git diff --stat -- sitemap.xml blog.html feed.xml
+            exit 1
+          fi
+
+      - run: npx playwright test --project=chromium
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
