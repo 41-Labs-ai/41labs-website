@@ -8,7 +8,10 @@
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:report": "playwright show-report",
-    "serve": "serve -l 3000"
+    "serve": "serve -l 3000",
+    "rebuild": "node rebuild-sitemap.js && node rebuild-blog-grid.js && node rebuild-feed.js",
+    "predeploy": "npm run rebuild && npm test",
+    "deploy": "vercel --prod"
   },
   "repository": {
     "type": "git",

@@ -30,6 +30,16 @@
       "permanent": true
     },
     {
+      "source": "/pricing",
+      "destination": "/41-closer",
+      "permanent": true
+    },
+    {
+      "source": "/services/quote-automation",
+      "destination": "/ai-quote-automation-singapore",
+      "permanent": true
+    },
+    {
       "source": "/post",
       "has": [
         {
