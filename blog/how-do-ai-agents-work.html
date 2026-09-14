@@ -40,104 +40,99 @@
     <link rel="alternate" type="application/rss+xml" title="41 Labs Blog" href="https://41labs.ai/feed.xml">
 
     <!-- Article Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "How Do AI Agents Work? A Plain-English Explainer for Business Owners",
-        "description": "How AI agents work, in plain English: a language model plus your business data, tools, and rules, running in a loop. What happens when a customer messages one, what agents get wrong, and what you need to run one.",
-        "image": "https://41labs.ai/blog/img/how-do-ai-agents-work.webp",
-        "author": {
-            "@type": "Person",
-            "name": "Alexander Lee",
-            "jobTitle": "Founder & CEO",
-            "url": "https://www.linkedin.com/in/leejunweialexander/"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "41 Labs",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://41labs.ai/logo-full.png"
-            }
-        },
-        "datePublished": "2026-07-24T08:00:00+08:00",
-        "dateModified": "2026-07-24T08:00:00+08:00",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://41labs.ai/blog/how-do-ai-agents-work"
-        }
-    }
-    </script>
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How Do AI Agents Work? A Plain-English Explainer for Business Owners",
+  "description": "How AI agents work, in plain English: a language model plus your business data, tools, and rules, running in a loop. What happens when a customer messages one, what agents get wrong, and what you need to run one.",
+  "image": "https://41labs.ai/blog/img/how-do-ai-agents-work.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Alexander Lee",
+    "jobTitle": "Founder & CEO",
+    "url": "https://www.linkedin.com/in/leejunweialexander/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "41 Labs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://41labs.ai/logo-full.png"
+    },
+    "url": "https://41labs.ai"
+  },
+  "datePublished": "2026-07-24T08:00:00+08:00",
+  "dateModified": "2026-07-24T08:00:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://41labs.ai/blog/how-do-ai-agents-work"
+  }
+}</script>
 
     <!-- FAQPage Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "How does an AI agent make decisions?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "It applies the rules it was given, through a language model that has read your business data. When a message arrives, the agent matches it against your catalogue and policies, then picks its next move from a short list of allowed actions: answer, quote, ask a qualifying question, book, or hand off to a human. It does not improvise outside that list. On the agents 41 Labs runs, the hard limits are written down, like never invent a price and never promise a delivery date the system cannot verify. The quality of the decisions tracks the quality of the rules and the data, which is why the setup work matters far beyond the choice of AI model."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do AI agents learn on their own?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "No. A production agent does not quietly retrain itself on your conversations. It behaves the same way today as it did yesterday, until someone deliberately updates its data or its instructions. That is by design. An agent that changed its own behaviour week to week could never be trusted with prices, bookings, and payments. In practice a person reads the transcripts, spots wrong or awkward answers, and updates the prompt or the data. On the agents 41 Labs runs, that tuning happens weekly. So the agent does improve over time, but every improvement is a change a human chose to make, and drift stays under control."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How accurate are AI agents?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "As accurate as the data behind them. An agent quoting from a clean, current price list gets prices right all day. The same agent pointed at a stale spreadsheet is confidently wrong, which does more damage than no answer at all. Accuracy also drops on ambiguous messages, so a well-built agent hands those to a human instead of guessing. This is why 41 Labs builds a working prototype on a client's real data before any payment: the prototype surfaces the messy data on day one, while it is still cheap to fix. On our best live deployment, 64.1% of handled chats end in a sale, with humans covering the tricky ones."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the difference between an AI agent and ChatGPT?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "ChatGPT is a general language model you chat with. It has no access to your stock, your prices, or your calendar, and it cannot take actions in your systems. An AI agent wraps that same kind of model with your business data, tools it may use, and rules it must follow. Ask ChatGPT what a sofa costs and you get a generic essay. Put the same question to an agent connected to a furniture catalogue and you get the price, a delivery option, and an offer to hold one. The engine is similar. The wiring around it, your data, your tools, your rules, is the part you are actually buying."
-                }
-            }
-        ]
+      "@type": "Question",
+      "name": "How does an AI agent make decisions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It applies the rules it was given, through a language model that has read your business data. When a message arrives, the agent matches it against your catalogue and policies, then picks its next move from a short list of allowed actions: answer, quote, ask a qualifying question, book, or hand off to a human. It does not improvise outside that list. On the agents 41 Labs runs, the hard limits are written down, like never invent a price and never promise a delivery date the system cannot verify. The quality of the decisions tracks the quality of the rules and the data, which is why the setup work matters far beyond the choice of AI model."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do AI agents learn on their own?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A production agent does not quietly retrain itself on your conversations. It behaves the same way today as it did yesterday, until someone deliberately updates its data or its instructions. That is by design. An agent that changed its own behaviour week to week could never be trusted with prices, bookings, and payments. In practice a person reads the transcripts, spots wrong or awkward answers, and updates the prompt or the data. On the agents 41 Labs runs, that tuning happens weekly. So the agent does improve over time, but every improvement is a change a human chose to make, and drift stays under control."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate are AI agents?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As accurate as the data behind them. An agent quoting from a clean, current price list gets prices right all day. The same agent pointed at a stale spreadsheet is confidently wrong, which does more damage than no answer at all. Accuracy also drops on ambiguous messages, so a well-built agent hands those to a human instead of guessing. This is why 41 Labs builds a working prototype on a client's real data before any payment: the prototype surfaces the messy data on day one, while it is still cheap to fix. On our best live deployment, 64.1% of handled chats end in a sale, with humans covering the tricky ones."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between an AI agent and ChatGPT?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ChatGPT is a general language model you chat with. It has no access to your stock, your prices, or your calendar, and it cannot take actions in your systems. An AI agent wraps that same kind of model with your business data, tools it may use, and rules it must follow. Ask ChatGPT what a sofa costs and you get a generic essay. Put the same question to an agent connected to a furniture catalogue and you get the price, a delivery option, and an offer to hold one. The engine is similar. The wiring around it, your data, your tools, your rules, is the part you are actually buying."
+      }
     }
-    </script>
+  ]
+}</script>
 
     <!-- BreadcrumbList Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
     {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://41labs.ai/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://41labs.ai/blog"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "How Do AI Agents Work?"
-            }
-        ]
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://41labs.ai/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://41labs.ai/blog"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How Do AI Agents Work?"
     }
-    </script>
+  ]
+}</script>
 
     <link rel="stylesheet" href="../styles.css?v=7">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -226,6 +221,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </li>
                 </ol>
             </nav>
+<main id="main">
 
             <!-- Post Header -->
             <header class="post-header">
@@ -419,7 +415,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-    <footer class="footer">
+    </main>
+<footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">

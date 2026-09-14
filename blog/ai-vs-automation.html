@@ -40,104 +40,99 @@
     <link rel="alternate" type="application/rss+xml" title="41 Labs Blog" href="https://41labs.ai/feed.xml">
 
     <!-- Article Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "AI vs Automation vs AI Agents: What's the Difference (and Which Do You Need)?",
-        "description": "Automation follows fixed rules, AI interprets messy input, and an AI agent acts across a whole workflow. Plain definitions, one concrete example of each, published cost bands, and a decision guide keyed to where your business loses money.",
-        "image": "https://41labs.ai/blog/img/ai-vs-automation.webp",
-        "author": {
-            "@type": "Person",
-            "name": "Alexander Lee",
-            "jobTitle": "Founder & CEO",
-            "url": "https://www.linkedin.com/in/leejunweialexander/"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "41 Labs",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://41labs.ai/logo-full.png"
-            }
-        },
-        "datePublished": "2026-07-24T08:00:00+08:00",
-        "dateModified": "2026-07-24T08:00:00+08:00",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://41labs.ai/blog/ai-vs-automation"
-        }
-    }
-    </script>
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI vs Automation vs AI Agents: What's the Difference (and Which Do You Need)?",
+  "description": "Automation follows fixed rules, AI interprets messy input, and an AI agent acts across a whole workflow. Plain definitions, one concrete example of each, published cost bands, and a decision guide keyed to where your business loses money.",
+  "image": "https://41labs.ai/blog/img/ai-vs-automation.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Alexander Lee",
+    "jobTitle": "Founder & CEO",
+    "url": "https://www.linkedin.com/in/leejunweialexander/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "41 Labs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://41labs.ai/logo-full.png"
+    },
+    "url": "https://41labs.ai"
+  },
+  "datePublished": "2026-07-24T08:00:00+08:00",
+  "dateModified": "2026-07-24T08:00:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://41labs.ai/blog/ai-vs-automation"
+  }
+}</script>
 
     <!-- FAQPage Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Is automation the same as AI?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "No. Automation runs rules a person wrote in advance, so the same trigger always produces the same action. AI interprets input nobody structured and makes a decision no rule anticipated. A tool that files every incoming invoice into a folder is automation. A tool that reads a rambling enquiry email and works out the product, quantity, and deadline is AI. Vendors blur the two words because AI carries higher prices, so test any pitch with one question: what happens when the input varies? If the honest answer is that it breaks, you are buying automation, whatever the label says."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is AI automation?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "AI automation is the two combined: an automated workflow that uses AI at the steps needing judgment. The automation moves work between steps, and the AI reads, decides, or writes at the points where fixed rules fail. Most systems sold under the label are this mix. In our quoting build, intake and document generation are plain automation, while reading the request and matching it to the catalogue is AI. Together they cut per-quote time from 3 hours to about 5 minutes. Bought as a custom project, systems in this shape run S$7,000 to S$25,000."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the difference between an AI agent and automation?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Automation executes one predefined step each time a trigger fires, and it never deviates from the rule. An AI agent carries a goal across many steps and chooses its own actions along the way: read the enquiry, check the price list, draft the quote, chase the follow-up. When a customer replies with something unexpected, an automation stalls and an agent adapts. The costs reflect that gap. Automation tools run about S$50 to S$500 a month set up yourself, while a managed agent like our 41 Closer runs from S$690 a month plus a one-time build fee from S$4,800."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Is ChatGPT automation or AI?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "ChatGPT is AI. It interprets whatever you type and generates a response, with no fixed rule mapping input to output, which is the opposite of how automation works. Out of the box it is not an agent for your business either, because it cannot see your price list, your CRM, or your WhatsApp. Connect a model like that to those tools, give it a goal and guardrails, and you have built an AI agent. That gap, between an app you chat with and a system wired into your operations, is where most of the cost in a S$7,000 to S$25,000 build goes."
-                }
-            }
-        ]
+      "@type": "Question",
+      "name": "Is automation the same as AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Automation runs rules a person wrote in advance, so the same trigger always produces the same action. AI interprets input nobody structured and makes a decision no rule anticipated. A tool that files every incoming invoice into a folder is automation. A tool that reads a rambling enquiry email and works out the product, quantity, and deadline is AI. Vendors blur the two words because AI carries higher prices, so test any pitch with one question: what happens when the input varies? If the honest answer is that it breaks, you are buying automation, whatever the label says."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is AI automation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI automation is the two combined: an automated workflow that uses AI at the steps needing judgment. The automation moves work between steps, and the AI reads, decides, or writes at the points where fixed rules fail. Most systems sold under the label are this mix. In our quoting build, intake and document generation are plain automation, while reading the request and matching it to the catalogue is AI. Together they cut per-quote time from 3 hours to about 5 minutes. Bought as a custom project, systems in this shape run S$7,000 to S$25,000."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between an AI agent and automation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Automation executes one predefined step each time a trigger fires, and it never deviates from the rule. An AI agent carries a goal across many steps and chooses its own actions along the way: read the enquiry, check the price list, draft the quote, chase the follow-up. When a customer replies with something unexpected, an automation stalls and an agent adapts. The costs reflect that gap. Automation tools run about S$50 to S$500 a month set up yourself, while a managed agent like our 41 Closer runs from S$690 a month plus a one-time build fee from S$4,800."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is ChatGPT automation or AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ChatGPT is AI. It interprets whatever you type and generates a response, with no fixed rule mapping input to output, which is the opposite of how automation works. Out of the box it is not an agent for your business either, because it cannot see your price list, your CRM, or your WhatsApp. Connect a model like that to those tools, give it a goal and guardrails, and you have built an AI agent. That gap, between an app you chat with and a system wired into your operations, is where most of the cost in a S$7,000 to S$25,000 build goes."
+      }
     }
-    </script>
+  ]
+}</script>
 
     <!-- BreadcrumbList Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
     {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://41labs.ai/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://41labs.ai/blog"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "AI vs Automation vs AI Agents"
-            }
-        ]
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://41labs.ai/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://41labs.ai/blog"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI vs Automation vs AI Agents"
     }
-    </script>
+  ]
+}</script>
 
     <link rel="stylesheet" href="../styles.css?v=7">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -226,6 +221,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </li>
                 </ol>
             </nav>
+<main id="main">
 
             <!-- Post Header -->
             <header class="post-header">
@@ -383,7 +379,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-    <footer class="footer">
+    </main>
+<footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">

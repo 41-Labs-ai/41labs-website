@@ -16,6 +16,17 @@
   },
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.41labs.ai"
+        }
+      ],
+      "destination": "https://41labs.ai/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {

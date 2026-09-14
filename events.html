@@ -20,24 +20,45 @@
     <meta name="twitter:description" content="Where you'll find 41 Labs in the AI community.">
     <meta name="twitter:image" content="https://41labs.ai/og-image.jpg?v=2">
 
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "41 Labs",
+  "url": "https://41labs.ai",
+  "logo": "https://41labs.ai/logo-full.png",
+  "memberOf": {
+    "@type": "Organization",
+    "name": "Singapore A.I. Association",
+    "alternateName": "SAIA",
+    "url": "https://41labs.ai"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Alexander Lee"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Singapore"
+  }
+}</script>
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
     {
-        "@context": "https://schema.org", "@type": "Organization",
-        "name": "41 Labs", "url": "https://41labs.ai", "logo": "https://41labs.ai/logo-full.png",
-        "memberOf": {"@type": "Organization", "name": "Singapore A.I. Association", "alternateName": "SAIA"},
-        "founder": {"@type": "Person", "name": "Alexander Lee"},
-        "areaServed": {"@type": "Country", "name": "Singapore"}
-    }
-    </script>
-    <script type="application/ld+json">
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://41labs.ai/"
+    },
     {
-        "@context": "https://schema.org", "@type": "BreadcrumbList",
-        "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://41labs.ai/"},
-            {"@type": "ListItem", "position": 2, "name": "Events & Recognition", "item": "https://41labs.ai/events"}
-        ]
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Events & Recognition",
+      "item": "https://41labs.ai/events"
     }
-    </script>
+  ]
+}</script>
 
     <link rel="icon" type="image/png" sizes="32x32" href="/logo-icon.png">
     <link rel="apple-touch-icon" href="/logo-icon.png">
@@ -109,6 +130,7 @@
             <button class="mobile-menu-btn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         </div>
     </nav>
+<main id="main">
 
     <header class="location-hero">
         <div class="container"><div class="location-hero-content">
@@ -196,7 +218,8 @@
         </div></div>
     </section>
 
-    <footer class="footer">
+    </main>
+<footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand"><img src="/logo-full.png" alt="41 Labs" class="footer-logo"><p>Custom AI systems for revenue and operations.</p><div class="footer-contact"><a href="mailto:alexander@41labs.ai">alexander@41labs.ai</a><span>Singapore</span></div></div>

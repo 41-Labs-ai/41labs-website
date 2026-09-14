@@ -37,23 +37,22 @@
     <meta name="twitter:image" content="https://41labs.ai/og-image.jpg?v=2">
 
     <!-- Structured Data for Blog -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Blog",
-        "name": "41 Labs Blog",
-        "description": "Practical insights on AI systems, automation, and operational efficiency for B2B businesses.",
-        "url": "https://41labs.ai/blog",
-        "publisher": {
-            "@type": "Organization",
-            "name": "41 Labs",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://41labs.ai/logo-full.png"
-            }
-        }
-    }
-    </script>
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "41 Labs Blog",
+  "description": "Practical insights on AI systems, automation, and operational efficiency for B2B businesses.",
+  "url": "https://41labs.ai/blog",
+  "publisher": {
+    "@type": "Organization",
+    "name": "41 Labs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://41labs.ai/logo-full.png"
+    },
+    "url": "https://41labs.ai"
+  }
+}</script>
 
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,26 +60,24 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
     <!-- BreadcrumbList Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
     {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://41labs.ai/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://41labs.ai/blog"
-            }
-        ]
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://41labs.ai/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://41labs.ai/blog"
     }
-    </script>
+  ]
+}</script>
 
 
     <script>/* deferred analytics for Core Web Vitals: load on first interaction or after 4s */

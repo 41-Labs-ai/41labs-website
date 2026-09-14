@@ -46,112 +46,107 @@
     <link rel="alternate" type="application/rss+xml" title="41 Labs Blog" href="https://41labs.ai/feed.xml">
 
     <!-- Article Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "AI Dispatch for Tow Truck Companies: How 365 Tow Automated 3am Calls",
-        "description": "AI dispatch systems help tow truck companies automate driver coordination, 24/7 call handling, and invoicing. See how 365 Tow cut response times by 40% with AI-powered dispatch from 41 Labs.",
-        "image": "https://41labs.ai/og-image.jpg",
-        "author": {
-            "@type": "Person",
-            "name": "Alexander Lee",
-            "jobTitle": "Founder & CEO",
-            "url": "https://www.linkedin.com/in/leejunweialexander/"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "41 Labs",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://41labs.ai/logo-full.png"
-            }
-        },
-        "datePublished": "2026-03-10T08:00:00+08:00",
-        "dateModified": "2026-03-23T08:00:00+08:00",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://41labs.ai/blog/ai-dispatch-tow-truck"
-        }
-    }
-    </script>
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Dispatch for Tow Truck Companies: How 365 Tow Automated 3am Calls",
+  "description": "AI dispatch systems help tow truck companies automate driver coordination, 24/7 call handling, and invoicing. See how 365 Tow cut response times by 40% with AI-powered dispatch from 41 Labs.",
+  "image": "https://41labs.ai/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Alexander Lee",
+    "jobTitle": "Founder & CEO",
+    "url": "https://www.linkedin.com/in/leejunweialexander/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "41 Labs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://41labs.ai/logo-full.png"
+    },
+    "url": "https://41labs.ai"
+  },
+  "datePublished": "2026-03-10T08:00:00+08:00",
+  "dateModified": "2026-03-23T08:00:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://41labs.ai/blog/ai-dispatch-tow-truck"
+  }
+}</script>
 
     <!-- FAQPage Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Can AI dispatch handle calls at 3am without a human operator?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes. AI dispatch systems use voice AI to answer inbound calls 24/7 without human operators. The system identifies the caller's location via GPS or address, determines the vehicle type and situation, finds the nearest available driver, and dispatches them — all within 90 seconds. Calls that require human judgement (accidents with injuries, police involvement) are escalated to an on-call manager with full context."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How does AI know which tow truck driver to dispatch?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The AI considers multiple factors simultaneously: driver proximity to the pickup location, current availability status, truck type compatibility (flatbed vs wheel-lift vs heavy-duty), driver shift schedule, and historical response time performance. The algorithm optimises for fastest customer response time while balancing workload across your fleet."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What happens if a driver rejects an AI dispatch assignment?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The system automatically reassigns to the next best driver within 15 seconds. It tracks rejection patterns and adjusts future routing accordingly. If no drivers are available within your fleet, the system can notify partner companies or alert management. Average reassignment time is under 20 seconds compared to 5-10 minutes for manual re-dispatch."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Does AI dispatch integrate with existing tow truck GPS tracking?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes. AI dispatch integrates with all major GPS and fleet tracking platforms including Samsara, Verizon Connect, GPS Trackit, and custom telematics systems. If your trucks already have GPS, the AI uses that real-time location data for dispatch decisions. No additional hardware is required."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How much does AI dispatch cost for a tow truck company?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "AI dispatch systems for tow truck companies typically cost S$12,000-S$30,000 for initial setup, with monthly operating costs of S$800-S$2,000 depending on call volume. A company handling 200 calls per month typically saves S$4,000-S$6,000 monthly in dispatcher labour costs alone, achieving full ROI within 3-5 months."
-                }
-            }
-        ]
+      "@type": "Question",
+      "name": "Can AI dispatch handle calls at 3am without a human operator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. AI dispatch systems use voice AI to answer inbound calls 24/7 without human operators. The system identifies the caller's location via GPS or address, determines the vehicle type and situation, finds the nearest available driver, and dispatches them — all within 90 seconds. Calls that require human judgement (accidents with injuries, police involvement) are escalated to an on-call manager with full context."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does AI know which tow truck driver to dispatch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The AI considers multiple factors simultaneously: driver proximity to the pickup location, current availability status, truck type compatibility (flatbed vs wheel-lift vs heavy-duty), driver shift schedule, and historical response time performance. The algorithm optimises for fastest customer response time while balancing workload across your fleet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if a driver rejects an AI dispatch assignment?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The system automatically reassigns to the next best driver within 15 seconds. It tracks rejection patterns and adjusts future routing accordingly. If no drivers are available within your fleet, the system can notify partner companies or alert management. Average reassignment time is under 20 seconds compared to 5-10 minutes for manual re-dispatch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does AI dispatch integrate with existing tow truck GPS tracking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. AI dispatch integrates with all major GPS and fleet tracking platforms including Samsara, Verizon Connect, GPS Trackit, and custom telematics systems. If your trucks already have GPS, the AI uses that real-time location data for dispatch decisions. No additional hardware is required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does AI dispatch cost for a tow truck company?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI dispatch systems for tow truck companies typically cost S$12,000-S$30,000 for initial setup, with monthly operating costs of S$800-S$2,000 depending on call volume. A company handling 200 calls per month typically saves S$4,000-S$6,000 monthly in dispatcher labour costs alone, achieving full ROI within 3-5 months."
+      }
     }
-    </script>
+  ]
+}</script>
 
     <!-- BreadcrumbList Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
     {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://41labs.ai/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://41labs.ai/blog"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "AI Dispatch for Tow Truck Companies: How 365 Tow Automated 3am Calls"
-            }
-        ]
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://41labs.ai/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://41labs.ai/blog"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI Dispatch for Tow Truck Companies: How 365 Tow Automated 3am Calls"
     }
-    </script>
+  ]
+}</script>
 
     <link rel="stylesheet" href="../styles.css?v=7">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -240,6 +235,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </li>
                 </ol>
             </nav>
+<main id="main">
 
             <!-- Post Header -->
             <header class="post-header">
@@ -453,7 +449,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-    <footer class="footer">
+    </main>
+<footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">

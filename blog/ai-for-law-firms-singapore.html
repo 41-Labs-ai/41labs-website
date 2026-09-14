@@ -46,112 +46,107 @@
     <link rel="alternate" type="application/rss+xml" title="41 Labs Blog" href="https://41labs.ai/feed.xml">
 
     <!-- Article Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "How Singapore Law Firms Use AI to Review Contracts and Cut Research Time by 70%",
-        "description": "Singapore law firms are using AI for contract review, legal research, and document summarisation. Here's what works, what doesn't, and how small firms can start without enterprise budgets.",
-        "image": "https://41labs.ai/og-image.jpg",
-        "author": {
-            "@type": "Person",
-            "name": "Alexander Lee",
-            "jobTitle": "Founder & CEO",
-            "url": "https://www.linkedin.com/in/leejunweialexander/"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "41 Labs",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://41labs.ai/logo-full.png"
-            }
-        },
-        "datePublished": "2026-03-25T08:00:00+08:00",
-        "dateModified": "2026-03-25T08:00:00+08:00",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://41labs.ai/blog/ai-for-law-firms-singapore"
-        }
-    }
-    </script>
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How Singapore Law Firms Use AI to Review Contracts and Cut Research Time by 70%",
+  "description": "Singapore law firms are using AI for contract review, legal research, and document summarisation. Here's what works, what doesn't, and how small firms can start without enterprise budgets.",
+  "image": "https://41labs.ai/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Alexander Lee",
+    "jobTitle": "Founder & CEO",
+    "url": "https://www.linkedin.com/in/leejunweialexander/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "41 Labs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://41labs.ai/logo-full.png"
+    },
+    "url": "https://41labs.ai"
+  },
+  "datePublished": "2026-03-25T08:00:00+08:00",
+  "dateModified": "2026-03-25T08:00:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://41labs.ai/blog/ai-for-law-firms-singapore"
+  }
+}</script>
 
     <!-- FAQPage Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Is AI accurate enough for legal contract review in Singapore?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Modern AI contract review tools achieve 90-95% accuracy on clause identification and risk flagging when configured for Singapore law. They excel at spotting missing clauses, non-standard terms, and deviations from templates. However, AI should augment — not replace — lawyer judgement. The best workflow is AI-first review followed by human verification on flagged items."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How do Singapore law firms handle AI hallucination risks?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The Ministry of Law's GenAI guidelines issued on 6 March 2026 require lawyers to verify all AI-generated outputs before relying on them professionally. In practice, firms mitigate hallucination risks by using retrieval-augmented generation (RAG) systems that ground AI responses in actual case law databases like LawNet, rather than relying on general-purpose language models."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Can small law firms in Singapore afford AI tools?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes. Entry-level AI tools for legal research and document review start at S$200-500 per month per user. Custom AI systems built for specific workflows — such as automated contract review or due diligence — typically cost S$15,000-40,000 for development. Small firms can start with off-the-shelf tools and graduate to custom systems as ROI is proven."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What types of legal work can AI automate in Singapore?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "AI is most effective for contract review and clause extraction, legal research and case law analysis, document summarisation, due diligence document review, regulatory change monitoring, and first-draft generation of standard agreements. It is less suitable for courtroom advocacy, client relationship management, and novel legal argumentation."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How long does it take to implement AI in a Singapore law firm?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Off-the-shelf AI legal tools can be deployed in 1-2 weeks including training. Custom AI systems — such as a contract review engine trained on your firm's templates and precedents — take 4-8 weeks from kickoff to production. Most firms see measurable time savings within the first month of deployment."
-                }
-            }
-        ]
+      "@type": "Question",
+      "name": "Is AI accurate enough for legal contract review in Singapore?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Modern AI contract review tools achieve 90-95% accuracy on clause identification and risk flagging when configured for Singapore law. They excel at spotting missing clauses, non-standard terms, and deviations from templates. However, AI should augment — not replace — lawyer judgement. The best workflow is AI-first review followed by human verification on flagged items."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do Singapore law firms handle AI hallucination risks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Ministry of Law's GenAI guidelines issued on 6 March 2026 require lawyers to verify all AI-generated outputs before relying on them professionally. In practice, firms mitigate hallucination risks by using retrieval-augmented generation (RAG) systems that ground AI responses in actual case law databases like LawNet, rather than relying on general-purpose language models."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can small law firms in Singapore afford AI tools?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Entry-level AI tools for legal research and document review start at S$200-500 per month per user. Custom AI systems built for specific workflows — such as automated contract review or due diligence — typically cost S$15,000-40,000 for development. Small firms can start with off-the-shelf tools and graduate to custom systems as ROI is proven."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What types of legal work can AI automate in Singapore?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI is most effective for contract review and clause extraction, legal research and case law analysis, document summarisation, due diligence document review, regulatory change monitoring, and first-draft generation of standard agreements. It is less suitable for courtroom advocacy, client relationship management, and novel legal argumentation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to implement AI in a Singapore law firm?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Off-the-shelf AI legal tools can be deployed in 1-2 weeks including training. Custom AI systems — such as a contract review engine trained on your firm's templates and precedents — take 4-8 weeks from kickoff to production. Most firms see measurable time savings within the first month of deployment."
+      }
     }
-    </script>
+  ]
+}</script>
 
     <!-- BreadcrumbList Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
     {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://41labs.ai/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://41labs.ai/blog"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "How Singapore Law Firms Use AI to Review Contracts and Cut Research Time by 70%"
-            }
-        ]
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://41labs.ai/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://41labs.ai/blog"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How Singapore Law Firms Use AI to Review Contracts and Cut Research Time by 70%"
     }
-    </script>
+  ]
+}</script>
 
     <link rel="stylesheet" href="../styles.css?v=7">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -240,6 +235,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </li>
                 </ol>
             </nav>
+<main id="main">
 
             <!-- Post Header -->
             <header class="post-header">
@@ -440,7 +436,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-    <footer class="footer">
+    </main>
+<footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
