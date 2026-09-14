@@ -12,13 +12,13 @@ test.describe('Homepage', () => {
   test('should display hero section with main heading', async ({ page }) => {
     const heroHeading = page.locator('.hero h1');
     await expect(heroHeading).toBeVisible();
-    await expect(heroHeading).toContainText('Outpace your competitors');
+    await expect(heroHeading).toContainText('41 Closer stops the leak');
   });
 
   test('should display hero CTA button', async ({ page }) => {
     const ctaButton = page.locator('.hero-cta .btn-primary');
     await expect(ctaButton).toBeVisible();
-    await expect(ctaButton).toContainText('Book Your Free');
+    await expect(ctaButton).toContainText('See It Close');
   });
 
   test('should display social proof stats', async ({ page }) => {
@@ -26,7 +26,13 @@ test.describe('Homepage', () => {
     await expect(statsSection).toBeVisible();
 
     const statItems = page.locator('.stat-item');
-    await expect(statItems).toHaveCount(4);
+    await expect(statItems).toHaveCount(3);
+
+    // Every hero stat must be substantiable — no invented proof.
+    const statText = (await statsSection.innerText()).toLowerCase();
+    for (const banned of ['$2m+', '200+ companies', '100% client retention', '100% production']) {
+      expect(statText).not.toContain(banned);
+    }
   });
 
   test('should display problem cards', async ({ page }) => {

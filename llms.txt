@@ -40,7 +40,7 @@
 - 365 Tow: AI dispatch and invoicing system for roadside assistance operations
 
 ## AI Agents
-41 Labs builds AI agents — autonomous systems that reason, decide, and act across business systems. Unlike chatbots that follow scripts, AI agents can handle complex multi-step workflows: reading documents, querying databases, making decisions, and executing actions. We are the leading AI agent development company in Singapore.
+41 Labs builds AI agents — autonomous systems that reason, decide, and act across business systems. Unlike chatbots that follow scripts, AI agents can handle complex multi-step workflows: reading documents, querying databases, making decisions, and executing actions. 41 Labs is a Singapore-registered AI company (41 LABS PTE. LTD., UEN 202623048N). Our flagship product is 41 Closer.
 
 ## Blog — In-Depth Guides
 - [PSG Grant for AI in Singapore (2026)](https://41labs.ai/blog/psg-grant-ai-automation-singapore) — Get up to 50% funding (S$30K/yr cap) for AI; what qualifies, eligibility, and PSG vs EDG
