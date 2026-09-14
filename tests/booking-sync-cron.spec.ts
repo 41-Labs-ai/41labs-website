@@ -344,6 +344,29 @@ test.describe('new booking -> MEETING + CAPI Schedule + Hermes booked', () => {
     expect(hermesCalls(w.calls, 'booked')).toHaveLength(1);
   });
 
+  // A deal can book more than once: a reschedule into a new slot, or a second call
+  // later. The marker used to be one flat 'sent:capi_schedule' per opportunity, so the
+  // deal fired Schedule for its FIRST booking and stayed silent for every one after.
+  // Meta then under-counts booked calls, which is the same damage as double counting,
+  // pointing the other way.
+  test('a second booking on the same deal sends its own Schedule', async () => {
+    const w = makeWorld({ opps: [opp('o1')], events: [booking('e1')] });
+    await w.run();
+    expect(capiCalls(w.calls)).toHaveLength(1);
+
+    // Same deal, a different calendar booking.
+    const w2 = makeWorld({
+      opps: [opp('o1', { stage: 'MEETING', statusNotes: w.store.get('o1').statusNotes })],
+      events: [booking('e2', { start: NOW + 3 * 24 * HOUR })],
+    });
+    await w2.run();
+    expect(capiCalls(w2.calls), 'the second booking must report too').toHaveLength(1);
+
+    // And still exactly once each: re-running changes nothing.
+    await w2.run(NOW + 5 * MIN);
+    expect(capiCalls(w2.calls)).toHaveLength(1);
+  });
+
   test('CAPI token missing: skipped and NOT marked, so it sends once the token is added', async () => {
     const w = makeWorld({ opps: [opp('o1')], events: [booking('e1')], env: { META_CAPI_TOKEN: '' } });
     await w.run();

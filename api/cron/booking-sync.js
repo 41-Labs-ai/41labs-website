@@ -201,7 +201,10 @@ async function runBookingSync({ env, fetchImpl, now }) {
       }
 
       // 2. Meta CAPI Schedule.
-      await once(opp, 'sent:capi_schedule', !!env.META_CAPI_TOKEN, () => {
+      // Keyed per booking, not per deal. A flat 'sent:capi_schedule' meant a deal
+      // reported its first booking and went silent for every later one, so a
+      // reschedule or a second call never reached Meta.
+      await once(opp, `sent:capi_schedule:${ev.id}`, !!env.META_CAPI_TOKEN, () => {
         const c = contactOf(opp);
         const parsed = notesLib.parseLeadNotes(opp.statusNotes);
         const created = Date.parse(ev.created || '');
