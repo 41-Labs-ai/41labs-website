@@ -373,12 +373,16 @@ test.describe('what reaches the lead', () => {
     expect(sent.api[1].eventId).toBe(eventID);
   });
 
-  test('a lead that does not qualify still reports, so we can see what the ads are buying', async ({ page }) => {
+  // Nobody is turned away any more (13 Sep: take every call while there is capacity), so
+  // the smallest business still books. The tier is what tells us what the ads bought, and
+  // it has to reach the server, because tier C is exactly what Meta must NOT be taught to
+  // go and find more of.
+  test('the smallest lead still books, and reports the tier that says what the ads are buying', async ({ page }) => {
     const sent = await stub(page);
     await page.goto('/ai-closer.html' + QS);
     await fillAndSubmit(page, { enquiries: 'under20' });
     await expect.poll(() => sent.api.length, { timeout: 3000 }).toBe(2);   // partial, then the full lead
-    expect(sent.api[1].qualified).toBe('no');
+    expect(sent.api[1].qualified).toBe('yes');
     expect(sent.api[1].tier).toBe('C');
     expect(sent.api[1].eventId).toBeTruthy();
   });

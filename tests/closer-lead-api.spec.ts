@@ -9,6 +9,14 @@ const HANDLER = path.join(__dirname, '..', 'api', 'closer-lead.js');
 
 type Call = { url: string; method: string; headers: any; body: any };
 
+// Not every call sends JSON: the Google token exchange posts form-encoded data, and
+// blindly JSON.parsing it threw inside the stub itself. That throw then surfaced as the
+// caller's "failure reason", which hid what the test was actually asserting.
+function parseBody(body: any) {
+  if (!body) return null;
+  try { return JSON.parse(body); } catch { return String(body); }
+}
+
 // Every env var the handler reads. Each run starts from a clean slate so a
 // developer's sourced ~/.config/41labs/*.env can never leak into a test.
 const ENV_KEYS = [
@@ -16,6 +24,10 @@ const ENV_KEYS = [
   'LEAD_ALERT_CHAT_ID', 'LEAD_ALERT_THREAD_ID', 'RESEND_API_KEY', 'RESEND_FROM', 'LEAD_ALERT_EMAIL_TO',
   'HERMES_BASE_URL', 'HERMES_INTAKE_KEY',
   'META_CAPI_TOKEN', 'META_CAPI_PIXEL_ID', 'META_CAPI_TEST_EVENT_CODE',
+  // The email path falls back to Gmail, so the service account decides whether email is
+  // 'skipped' or attempted. Leaving it out let a developer's sourced ~/.config/41labs
+  // env leak in and turned "no email configured" into a live token exchange.
+  'GOOGLE_SERVICE_ACCOUNT_JSON', 'LEAD_ALERT_EMAIL_FROM', 'LEAD_ALERT_EMAIL_TO',
 ];
 
 const FULL_ENV = {
@@ -56,7 +68,7 @@ async function run(body: any, opts: Opts = {}) {
   let n = 0;
   (globalThis as any).fetch = async (url: string, init: any) => {
     const host = new URL(url).host;
-    calls.push({ url, method: init?.method, headers: init?.headers || {}, body: init?.body ? JSON.parse(init.body) : null });
+    calls.push({ url, method: init?.method, headers: init?.headers || {}, body: parseBody(init?.body) });
     if (opts.throwHosts?.includes(host)) throw new Error('network down');
     if (opts.hangHosts?.includes(host)) {
       return new Promise((_, reject) => {
@@ -268,10 +280,14 @@ test.describe('closer-lead: instant Telegram + email alert', () => {
     expect(mailCall(calls)).toBeTruthy();
   });
 
-  test('Resend returns 500: Telegram still sends and the response is still ok', async () => {
+  // Resend failing must never cost us the notification: the email path falls through to
+  // Gmail. No service account is configured here, so the fallback reports 'skipped'
+  // rather than sending. That the fallback really reaches Gmail is proven in
+  // gmail-lib.spec.ts; what matters here is that Resend dying is not fatal.
+  test('Resend returns 500: the email path falls through, Telegram still sends, response still ok', async () => {
     const { json } = await run(lead, { env: FULL_ENV, failHosts: ['api.resend.com'] });
     expect(json.ok).toBe(true);
-    expect(json.alerts).toEqual({ telegram: 'sent', email: 'failed' });
+    expect(json.alerts).toEqual({ telegram: 'sent', email: 'skipped' });
   });
 
   test('Twenty fails: the alert says so, so Alexander knows to add the lead by hand', async () => {
@@ -554,7 +570,7 @@ test.describe('a company we already know must not kill the lead', () => {
     Object.assign(process.env, { TWENTY_API_KEY: 'test-key' });
     let n = 0;
     (globalThis as any).fetch = async (url: string, init: any) => {
-      calls.push({ url, method: init?.method, headers: init?.headers || {}, body: init?.body ? JSON.parse(init.body) : null });
+      calls.push({ url, method: init?.method, headers: init?.headers || {}, body: parseBody(init?.body) });
       if (url.includes('/rest/companies') && init?.method === 'POST') {
         return { ok: false, status: 400, text: async () => '{"messages":["A duplicate entry was detected"]}', json: async () => ({}) };
       }
@@ -596,7 +612,7 @@ test.describe('a company we already know must not kill the lead', () => {
     Object.assign(process.env, { TWENTY_API_KEY: 'test-key' });
     let n = 0;
     (globalThis as any).fetch = async (url: string, init: any) => {
-      calls.push({ url, method: init?.method, headers: init?.headers || {}, body: init?.body ? JSON.parse(init.body) : null });
+      calls.push({ url, method: init?.method, headers: init?.headers || {}, body: parseBody(init?.body) });
       if (url.includes('/rest/companies')) return { ok: false, status: 500, text: async () => 'boom', json: async () => ({}) };
       if (url.includes('/rest/')) {
         n += 1;

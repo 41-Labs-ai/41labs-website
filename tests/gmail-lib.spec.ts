@@ -83,9 +83,13 @@ test.describe('sending', () => {
     expect((await run({ env: {} })).r).toBe('skipped');
   });
 
-  test('a Gmail outage is reported, never thrown into the lead path', async () => {
-    expect((await run({ ok: false })).r).toBe('failed');
-    expect((await run({ throws: true })).r).toBe('failed');
+  // Not just "failed": the REASON has to survive. A bare 'failed' is what hid a dead
+  // Gmail import for three deploys, so the status carrying why is the point.
+  test('a Gmail outage is reported with its reason, never thrown into the lead path', async () => {
+    expect(await run({ ok: false }).then((x) => x.r)).toMatch(/^failed:500:/);
+    const thrown = (await run({ throws: true })).r;
+    expect(thrown).toMatch(/^failed:/);
+    expect(thrown.replace(/^failed:/, ''), 'the reason must not be empty').not.toBe('');
   });
 });
 
