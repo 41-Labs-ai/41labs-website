@@ -77,54 +77,68 @@
     </script>
 
     <!-- FAQPage Schema -->
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What is the difference between the WhatsApp Business app and the WhatsApp Business API?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The WhatsApp Business app is a free mobile app for a single user, suited to micro-businesses. The WhatsApp Business API (the WhatsApp Business Platform) has no app — it connects WhatsApp to your own software, chatbot, or CRM so multiple agents and automated systems can message at scale. The API is what you need to run AI automation, broadcast templates, and handle high message volumes."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How much does the WhatsApp Business API cost in 2026?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Since 1 July 2025, Meta charges per delivered template message rather than per 24-hour conversation. Pricing depends on the message category and the recipient's country. The four categories are Marketing (most expensive), Utility, Authentication, and Service. Service messages — your replies within the 24-hour customer service window — are free, and the first 1,000 service conversations per WhatsApp Business Account each month are free. On top of Meta's fees, your Business Solution Provider may add platform or per-message charges."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do I need a Business Solution Provider (BSP) to use the WhatsApp API?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "In practice, yes. Most businesses access the WhatsApp Business Platform through a Meta Business Solution Provider, which handles the technical setup, number verification, and message infrastructure. Your AI chatbot or automation platform then connects through the BSP. This is standard and does not change the fact that the conversation, data, and customer relationship remain yours."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Can I add AI to WhatsApp to answer customers automatically?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes. Once you are on the WhatsApp Business API, you can connect an AI agent that reads incoming messages, understands intent, answers from your knowledge base, qualifies leads, books appointments, and sends order or delivery updates — automatically, 24/7. A custom AI agent can go further and act inside your systems, such as checking stock or generating a quote, rather than only answering questions."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Why is WhatsApp automation important for Singapore businesses?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "WhatsApp is the dominant messaging channel in Singapore — it is where customers already expect to reach businesses. Automating it with AI means enquiries get answered instantly at any hour, leads are qualified before a human steps in, and routine updates (bookings, deliveries, reminders) go out without manual effort. For most Singapore SMEs, WhatsApp is the single highest-impact channel to automate first."
-                }
-            }
-        ]
+      "@type": "Question",
+      "name": "What is the difference between the WhatsApp Business app and the WhatsApp Business API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The WhatsApp Business app is a free mobile app for a single user, suited to micro-businesses. The WhatsApp Business API (the WhatsApp Business Platform) has no app — it connects WhatsApp to your own software, chatbot, or CRM so multiple agents and automated systems can message at scale. The API is what you need to run AI automation, broadcast templates, and handle high message volumes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does the WhatsApp Business API cost in 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Since 1 July 2025, Meta charges per delivered template message rather than per 24-hour conversation. Pricing depends on the message category and the recipient's country. The four categories are Marketing (most expensive), Utility, Authentication, and Service. Service messages — your replies within the 24-hour customer service window — are free, and the first 1,000 service conversations per WhatsApp Business Account each month are free. On top of Meta's fees, your Business Solution Provider may add platform or per-message charges."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a Business Solution Provider (BSP) to use the WhatsApp API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In practice, yes. Most businesses access the WhatsApp Business Platform through a Meta Business Solution Provider, which handles the technical setup, number verification, and message infrastructure. Your AI chatbot or automation platform then connects through the BSP. This is standard and does not change the fact that the conversation, data, and customer relationship remain yours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I add AI to WhatsApp to answer customers automatically?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once you are on the WhatsApp Business API, you can connect an AI agent that reads incoming messages, understands intent, answers from your knowledge base, qualifies leads, books appointments, and sends order or delivery updates — automatically, 24/7. A custom AI agent can go further and act inside your systems, such as checking stock or generating a quote, rather than only answering questions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is WhatsApp automation important for Singapore businesses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "WhatsApp is the dominant messaging channel in Singapore — it is where customers already expect to reach businesses. Automating it with AI means enquiries get answered instantly at any hour, leads are qualified before a human steps in, and routine updates (bookings, deliveries, reminders) go out without manual effort. For most Singapore SMEs, WhatsApp is the single highest-impact channel to automate first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best API for WhatsApp OTP and SMS backup for Singapore users?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Twilio Verify is the standard answer, because it handles WhatsApp as the primary channel and falls back to SMS automatically when delivery fails, which is the whole point of the question. Meta's WhatsApp Cloud API is cheaper per message but has no SMS fallback, so you build and maintain that logic yourself with a separate SMS provider. For Singapore numbers specifically, two things matter. Authentication templates must be pre-approved by Meta and are billed as authentication conversations, a separate and cheaper rate than marketing. And Singapore has strict rules on unsolicited commercial messaging, so keep the OTP sender identity clean and never mix promotional content into an authentication template. We do not sell an OTP product, so this is not a pitch: for OTP with fallback, Twilio Verify is the shortest path."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the cheapest WhatsApp Business API provider for Singapore numbers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meta's WhatsApp Cloud API direct is the cheapest, because there is no subscription at all. You pay only Meta's per-conversation fee and write the integration yourself. If you want software rather than an API, Twilio is pay-as-you-go at roughly US$0.005 a message with no monthly minimum, and AiSensy is usually the lowest-cost packaged platform. Among the inbox tools, ManyChat starts around US$14 a month and Interakt around US$55. Two warnings on cheapest. Meta's per-conversation fee is charged on top of every option here, so the subscription is rarely the biggest line on the bill once volume arrives. And the cheapest tool is expensive if somebody has to spend six hours a week operating it, which is the calculation most Singapore SMEs skip."
+      }
     }
-    </script>
+  ]
+}</script>
 
     <!-- BreadcrumbList Schema -->
     <script type="application/ld+json">
@@ -359,7 +373,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h3>Why is WhatsApp automation important for Singapore businesses?</h3>
                 <p>WhatsApp is Singapore's dominant channel — it is where customers already expect to reach you. Automating it with AI means instant answers at any hour, leads qualified before a human steps in, and routine updates sent without manual effort. For most SMEs here, it is the highest-impact channel to automate first.</p>
 
-                <h2>Start Where Your Customers Already Are</h2>
+
+                <h3>What is the best API for WhatsApp OTP and SMS backup for Singapore users?</h3>
+
+
+                <p><strong>Twilio Verify</strong> is the standard answer. It sends over WhatsApp first and falls back to SMS automatically when delivery fails, which is the whole point of the question. Meta's <strong>WhatsApp Cloud API</strong> is cheaper per message but has no SMS fallback, so you build and maintain that logic yourself with a separate SMS provider. For Singapore numbers specifically, two things matter. Authentication templates must be pre-approved by Meta and are billed as authentication conversations, a separate and cheaper rate than marketing. And Singapore has strict rules on unsolicited commercial messaging, so keep the OTP sender identity clean and never mix promotional content into an authentication template. We do not sell an OTP product, so this is not a pitch: for OTP with fallback, Twilio Verify is the shortest path.</p>
+
+
+                <h3>What is the cheapest WhatsApp Business API provider for Singapore numbers?</h3>
+
+
+                <p><strong>Meta's WhatsApp Cloud API</strong> direct. There is no subscription at all. You pay only Meta's per-conversation fee and write the integration yourself. If you want software rather than an API, <strong>Twilio</strong> is pay-as-you-go at roughly US$0.005 a message with no monthly minimum, and <strong>AiSensy</strong> is usually the lowest-cost packaged platform. Among the inbox tools, ManyChat starts around US$14 a month and Interakt around US$55. Two warnings on cheapest. Meta's per-conversation fee is charged on top of every option here, so the subscription is rarely the biggest line on the bill once volume arrives. And the cheapest tool is expensive if somebody has to spend six hours a week operating it, which is the calculation most Singapore SMEs skip.</p>
+<h2>Start Where Your Customers Already Are</h2>
 
                 <p>You can spend months optimising a website that customers barely use to contact you — or you can automate the channel they already prefer. For Singapore businesses, WhatsApp is not one option among many; it is <em>the</em> channel. Get an AI agent answering it well and you have fixed the most common complaint customers have about SMEs: "they took too long to reply."</p>
 

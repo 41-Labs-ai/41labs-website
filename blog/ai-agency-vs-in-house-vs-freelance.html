@@ -52,19 +52,60 @@
         ]
     }
     </script>
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {"@type": "Question", "name": "Should I hire an AI agency or build in-house?", "acceptedAnswer": {"@type": "Answer", "text": "For most SMEs and mid-market businesses, an AI agency is faster and lower-risk than building in-house. Hiring an in-house AI team in Singapore costs S$120,000–S$250,000+ per year in salaries and takes months to recruit and ramp. An agency like 41 Labs delivers a working prototype in about 2 weeks and a deployed system in 3–8 weeks for S$7,000–S$25,000. Build in-house only when AI is core to your product and you need a permanent team."}},
-            {"@type": "Question", "name": "Is a freelance AI developer cheaper than an agency?", "acceptedAnswer": {"@type": "Answer", "text": "A freelance AI developer often quotes a lower upfront price (S$3,000–S$15,000), but carries higher delivery risk: single point of failure, variable quality, limited accountability, and a higher chance of stalling before production. An agency costs more but brings a team, a track record of deployed systems, and ongoing support. For business-critical automation, the agency's reliability usually outweighs the freelancer's lower price."}},
-            {"@type": "Question", "name": "How much does an in-house AI team cost in Singapore?", "acceptedAnswer": {"@type": "Answer", "text": "A single mid-level AI/ML engineer in Singapore costs roughly S$8,000–S$15,000 per month (S$96,000–S$180,000+ per year) before benefits, recruitment, and management overhead. A functional in-house team of two to three people runs well over S$250,000 per year — justified only when AI is central to your product and roadmap."}},
-            {"@type": "Question", "name": "What is the fastest way to get an AI system built?", "acceptedAnswer": {"@type": "Answer", "text": "A specialist AI agency is the fastest route for most businesses. 41 Labs delivers a working prototype on your real data in about 2 weeks and full production deployment in 3–8 weeks — versus months to recruit an in-house team or an uncertain timeline with a freelancer."}},
-            {"@type": "Question", "name": "Who owns the AI system after it's built?", "acceptedAnswer": {"@type": "Answer", "text": "With an agency like 41 Labs or a freelancer, you own the system that is built for you — clarify IP in the contract. With off-the-shelf SaaS tools you rent access and never own the underlying system. In-house builds are owned outright but require you to maintain the team that keeps them running."}}
-        ]
+      "@type": "Question",
+      "name": "Should I hire an AI agency or build in-house?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For most SMEs and mid-market businesses, an AI agency is faster and lower-risk than building in-house. Hiring an in-house AI team in Singapore costs S$120,000–S$250,000+ per year in salaries and takes months to recruit and ramp. An agency like 41 Labs delivers a working prototype in about 2 weeks and a deployed system in 3–8 weeks for S$7,000–S$25,000. Build in-house only when AI is core to your product and you need a permanent team."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a freelance AI developer cheaper than an agency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A freelance AI developer often quotes a lower upfront price (S$3,000–S$15,000), but carries higher delivery risk: single point of failure, variable quality, limited accountability, and a higher chance of stalling before production. An agency costs more but brings a team, a track record of deployed systems, and ongoing support. For business-critical automation, the agency's reliability usually outweighs the freelancer's lower price."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does an in-house AI team cost in Singapore?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A single mid-level AI/ML engineer in Singapore costs roughly S$8,000–S$15,000 per month (S$96,000–S$180,000+ per year) before benefits, recruitment, and management overhead. A functional in-house team of two to three people runs well over S$250,000 per year — justified only when AI is central to your product and roadmap."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the fastest way to get an AI system built?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A specialist AI agency is the fastest route for most businesses. 41 Labs delivers a working prototype on your real data in about 2 weeks and full production deployment in 3–8 weeks — versus months to recruit an in-house team or an uncertain timeline with a freelancer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who owns the AI system after it's built?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With an agency like 41 Labs or a freelancer, you own the system that is built for you — clarify IP in the contract. With off-the-shelf SaaS tools you rent access and never own the underlying system. In-house builds are owned outright but require you to maintain the team that keeps them running."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do the costs compare: AI agent development consultancy vs an internal team vs freelancers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rough Singapore numbers, for a first production agent. A freelancer runs S$5,000 to S$20,000 and is cheapest up front, with the risk concentrated in one person who may not be reachable in month six. A consultancy runs S$15,000 to S$60,000 for a boutique and well into six figures for a large firm, and buys you a team, a method and someone accountable. An internal hire costs S$90,000 to S$150,000 a year fully loaded before you have shipped anything, and only makes sense when you have a pipeline of AI work rather than one project. The number most people miss is year two. Agents need retuning as your catalogue, prices and edge cases change, so ask every option what ongoing costs look like. A cheap build with no maintenance plan is the most expensive of the three."
+      }
     }
-    </script>
+  ]
+}</script>
 
     <link rel="stylesheet" href="../styles.css?v=5">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -192,7 +233,10 @@
                 <h3>Who owns the AI system after it's built?</h3>
                 <p>With an agency or freelancer, you own what's built for you — clarify IP in the contract. With off-the-shelf SaaS you rent access and never own it. In-house builds are owned outright but require maintaining the team.</p>
 
-                <h2>Ready to Explore AI for Your Business?</h2>
+                <h3>How do the costs compare: AI agent development consultancy vs an internal team vs freelancers?</h3>
+
+                <p>Rough Singapore numbers, for a first production agent. A <strong>freelancer</strong> runs S$5,000 to S$20,000 and is cheapest up front, with the risk concentrated in one person who may not be reachable in month six. A <strong>consultancy</strong> runs S$15,000 to S$60,000 for a boutique and well into six figures for a large firm, and buys you a team, a method and someone accountable. An <strong>internal hire</strong> costs S$90,000 to S$150,000 a year fully loaded before you have shipped anything, and only makes sense when you have a pipeline of AI work rather than one project. The number most people miss is year two. Agents need retuning as your catalogue, prices and edge cases change, so ask every option what ongoing costs look like. A cheap build with no maintenance plan is the most expensive of the three.</p>
+<h2>Ready to Explore AI for Your Business?</h2>
                 <p>Tell us the one process costing your team the most time. We'll tell you honestly whether an agency, a freelancer, or in-house is the right fit — and if it's us, we'll prototype it on your data before you pay anything.</p>
                 <p style="margin-top:32px;"><a href="https://wa.me/6580124848?text=Hi%2041%20Labs%21%20I%27m%20exploring%20AI%20for%20my%20business%20and%20not%20sure%20where%20to%20start." class="btn btn-primary btn-large" target="_blank" rel="noopener">Message 41 Labs on WhatsApp</a></p>
             </div>
