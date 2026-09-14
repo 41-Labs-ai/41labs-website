@@ -8,7 +8,7 @@
     <link>https://41labs.ai/blog</link>
     <description>Practical insights on AI systems, automation, and operational efficiency for B2B businesses in Southeast Asia.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2026 11:49:49 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2026 11:56:30 GMT</lastBuildDate>
     <atom:link href="https://41labs.ai/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://41labs.ai/logo-full.png</url>
@@ -54,6 +54,16 @@
       <dc:creator>Alexander Lee</dc:creator>
       <category>Insights</category>
       <description>A digital salesperson is an AI agent that answers enquiries in seconds, quotes real prices, follows up, and closes on WhatsApp, 24/7. The definition, the limits, and the honest cost vs a human hire.</description>
+    </item>
+
+    <item>
+      <title>We Messaged 25 Singapore Businesses on WhatsApp at 9pm. One Replied That Night.</title>
+      <link>https://41labs.ai/blog/whatsapp-response-time-singapore-study</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/whatsapp-response-time-singapore-study</guid>
+      <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>We sent a real buying enquiry to 25 Singapore businesses on WhatsApp between 8pm and 11pm. One replied within five minutes. The median wait was 13.3 hours and four never produced a human reply at all. Full method, data and caveats.</description>
     </item>
 
     <item>

@@ -1,6 +1,16 @@
 {
   "posts": [
     {
+      "slug": "whatsapp-response-time-singapore-study",
+      "title": "We Messaged 25 Singapore Businesses on WhatsApp at 9pm. One Replied That Night.",
+      "date": "2026-09-14",
+      "author": "Alexander Lee",
+      "category": "ai-systems",
+      "excerpt": "Original 41 Labs research. One real buying enquiry sent to 25 Singapore businesses over WhatsApp, all in the evening. One replied within five minutes, the median wait was 13.3 hours, and four never sent a human reply at all.",
+      "readTime": "7 min read",
+      "image": "/blog/img/whatsapp-response-time-singapore-study.webp"
+    },
+    {
       "slug": "is-ai-profitable",
       "title": "Is AI Actually Profitable for a Business? Honest Math From Real Deployments",
       "date": "2026-07-25",
