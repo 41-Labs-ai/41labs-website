@@ -58,10 +58,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
         bookedAlready = true;
         metaEvent('Schedule', { content_name: 'ai_closer_call', variant: variant }, sharedId);
         track('book_call_complete', { event_category: 'conversion', cta_id: 'ai_closer', variant: variant });
-        var box = document.getElementById('cl-handoff');
-        if (box) box.hidden = false;
-        var lead = box && box.querySelector('.handoff-lead');
-        if (lead) lead.innerHTML = '<b>Booked.</b> Now say hello to your Closer on WhatsApp. Everything you told us is already in the message, and you get to watch it work before the call.';
     };
 
     // Best effort only. Google does not document a booking message from the appointment
@@ -316,64 +312,11 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
             document.getElementById('cl-step2').hidden = false;
             document.getElementById(qualified ? 'cl-book' : 'cl-notyet').hidden = false;
             if (qualified) {
-                showHandoff(data, true);                       // link ready immediately
                 dealReady.then(function () { showCalendar(data); });
             }
             var anchor = document.getElementById('qualify') || form;
             anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
-    }
-
-    // Qualified only. The handoff to our own AI Closer is deliberately shown AFTER the
-    // calendar: the booking is the commitment, the WhatsApp conversation is what keeps
-    // them warm until the call. Leads who did not qualify never see it.
-    // Labels for the prefilled first message. The visitor sends it themselves, which
-    // is the whole point: an inbound message opens WhatsApp's 24-hour service window,
-    // so the Closer can just talk. No approved template, no server-to-server send.
-    var SAY_ENQ = { under20: 'under 20', '20to50': '20 to 50', '50to150': '50 to 150', '150plus': 'over 150' };
-    var SAY_SALE = { under500: 'under S$500', '500to2k': 'S$500 to S$2,000', '2kto10k': 'S$2,000 to S$10,000', '10kplus': 'over S$10,000' };
-    var SAY_CHALLENGE = { slow: 'replies take too long', afterhours: 'nobody answers after hours',
-        followup: 'we forget to follow up', stock: 'checking stock or prices is slow',
-        quotes: 'quoting takes too long', volume: 'too many enquiries to handle' };
-    var SAY_GOAL = { recover: 'stop losing enquiries we already paid for', faster: 'reply and quote faster',
-        scale: 'handle more enquiries without hiring', freeteam: 'free the team from repetitive chats',
-        unsure: 'see what it can do' };
-
-    // Everything they just typed, in their own words, so the Closer never asks twice.
-    function handoffMessage(data) {
-        var first = (data.name || '').trim().split(/\s+/)[0];
-        var lines = ['Hi, I just asked for a free 41 Closer demo on your site.'];
-        if (first) lines.push('I am ' + first + (data.website ? ' from ' + data.website : '') + '.');
-        else if (data.website) lines.push('My site is ' + data.website + '.');
-
-        var vol = SAY_ENQ[data.enquiries], sale = SAY_SALE[data.saleValue];
-        if (vol || sale) {
-            lines.push('We get ' + (vol || 'a number of') + ' WhatsApp enquiries a week'
-                + (sale ? ', average sale ' + sale : '') + '.');
-        }
-        var pains = (data.challenges || []).map(function (c) { return SAY_CHALLENGE[c]; }).filter(Boolean);
-        if (pains.length) lines.push('What costs us most: ' + pains.join(', ') + '.');
-        if (SAY_GOAL[data.goal]) lines.push('What I want: ' + SAY_GOAL[data.goal] + '.');
-        lines.push('Can we set up a time to go through it?');
-        return lines.join('\n');
-    }
-
-    // Qualified only. Shown AFTER the calendar: the booking is the commitment, the
-    // WhatsApp conversation is what keeps them warm until the call.
-    // Builds the prefilled link and, only when told to, reveals it. Calendar-first
-    // means the handoff is the reward for booking, not a competing button beside it.
-    function showHandoff(data, reveal) {
-        var box = document.getElementById('cl-handoff');
-        if (!box) return;
-        var link = document.getElementById('cl-wa-handoff');
-        if (link) {
-            link.href = 'https://wa.me/6580124848?text=' + encodeURIComponent(handoffMessage(data));
-            link.addEventListener('click', function () {
-                track('closer_handoff_click', { event_category: 'conversion', tier: data.tier, variant: variant });
-                if (window.cl41) window.cl41.mark('closer_handoff_click', { tier: data.tier });
-            });
-        }
-        if (reveal) box.hidden = false;
     }
 
     function showBooked(info, data) {
@@ -403,13 +346,11 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
         // the page no booking callback, so waiting for one leaves the visitor staring at
         // an unchanged screen after they book. Bookings are caught server-side instead,
         // by api/cron/booking-sync.js.
-        // No calendar configured is fine now: the Closer books the call in chat, so
-        // the page never has to apologise for an empty slot.
+        // No calendar configured: say we will come back with times rather than leaving
+        // the visitor staring at an empty slot.
         if (!url) {
             if (holder) holder.hidden = true;
             if (head) head.hidden = true;
-            var box = document.getElementById('cl-handoff');
-            if (box) box.hidden = false;
             var fb = document.getElementById('cl-cal-fallback');
             if (fb) fb.hidden = false;
             return;

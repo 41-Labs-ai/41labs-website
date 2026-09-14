@@ -169,14 +169,17 @@ for (const P of PAGES) {
       expect(await fbqEvents(page)).toContain('Lead');
     });
 
-    test('clearing both floors books a time and hands off to the AI Closer', async ({ page }) => {
+    // The booking is the whole point of the page. There is no WhatsApp handoff beside
+    // it any more: asking someone to message us "can we set up a time" ten seconds after
+    // they set up a time read as a page that had not noticed what they just did.
+    test('clearing both floors books a time, with nothing competing beside the calendar', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
       await fillForm(page);
       await page.click('#cl-submit');
       await expect(page.locator('#cl-book')).toBeVisible();
-      // the handoff sits with the calendar: Google never tells us the booking happened
-      await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /wa\.me\/6580124848/);
+      await expect(page.locator('#cl-cal-head')).toBeVisible();
+      expect(await page.locator('a[href*="wa.me"]').count(), 'no WhatsApp CTA on the booking screen').toBe(0);
     });
 
     // Nobody is turned away any more: everyone books and the tier carries the judgement.
@@ -213,14 +216,15 @@ for (const P of PAGES) {
       expect(queued, 'the Cal.com inline embed was never requested').toBe(true);
     });
 
-    test('qualified + no booking URL: the Closer carries it, no empty calendar', async ({ page }) => {
+    test('qualified + no booking URL: we promise times, rather than show an empty calendar', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
       await page.evaluate(() => { (window as any).BOOKING_URL = ''; });
       await fillForm(page);
       await page.click('#cl-submit');
-      await expect(page.locator('#cl-wa-handoff')).toBeVisible();
+      await expect(page.locator('#cl-cal-fallback')).toBeVisible();
       await expect(page.locator('#cl-cal-head')).toBeHidden();
+      await expect(page.locator('#cl-cal-fallback')).toContainText(/one working day/i);
     });
 
     test('qualify41 override returning a boolean still routes correctly', async ({ page }) => {
@@ -447,76 +451,11 @@ test.describe('the qualified screen when no calendar is configured', () => {
 
     await expect(page.locator('#cl-book')).toBeVisible();
     await expect(page.locator('#cl-cal-head')).toBeHidden();     // no "Pick a time"
-    await expect(page.locator('#cl-wa-handoff')).toBeVisible();   // the Closer carries it
-    await expect(page.locator('#cl-handoff')).toBeVisible();      // and something to do now
+    await expect(page.locator('#cl-cal-fallback')).toBeVisible();  // we say what happens next
+    await expect(page.locator('#cl-cal-fallback')).toContainText(/one working day/i);
   });
 });
 
-// The handoff is INBOUND on purpose: the visitor sends the first message, which
-// opens WhatsApp's 24-hour service window, so the Closer can reply freely with no
-// approved template and no server-to-server send. That only works if the message
-// they send actually carries their answers.
-test.describe('the prefilled first message to the AI Closer', () => {
-  async function qualifyAndRead(page: any) {
-    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"x"}' }));
-    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route('**/app.cal.com/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
-    await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
-    await page.route(/connect\.facebook\.net|googletagmanager|app\.cal\.com|fonts\.g/, (r: any) => r.abort());
-    await page.goto('/ai-closer.html');
-    await page.fill('#cl-name', 'Tan Wei Ming');
-    await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+6591234567');
-    await page.click('#cl-next');
-    await page.fill('#cl-website', 'tanaircon.sg');
-    await page.selectOption('#cl-enquiries', '50to150');
-    await page.selectOption('#cl-sale', '500to2k');
-    await page.check('input[name="challenges"][value="slow"]');
-    await page.check('input[name="challenges"][value="afterhours"]');
-    await page.selectOption('#cl-goal', 'recover');
-    await page.click('#cl-submit');
-    await expect(page.locator('#cl-wa-handoff')).toBeVisible();   // sits with the calendar
-    const href = await page.locator('#cl-wa-handoff').getAttribute('href');
-    return decodeURIComponent((href || '').split('?text=')[1] || '');
-  }
-
-  test('carries their name, site, volume, ticket, pains and goal', async ({ page }) => {
-    const msg = await qualifyAndRead(page);
-    expect(msg).toContain('Tan');
-    expect(msg).toContain('tanaircon.sg');
-    expect(msg).toContain('50 to 150');
-    expect(msg).toContain('S$500 to S$2,000');
-    expect(msg).toContain('replies take too long');
-    expect(msg).toContain('nobody answers after hours');
-    expect(msg).toContain('stop losing enquiries we already paid for');
-  });
-
-  test('reads as a person wrote it, not as a form dump', async ({ page }) => {
-    const msg = await qualifyAndRead(page);
-    expect(msg.startsWith('Hi,')).toBe(true);
-    expect(msg).not.toMatch(/\b(50to150|500to2k|afterhours|undefined|null)\b/);
-    expect(msg.length).toBeLessThan(700);   // wa.me prefill has to survive the URL
-  });
-
-  test('goes to the Closer line', async ({ page }) => {
-    await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
-    await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-    await page.route(/connect\.facebook\.net|googletagmanager|fonts\.g/, (r: any) => r.abort());
-    await page.goto('/ai-closer.html');
-    await page.fill('#cl-name', 'Tan Wei Ming');
-    await page.fill('#cl-email', 'wm@tanaircon.sg');
-    await page.fill('#cl-whatsapp', '+6591234567');
-    await page.click('#cl-next');
-    await page.fill('#cl-website', 'tanaircon.sg');
-    await page.selectOption('#cl-enquiries', '150plus');
-    await page.selectOption('#cl-sale', '2kto10k');
-    await page.check('input[name="challenges"][value="stock"]');
-    await page.selectOption('#cl-goal', 'scale');
-    await page.click('#cl-submit');
-    await page.evaluate(() => (window as any).onCloserBooked());
-    await expect(page.locator('#cl-wa-handoff')).toHaveAttribute('href', /^https:\/\/wa\.me\/6580124848\?text=/);
-  });
-});
 
 // The website drives the preview build, so free text here costs a real build.
 test.describe('the website field only accepts a website', () => {
@@ -572,9 +511,9 @@ test.describe('the website field only accepts a website', () => {
   });
 });
 
-// The Closer runs discovery and books the call, so it is the action, not a footnote.
+// Booking the call is the single action on this screen. Nothing sits beside it.
 test.describe('a qualified lead is sent to the calendar', () => {
-  test('the Cal.com embed is requested and the Closer handoff sits beside it', async ({ page }) => {
+  test('the Cal.com embed is requested, and it is the only thing on offer', async ({ page }) => {
     await page.route('**/api/closer-lead', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"id":"deal-1"}' }));
     await page.route('**/api/meta-event', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
     await page.route('**/formspree.io/**', (r: any) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
@@ -593,11 +532,13 @@ test.describe('a qualified lead is sent to the calendar', () => {
     await page.click('#cl-submit');
 
     await expect(page.locator('#cl-cal-head')).toBeVisible();
-    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
     const queued = await page.evaluate(() => (((window as any).Cal || {}).q || []).some((a: any) => a[0] === 'inline'));
     expect(queued).toBe(true);
-    const msg = decodeURIComponent(((await page.locator('#cl-wa-handoff').getAttribute('href')) || '').split('?text=')[1] || '');
-    expect(msg).toContain('tanaircon.sg');
+    // The Cal.com config carries what they typed, so nothing is retyped in the booking.
+    const cfg = await page.evaluate(() => (((window as any).Cal || {}).q || []).find((a: any) => a[0] === 'inline')?.[1]?.config);
+    expect(cfg.notes).toContain('tanaircon.sg');
+    expect(cfg.email).toBe('wm@tanaircon.sg');
+    expect(await page.locator('a[href*="wa.me"]').count(), 'nothing competes with the booking').toBe(0);
   });
 });
 
@@ -661,9 +602,9 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     expect(api.find((e) => e.name === 'Schedule').eventId).toBe(px[3].eventID);
   });
 
-  // With Cal.com the handoff no longer waits for a booking: the message is built from
-  // what they typed, so it is ready the moment they qualify. The copy changes on booking.
-  test('the handoff copy changes once the booking is confirmed', async ({ page }) => {
+  // Cal.com renders its own confirmation (time, Meet link, the notes we passed) inside
+  // the embed, so the page must not add a second competing call to action underneath it.
+  test('confirming the booking leaves no WhatsApp CTA behind', async ({ page }) => {
     await setup(page);
     await page.goto('/ai-closer.html');
     await page.fill('#cl-name', 'Tan Wei Ming');
@@ -677,10 +618,9 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     await page.selectOption('#cl-goal', 'recover');
     await page.click('#cl-submit');
 
-    await expect(page.locator('#cl-wa-handoff')).toBeVisible();
-    await expect(page.locator('.handoff-lead')).toContainText(/once you have picked a time/i);
+    await expect(page.locator('#cl-cal-head')).toBeVisible();
     await page.evaluate(() => (window as any).onCloserBooked());
-    await expect(page.locator('.handoff-lead')).toContainText(/booked/i);
+    expect(await page.locator('a[href*="wa.me"]').count()).toBe(0);
   });
 
   test('ViewContent fires once the demo has been on screen a while', async ({ page }) => {
