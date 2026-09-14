@@ -1,5 +1,8 @@
 {
+  "buildCommand": "node rebuild-sitemap.js && node rebuild-blog-grid.js && node rebuild-feed.js",
+  "outputDirectory": ".",
   "cleanUrls": true,
+  "trailingSlash": false,
   "crons": [
     {
       "path": "/api/cron/booking-sync",
@@ -11,7 +14,6 @@
       "maxDuration": 60
     }
   },
-  "trailingSlash": false,
   "redirects": [
     {
       "source": "/:path*",
