@@ -592,6 +592,44 @@ test.describe('Meta conversions fire from both sides with one id', () => {
     expect(srv.sourceUrl).toContain('/ai-closer');
   });
 
+  // The one that matters. api/cron/booking-sync.js sends Schedule for the same booking
+  // with the deterministic id schedule_<opportunityId>. If the browser mints a random
+  // uuid instead, the two never deduplicate and Meta counts one booked call as two,
+  // which halves every cost-per-booking figure. So the browser MUST use the same key.
+  test('a real Cal.com booking uses the same id the cron will send, not a fresh uuid', async ({ page }) => {
+    const api = await setup(page);
+    await page.goto('/ai-closer.html');
+    await page.fill('#cl-name', 'Tan Wei Ming');
+    await page.fill('#cl-email', 'wm@tanaircon.sg');
+    await page.fill('#cl-whatsapp', '+6591234567');
+    await page.click('#cl-next');
+    await page.fill('#cl-website', 'tanaircon.sg');
+    await page.selectOption('#cl-enquiries', '150plus');
+    await page.selectOption('#cl-sale', '2kto10k');
+    await page.check('input[name="challenges"][value="slow"]');
+    await page.selectOption('#cl-goal', 'recover');
+    await page.click('#cl-submit');
+
+    // Fire it the way Cal.com does: through the callback the page registered, with no
+    // arguments. Calling onCloserBooked('schedule_x') by hand would prove nothing.
+    await expect.poll(async () => page.evaluate(() =>
+      ((((window as any).Cal || {}).q) || []).some((a: any) =>
+        a[0] === 'on' && a[1] && a[1].action === 'bookingSuccessful')), { timeout: 8000 }).toBe(true);
+    await page.evaluate(() => {
+      const entry = (((window as any).Cal || {}).q || []).find((a: any) =>
+        a[0] === 'on' && a[1] && a[1].action === 'bookingSuccessful');
+      entry[1].callback({});
+    });
+
+    const px = await pixelCall(page, 'Schedule');
+    expect(px, 'pixel Schedule').toBeTruthy();
+    await expect.poll(() => api.filter((e) => e.name === 'Schedule').length).toBe(1);
+    const srv = api.find((e) => e.name === 'Schedule');
+    expect(srv.eventId, 'browser and server must agree').toBe(px[3].eventID);
+    // /api/closer-lead was stubbed to return id "x".
+    expect(px[3].eventID, 'must be the deal-derived key the cron also uses').toBe('schedule_x');
+  });
+
   test('Schedule fires from the browser too, so it can deduplicate', async ({ page }) => {
     const api = await setup(page);
     await page.goto('/ai-closer.html');

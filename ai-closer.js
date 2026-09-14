@@ -319,25 +319,6 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
         });
     }
 
-    function showBooked(info, data) {
-        var box = document.getElementById('cl-booked');
-        var when = document.getElementById('cl-booked-when');
-        if (when && info.start) {
-            try {
-                when.textContent = new Date(info.start).toLocaleString('en-SG',
-                    { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' });
-            } catch (e) { when.textContent = 'your booked time'; }
-        }
-        var head = document.getElementById('cl-cal-head');
-        var cal = document.getElementById('cl-cal');
-        if (head) head.hidden = true;
-        if (cal) cal.hidden = true;           // the calendar has done its job
-        if (box) box.hidden = false;
-        // event_id matches exactly what api/cron/booking-sync.js will send for this deal,
-        // so the pixel copy and the server copy deduplicate instead of counting twice.
-        onCloserBooked('schedule_' + (data.opportunityId || ''));
-    }
-
     function showCalendar(data) {
         var url = (window.BOOKING_URL || '').trim();
         var holder = document.getElementById('cl-cal');
@@ -380,7 +361,13 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
                 notes: ['Website: ' + (data.website || ''), 'Enquiries/week: ' + (data.enquiries || ''), 'Avg sale: ' + (data.saleValue || ''), 'WhatsApp: ' + (data.whatsapp || '')].join(' | ')
             }
         });
-        Cal('on', { action: 'bookingSuccessful', callback: function () { window.onCloserBooked(); } });
+        // Use the SAME key api/cron/booking-sync.js will send for this deal, or Meta
+        // counts one booked call twice. With no deal id we stay quiet and let the cron
+        // send it: a second id here is worse than a few minutes of delay there.
+        Cal('on', { action: 'bookingSuccessful', callback: function () {
+            if (!data.opportunityId) return;
+            window.onCloserBooked('schedule_' + data.opportunityId);
+        } });
     }
 
     // ---- Leak calculator (long form only) ----
