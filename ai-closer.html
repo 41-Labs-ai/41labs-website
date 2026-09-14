@@ -236,13 +236,13 @@
         .vs { margin-top: 30px; background: var(--surface, #fff); border: 1px solid var(--rule, #e5e7eb);
             border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
         .vs-q { font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 18px; }
-        .vs-tag { display: block; font: 700 11px/1 Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase;
+        .vs-tag { display: block; font: 700 12px/1 Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase;
             color: var(--text-2); margin-bottom: 7px; }
         .vs-pair { display: grid; gap: 14px; }
         @media (min-width: 760px) { .vs-pair { grid-template-columns: 1fr 1fr; } }
         .vs-card { border-radius: 14px; padding: 16px 17px; display: flex; flex-direction: column; gap: 9px; }
         .vs-card p { margin: 0; font-size: 15px; line-height: 1.45; }
-        .vs-who { font: 800 11px/1 Inter, sans-serif; letter-spacing: .07em; text-transform: uppercase; }
+        .vs-who { font: 800 12px/1 Inter, sans-serif; letter-spacing: .07em; text-transform: uppercase; }
         .vs-verdict { font-size: 12.5px; font-weight: 700; }
         .vs-bad { background: #fdf2f2; border: 1px solid #f3d4d4; }
         .vs-bad .vs-who, .vs-bad .vs-verdict { color: #9a3535; }
@@ -385,7 +385,8 @@
 
         footer { background: var(--ink); color: rgba(255,255,255,0.55); font-size: 13px; padding: 26px 0 90px; }
         footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
-        footer a { color: rgba(255,255,255,0.7); }
+        /* Padded to a thumb-sized hit area: the link itself is only 21px of text. */
+        footer a { color: rgba(255,255,255,0.7); display: inline-block; padding: 11px 4px; margin: -11px 0; }
 
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
         .reveal.in-view { opacity: 1; transform: none; }
