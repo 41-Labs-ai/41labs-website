@@ -12,7 +12,7 @@ flowchart TD
   C --> D[Telegram alert to Alexander<br/>TIER first, wa.me link]
   C --> E[Resend email copy<br/>to alexander@41labs.ai]
   C --> F[Hermes intake<br/>event: lead_created]
-  B -->|tier A/B| G[Google Calendar<br/>appointment schedule iframe]
+  B --> G[Cal.com inline embed<br/>prefilled, metadata: opportunityId]
   G --> H[(alexander@41labs.ai calendar)]
   I[Vercel cron every 5 min<br/>GET /api/cron/booking-sync] -->|service account, read-only| H
   I -->|match guest email / phone| C
@@ -31,7 +31,7 @@ ad click -> /ai-closer page -> closer-analytics.js records the visit
                                  |-> Meta CAPI Lead (+ QualifiedLead if tier A/B)  [what the ads optimise on]
                                  |-> Telegram + Resend email            [speed to lead, backup]
                                  |-> Hermes  lead_created               [41 Closer takes over on WhatsApp]
-            tier A/B -> Google Calendar booking (iframe, can't report back)
+            everyone  -> Cal.com embed (fires bookingSuccessful, prefilled, carries the deal id)
 
 every 5 min: /api/cron/booking-sync
    calendar (last 2 days of updates + next 25h) -> match to deal
@@ -47,7 +47,7 @@ every 5 min: /api/cron/booking-sync
 |---|---|
 | `api/closer-lead.js` | Form POST. Twenty write, then alert + Hermes in parallel. Always 200 to the visitor. |
 | `api/cron/booking-sync.js` | The 5-minute cron. `runBookingSync()` is exported for tests. |
-| `api/_lib/lead-alert.js` | Telegram + Resend formatting and sending. |
+| `api/_lib/lead-alert.js` | Telegram + email. Resend if a key is set, otherwise Gmail via the service account. |
 | `api/_lib/hermes.js` | Hermes intake call (3s timeout, skip when env missing). |
 | `api/_lib/meta-capi.js` | SHA-256 hashing, `fbp`/`fbc`, Lead / QualifiedLead / Schedule payloads, batched send. |
 | `closer-analytics.js` | Browser journey recorder. Loads before `ai-closer.js`, exposes `window.cl41`. |
@@ -84,7 +84,7 @@ The cron writes marker lines into the opportunity's `statusNotes`:
 
 ```
 [booked:<calendarEventId>]                 deal bound to this booking, stage moved
-[sent:capi_schedule]                       Meta Schedule event accepted
+[sent:capi_schedule:<calendarEventId>]     Meta Schedule event accepted, per booking
 [sent:booked:<eventId>]                    Hermes told about the booking
 [sent:reminder_24h:<eventId>@<startIso>]   reminder sent for this start time
 [sent:reminder_1h:<eventId>@<startIso>]
@@ -104,8 +104,109 @@ To replay a step on purpose, delete its marker line from the deal's notes in Twe
 - **finish_booking** only for tier A/B, still SCREENING, 15 minutes to 24 hours after the form. The 24-hour cap stops the first deploy from nudging two weeks of old leads.
 - **reminder_24h** is skipped when the booking was made less than 25 hours before the call (the booking confirmation just went out).
 - **reminder_1h** window is 55 to 60 minutes before the call, exactly one 5-minute cron tick. If Vercel skips or delays that tick, the reminder is missed rather than sent late.
-- **CAPI** `event_time` is when the booking was made (Meta rejects events older than 7 days, so older bookings use "now"). `fbc` is `fb.1.<form submit ms>.<fbclid>`. `client_user_agent` comes from the form request, stored as a `UA:` line in the notes. Leads created before this deploy have no UA line.
+- **CAPI** `event_time` is when the booking was made (Meta rejects events older than 7 days, so older bookings use "now"). `fbc` is the REAL `_fbc` cookie when the notes carry one, falling back to `fb.1.<deal created ms>.<fbclid>` for leads saved before 15 Sep 2026. `client_user_agent` comes from the form request, stored as a `UA:` line in the notes. Leads created before this deploy have no UA line.
 - **Race**: the cron overwrites `statusNotes` with its own copy plus the new marker. An edit Alexander makes to the same deal's notes in the same second could be lost. Put hand notes in Twenty notes/tasks, not in `statusNotes`.
+
+## Traps (14-15 Sep 2026)
+
+Each of these cost hours. They are written down because none of them look like bugs.
+
+### `QualifiedLead` is server-side. Searching the page for it finds nothing, correctly.
+
+It is sent from `api/closer-lead.js` over the Conversions API, tier A and B only. There is
+no browser copy, so `grep QualifiedLead ai-closer.js` returns 0 and that is the design: a
+server-to-server call survives ad blockers and iOS, a browser pixel does not. An outside
+reviewer has already concluded "QualifiedLead is not tracking" from this. Verify the
+**event**, never the page:
+
+```bash
+curl "https://graph.facebook.com/v21.0/24659272643698089/stats?aggregation=event&access_token=$META_ADS_ACCESS_TOKEN"
+```
+
+### Meta's `/stats` endpoint runs about a day behind.
+
+It returns hourly buckets that end roughly 24 hours ago, while `last_fired_time` can look
+even staler. Do not design a "the number should go from 7 to 8" test around it: today's
+conversions are not in it. For anything same-day use Events Manager, or set
+`META_CAPI_TEST_EVENT_CODE` and watch Test Events.
+
+### One conversion appears under many `action_type` names. That is not double counting.
+
+In an insights `actions` array, `ViewContent` showed under seven aliases
+(`view_content`, `omni_view_content`, `offsite_conversion.fb_pixel_view_content`,
+`onsite_web_view_content`, `*_add_20_s_calls`, `*_add_meta_leads`) **all reading 25**.
+To tell genuinely distinct conversions apart, request
+`action_attribution_windows=['1d_click','7d_click','1d_view']` and read the split. Real
+double counting shows up as a doubled `1d_click` on **one** ad, not as two ads with one
+each.
+
+### Never put Alexander's real email or phone in a test that hits the live pixel.
+
+A curl test using `alexander@41labs.ai` + `6580124848` was hashed, matched to his own
+Facebook profile, checked against ads he had been shown, and recorded as a **view-attributed
+conversion** on `cold_whatsapp_B`. It inflated Lead and QualifiedLead by one each for days
+and looked exactly like a double-fire. Use an address with no Facebook account, or
+`META_CAPI_TEST_EVENT_CODE`.
+
+### `Schedule` has three senders. They must share one id.
+
+The browser pixel, `POST /api/meta-event`, and `api/cron/booking-sync.js` can all send
+`Schedule` for the same booking, because Cal.com writes into the Google Calendar the cron
+scans. All three key on `schedule_<opportunityId>`.
+
+Until 14 Sep the Cal.com `bookingSuccessful` callback ran `onCloserBooked()` with **no
+argument**, so the browser minted a random uuid: it agreed with `/api/meta-event` and
+disagreed with the cron. One booked call counted twice and every cost-per-booked-call
+figure read half its real value.
+
+⚠️ A test that calls `onCloserBooked('schedule_x')` by hand proves nothing. It only shows
+that two things you triggered yourself agree. **Fire the vendor's own registered handler**
+(find the `['on', {action:'bookingSuccessful', callback}]` entry in `Cal.q` and invoke it)
+and assert the id equals what the third sender would use.
+
+### Events sent later by a server need the browser's cookies written down.
+
+Meta credited the ads with `Lead` and with **nothing else**: `Schedule` appeared in no
+attribution window over seven days. `Lead` is sent from the browser carrying `_fbp` and
+`_fbc`. `Schedule` is sent minutes later by the cron, and `statusNotes` only stored
+`fbclid`, so the cron rebuilt an `fbc` from `opp.createdAt`, which is not the click time.
+Hashed email plus a guessed-timestamp `fbc` was not enough to match.
+
+Now `api/closer-lead.js` writes `fbp=` and `fbc=` lines into the notes,
+`api/_lib/notes.js` parses them, and the cron passes them through. **Rule: any event a
+server sends later needs the browser identifiers persisted at capture time. Hashed PII
+alone does not attribute.**
+
+### Custom conversion rules are immutable, and the API lies about it.
+
+The original "41 Closer Qualified Lead" rule was
+`{"and":[{"event":{"eq":"QualifiedLead"}},{"or":[{"value":{"eq":"41closer-qualified"}}]}]}`
+which compares a **string** against Meta's **numeric** `value` field and can never match,
+so `last_fired` stayed `None` forever. A POST to update the rule returns
+`{"success": true}` and silently changes nothing. Create a new one instead: creation needs
+`event_source_id` and rejects a single-condition rule ("A conversion rule is required at
+creation time"), hence the url clause. Live one is
+**41 Closer Qualified Lead v2**, id `2848588148855565`:
+`{"and":[{"event":{"eq":"QualifiedLead"}},{"url":{"i_contains":"41labs.ai"}}]}`.
+
+⚠️ Do **not** paste the drop-in from `41closer-marketing/ads/2026-09-batch/tracking-snippet.md`
+onto the page. It puts a string in Meta's numeric `value` field. That snippet is what
+created the broken rule.
+
+### Test records in Twenty hijack real bookings.
+
+The cron matches bookings to deals **by contact**, pulling emails out of the calendar event
+description, and every Cal.com invite lists `alexander@41labs.ai` in its "Who:" block. A
+test deal carrying that address swallowed six real bookings. Delete test deals the same day
+you make them, contact record included.
+
+### Google appointment schedules are invisible to the Calendar API.
+
+They render in the UI and cannot be listed, audited or deleted programmatically. Same for
+which calendars a viewer has ticked in their sidebar (`calendarList.patch` is not exposed).
+A booking that appears "twice" is usually one event id rendered on the organiser's calendar
+and on an attendee calendar the same person also has open: a self-test artifact, not a
+duplicate.
 
 ## Environment variables
 
@@ -145,7 +246,7 @@ The ad account can only optimise for what we report. Three events, deepest last:
 |---|---|---|---|
 | `Lead` | every form submit, including tier C | none | Volume, so the pixel keeps learning. No value, so Meta never bids to buy more tier C. |
 | `QualifiedLead` | tier A and B only | S$96 | **This is the event ad sets should optimise on.** MODELLED, not measured: base case 5% book x 20% close x S$9,600 build fee. See the warning below. |
-| `Schedule` | a call lands on the calendar | S$1,920 | Modelled: 20% close x S$9,600. Sent by the cron, because the Google booking iframe cannot report back. |
+| `Schedule` | a call is confirmed | S$500 | Set by the ads contract, not derived. The funnel implies nearer S$2,000, so this UNDERSTATES a booked call about 4x: safe for bidding, wrong for reading ROAS. Sent by the browser AND the cron, same id. |
 
 ⚠️ **No ad-sourced client has ever been traced.** Checked 13 Sep 2026 against Hermes and
 Twenty: no lead carrying an ad referral has reached a won stage, the Hertz deal has
@@ -187,7 +288,7 @@ Chosen default: **41 Labs group, inbox topic 27.** There is no leads or sales to
 ## One-time human steps
 
 1. **Share the calendar with the service account.** Google Calendar (alexander@41labs.ai), Settings, the calendar, "Share with specific people", add `claude-drive@claude-drive-access-492002.iam.gserviceaccount.com` with **"See all event details"**. (Tested 2026-09-11: today the API answers 404, meaning not shared. The Calendar API is already enabled on the project.)
-2. **Appointment schedule setup.** The schedule's title must contain "41 Closer" (or set `BOOKING_EVENT_MATCH`). Add a **phone number** question to the booking form so a guest who books with a different email still matches.
+2. ~~Appointment schedule setup.~~ **Done and gone.** The Google appointment schedule was deleted on 14 Sep 2026; Cal.com is the only booking path. Cal.com writes its bookings into the same Google Calendar, so the cron still sees them. Its event titles read "41 Closer between Alexander Lee and <name>", which still contains "41 Closer".
 3. **Resend.** Create an API key. Verify `41labs.ai` in Resend: add the DKIM TXT (`resend._domainkey`), and the `send` subdomain MX + SPF records it shows. Today 41labs.ai has no Resend records. Until then, set `RESEND_FROM="41 Labs Leads <onboarding@resend.dev>"`. That only delivers to the Resend account owner's address, so the account must be alexander@41labs.ai.
 4. **Hermes.** Once the `landing-lead` intake is deployed, set the same `HERMES_INTAKE_KEY` on Hermes and here, plus `HERMES_BASE_URL`.
 5. **Vercel env vars** (Production) for `41labs/41labs-website`:
@@ -203,7 +304,7 @@ Chosen default: **41 Labs group, inbox topic 27.** There is no leads or sales to
    ```
    Don't use `vercel env pull` to check them. It blanks secrets.
 6. **Deploy** (`vercel --prod`). The cron appears under the project's Settings, Cron Jobs.
-7. **Formspree.** Leave it on the page until the Resend email has been seen arriving for real leads for a week, then remove the Formspree post from `ai-closer.html`.
+7. ~~Formspree.~~ **Removed.** It capped out on the free tier. Email now goes through Gmail with the service account's `gmail.compose` delegation, which needs no new account and has no practical quota.
 
 ## Testing
 
@@ -224,7 +325,7 @@ They cover alert formatting, failure isolation, the Hermes contract and timeout,
    ```bash
    curl -s -H "Authorization: Bearer $CRON_SECRET" https://<preview-url>/api/cron/booking-sync | jq
    ```
-   Expect `booked: [...]`, the deal at MEETING with `[booked:...]`, `[sent:capi_schedule]` in the notes, and a Schedule event in Events Manager, Test events.
+   Expect `booked: [...]`, the deal at MEETING with `[booked:...]`, `[sent:capi_schedule:<eventId>]` in the notes, and a Schedule event in Events Manager, Test events.
 5. Run the curl again. Nothing new should be sent (`sends` empty).
 6. Clean up: cancel the test booking, move the test deal to LOST, and unset `META_CAPI_TEST_EVENT_CODE` before production.
 
