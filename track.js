@@ -58,6 +58,72 @@
         return 'other';
     }
 
+
+    // ---- Where the lead came from -------------------------------------------
+    // Every lead reaches us on WhatsApp, and the message used to arrive with no
+    // idea which page or campaign produced it. GA saw the click; the conversation
+    // did not. We remember first touch for the session and carry it into both.
+    var ATTR_KEY = '41l_attr';
+
+    function firstTouch() {
+        var saved;
+        try { saved = JSON.parse(sessionStorage.getItem(ATTR_KEY) || 'null'); } catch (e) { saved = null; }
+        if (saved) return saved;
+
+        var q = new URLSearchParams(location.search);
+        var src = q.get('utm_source') || '';
+        if (!src) {
+            // No utm: infer from the ad click ids, then the referrer, and say
+            // nothing rather than guess when there is genuinely nothing to say.
+            if (q.get('gclid')) src = 'google';
+            else if (q.get('fbclid')) src = 'meta';
+            else if (document.referrer) {
+                try {
+                    var h = new URL(document.referrer).hostname.replace(/^www\./, '');
+                    if (h && h !== location.hostname) src = h;
+                } catch (e) {}
+            }
+        }
+        var a = {
+            source: src,
+            medium: q.get('utm_medium') || '',
+            campaign: q.get('utm_campaign') || '',
+            content: q.get('utm_content') || '',
+            landing: location.pathname
+        };
+        try { sessionStorage.setItem(ATTR_KEY, JSON.stringify(a)); } catch (e) {}
+        return a;
+    }
+
+    // A short slug for the page the click happened on. "/" becomes "home".
+    function pageRef() {
+        var seg = location.pathname.replace(/\.html$/, '').split('/').filter(Boolean);
+        var last = seg.length ? seg[seg.length - 1] : 'home';
+        return last === 'index' ? 'home' : last;
+    }
+
+    // Append "(via page - source)" to the prefilled WhatsApp message so the
+    // conversation itself says where it came from. Kept short and readable:
+    // the customer sees this text before they send it.
+    function tagWhatsAppHref(href) {
+        var url;
+        try { url = new URL(href, location.href); } catch (e) { return href; }
+        var ref = pageRef();
+        var msg = url.searchParams.get('text') || '';
+        if (msg.indexOf('(via ') !== -1) return url.toString();   // already tagged
+        var a = firstTouch();
+        var bits = [ref];
+        if (a.source) bits.push(a.source);
+        if (a.campaign) bits.push(a.campaign);
+        url.searchParams.set('text', (msg ? msg + ' ' : '') + '(via ' + bits.join(' - ') + ')');
+        return url.toString();
+    }
+
+    // Record first touch as soon as the page loads. Doing it lazily at click
+    // time loses the campaign entirely when someone lands on an ad page, browses
+    // to a second page and only then clicks WhatsApp.
+    firstTouch();
+
     document.addEventListener('click', function (e) {
         var el = e.target && e.target.closest ? e.target.closest('a, button') : null;
         if (!el) return;
@@ -68,12 +134,25 @@
 
         // WhatsApp — the primary conversion across the site
         if (/wa\.me|whatsapp/i.test(href)) {
+            // Rewrite before the browser follows the link, so the prefilled
+            // message carries the page and campaign into the conversation.
+            var tagged = href;
+            if (/wa\.me/i.test(href)) {
+                tagged = tagWhatsAppHref(href);
+                if (tagged !== href) { try { el.setAttribute('href', tagged); } catch (e) {} }
+            }
+            var attr = firstTouch();
             track('whatsapp_click', {
                 event_category: 'conversion',
                 event_label: text || 'whatsapp',
                 cta_id: ctaId(el, href, text),
-                link_url: href,
-                page_path: page
+                link_url: tagged,
+                page_path: page,
+                utm_source: attr.source,
+                utm_medium: attr.medium,
+                utm_campaign: attr.campaign,
+                utm_content: attr.content,
+                landing_page: attr.landing
             });
             // Google Ads conversion (separate destination from GA4 above).
             // No-ops until AW_ID + label are filled in. beacon transport so it
