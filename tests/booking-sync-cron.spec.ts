@@ -31,7 +31,7 @@ const ENV = {
 type Call = { url: string; method: string; headers: any; body: any };
 
 const LANDING_NOTES = (tier: string, extra = '') =>
-  `Form: 41labs.ai/ai-closer\nRole: Owner\nTier: ${tier} (fit)\nUTM: utm_source=facebook utm_content=ad_stalk1\nfbclid=abc123\nUA: Mozilla/5.0 test${extra}`;
+  `Form: 41labs.ai/ai-closer\nRole: Owner\nTier: ${tier} (fit)\nUTM: utm_source=facebook utm_content=ad_stalk1\nfbclid=abc123\nfbp=fb.1.1757000000000.9876543210\nfbc=fb.1.1757000000000.abc123\nUA: Mozilla/5.0 test${extra}`;
 
 function opp(id: string, o: any = {}) {
   return {
@@ -270,7 +270,9 @@ test.describe('new booking -> MEETING + CAPI Schedule + Hermes booked', () => {
     expect(ev.user_data.em).toEqual(['99aca33e4d528d64142b3a7933d507112be98cfbc813ad173244e03575574e34']);
     expect(ev.user_data.ph).toEqual(['fd38d3edfeb70b7fb09e74e269d27f6fb24d5c75799b7e3d85604a5965a6623f']);
     expect(ev.user_data.fn).toEqual(['0e5123df1126f9d228246647d8cb62fd28bba9fb4e751d1934aef03741052c77']);
-    expect(ev.user_data.fbc).toBe(`fb.1.${Date.parse(opp('o1').createdAt)}.abc123`);
+    // The real cookie, not one rebuilt from fbclid and a guessed click time.
+    expect(ev.user_data.fbc).toBe('fb.1.1757000000000.abc123');
+    expect(ev.user_data.fbp).toBe('fb.1.1757000000000.9876543210');
     expect(ev.user_data.client_user_agent).toBe('Mozilla/5.0 test');
     expect(ev.custom_data.tier).toBe('A');
     // booked 3 minutes ago: event_time is the booking time, not the cron time
@@ -349,6 +351,33 @@ test.describe('new booking -> MEETING + CAPI Schedule + Hermes booked', () => {
   // deal fired Schedule for its FIRST booking and stayed silent for every one after.
   // Meta then under-counts booked calls, which is the same damage as double counting,
   // pointing the other way.
+  // Meta attributed our Lead to the ads but never the Schedule. Lead is sent from the
+  // browser with the _fbp and _fbc cookies; Schedule is sent hours later by this cron,
+  // and the notes only kept fbclid. Without _fbp, server-side matching is weak enough
+  // that Meta credits the booking to nobody, so Ads Manager can never show a
+  // cost per booked call.
+  test('Schedule carries the same _fbp and _fbc the Lead had, or Meta cannot attribute it', async () => {
+    const w = makeWorld({ opps: [opp('o1')], events: [booking('e1')] });
+    await w.run();
+    const capi = capiCalls(w.calls);
+    expect(capi).toHaveLength(1);
+    const ud = capi[0].body.data[0].user_data;
+    expect(ud.fbp, '_fbp must survive into the booking event').toBe('fb.1.1757000000000.9876543210');
+    expect(ud.fbc, 'the real _fbc cookie beats one rebuilt from fbclid').toBe('fb.1.1757000000000.abc123');
+  });
+
+  // Deals created before 15 Sep 2026 have no fbp/fbc in their notes. They must still
+  // send, falling back to an fbc rebuilt from fbclid rather than dropping the booking.
+  test('a lead saved before we stored the cookies still sends, rebuilding fbc from fbclid', async () => {
+    const legacy = opp('o1');
+    legacy.statusNotes = legacy.statusNotes.replace(/\nfbp=\S+/, '').replace(/\nfbc=\S+/, '');
+    const w = makeWorld({ opps: [legacy], events: [booking('e1')] });
+    await w.run();
+    const ud = capiCalls(w.calls)[0].body.data[0].user_data;
+    expect(ud.fbp).toBeUndefined();
+    expect(ud.fbc).toBe(`fb.1.${Date.parse(legacy.createdAt)}.abc123`);
+  });
+
   test('a second booking on the same deal sends its own Schedule', async () => {
     const w = makeWorld({ opps: [opp('o1')], events: [booking('e1')] });
     await w.run();

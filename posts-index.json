@@ -1,6 +1,36 @@
 {
   "posts": [
     {
+      "slug": "sleekflow-alternatives",
+      "title": "SleekFlow Alternatives in 2026: What Else Works for Asia-Based Teams",
+      "date": "2026-09-15",
+      "author": "Alexander Lee",
+      "category": "insights",
+      "excerpt": "Published pricing, checked 15 September 2026. The alternatives that make sense for Singapore and Hong Kong teams, and when to stay put.",
+      "readTime": "6 min read",
+      "image": "/blog/img/sleekflow-alternatives.webp"
+    },
+    {
+      "slug": "wati-alternatives",
+      "title": "Wati Alternatives in 2026: 7 Options, Real Pricing, Honest Trade-offs",
+      "date": "2026-09-15",
+      "author": "Alexander Lee",
+      "category": "insights",
+      "excerpt": "Published pricing, checked 15 September 2026. What each alternative is actually better at, and the case for staying on Wati.",
+      "readTime": "6 min read",
+      "image": "/blog/img/wati-alternatives.webp"
+    },
+    {
+      "slug": "manychat-alternatives",
+      "title": "ManyChat Alternatives in 2026: 7 Options Compared by the Job They Do",
+      "date": "2026-09-15",
+      "author": "Alexander Lee",
+      "category": "insights",
+      "excerpt": "Published pricing, checked 15 September 2026. Which alternative fits which job, and the case for staying where you are.",
+      "readTime": "6 min read",
+      "image": "/blog/img/manychat-alternatives.webp"
+    },
+    {
       "slug": "whatsapp-response-time-singapore-study",
       "title": "We Messaged 25 Singapore Businesses on WhatsApp at 9pm. One Replied That Night.",
       "date": "2026-09-14",

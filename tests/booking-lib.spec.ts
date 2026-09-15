@@ -191,7 +191,19 @@ test.describe('booking event detection', () => {
 test.describe('statusNotes parsing and idempotency markers', () => {
   const n = 'Form: 41labs.ai/ai-closer\nTier: A (High value)\nUTM: utm_source=facebook utm_content=ad_stalk1\nfbclid=abc123\nUA: Mozilla/5.0 test';
   test('parses tier, fbclid, user agent and UTM content', () => {
-    expect(notes.parseLeadNotes(n)).toEqual({ tier: 'A', fbclid: 'abc123', userAgent: 'Mozilla/5.0 test', utmContent: 'ad_stalk1', fromLandingPage: true });
+    expect(notes.parseLeadNotes(n)).toEqual({
+      tier: 'A', fbclid: 'abc123', fbp: '', fbc: '',
+      userAgent: 'Mozilla/5.0 test', utmContent: 'ad_stalk1', fromLandingPage: true,
+    });
+  });
+
+  // Without these the booking cron sends Schedule with weaker identifiers than the
+  // Lead had, and Meta attributes the booked call to nobody.
+  test('parses the _fbp and _fbc cookies the browser captured at lead time', () => {
+    const p = notes.parseLeadNotes(`${n}\nfbp=fb.1.1757000000000.9876543210\nfbc=fb.1.1757000000000.abc123`);
+    expect(p.fbp).toBe('fb.1.1757000000000.9876543210');
+    expect(p.fbc).toBe('fb.1.1757000000000.abc123');
+    expect(p.fbclid).toBe('abc123');
   });
   test('markers are added once and can be removed', () => {
     const a = notes.addMarker(n, 'sent:finish_booking');

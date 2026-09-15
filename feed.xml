@@ -8,7 +8,7 @@
     <link>https://41labs.ai/blog</link>
     <description>Practical insights on AI systems, automation, and operational efficiency for B2B businesses in Southeast Asia.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2026 12:10:02 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 15 Sep 2026 03:12:11 GMT</lastBuildDate>
     <atom:link href="https://41labs.ai/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://41labs.ai/logo-full.png</url>
@@ -274,6 +274,36 @@
       <dc:creator>Alexander Lee</dc:creator>
       <category>Insights</category>
       <description>Wati vs ManyChat vs 41 Closer, compared honestly for Singapore businesses. Real 2026 pricing, who runs each tool, and when a managed AI agent pays off.</description>
+    </item>
+
+    <item>
+      <title>ManyChat Alternatives in 2026: 7 Options Compared by the Job They Do</title>
+      <link>https://41labs.ai/blog/manychat-alternatives</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/manychat-alternatives</guid>
+      <pubDate>Fri, 03 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>Honest comparison of ManyChat alternatives for 2026, with published pricing checked 15 September. Wati, Interakt, respond.io, SleekFlow, AiSensy, Twilio and managed agents, plus when to just stay on ManyChat.</description>
+    </item>
+
+    <item>
+      <title>SleekFlow Alternatives in 2026: What Else Works for Asia-Based Teams</title>
+      <link>https://41labs.ai/blog/sleekflow-alternatives</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/sleekflow-alternatives</guid>
+      <pubDate>Fri, 03 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>SleekFlow alternatives compared for 2026 with published pricing checked 15 September. respond.io, Wati, Interakt, ManyChat, Twilio and managed agents, plus when SleekFlow remains the right choice for Singapore and Hong Kong teams.</description>
+    </item>
+
+    <item>
+      <title>Wati Alternatives in 2026: 7 Options, Real Pricing, Honest Trade-offs</title>
+      <link>https://41labs.ai/blog/wati-alternatives</link>
+      <guid isPermaLink="true">https://41labs.ai/blog/wati-alternatives</guid>
+      <pubDate>Fri, 03 Jul 2026 00:00:00 GMT</pubDate>
+      <dc:creator>Alexander Lee</dc:creator>
+      <category>Insights</category>
+      <description>Wati alternatives compared for 2026 with published pricing checked 15 September. Interakt, respond.io, SleekFlow, ManyChat, AiSensy, Gallabox, Twilio and managed agents, plus when Wati is still the right call.</description>
     </item>
 
     <item>

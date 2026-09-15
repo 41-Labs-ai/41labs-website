@@ -11,9 +11,13 @@ function parseLeadNotes(notes) {
   const n = String(notes || '');
   const tier = (n.match(/^Tier: ([ABC])\b/m) || [])[1] || '';
   const fbclid = (n.match(/^fbclid=(\S+)/m) || [])[1] || '';
+  // The real cookies beat an fbc rebuilt from fbclid, because the rebuild has to guess
+  // the click time and we only know when the deal was created.
+  const fbp = (n.match(/^fbp=(\S+)/m) || [])[1] || '';
+  const fbc = (n.match(/^fbc=(\S+)/m) || [])[1] || '';
   const userAgent = ((n.match(/^UA: (.+)$/m) || [])[1] || '').trim();
   const utmContent = (n.match(/\butm_content=(\S+)/) || [])[1] || '';
-  return { tier, fbclid, userAgent, utmContent, fromLandingPage: n.includes(LANDING_FORM_LINE) };
+  return { tier, fbclid, fbp, fbc, userAgent, utmContent, fromLandingPage: n.includes(LANDING_FORM_LINE) };
 }
 
 const tag = (key) => `[${key}]`;

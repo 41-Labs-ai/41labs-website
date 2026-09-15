@@ -134,6 +134,10 @@ module.exports = async (req, res) => {
   const utmObj = {};
   for (const k of UTM_KEYS) if (clean(body[k], 120)) utmObj[k.slice(4)] = clean(body[k], 120);
   const fbclid = clean(body.fbclid, 300);
+  // Meta's two strongest web identifiers. They only exist in the browser, so if they are
+  // not written down here the booking cron cannot send them hours later.
+  const fbp = clean(body.fbp, 120);
+  const fbc = clean(body.fbc, 300);
   const tier = ['A', 'B', 'C'].includes(body.tier) ? body.tier : '';
   // Step 1 of the form posts partial: contact captured, questions not answered yet.
   const isPartial = body.partial === true || body.partial === 'true';
@@ -167,6 +171,11 @@ module.exports = async (req, res) => {
     tier ? `Tier: ${tier}${fitReason ? ` (${fitReason})` : ''}` : '',
     utm.length ? `UTM: ${utm.join(' ')}` : '',
     fbclid ? `fbclid=${fbclid}` : '',
+    // Kept so the booking cron can send Schedule with the SAME identifiers the Lead
+    // carried. Meta attributed our Lead and never our Schedule: the browser sends _fbp
+    // and _fbc, and the cron, hours later, only had fbclid to rebuild an fbc from.
+    fbp ? `fbp=${fbp}` : '',
+    fbc ? `fbc=${fbc}` : '',
     userAgent ? `UA: ${userAgent}` : '',
     journeyNote(journey),
     leadNotes ? `Notes: ${leadNotes}` : '',

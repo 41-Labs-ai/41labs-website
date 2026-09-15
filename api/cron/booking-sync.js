@@ -217,6 +217,11 @@ async function runBookingSync({ env, fetchImpl, now }) {
           firstName: c.firstName,
           lastName: c.lastName,
           fbclid: parsed.fbclid,
+          // The cookies the browser had at lead time. Without these the match is just
+          // hashed email plus an fbc rebuilt from a guessed click time, which Meta was
+          // not attributing to the ad at all.
+          fbp: parsed.fbp,
+          fbc: parsed.fbc,
           clickMs: Date.parse(opp.createdAt),
           userAgent: parsed.userAgent,
           tier: parsed.tier,
