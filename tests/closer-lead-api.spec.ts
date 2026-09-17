@@ -130,8 +130,12 @@ test.describe('POST /api/closer-lead', () => {
     expect(json.ok).toBe(false);
   });
 
-  test('honeypot filled: pretends success and never calls anything', async () => {
-    const { res, json, calls } = await run({ ...lead, url_hp: 'http://spam.example' }, { env: FULL_ENV });
+  // A real bot pastes the same URL into every field. A valid email plus a real phone
+  // beside a tripped honeypot is browser autofill, not a bot, and is kept: see the
+  // autofill tests further down.
+  test('honeypot filled by an actual bot: pretends success and never calls anything', async () => {
+    const bot = { name: 'http://spam.example', whatsapp: 'http://spam.example', email: 'http://spam.example' };
+    const { res, json, calls } = await run({ ...bot, url_hp: 'http://spam.example' }, { env: FULL_ENV });
     expect(res.statusCode).toBe(200);
     expect(json.skipped).toBe('bot');
     expect(calls).toHaveLength(0);
@@ -261,6 +265,27 @@ test.describe('closer-lead: instant Telegram + email alert', () => {
     expect(mail.body.subject).toContain('Tan Wei Ming');
     expect(mail.body.text).toContain('https://wa.me/6591234567');
     expect(mail.body.text).toContain('Replies take too long');
+  });
+
+  // 16 Sep 2026: two booked calls never reached the CRM. The honeypot field was
+  // labelled "Website URL" while the real form also asks for a website, so browser
+  // autofill filled it. The API answered {ok:true, skipped:'bot'}, the page showed the
+  // calendar anyway, and the lead booked a call we had no record of. A trap that eats
+  // real buyers is worse than no trap.
+  test('a complete human answer is kept even if the honeypot was autofilled', async () => {
+    const { json, calls } = await run({ ...lead, url_hp: 'www.tanaircon.sg' }, { env: FULL_ENV });
+    expect(json.ok).toBe(true);
+    expect(json.skipped, 'a real answer must not be discarded').toBeUndefined();
+    expect(json.id, 'the deal must still be created').toBeTruthy();
+    expect(tgCall(calls), 'and Alexander must still be told').toBeTruthy();
+  });
+
+  test('an obvious bot (honeypot + no real answers) is still dropped silently', async () => {
+    const { json, calls } = await run(
+      { name: 'x', whatsapp: '123', url_hp: 'http://spam.example', enquiries: '', saleValue: '' },
+      { env: FULL_ENV });
+    expect(json.skipped).toBe('bot');
+    expect(tgCall(calls)).toBeUndefined();
   });
 
   test('alerts are skipped (not failed) when their env is missing', async () => {
@@ -505,7 +530,8 @@ test.describe('Meta Conversions API', () => {
   });
 
   test('a bot caught by the honeypot is never reported to Meta as a lead', async () => {
-    const { calls } = await run({ ...lead, ...browser, url_hp: 'http://spam.example' }, { env: FULL_ENV });
+    const bot = { name: 'http://spam.example', whatsapp: 'http://spam.example', email: 'http://spam.example' };
+    const { calls } = await run({ ...bot, ...browser, url_hp: 'http://spam.example' }, { env: FULL_ENV });
     expect(capiCall(calls)).toBeUndefined();
   });
 });

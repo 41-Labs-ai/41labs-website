@@ -106,9 +106,23 @@ module.exports = async (req, res) => {
 
   const body = await readBody(req);
 
-  // honeypot: bots fill hidden fields. Pretend success and skip.
-  // (the field is url_hp; 'website' is a real question now)
-  if (clean(body._gotcha) || clean(body.url_hp)) return send(res, 200, { ok: true, skipped: 'bot' });
+  // Honeypot: bots fill hidden fields. Pretend success and skip.
+  //
+  // 16 Sep 2026: this ate two booked calls. The hidden field was labelled "Website URL"
+  // while the real form also asks for a website, so browser autofill filled it. We
+  // answered {ok:true, skipped:'bot'}, the page showed the calendar regardless, and the
+  // buyer booked a call we had no record of, no alert for, and never reported to Meta.
+  //
+  // So the trap now needs corroboration. A bot posts junk; it does not pick valid values
+  // from our two qualifying dropdowns AND give a well-formed email. When all of that is
+  // present the answer is human, whatever the hidden field says, and we keep it.
+  // Step 1 has no dropdown answers yet, so the signal has to work for a partial too.
+  // Spam bots paste the same URL into every text field: a well-formed email AND a real
+  // phone together is something they almost never produce.
+  const trapped = !!(clean(body._gotcha) || clean(body.url_hp));
+  const looksHuman = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(clean(body.email, 160))
+    && e164Digits(clean(body.whatsapp, 40)).length >= 8;
+  if (trapped && !looksHuman) return send(res, 200, { ok: true, skipped: 'bot' });
 
   const name = clean(body.name, 120);
   const whatsapp = clean(body.whatsapp, 40);
@@ -170,6 +184,7 @@ module.exports = async (req, res) => {
     isPartial ? 'Stage: contact captured, questions not answered' : `Qualified: ${clean(body.qualified, 10) || '-'}`,
     tier ? `Tier: ${tier}${fitReason ? ` (${fitReason})` : ''}` : '',
     utm.length ? `UTM: ${utm.join(' ')}` : '',
+    trapped ? 'NOTE: hidden spam field was filled, most likely browser autofill. Kept because the answers are complete.' : '',
     fbclid ? `fbclid=${fbclid}` : '',
     // Kept so the booking cron can send Schedule with the SAME identifiers the Lead
     // carried. Meta attributed our Lead and never our Schedule: the browser sends _fbp
