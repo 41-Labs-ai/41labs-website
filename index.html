@@ -304,7 +304,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="hero-subtitle">41 Closer answers every enquiry in seconds, 24 hours a day, with real prices from your catalogue. It follows up every lead, closes the sale, and hands off to a human when needed. We build it, run it, and tune it for you.</p>
                 <div class="hero-cta">
                     <a href="https://wa.me/6580124848?text=Hi%21%20Show%20me%2041%20Closer%20in%20action." target="_blank" rel="noopener" class="btn btn-primary btn-large">See It Close: WhatsApp Us</a>
-                    <a href="#what-we-do" class="btn btn-secondary btn-large">Explore Custom AI Systems &rarr;</a>
+                    <a href="/41-closer" class="btn btn-secondary btn-large">See how it works &rarr;</a>
                 </div>
                 <p class="hero-note">The agent that replies to your WhatsApp message is the exact product you are buying. From $690 a month, fully managed by 41 Labs. <a href="/41-closer">See how 41 Closer works &rarr;</a></p>
             </div>
@@ -585,8 +585,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section id="use-cases" class="section section-dark">
         <div class="container">
             <div class="section-header">
-                <h2>What You Can Automate</h2>
-                <p>See what this looks like in practice</p>
+                <h2>What It Handles On Its Own</h2>
+                <p>Real conversations, start to finish</p>
             </div>
             <div class="usecase-grid">
                 <div class="usecase-card">
@@ -652,29 +652,82 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </section>
 
     <!-- Why Us -->
-    <section id="why-us" class="section">
+    <style>
+        .usp-section { background: var(--bg-card); }
+        .usp-lead { max-width: 720px; margin: 0 auto 56px; text-align: center; }
+        .usp-lead h2 { margin-bottom: 16px; }
+        .usp-lead p { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; }
+        .usp-steps { display: grid; gap: 24px; grid-template-columns: 1fr; margin-bottom: 72px; }
+        @media (min-width: 860px) { .usp-steps { grid-template-columns: repeat(3, 1fr); } }
+        .usp-step { background: var(--bg-main); border: 1px solid var(--border-color);
+                    border-radius: var(--border-radius); padding: 32px; transition: var(--transition); }
+        .usp-step:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+        .usp-step-num { display: inline-flex; align-items: center; justify-content: center;
+                        width: 34px; height: 34px; border-radius: 50%; background: var(--accent);
+                        color: var(--bg-dark); font-weight: 700; font-size: 0.95rem; margin-bottom: 18px; }
+        .usp-step h3 { margin-bottom: 12px; font-size: 1.15rem; }
+        .usp-step p { color: var(--text-secondary); line-height: 1.7; margin: 0; }
+        .usp-turn { text-align: center; max-width: 760px; margin: 0 auto 40px; }
+        .usp-turn h3 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.02em; margin-bottom: 12px; }
+        .usp-turn .usp-hi { color: var(--accent-dark); }
+        .usp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 auto; max-width: 820px; }
+        .usp-table { width: 100%; min-width: 560px; border-collapse: collapse;
+                     background: var(--bg-main); border-radius: var(--border-radius-sm); overflow: hidden; }
+        .usp-table th { text-align: left; padding: 18px 24px; font-size: 0.8rem; font-weight: 600;
+                        letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light);
+                        border-bottom: 1px solid var(--border-color); }
+        .usp-table th.usp-ours { color: var(--bg-dark); }
+        .usp-table td { padding: 16px 24px; line-height: 1.6; border-bottom: 1px solid var(--border-color); }
+        .usp-table tr:last-child td { border-bottom: none; }
+        .usp-table td.usp-them { color: var(--text-secondary); }
+        .usp-table td.usp-ours { color: var(--text-primary); font-weight: 500; background: rgba(74, 222, 128, 0.07); }
+        .usp-foot { max-width: 720px; margin: 40px auto 0; text-align: center; }
+        .usp-foot p { color: var(--text-secondary); line-height: 1.7; }
+        .usp-scope { margin-top: 20px; font-size: 0.93rem; color: var(--text-light); }
+    </style>
+    <section id="why-us" class="section usp-section">
         <div class="container">
-            <div class="section-header">
-                <h2>Why Companies Choose 41 Labs</h2>
-                <p>Strategy and execution from a team that ships</p>
+            <div class="usp-lead">
+                <h2>Anyone can connect an API.</h2>
+                <p>That part takes an afternoon. The hard part is what comes after, and it's the reason this closes instead of chats.</p>
             </div>
-            <div class="why-grid">
-                <div class="why-item">
-                    <h3>Strategy + build, not just code</h3>
-                    <p>We don't just build what you ask for. We help you identify where AI creates the most revenue impact, then we design and build the system to capture it.</p>
+            <div class="usp-steps">
+                <div class="usp-step">
+                    <span class="usp-step-num">1</span>
+                    <h3>Connect it, then clean it</h3>
+                    <p>Most businesses either have no CRM or have one full of half finished entries. We connect your systems and get the data into a state the AI can actually trust. The cheap tools hand you an API key and wish you luck.</p>
                 </div>
-                <div class="why-item">
-                    <h3>We ship to production, not to a demo</h3>
-                    <p>Most AI projects never make it past the pilot. We build on your real WhatsApp history and your real catalogue from week one, your team tests it in weeks three and four, and we go live in phases. You end up with something your staff use every day.</p>
+                <div class="usp-step">
+                    <span class="usp-step-num">2</span>
+                    <h3>Decide what it may read, and what it may change</h3>
+                    <p>Reading your catalogue to answer a question is easy. Letting an AI update a lead, move a booking, hold stock and take a payment is not, and most tools won't go near it. We work out exactly what it may touch, and put guardrails around the rest.</p>
                 </div>
-                <div class="why-item">
-                    <h3>Weeks to deployed, not months</h3>
-                    <p>Speed is your competitive edge. We go from strategy session to production system in 4-8 weeks, so you're capturing value while competitors are still planning.</p>
+                <div class="usp-step">
+                    <span class="usp-step-num">3</span>
+                    <h3>Teach it how your business sells</h3>
+                    <p>Your flow, your tone, when to push and when to leave someone alone. You're not an expert at building a salesperson. You shouldn't have to be.</p>
                 </div>
-                <div class="why-item">
-                    <h3>Free demo before you commit</h3>
-                    <p>We build a working prototype with your data before you invest. You see the results firsthand &mdash; if it doesn't show clear value, you walk away at zero cost.</p>
-                </div>
+            </div>
+            <div class="usp-turn">
+                <h3>Read only is a chatbot. <span class="usp-hi">Write access is a closer.</span></h3>
+            </div>
+            <div class="usp-table-wrap">
+                <table class="usp-table">
+                    <thead>
+                        <tr><th scope="col">A chatbot</th><th scope="col" class="usp-ours">41 Closer</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="usp-them">Reads a list of FAQs</td><td class="usp-ours">Reads your live catalogue and what is actually in stock</td></tr>
+                        <tr><td class="usp-them">Answers the question</td><td class="usp-ours">Quotes the real price, for the real item</td></tr>
+                        <tr><td class="usp-them">Says someone will call you back</td><td class="usp-ours">Puts the slot in your calendar</td></tr>
+                        <tr><td class="usp-them">Leaves your CRM exactly as it found it</td><td class="usp-ours">Updates the lead and the schedule as it goes</td></tr>
+                        <tr><td class="usp-them">Ends the chat</td><td class="usp-ours">Takes the payment</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="usp-foot">
+                <p>That's the whole difference, and it's why this costs more than a tool you run yourself.</p>
+                <p class="usp-scope">One boundary, so you know where it stops. This covers everything up to the sale. Once the deal is done, amendments and support still go to a person on your team.</p>
             </div>
         </div>
     </section>
@@ -687,20 +740,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="clients-carousel">
             <div class="clients-track">
                 <span class="client-tag">Ecommerce company, $5M revenue</span>
-                <span class="client-tag">SaaS startup, 30 employees &mdash; 60% faster operations</span>
+                <span class="client-tag">SaaS startup, 30 employees</span>
                 <span class="client-tag">Healthcare provider, $12M revenue</span>
-                <span class="client-tag">Fintech company, 80 employees &mdash; 45% cost reduction</span>
+                <span class="client-tag">Fintech company, 80 employees</span>
                 <span class="client-tag">Real estate agency, $3M revenue</span>
                 <span class="client-tag">Education platform, 25 employees</span>
-                <span class="client-tag">Logistics company, $8M revenue &mdash; 3x processing speed</span>
+                <span class="client-tag">Logistics company, $8M revenue</span>
                 <!-- Duplicated for seamless loop -->
                 <span class="client-tag">Ecommerce company, $5M revenue</span>
-                <span class="client-tag">SaaS startup, 30 employees &mdash; 60% faster operations</span>
+                <span class="client-tag">SaaS startup, 30 employees</span>
                 <span class="client-tag">Healthcare provider, $12M revenue</span>
-                <span class="client-tag">Fintech company, 80 employees &mdash; 45% cost reduction</span>
+                <span class="client-tag">Fintech company, 80 employees</span>
                 <span class="client-tag">Real estate agency, $3M revenue</span>
                 <span class="client-tag">Education platform, 25 employees</span>
-                <span class="client-tag">Logistics company, $8M revenue &mdash; 3x processing speed</span>
+                <span class="client-tag">Logistics company, $8M revenue</span>
             </div>
         </div>
     </section>
@@ -824,7 +877,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="audit-cta-grid">
                 <div class="audit-cta-content">
                     <span class="audit-badge">Free &middot; 60 Seconds &middot; No Login</span>
-                    <h2>Find out where AI can save you money</h2>
+                    <h2>Find out what slow replies are costing you</h2>
                     <p>Get a personalized AI readiness audit for your business. Our AI analyzes your company, identifies automation opportunities, and gives you a dollar-figure ROI estimate &mdash; powered by the 4+1 Method.</p>
                     <div class="audit-features">
                         <div class="audit-feature">
@@ -853,7 +906,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="audit-preview-dot"></span>
                             <span class="audit-preview-dot y"></span>
                             <span class="audit-preview-dot g"></span>
-                            <span class="audit-preview-title">AI Readiness Audit</span>
+                            <span class="audit-preview-title">AI Readiness Audit (example)</span>
                         </div>
                         <div class="audit-preview-body">
                             <div class="audit-score-ring">
@@ -886,8 +939,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="container">
             <div class="cta-grid">
                 <div class="cta-content">
-                    <h2>Ready to automate your manual processes?</h2>
-                    <p>Book a free 30-minute discovery call. We'll analyze your workflow and show you exactly where AI can save you time and money.</p>
+                    <h2>See what your WhatsApp is losing</h2>
+                    <p>We read your last few weeks of WhatsApp, show you the enquiries that went cold, and put a number on them. If the number is small, we will tell you so.</p>
                     <div class="cta-benefits">
                         <div class="cta-benefit">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>

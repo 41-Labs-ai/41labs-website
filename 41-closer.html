@@ -429,7 +429,7 @@
     <section id="speed" class="clo-section--tight clo-deep">
         <div class="clo-orb g" style="width:480px;height:480px;top:-160px;right:-120px;opacity:.3;"></div>
         <div class="clo-wrap clo-center">
-            <h2 class="clo-h2"><span class="clo-grad">75%</span> of deals go to whoever replies first.</h2>
+            <h2 class="clo-h2"><span class="clo-grad">78%</span> of customers buy from whoever replies first.</h2><span style="display:block;margin-top:14px;font-size:0.82rem;opacity:.65;">Lead Response Management Study, Dr. James Oldroyd, 2007. Widely cited since, including by Harvard Business Review.</span>
             <p class="clo-lead clo-narrow" style="margin-left:auto;margin-right:auto;color:rgba(255,255,255,.8);">Speed is the whole game. 41 Closer replies in seconds, every time, day or night. So the deal is yours, not the competitor who answered while you were asleep.</p>
         </div>
     </section>
@@ -670,6 +670,68 @@
                 <a class="clo-ind" href="/industries/ai-for-car-dealers-singapore">Car Dealers</a>
             </div>
             <a class="clo-inds-all" href="/industries">See all industries &rarr;</a>
+        </div>
+    </section>
+
+    <!-- THE USP: why this is not a DIY tool -->
+    <style>
+        .usp2-steps { display:grid; gap:20px; grid-template-columns:1fr; margin:44px 0 64px; text-align:left; }
+        @media (min-width:880px){ .usp2-steps { grid-template-columns:repeat(3,1fr); } }
+        .usp2-step { background:var(--white); border:1px solid rgba(0,0,0,.07); border-radius:20px; padding:28px; }
+        .usp2-num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px;
+                    border-radius:50%; background:var(--accent); color:#0b0b0b; font-weight:800; font-size:.9rem; margin-bottom:16px; }
+        .usp2-step h3 { font-size:1.08rem; margin:0 0 10px; letter-spacing:-0.01em; }
+        .usp2-step p { margin:0; color:var(--text-secondary); line-height:1.7; font-size:.97rem; }
+        .usp2-turn { font-size:clamp(1.4rem,3vw,1.95rem); font-weight:600; letter-spacing:-0.02em; margin:0 0 28px; }
+        .usp2-turn em { font-style:normal; color:var(--accent-dark); }
+        .usp2-tablewrap { overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:780px; margin:0 auto; }
+        .usp2-table { width:100%; min-width:540px; border-collapse:collapse; background:var(--white);
+                      border:1px solid rgba(0,0,0,.07); border-radius:18px; overflow:hidden; text-align:left; }
+        .usp2-table th { padding:16px 22px; font-size:.75rem; font-weight:700; letter-spacing:.14em;
+                         text-transform:uppercase; color:var(--text-light); border-bottom:1px solid rgba(0,0,0,.07); }
+        .usp2-table th.on { color:#0b0b0b; }
+        .usp2-table td { padding:15px 22px; line-height:1.6; border-bottom:1px solid rgba(0,0,0,.06); font-size:.97rem; }
+        .usp2-table tr:last-child td { border-bottom:none; }
+        .usp2-table td.off { color:var(--text-secondary); }
+        .usp2-table td.on { font-weight:500; background:rgba(74,222,128,.08); }
+        .usp2-note { max-width:640px; margin:30px auto 0; font-size:.92rem; color:var(--text-light); line-height:1.7; }
+    </style>
+    <section class="clo-section clo-white clo-light" id="why-not-diy">
+        <div class="clo-wrap clo-center">
+            <span class="clo-eyebrow">Why it costs more than a tool</span>
+            <h2 class="clo-h2">Anyone can connect an API.</h2>
+            <p class="clo-lead clo-narrow" style="margin-left:auto;margin-right:auto;">That part takes an afternoon. The hard part is what comes after, and it's what you'd otherwise have to become an expert in yourself.</p>
+            <div class="usp2-steps">
+                <div class="usp2-step">
+                    <span class="usp2-num">1</span>
+                    <h3>Connect it, then clean it</h3>
+                    <p>Most businesses either have no CRM or have one full of half finished entries. We connect your systems and get the data into a state the AI can trust. The cheap tools hand you an API key and wish you luck.</p>
+                </div>
+                <div class="usp2-step">
+                    <span class="usp2-num">2</span>
+                    <h3>Decide what it may read, and what it may change</h3>
+                    <p>Reading your catalogue to answer a question is easy. Letting an AI update a lead, move a booking, hold stock and take a payment is not, and most tools won't go near it. We work out exactly what it may touch, and put guardrails around the rest.</p>
+                </div>
+                <div class="usp2-step">
+                    <span class="usp2-num">3</span>
+                    <h3>Teach it how you sell</h3>
+                    <p>Your flow, your tone, when to push and when to leave someone alone. You're not an expert at building a salesperson. You shouldn't have to be.</p>
+                </div>
+            </div>
+            <p class="usp2-turn">Read only is a chatbot. <em>Write access is a closer.</em></p>
+            <div class="usp2-tablewrap">
+                <table class="usp2-table">
+                    <thead><tr><th scope="col">A chatbot</th><th scope="col" class="on">41 Closer</th></tr></thead>
+                    <tbody>
+                        <tr><td class="off">Reads a list of FAQs</td><td class="on">Reads your live catalogue and what is in stock</td></tr>
+                        <tr><td class="off">Answers the question</td><td class="on">Quotes the real price, for the real item</td></tr>
+                        <tr><td class="off">Says someone will call you back</td><td class="on">Puts the slot in your calendar</td></tr>
+                        <tr><td class="off">Leaves your CRM as it found it</td><td class="on">Updates the lead and the schedule as it goes</td></tr>
+                        <tr><td class="off">Ends the chat</td><td class="on">Takes the payment</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="usp2-note">One boundary, so you know where it stops. This covers everything up to the sale. After the deal is done, amendments and support still go to a person on your team.</p>
         </div>
     </section>
 
