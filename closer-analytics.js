@@ -185,6 +185,18 @@
         return m ? m[1] : '';
     }
 
+    // GA4 stitches a Measurement Protocol event onto an existing session by client_id
+    // AND session_id. We used to send our own random id, so GA4 opened a fresh session
+    // for every beacon with no traffic source attached. That parked every journey under
+    // "(not set)" and made them impossible to attribute to the ad that paid for them.
+    // The real one is in GA4's own _ga_<streamId> cookie, in two formats:
+    //   GS1.1.<sessionId>.<n>...       older
+    //   GS2.1.s<sessionId>$o<n>$g...   newer
+    function gaSessionId() {
+        var m = /_ga_[A-Z0-9]+=GS\d\.\d\.s?(\d+)/.exec(document.cookie || '');
+        return m ? m[1] : '';
+    }
+
     // ?v= is how the live Meta ads split /41-closer (ecom / industrial / services).
     // It has to win over the page's own label, or the split test cannot be read.
     function variantName() {
@@ -194,7 +206,8 @@
 
     function snapshot() {
         return { v: 1, vid: vid, sid: sid, page: location.pathname, variant: variantName(),
-                 ga: gaClientId(), ids: metaIds(), attr: { first: first, last: last }, journey: journey() };
+                 ga: gaClientId(), gaSid: gaSessionId(), ids: metaIds(),
+                 attr: { first: first, last: last }, journey: journey() };
     }
 
     // ---- named funnel events: GA4 now, and kept for the beacon ----

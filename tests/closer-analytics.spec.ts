@@ -387,3 +387,42 @@ test.describe('what reaches the lead', () => {
     expect(sent.api[1].eventId).toBeTruthy();
   });
 });
+
+// GA4 stitches a Measurement Protocol event onto an existing session by client_id AND
+// session_id. We were sending our own random id as session_id, so GA4 opened a brand new
+// session for every journey beacon, with no traffic source attached. Result: every
+// closer_journey landed under "(not set)" and none could be attributed to the ad that
+// paid for it. 18 Sep 2026: zero journeys were queryable against facebook / paid.
+test.describe('the journey beacon lands on the visitor\'s real GA4 session', () => {
+  const setGaCookies = (page: Page) => page.addInitScript(() => {
+    document.cookie = '_ga=GA1.1.1234567890.1757000000';
+    // GA4's own session cookie for measurement id G-VQQ49H8N1L.
+    document.cookie = '_ga_VQQ49H8N1L=GS1.1.1757009999.3.1.1757010500.0.0.0';
+  });
+
+  test('sends GA4 own session id, not one we invented', async ({ page }) => {
+    await setGaCookies(page);
+    await stub(page);
+    await page.goto('/ai-closer.html' + QS);
+    const s = await page.evaluate(() => (window as any).cl41.snapshot());
+    expect(s.ga, 'client id still read from _ga').toBe('1234567890.1757000000');
+    expect(s.gaSid, 'GA4 session id from the _ga_<stream> cookie').toBe('1757009999');
+    expect(s.gaSid).not.toBe(s.sid);
+  });
+
+  test('handles the newer GS2 cookie format too', async ({ page }) => {
+    await page.addInitScript(() => {
+      document.cookie = '_ga=GA1.1.1234567890.1757000000';
+      document.cookie = '_ga_VQQ49H8N1L=GS2.1.s1757009999$o3$g1$t1757010500$j0$l0$h0';
+    });
+    await stub(page);
+    await page.goto('/ai-closer.html' + QS);
+    expect((await page.evaluate(() => (window as any).cl41.snapshot())).gaSid).toBe('1757009999');
+  });
+
+  test('no GA4 cookie: sends nothing rather than a made-up session', async ({ page }) => {
+    await stub(page);
+    await page.goto('/ai-closer.html' + QS);
+    expect((await page.evaluate(() => (window as any).cl41.snapshot())).gaSid).toBe('');
+  });
+});

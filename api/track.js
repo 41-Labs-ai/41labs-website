@@ -46,7 +46,10 @@ function gaParams(b, j) {
     scroll_depth: j.scroll,
     visits: j.visits,
     sections_seen: j.sections.length,
-    session_id: str(b.sid, 60),
+    // GA4's own session id, not ours. Ours is not a GA4 session, and sending it made
+    // every beacon a new sourceless session. Omitted when the cookie is absent: no
+    // session_id is better than one GA4 cannot match.
+    ...(str(b.gaSid, 60) ? { session_id: str(b.gaSid, 60) } : {}),
     engagement_time_msec: Math.max(1, j.engagedMs),
   };
   if (j.sections.length) p.top_section = j.sections[0][0];
