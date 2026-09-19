@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting your payment webhook</title>
+<meta name="doc-category" content="Payment">
+<meta name="doc-visibility" content="private">
+<style>
+  :root{
+    --green:#16a34a; --green-bg:#f0fdf4; --ink:#1a1a1a; --muted:#52525b;
+    --rule:#e4e4e7; --amber-bg:#fffbeb; --amber-border:#f59e0b; --code-bg:#f4f4f5;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    margin:0; background:#e9e9ec; color:var(--ink);
+    font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;
+    font-size:10pt; line-height:15.5pt;
+  }
+
+  /* ---- Sheet (screen) ---- */
+  .doc{
+    background:#fff; width:210mm; margin:24px auto; padding:24mm 22mm 22mm;
+    box-shadow:0 2px 22px rgba(0,0,0,.13);
+  }
+
+  /* ---- Header ---- */
+  .run-header{ margin:0 0 6mm; }
+  .run-header .row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12pt;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+  .run-header .supplier{ text-transform:uppercase; letter-spacing:.04em; }
+  .run-header .docname{ text-align:right; }
+  .run-header .rule{ border-bottom:2.5pt solid var(--green); margin-top:4pt; }
+
+  /* ---- Footer ---- */
+  .run-footer{ margin:8mm 0 0; }
+  .run-footer .rule{ border-top:.5pt solid var(--rule); margin-bottom:4pt; }
+  .run-footer .row{
+    display:flex; justify-content:space-between;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+
+  /* ---- Titles ---- */
+  h1.title{ font-size:23pt; line-height:27pt; font-weight:bold; margin:0 0 3pt; }
+  p.subtitle{ font-size:11.5pt; line-height:16pt; color:var(--muted); margin:0 0 6pt; }
+  p.meta{ font-size:8.8pt; line-height:13pt; color:var(--muted); margin:0 0 14pt; }
+
+  h2.section-h{
+    font-size:13.5pt; line-height:17pt; font-weight:bold; margin:16pt 0 7pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+
+  p{ margin:0 0 6pt; }
+  strong{ font-weight:bold; }
+
+  /* ---- Lists ---- */
+  ul.bullets{ margin:0 0 4pt; padding-left:12pt; }
+  ul.bullets li{ margin:0 0 2pt; }
+  ol.actions{ margin:0 0 4pt; padding-left:14pt; }
+  ol.actions li{ margin:0 0 2pt; }
+
+  /* ---- Callouts ---- */
+  .callout{
+    width:100%; padding:7pt 9pt; margin:0 0 6pt;
+    font-size:9.2pt; line-height:14pt;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .callout p{ margin:0 0 4pt; font-size:9.2pt; line-height:14pt; }
+  .callout p:last-child{ margin-bottom:0; }
+  .callout ol{ margin:2pt 0 0; padding-left:14pt; }
+  .callout ol li{ margin:0 0 2pt; }
+  .callout ol li:last-child{ margin-bottom:0; }
+  .note{ background:var(--green-bg); border-left:2.2pt solid var(--green); }
+  .warn{ background:var(--amber-bg); border-left:2.2pt solid var(--amber-border); }
+
+  /* ---- Steps ---- */
+  .step{ margin:0 0 9pt; break-inside:avoid; page-break-inside:avoid; }
+  .step-head{
+    display:flex; align-items:flex-start; gap:8pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+  .step-head .num{
+    flex:0 0 auto; width:7.5mm; height:7.5mm; background:var(--green);
+    color:#fff; font-size:9.5pt; font-weight:bold;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-head .step-title{
+    font-size:11.5pt; line-height:15pt; font-weight:bold; margin:0;
+    align-self:center;
+  }
+  .step-body{ margin:5pt 0 0 10mm; }
+
+  /* ---- Key / value table ---- */
+  table.kv{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.kv td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.kv tr:last-child td{ border-bottom:0; }
+  table.kv td.k{ width:45mm; font-weight:bold; padding-right:6pt; }
+
+  /* ---- Data table (multi-column) ---- */
+  table.data{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.data th{
+    font-size:8.6pt; line-height:12.5pt; text-align:left; font-weight:bold;
+    padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:1.2pt solid var(--muted);
+    text-transform:uppercase; letter-spacing:.03em; color:var(--muted);
+  }
+  table.data td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.data td:last-child, table.data th:last-child{ padding-right:0; }
+  table.data tr:last-child td{ border-bottom:0; }
+  table.data td.yes{ color:var(--green); font-weight:bold; }
+  table.data .ok{ color:var(--green); font-weight:bold; }
+  table.data .bad{ color:#b91c1c; font-weight:bold; }
+
+  /* ---- Checklist ---- */
+  table.checklist{ width:100%; border-collapse:collapse; }
+  table.checklist td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.checklist tr:last-child td{ border-bottom:0; }
+  table.checklist td.box{ width:8mm; }
+  table.checklist tr{ break-inside:avoid; page-break-inside:avoid; }
+  table.checklist td label{ display:block; cursor:pointer; }
+  table.checklist input[type="checkbox"]{
+    appearance:none; -webkit-appearance:none; -moz-appearance:none;
+    width:13pt; height:13pt; margin:0; vertical-align:-2pt; cursor:pointer;
+    border:1.2pt solid var(--muted); border-radius:2px; background:#fff;
+  }
+  table.checklist input[type="checkbox"]:checked{ background:var(--green); border-color:var(--green); }
+  table.checklist input[type="checkbox"]:checked::after{
+    content:""; display:block; width:4pt; height:7.5pt; margin:0.5pt auto 0;
+    border:solid #fff; border-width:0 2pt 2pt 0; transform:rotate(45deg);
+  }
+  table.checklist input[type="checkbox"]:focus-visible{ outline:2px solid var(--green); outline-offset:1px; }
+
+  /* ---- Code block ---- */
+  .code{
+    width:100%; background:var(--code-bg); padding:6pt 8pt; margin:0 0 6pt;
+    font-family:"Courier New",Courier,monospace; font-size:8.6pt; line-height:12.5pt;
+    word-break:break-all; break-inside:avoid; page-break-inside:avoid;
+  }
+  code.inline{
+    font-family:"Courier New",Courier,monospace; font-size:8.8pt;
+    background:var(--code-bg); padding:0 3pt; border-radius:2px;
+  }
+  /* A JSON sample keeps its own line breaks and indentation. */
+  pre.code{ white-space:pre; word-break:normal; overflow-x:auto; }
+
+  /* ---- Print ---- */
+  @media print{
+    @page{ size:A4; margin:24mm 22mm 22mm 22mm; }
+    body{ background:#fff; }
+    .doc{ width:auto; margin:0; padding:0; box-shadow:none; }
+    .run-header{ position:fixed; top:-15mm; left:0; right:0; margin:0; }
+    .run-footer{ position:fixed; bottom:-15mm; left:0; right:0; margin:0; }
+    .run-header .row, .run-footer .row{ color:var(--muted); }
+  }
+
+  @media screen and (max-width:800px){
+    .doc{ width:auto; margin:0; padding:16px; box-shadow:none; }
+    table.data{ display:block; overflow-x:auto; }
+  }
+
+  /* ---- Back to the index (screen only) ---- */
+  .back-bar{ width:210mm; max-width:100%; margin:20px auto 0; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:5pt;
+    background:#fff; border:.75pt solid var(--rule); border-radius:999px;
+    padding:5pt 11pt; font-size:9pt; line-height:12pt; color:var(--muted);
+    text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,.07);
+  }
+  .back-link:hover{ color:var(--green); border-color:var(--green); }
+  .back-link .arrow{ font-size:11pt; line-height:1; }
+
+  @media print{ .back-bar{ display:none !important; } }
+  @media screen and (max-width:800px){
+    .back-bar{ width:auto; margin:0; padding:14px 16px 0; }
+  }
+
+  /* ---- Screen reading ----
+     The sheet above is sized for A4 print at 10pt, which reads small on a
+     monitor. Scale the type up on screen only, and give code a real mono
+     stack. Print keeps the sizes above, so pagination does not move. */
+  @media screen{
+    body{
+      font-size:13pt; line-height:20pt;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    h1.title{ font-size:28pt; line-height:33pt; margin:0 0 5pt; }
+    p.subtitle{ font-size:14.5pt; line-height:21pt; margin:0 0 8pt; }
+    p.meta{ font-size:11pt; line-height:16pt; }
+    h2.section-h{ font-size:18pt; line-height:23pt; margin:24pt 0 9pt; }
+    ul.bullets, ol.actions{ padding-left:18pt; }
+    .step-head .num{ width:9mm; height:9mm; font-size:12pt; }
+    .step-head .step-title{ font-size:15pt; line-height:20pt; }
+    .callout, .callout p{ font-size:12.5pt; line-height:19pt; }
+    table.kv td, table.data td, table.checklist td{ font-size:12.5pt; line-height:19pt; }
+    table.data th{ font-size:11pt; line-height:16pt; }
+    .shot .cap{ font-size:11pt; line-height:16pt; }
+    .run-header .row, .run-footer .row{ font-size:10pt; line-height:14pt; }
+    .code, code.inline{
+      font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,
+        "Liberation Mono","Courier New",monospace;
+    }
+    .code{ font-size:12pt; line-height:18.5pt; padding:9pt 11pt; }
+    code.inline{ font-size:12pt; padding:1pt 4pt; }
+    .back-link{ font-size:11pt; line-height:15pt; padding:6pt 13pt; }
+  }
+</style>
+</head>
+<body>
+<div class="back-bar">
+  <a class="back-link" href="/"><span class="arrow" aria-hidden="true">&larr;</span> All docs</a>
+</div>
+<div class="doc">
+
+  <!-- ============ HEADER (repeats on every printed page) ============ -->
+  <header class="run-header">
+    <div class="row">
+      <div class="supplier">HERMES &middot; 41 LABS</div>
+      <div class="docname">Connecting the payment webhook</div>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <!-- ============ BODY ============ -->
+  <main class="run-body">
+
+    <h1 class="title">Connecting your payment webhook</h1>
+    <p class="subtitle">Your booking system relays every settlement to Hermes, so a booking marks itself paid, failed or expired the moment the payment resolves.</p>
+    <p class="meta">For your in-house developer &middot; v1 &middot; 19 September 2026</p>
+
+    <div class="callout note">
+      <p><strong>You relay, you do not forward.</strong> Your booking system receives the settlement webhook at its own <code class="inline">/v1/payments/webhook</code>, then sends a fresh request to Hermes in the shape below. Hermes validates your payload and your token, not a raw payment-provider signature.</p>
+    </div>
+
+    <h2 class="section-h">Who does what</h2>
+    <table class="kv">
+      <tr>
+        <td class="k">You send</td>
+        <td>An HTTP <code class="inline">POST</code> to the endpoint below each time a payment settles, fails or expires. You store the token and you retry on failure.</td>
+      </tr>
+      <tr>
+        <td class="k">41 Labs gives</td>
+        <td>The endpoint URL and a bearer token. We validate each payload, match it to the booking and update it at once.</td>
+      </tr>
+    </table>
+
+    <h2 class="section-h">The endpoint</h2>
+    <p>Send over HTTPS only:</p>
+    <pre class="code">POST https://aisalescloser.41labs.ai/api/webhooks/druk-trs/cmscl2z2v0001253rseqhzcst
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json</pre>
+    <p>The token is static and 41 Labs issues it. Store it as an environment variable, not in code.</p>
+
+    <h2 class="section-h">When you send</h2>
+    <p>Relay on <strong>all three</strong> outcomes, not only on success:</p>
+    <table class="data">
+      <tr><th>Status</th><th>Send it when</th></tr>
+      <tr><td><code class="inline">paid</code></td><td>The payment settled.</td></tr>
+      <tr><td><code class="inline">failed</code></td><td>The payment was declined or errored.</td></tr>
+      <tr><td><code class="inline">expired</code></td><td>The payment link or intent ran out of time.</td></tr>
+    </table>
+    <div class="callout warn">
+      <p>A failure or an expiry that never arrives leaves the booking sitting as unpaid with no reason attached. Send all three.</p>
+    </div>
+
+    <h2 class="section-h">The fields</h2>
+    <table class="data">
+      <tr><th>Field</th><th>Type</th><th>Required</th><th>What it carries</th></tr>
+      <tr>
+        <td><code class="inline">event</code></td><td>string</td><td class="yes">Yes</td>
+        <td>One of <code class="inline">payment.paid</code>, <code class="inline">payment.failed</code>, <code class="inline">payment.expired</code>.</td>
+      </tr>
+      <tr>
+        <td><code class="inline">online_booking_id</code></td><td>string</td><td class="yes">Yes</td>
+        <td>Echo it back from the payment. Hermes matches the booking on this.</td>
+      </tr>
+      <tr>
+        <td><code class="inline">booking_ref_code</code></td><td>string</td><td class="yes">Yes</td>
+        <td>Echo it back from the payment. Your reconciliation key.</td>
+      </tr>
+      <tr>
+        <td><code class="inline">payment_reference</code></td><td>string</td><td class="yes">Yes</td>
+        <td>The payment intent or transaction id. <strong>This is the idempotency key.</strong></td>
+      </tr>
+      <tr>
+        <td><code class="inline">status</code></td><td>enum</td><td class="yes">Yes</td>
+        <td><code class="inline">paid</code>, <code class="inline">failed</code> or <code class="inline">expired</code>.</td>
+      </tr>
+      <tr>
+        <td><code class="inline">amount</code></td><td>number</td><td class="yes">Yes</td>
+        <td>The settled amount.</td>
+      </tr>
+      <tr>
+        <td><code class="inline">currency</code></td><td>string</td><td class="yes">Yes</td>
+        <td>ISO 4217, for example <code class="inline">"USD"</code>.</td>
+      </tr>
+      <tr>
+        <td><code class="inline">paid_at</code></td><td>string</td><td>On <code class="inline">paid</code></td>
+        <td>Settlement time, ISO 8601 in UTC.</td>
+      </tr>
+    </table>
+
+    <h2 class="section-h">The reply, and retries</h2>
+    <p>A success looks like this:</p>
+    <pre class="code">200 { "received": true }</pre>
+    <p>Any reply that is not a <strong>2xx</strong> is a failure. Retry with backoff &mdash; for example after 1, 5 and 30 minutes.</p>
+    <div class="callout note">
+      <p>Hermes dedupes on <code class="inline">payment_reference</code>, so sending the same event twice is safe. Retry until you receive a <strong>2xx</strong>.</p>
+    </div>
+
+    <h2 class="section-h">Samples</h2>
+
+    <p><strong>A payment settled.</strong></p>
+    <pre class="code">{
+  "event": "payment.paid",
+  "online_booking_id": "OB-123456",
+  "booking_ref_code": "DA-26-X7K2PQ",
+  "payment_reference": "int_abc123",
+  "status": "paid",
+  "amount": 5000.00,
+  "currency": "USD",
+  "paid_at": "2026-09-19T03:12:00Z"
+}</pre>
+
+    <p><strong>A payment failed.</strong></p>
+    <pre class="code">{
+  "event": "payment.failed",
+  "online_booking_id": "OB-123456",
+  "booking_ref_code": "DA-26-X7K2PQ",
+  "payment_reference": "int_abc123",
+  "status": "failed",
+  "amount": 5000.00,
+  "currency": "USD"
+}</pre>
+
+    <p><strong>The reply you will receive.</strong></p>
+    <pre class="code">{ "received": true }</pre>
+
+    <h2 class="section-h">What we need from you next</h2>
+
+    <!-- STEP 1 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">01</div>
+        <h3 class="step-title">Store the token</h3>
+      </div>
+      <div class="step-body">
+        <p>Take the bearer token from your 41 Labs contact and store it as an environment variable. Send it on every request as <code class="inline">Authorization: Bearer &lt;token&gt;</code>.</p>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">02</div>
+        <h3 class="step-title">Build the relay</h3>
+      </div>
+      <div class="step-body">
+        <p>At your own <code class="inline">/v1/payments/webhook</code>, build the payload above and <code class="inline">POST</code> it to the 41 Labs endpoint. Echo <code class="inline">online_booking_id</code> and <code class="inline">booking_ref_code</code> straight back from the payment.</p>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">03</div>
+        <h3 class="step-title">Cover all three outcomes</h3>
+      </div>
+      <div class="step-body">
+        <p>Relay on <code class="inline">paid</code>, on <code class="inline">failed</code> and on <code class="inline">expired</code>. Set <code class="inline">event</code> and <code class="inline">status</code> to match, and send <code class="inline">paid_at</code> on a settlement.</p>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">04</div>
+        <h3 class="step-title">Add retries with backoff</h3>
+      </div>
+      <div class="step-body">
+        <p>Treat any non-2xx reply as a failure and retry. Keep <code class="inline">payment_reference</code> the same across retries of one event, so Hermes recognises the resend.</p>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">05</div>
+        <h3 class="step-title">Send one live event and confirm the booking moved</h3>
+      </div>
+      <div class="step-body">
+        <p>Run one real payment through, watch for the <strong>200</strong>, then tell your 41 Labs contact the <code class="inline">booking_ref_code</code>. We confirm the booking marked itself paid on our side.</p>
+      </div>
+    </section>
+
+    <h2 class="section-h">Checklist</h2>
+    <table class="checklist">
+      <tr><td class="box"><input type="checkbox" id="ck1"></td><td><label for="ck1">The bearer token stored as an environment variable, not in code (Step 1)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">The relay posts the payload to the 41 Labs endpoint over HTTPS (Step 2)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck3"></td><td><label for="ck3"><code class="inline">online_booking_id</code> and <code class="inline">booking_ref_code</code> echoed back from the payment (Step 2)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck4"></td><td><label for="ck4">All three outcomes relayed: paid, failed and expired (Step 3)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck5"></td><td><label for="ck5">A non-2xx reply triggers a retry with backoff (Step 4)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck6"></td><td><label for="ck6">One live event sent, answered <strong>200</strong>, and the booking confirmed on the 41 Labs side (Step 5)</label></td></tr>
+    </table>
+
+  </main>
+
+  <!-- ============ FOOTER (repeats on every printed page) ============ -->
+  <footer class="run-footer">
+    <div class="rule"></div>
+    <div class="row">
+      <div>Questions? Reply to your 41 Labs contact.</div>
+      <div class="pageno"></div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
