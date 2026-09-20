@@ -107,6 +107,40 @@ To replay a step on purpose, delete its marker line from the deal's notes in Twe
 - **CAPI** `event_time` is when the booking was made (Meta rejects events older than 7 days, so older bookings use "now"). `fbc` is the REAL `_fbc` cookie when the notes carry one, falling back to `fb.1.<deal created ms>.<fbclid>` for leads saved before 15 Sep 2026. `client_user_agent` comes from the form request, stored as a `UA:` line in the notes. Leads created before this deploy have no UA line.
 - **Race**: the cron overwrites `statusNotes` with its own copy plus the new marker. An edit Alexander makes to the same deal's notes in the same second could be lost. Put hand notes in Twenty notes/tasks, not in `statusNotes`.
 
+## The Cal.com webhook (20 Sep 2026)
+
+`POST /api/cal-webhook` is now the fast, exact path for bookings. The cron stays as the
+backstop and as the clock for reminders.
+
+**Why.** The cron matched a booking to a deal by pulling emails and phone numbers out of
+the calendar event text. Alan Ong booked twice, once as `onggl@cdgtaxi.com` and once as
+`onggl@cdgtaxi.com.sg`. Seven bookings matched nothing at all. We were already sending
+`metadata[opportunityId]` into the Cal.com embed from `ai-closer.js` and never reading it
+back. This endpoint reads it, so the match is exact. Email is kept only as a fallback for
+a booking made outside the page.
+
+| Cal.com event | What happens |
+|---|---|
+| `BOOKING_CREATED` | stage to MEETING, follow-up set, Meta `Schedule` keyed `schedule_<oppId>`, Closer told `booked` |
+| `BOOKING_RESCHEDULED` | follow-up moved, Closer told `rescheduled`. **No second Meta event**: moving a call is not a second conversion |
+| `BOOKING_CANCELLED` | stage back to SCREENING, booking marker removed so they re-enter the chase list, Closer told `cancelled` |
+| anything else | acknowledged with 200 and ignored |
+
+**Security.** `CAL_WEBHOOK_SECRET` must be set, and the same value must be in the Cal.com
+webhook's Secret field. Signature is HMAC-SHA256 of the raw body, compared with
+`timingSafeEqual`. With no secret configured the endpoint answers 503 and writes nothing,
+rather than trusting anyone who finds the URL.
+
+**Idempotency.** Every send is claimed in the SAME write that records the booking, then
+released if it fails. Claiming in a second write meant a failed write could report one
+booking to Meta twice, and could make the Closer send "you are booked in" again on a
+Cal.com retry. Markers: `[booked:<uid>]`, `[sent:capi_schedule:<uid>]`,
+`[sent:hermes_booked:<uid>]`. The cron uses the same keys, so whichever arrives first
+wins and the other does nothing.
+
+**Failures answer 200.** Cal.com retries a non-200 for hours. A Twenty outage is reported
+in the response body instead, and the cron picks the booking up on its next run.
+
 ## Traps (14-15 Sep 2026)
 
 Each of these cost hours. They are written down because none of them look like bugs.
@@ -232,6 +266,7 @@ Checked against `~/.config/41labs/*.env` and `vercel env ls` for `41labs/41labs-
 | `BOOKING_EVENT_MATCH` | cron | no | default `41 Closer`. Comma-separated, case-insensitive, matched on event title + description | not needed if the schedule title contains "41 Closer" |
 | `META_CAPI_TOKEN` | lead, cron | yes for CAPI | `META_ACCESS_TOKEN` in `meta.env` already works: system-user token, never expires, `ads_management`, can read pixel `24659272643698089` (checked 2026-09-11) | no (new name). Value exists as `META_ACCESS_TOKEN` |
 | `META_CAPI_PIXEL_ID` | cron | no | default `24659272643698089` (same as `META_PIXEL_ID` in `meta.env`) | not needed |
+| `CAL_WEBHOOK_SECRET` | cal-webhook | **yes** (endpoint fails closed without it) | Cal.com, Settings, Webhooks, the Secret field. Stored in `~/.config/41labs/calcom.env` | Vercel: yes (20 Sep) |
 | `META_CAPI_TEST_EVENT_CODE` | lead, cron | no | Events Manager, dataset, Test events tab. When set, every CAPI event goes to Test Events only | set only while testing |
 
 
