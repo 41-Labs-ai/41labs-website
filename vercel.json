@@ -99,6 +99,10 @@
   ],
   "rewrites": [
     {
+      "source": "/card",
+      "destination": "/api/card"
+    },
+    {
       "source": "/wp-admin/:path*",
       "destination": "/api/410"
     },
