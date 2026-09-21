@@ -412,20 +412,36 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
 
     var tabs = document.querySelectorAll('.wa-tab');
     var slots = document.querySelectorAll('.wa-slot');
+    function showChat(key) {
+        tabs.forEach(function (t) { t.classList.toggle('on', t.getAttribute('data-chat') === key); });
+        slots.forEach(function (sl) {
+            var on = sl.getAttribute('data-chat') === key;
+            sl.hidden = !on;
+            sl.classList.toggle('on', on);
+            if (on) playChat(sl.querySelector('.wa-live'));
+        });
+    }
     tabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
             var key = tab.getAttribute('data-chat');
-            tabs.forEach(function (t) { t.classList.toggle('on', t === tab); });
-            slots.forEach(function (sl) {
-                var on = sl.getAttribute('data-chat') === key;
-                sl.hidden = !on;
-                sl.classList.toggle('on', on);
-                if (on) playChat(sl.querySelector('.wa-live'));
-            });
+            showChat(key);
+            // Only a real click is reported. Picking the chat for them below is not a choice.
             track('hero_chat_switch', { industry: key, cta_id: 'ai_closer' });
         });
     });
-    playChat(document.querySelector('.wa-slot:not([hidden]) .wa-live') || document.querySelector('.wa-live'));
+
+    // Open on the conversation that matches the ad they came from. Everyone used to see
+    // the Aircon chat first; cold_carrental, the best ad in the account, sent two car
+    // rental owners to an aircon conversation. Ads with no matching chat keep the default.
+    var AD_CHAT = { cold_carrental: 'car', cold_reno: 'renovation', cold_clinic: 'clinic' };
+    var fromAd = '';
+    try { fromAd = new URLSearchParams(location.search).get('utm_content') || attr.utm_content || ''; } catch (e) {}
+    var matched = AD_CHAT[fromAd];
+    if (matched && document.querySelector('.wa-tab[data-chat="' + matched + '"]')) {
+        showChat(matched);
+    } else {
+        playChat(document.querySelector('.wa-slot:not([hidden]) .wa-live') || document.querySelector('.wa-live'));
+    }
     document.querySelectorAll('.wa:not(.wa-live) .wa-msg').forEach(function (m) { m.classList.add('show'); });
 
     // ---- Reveal on scroll ----
