@@ -51,14 +51,14 @@ function alertLines(lead, { html }) {
   return lines.filter(Boolean);
 }
 
-async function sendTelegram(lead, { env, fetchImpl }) {
+async function postTelegram(text, { env, fetchImpl }) {
   const token = env.TELEGRAM_BOT_TOKEN;
   const chat = env.LEAD_ALERT_CHAT_ID || env.TELEGRAM_GROUP_ID;
   const thread = env.LEAD_ALERT_CHAT_ID ? env.LEAD_ALERT_THREAD_ID : env.TELEGRAM_INBOX_THREAD_ID;
   if (!token || !chat) return 'skipped';
   const payload = {
     chat_id: chat,
-    text: alertLines(lead, { html: true }).join('\n'),
+    text,
     parse_mode: 'HTML',
     disable_web_page_preview: true,
   };
@@ -71,6 +71,22 @@ async function sendTelegram(lead, { env, fetchImpl }) {
   } catch {
     return 'failed';
   }
+}
+
+function sendTelegram(lead, deps) {
+  return postTelegram(alertLines(lead, { html: true }).join('\n'), deps);
+}
+
+// Sent as its own message, after the lead alert, because the alert and the Hermes
+// handoff run in parallel and the alert has already gone by the time Hermes answers.
+// Same chat and topic as the alert, so it lands right under the lead it is about.
+function sendHermesWarning(fields, lead, deps) {
+  const text = [
+    `<b>Hermes ignored ${fields.length === 1 ? 'a field' : 'fields'}</b> from ${escapeHtml(lead.name || 'this lead')}`,
+    `Not recognised: ${escapeHtml(fields.join(', '))}`,
+    'The Closer will not see these answers. The website and Hermes disagree on the field names, so fix one side.',
+  ].join('\n');
+  return postTelegram(text, deps);
 }
 
 // Gmail first: the Workspace already delegates gmail.compose to the service account we
@@ -121,4 +137,4 @@ async function sendLeadAlerts(lead, deps) {
   return { telegram, email };
 }
 
-module.exports = { alertLines, sendLeadAlerts };
+module.exports = { alertLines, sendLeadAlerts, sendHermesWarning };

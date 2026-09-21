@@ -55,6 +55,7 @@ type Opts = {
   failHosts?: string[]; // these hosts return 500
   throwHosts?: string[]; // these hosts throw (network error)
   hangHosts?: string[]; // these hosts never answer until aborted
+  replyJson?: Record<string, any>; // these hosts answer 200 with this body
   headers?: Record<string, string>;
 };
 
@@ -76,6 +77,7 @@ async function run(body: any, opts: Opts = {}) {
       });
     }
     if (opts.failHosts?.includes(host)) return { ok: false, status: 500, text: async () => 'boom', json: async () => ({}) };
+    if (opts.replyJson?.[host]) return { ok: true, status: 200, json: async () => opts.replyJson![host], text: async () => JSON.stringify(opts.replyJson![host]) };
     if (url.includes('/rest/')) {
       if (opts.fail) return { ok: false, status: 500, text: async () => 'boom', json: async () => ({}) };
       n += 1;
@@ -376,6 +378,42 @@ test.describe('closer-lead: Hermes handoff', () => {
     expect(json.hermes).toBe('failed');
     expect(ms).toBeLessThan(4500);
     expect(ms).toBeGreaterThanOrEqual(2900);
+  });
+
+  // 21 Sep 2026: Hermes silently dropped `challenges` and `goal` for days. It now names
+  // any field it did not recognise, and that has to reach a person, not a log.
+  test('Hermes ignores a field: a second Telegram message names it', async () => {
+    const { json, calls } = await run(lead, {
+      env: FULL_ENV,
+      replyJson: { 'hermes.example.com': { ok: true, ignoredFields: ['goal', 'challenges'] } },
+    });
+    expect(json.hermes).toBe('sent');
+    expect(json.hermesIgnored).toEqual(['goal', 'challenges']);
+    const tg = calls.filter((c) => c.url.startsWith('https://api.telegram.org/'));
+    expect(tg).toHaveLength(2);
+    expect(tg[1].body.text).toMatch(/goal, challenges/);
+    expect(tg[1].body.text).toMatch(/Tan Wei Ming/);
+    expect(tg[1].body.message_thread_id).toBe(tg[0].body.message_thread_id);
+  });
+
+  test('Hermes takes every field: one Telegram message, nothing extra reported', async () => {
+    const { json, calls } = await run(lead, {
+      env: FULL_ENV,
+      replyJson: { 'hermes.example.com': { ok: true, ignoredFields: [] } },
+    });
+    expect(json.hermesIgnored).toBeUndefined();
+    expect(calls.filter((c) => c.url.startsWith('https://api.telegram.org/'))).toHaveLength(1);
+  });
+
+  test('the warning failing never costs the visitor their ok', async () => {
+    const { res, json } = await run(lead, {
+      env: FULL_ENV,
+      replyJson: { 'hermes.example.com': { ok: true, ignoredFields: ['goal'] } },
+      throwHosts: ['api.telegram.org'],
+    });
+    expect(res.statusCode).toBe(200);
+    expect(json.ok).toBe(true);
+    expect(json.hermesIgnored).toEqual(['goal']);
   });
 
   test('Hermes 500: reported as failed, never thrown', async () => {

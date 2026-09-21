@@ -11,7 +11,12 @@ function hermesConfigured(env) {
 }
 
 // 'sent' | 'skipped' | 'failed'. Never throws.
-async function postHermesIntake(body, { env, fetchImpl, timeoutMs = 3000 }) {
+// Pass `report` (an object) to learn which lead fields Hermes did not recognise. It is
+// filled rather than returned because the booking cron releases its claim on anything
+// other than exactly 'sent', so a richer return value would make it retry every five
+// minutes forever. On 21 Sep 2026 Hermes was silently dropping `challenges` and `goal`,
+// this is how that shows up now.
+async function postHermesIntake(body, { env, fetchImpl, timeoutMs = 3000, report }) {
   if (!hermesConfigured(env)) return 'skipped';
   const url = `${String(env.HERMES_BASE_URL).replace(/\/+$/, '')}/api/intake/landing-lead`;
   try {
@@ -20,6 +25,14 @@ async function postHermesIntake(body, { env, fetchImpl, timeoutMs = 3000 }) {
       headers: { 'Content-Type': 'application/json', 'x-intake-key': env.HERMES_INTAKE_KEY },
       body: JSON.stringify(body),
     }, timeoutMs);
+    if (r.ok && report && typeof r.json === 'function') {
+      try {
+        const j = await r.json();
+        if (j && Array.isArray(j.ignoredFields) && j.ignoredFields.length > 0) {
+          report.ignoredFields = j.ignoredFields.map(String).slice(0, 20);
+        }
+      } catch { /* a reply we cannot read never costs us the send */ }
+    }
     return r.ok ? 'sent' : 'failed';
   } catch {
     return 'failed';

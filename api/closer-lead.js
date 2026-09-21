@@ -8,7 +8,7 @@
 //   - handoff to Hermes (41 Closer) intake, event 'lead_created' (api/_lib/hermes.js).
 // The page still posts to Formspree too, for now. See docs/BOOKING-PIPELINE.md.
 
-const { sendLeadAlerts } = require('./_lib/lead-alert');
+const { sendLeadAlerts, sendHermesWarning } = require('./_lib/lead-alert');
 const { postHermesIntake } = require('./_lib/hermes');
 const { e164Digits } = require('./_lib/util');
 const { cleanJourney, journeyNote } = require('./_lib/journey');
@@ -271,6 +271,7 @@ module.exports = async (req, res) => {
   const capiEvents = isPartial ? [] : [buildLeadEvent(capiInput)];
   if (!isPartial && (tier === 'A' || tier === 'B')) capiEvents.push(buildQualifiedLeadEvent(capiInput));
 
+  const hermesReport = {};
   const [alerts, hermes, meta] = await Promise.all([
     sendLeadAlerts({
       partial: isPartial,
@@ -314,9 +315,12 @@ module.exports = async (req, res) => {
         ...(journey ? { journey } : {}),
         twentyOpportunityId: oppId,
       },
-    }, deps),
+    }, { ...deps, report: hermesReport }),
     sendCapiEvent(capiEvents, deps),
   ]);
 
-  return send(res, 200, { ...result, alerts, hermes, meta });
+  const hermesIgnored = hermesReport.ignoredFields;
+  if (hermesIgnored) await sendHermesWarning(hermesIgnored, { name }, deps).catch(() => {});
+
+  return send(res, 200, { ...result, alerts, hermes, meta, ...(hermesIgnored ? { hermesIgnored } : {}) });
 };
