@@ -217,11 +217,18 @@ module.exports = async (req, res) => {
           nextAction,
         });
       } else {
-        const personId = await create(key, 'people', {
-          name: splitName(name),
-          phones: { primaryPhoneNumber: whatsapp.replace(/[^\d+]/g, '') },
-          ...(email ? { emails: { primaryEmail: email } } : {}),
-        });
+        // Twenty cannot place a bare 8-digit number and refuses the whole person, which
+        // lost two real leads on 21 Sep 2026. Send it with the country code, and if Twenty
+        // still refuses the phone, save the person without it: the number is in the alert.
+        const person = { name: splitName(name), ...(email ? { emails: { primaryEmail: email } } : {}) };
+        const phone = e164Digits(whatsapp);
+        let personId;
+        try {
+          personId = await create(key, 'people', phone ? { ...person, phones: { primaryPhoneNumber: `+${phone}` } } : person);
+        } catch (phoneErr) {
+          if (!phone || !/phone/i.test(String(phoneErr))) throw phoneErr;
+          personId = await create(key, 'people', person);
+        }
         // A company we already have is the normal case for a repeat domain, not an error.
         let companyId = null;
         try {

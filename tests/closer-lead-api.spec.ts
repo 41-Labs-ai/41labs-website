@@ -56,6 +56,7 @@ type Opts = {
   throwHosts?: string[]; // these hosts throw (network error)
   hangHosts?: string[]; // these hosts never answer until aborted
   replyJson?: Record<string, any>; // these hosts answer 200 with this body
+  twentyPhone?: 'strict' | 'rejectAll'; // mimic Twenty's phone validation on /rest/people
   headers?: Record<string, string>;
 };
 
@@ -79,6 +80,13 @@ async function run(body: any, opts: Opts = {}) {
     if (opts.failHosts?.includes(host)) return { ok: false, status: 500, text: async () => 'boom', json: async () => ({}) };
     if (opts.replyJson?.[host]) return { ok: true, status: 200, json: async () => opts.replyJson![host], text: async () => JSON.stringify(opts.replyJson![host]) };
     if (url.includes('/rest/')) {
+      // Twenty refuses a phone it cannot parse. With no country code it cannot place
+      // an 8-digit number, which is what dropped two real leads on 21 Sep 2026.
+      const ph = url.endsWith('/rest/people') && init?.method === 'POST' ? parseBody(init?.body)?.phones?.primaryPhoneNumber : undefined;
+      if (ph !== undefined && (opts.twentyPhone === 'rejectAll' || (opts.twentyPhone === 'strict' && !String(ph).startsWith('+')))) {
+        const t = JSON.stringify({ statusCode: 400, messages: [`Provided phone number is invalid ${ph}`], code: 'INVALID_PHONE_NUMBER' });
+        return { ok: false, status: 400, text: async () => t, json: async () => JSON.parse(t) };
+      }
       if (opts.fail) return { ok: false, status: 500, text: async () => 'boom', json: async () => ({}) };
       n += 1;
       const obj = url.split('/rest/')[1];
@@ -320,6 +328,40 @@ test.describe('closer-lead: instant Telegram + email alert', () => {
   test('Twenty fails: the alert says so, so Alexander knows to add the lead by hand', async () => {
     const { calls } = await run(lead, { env: FULL_ENV, fail: true });
     expect(tgCall(calls)!.body.text).toMatch(/CRM write failed/);
+  });
+});
+
+// 21 Sep 2026: Jason Lim (tier B) and Shan typed their numbers without +65. Twenty
+// rejected the person, the whole CRM write failed, and neither lead reached the pipeline.
+test.describe('closer-lead: phone numbers typed without a country code', () => {
+  test('a bare 8-digit number reaches Twenty as a +65 number', async () => {
+    const { json, calls } = await run({ ...lead, whatsapp: '92259911' }, { twentyPhone: 'strict' });
+    const person = calls.find((c) => c.url.endsWith('/rest/people') && c.method === 'POST')!;
+    expect(person.body.phones.primaryPhoneNumber).toBe('+6592259911');
+    expect(json.ok).toBe(true);
+    expect(calls.some((c) => c.url.endsWith('/rest/opportunities') && c.method === 'POST')).toBe(true);
+  });
+
+  test('spaces and dashes are fine too', async () => {
+    const { calls } = await run({ ...lead, whatsapp: '9225 9911' }, { twentyPhone: 'strict' });
+    const person = calls.find((c) => c.url.endsWith('/rest/people') && c.method === 'POST')!;
+    expect(person.body.phones.primaryPhoneNumber).toBe('+6592259911');
+  });
+
+  test('a number with its own country code is kept as typed', async () => {
+    const { calls } = await run({ ...lead, whatsapp: '+60 12 345 6789' }, { twentyPhone: 'strict' });
+    const person = calls.find((c) => c.url.endsWith('/rest/people') && c.method === 'POST')!;
+    expect(person.body.phones.primaryPhoneNumber).toBe('+60123456789');
+  });
+
+  test('if Twenty still refuses the phone, the lead is saved without it rather than lost', async () => {
+    const { json, calls } = await run({ ...lead, whatsapp: '92259911' }, { env: FULL_ENV, twentyPhone: 'rejectAll' });
+    const people = calls.filter((c) => c.url.endsWith('/rest/people') && c.method === 'POST');
+    expect(people).toHaveLength(2);
+    expect(people[1].body.phones).toBeUndefined();
+    expect(calls.some((c) => c.url.endsWith('/rest/opportunities') && c.method === 'POST')).toBe(true);
+    expect(json.ok).toBe(true);
+    expect(tgCall(calls)!.body.text).not.toMatch(/CRM write failed/);
   });
 });
 
