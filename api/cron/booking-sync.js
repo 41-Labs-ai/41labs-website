@@ -73,7 +73,8 @@ function hermesLead(opp) {
     phone: c.phone,
     email: c.emails[0] || '',
     company: (opp.company && opp.company.name) || '',
-    tier,
+    // Hermes takes A, B, C or nothing. A partial has no tier, and '' would be refused.
+    tier: tier || null,
     twentyOpportunityId: opp.id,
   };
 }
@@ -248,7 +249,8 @@ async function runBookingSync({ env, fetchImpl, now }) {
     }
   }
 
-  // finish_booking: tier A/B, 15 min to 24 h old, still SCREENING, no booking.
+  // finish_booking: tier A/B, or stopped after the contact step, 15 min to 24 h old,
+  // still SCREENING, no booking. Tier C already got a message when they submitted.
   const bookedUnderName = (name) => {
     const n = name.toLowerCase();
     return n.length >= 3 && unmatchedBookings.some((ev) => `${ev.summary || ''}\n${ev.description || ''}`.toLowerCase().includes(n));
@@ -256,8 +258,8 @@ async function runBookingSync({ env, fetchImpl, now }) {
   for (const opp of opps) {
     if (opp.stage !== 'SCREENING' || boundThisRun.has(opp.id)) continue;
     if (notesLib.boundEventIds(opp.statusNotes).length) continue;
-    const { tier } = notesLib.parseLeadNotes(opp.statusNotes);
-    if (tier !== 'A' && tier !== 'B') continue;
+    const { tier, partial } = notesLib.parseLeadNotes(opp.statusNotes);
+    if (tier !== 'A' && tier !== 'B' && !partial) continue;
     const age = t - Date.parse(opp.createdAt);
     if (!(age >= FINISH_MIN_AGE && age <= FINISH_MAX_AGE)) continue;
     // A booking under their name we couldn't match (different email, no phone):

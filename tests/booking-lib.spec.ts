@@ -193,8 +193,14 @@ test.describe('statusNotes parsing and idempotency markers', () => {
   test('parses tier, fbclid, user agent and UTM content', () => {
     expect(notes.parseLeadNotes(n)).toEqual({
       tier: 'A', fbclid: 'abc123', fbp: '', fbc: '',
-      userAgent: 'Mozilla/5.0 test', utmContent: 'ad_stalk1', fromLandingPage: true,
+      userAgent: 'Mozilla/5.0 test', utmContent: 'ad_stalk1', fromLandingPage: true, partial: false,
     });
+  });
+
+  test('knows a lead who stopped after the contact step, and forgets it once they finish', () => {
+    const step1 = 'Form: 41labs.ai/ai-closer\nStage: contact captured, questions not answered\nUTM: utm_content=cold_bottleneck';
+    expect(notes.parseLeadNotes(step1)).toMatchObject({ tier: '', partial: true });
+    expect(notes.parseLeadNotes(n).partial).toBe(false);
   });
 
   // Without these the booking cron sends Schedule with weaker identifiers than the

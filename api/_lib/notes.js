@@ -6,6 +6,8 @@
 // the lead is visible to a human ("[sent:reminder_1h:...]") when debugging.
 
 const LANDING_FORM_LINE = 'Form: 41labs.ai/ai-closer';
+// Written by api/closer-lead.js at step 1 and replaced when step 2 comes in.
+const PARTIAL_LINE = 'Stage: contact captured, questions not answered';
 
 function parseLeadNotes(notes) {
   const n = String(notes || '');
@@ -17,7 +19,7 @@ function parseLeadNotes(notes) {
   const fbc = (n.match(/^fbc=(\S+)/m) || [])[1] || '';
   const userAgent = ((n.match(/^UA: (.+)$/m) || [])[1] || '').trim();
   const utmContent = (n.match(/\butm_content=(\S+)/) || [])[1] || '';
-  return { tier, fbclid, fbp, fbc, userAgent, utmContent, fromLandingPage: n.includes(LANDING_FORM_LINE) };
+  return { tier, fbclid, fbp, fbc, userAgent, utmContent, fromLandingPage: n.includes(LANDING_FORM_LINE), partial: !tier && n.includes(PARTIAL_LINE) };
 }
 
 const tag = (key) => `[${key}]`;

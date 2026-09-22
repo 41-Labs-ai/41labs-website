@@ -454,6 +454,28 @@ test.describe('finish_booking nudge', () => {
     expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
   });
 
+  // 21 Sep 2026: Shan (Spartans Boxing) gave his contact details and left. The nudge was
+  // tier A/B only, so someone who stopped at step 1 was never messaged at all.
+  const PARTIAL_NOTES = 'Form: 41labs.ai/ai-closer\nWhatsApp enquiries/week: -\nAverage sale: -\nCosting them most: -\nWants: -\n' +
+    'Stage: contact captured, questions not answered\nUTM: utm_source=facebook utm_content=cold_bottleneck';
+
+  test('stopped after the contact step: nudged once, with no tier', async () => {
+    const w = makeWorld({ opps: [opp('o1', { statusNotes: PARTIAL_NOTES, createdAt: iso(NOW - 16 * MIN) })], events: [] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(1);
+    const h = hermesCalls(w.calls, 'finish_booking')[0];
+    // Hermes accepts A, B, C or nothing. An empty string would get the whole nudge refused.
+    expect(h.body.lead.tier).toBeNull();
+    await w.run(NOW + 30 * MIN);
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(1);
+  });
+
+  test('stopped after the contact step but still inside 15 minutes: they may be on step 2, so wait', async () => {
+    const w = makeWorld({ opps: [opp('o1', { statusNotes: PARTIAL_NOTES, createdAt: iso(NOW - 10 * MIN) })], events: [] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
+  });
+
   test('tier C: never nudged to book (they are not offered the calendar)', async () => {
     const w = makeWorld({ opps: [opp('o1', { tier: 'C', createdAt: iso(NOW - 30 * MIN) })], events: [] });
     await w.run();
