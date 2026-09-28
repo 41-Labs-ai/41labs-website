@@ -482,6 +482,31 @@ test.describe('finish_booking nudge', () => {
     expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
   });
 
+  // 28 Sep 2026: the event list includes anything updated in the last two days, which can
+  // be a call that has already happened. Hazel Lee's call ended at 10:30 and the cron was
+  // about to text her "you are booked in" for it.
+  test('a call that has already happened gets no confirmation', async () => {
+    const w = makeWorld({
+      opps: [opp('o1', { createdAt: iso(NOW - 2 * HOUR) })],
+      events: [booking('e1', { start: NOW - 90 * MIN, created: NOW - 26 * HOUR })],
+    });
+    await w.run();
+    expect(hermesCalls(w.calls, 'booked')).toHaveLength(0);
+    // The deal is still bound and staged, and Meta still gets the booking.
+    expect(w.store.get('o1').statusNotes).toContain('[booked:e1]');
+    expect(w.store.get('o1').statusNotes).not.toContain('sent:booked:e1');
+    expect(w.store.get('o1').stage).toBe('MEETING');
+  });
+
+  test('a call still ahead of us does get the confirmation', async () => {
+    const w = makeWorld({
+      opps: [opp('o1', { createdAt: iso(NOW - 2 * HOUR) })],
+      events: [booking('e1', { start: NOW + 3 * HOUR })],
+    });
+    await w.run();
+    expect(hermesCalls(w.calls, 'booked')).toHaveLength(1);
+  });
+
   test('lead who booked in this same run: not nudged', async () => {
     const w = makeWorld({ opps: [opp('o1', { createdAt: iso(NOW - 20 * MIN) })], events: [booking('e1')] });
     await w.run();

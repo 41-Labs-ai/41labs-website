@@ -230,9 +230,14 @@ async function runBookingSync({ env, fetchImpl, now }) {
         }), { env, fetchImpl });
       });
 
-      // 3. Hermes: booked.
-      await once(opp, `sent:booked:${ev.id}`, hermesOn, () =>
-        postHermesIntake({ event: 'booked', lead: hermesLead(opp), booking: bookingOf(ev) }, { env, fetchImpl }));
+      // 3. Hermes: booked. Never for a call that has already happened. The event list
+      // includes anything updated in the last two days, so it can hold a finished call,
+      // and "you are booked in" about a call that is over reads as nobody paying
+      // attention. The reminders are already bounded by their own windows.
+      if (startMs > t) {
+        await once(opp, `sent:booked:${ev.id}`, hermesOn, () =>
+          postHermesIntake({ event: 'booked', lead: hermesLead(opp), booking: bookingOf(ev) }, { env, fetchImpl }));
+      }
 
       // 4. Reminders (keyed by start time, so a moved call re-arms them).
       const until = startMs - t;
