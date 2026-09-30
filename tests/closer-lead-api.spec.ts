@@ -333,6 +333,56 @@ test.describe('closer-lead: instant Telegram + email alert', () => {
 
 // 21 Sep 2026: Jason Lim (tier B) and Shan typed their numbers without +65. Twenty
 // rejected the person, the whole CRM write failed, and neither lead reached the pipeline.
+// The form never asks for a company. Step 1 creates the deal before we know their website,
+// so it was named after the person and stayed that way: "Lee Richard - 41 Closer". Step 2
+// knows the website, so that is where the business name gets put right.
+test.describe('closer-lead: the deal is named after the business', () => {
+  const noCompany = (extra: any = {}) => { const { company, ...rest } = lead as any; return { ...rest, ...extra }; };
+
+  test('a first-time submit with a website names the deal after the business', async () => {
+    const { calls } = await run(noCompany({ website: 'dreamcrafts.com' }));
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities') && c.method === 'POST')!;
+    expect(opp.body.name).toBe('Dreamcrafts - 41 Closer (ad landing page)');
+    const co = calls.find((c) => c.url.endsWith('/rest/companies'))!;
+    expect(co.body.name).toBe('Dreamcrafts');
+  });
+
+  test('step 2 renames the deal step 1 named after the person', async () => {
+    const { calls } = await run(noCompany({ website: 'www.lchlogistics.com', opportunityId: 'opp-from-step-1' }));
+    const patch = calls.find((c) => c.url.includes('/rest/opportunities/opp-from-step-1'))!;
+    expect(patch.method).toBe('PATCH');
+    expect(patch.body.name).toBe('Lchlogistics - 41 Closer (ad landing page)');
+    expect(patch.body.companyId).toBeTruthy();
+    expect(calls.some((c) => c.url.endsWith('/rest/companies') && c.body.name === 'Lchlogistics')).toBe(true);
+  });
+
+  test('a hyphenated domain reads as words', async () => {
+    const { calls } = await run(noCompany({ website: 'tan-aircon.sg' }));
+    expect(calls.find((c) => c.url.endsWith('/rest/companies'))!.body.name).toBe('Tan Aircon');
+  });
+
+  // An @handle is usually the brand itself, so it is kept. The platform it sits on is not.
+  test('an Instagram handle is treated as the business name', async () => {
+    const { calls } = await run(noCompany({ website: '@myshop', opportunityId: 'opp-h' }));
+    expect(calls.find((c) => c.url.includes('/rest/opportunities/opp-h'))!.body.name)
+      .toBe('Myshop - 41 Closer (ad landing page)');
+  });
+
+  test('a social page or a free inbox is not a business name', async () => {
+    for (const site of ['Www.fb.com', 'no.com', 'instagram.com/someshop', 'gmail.com']) {
+      const { calls } = await run(noCompany({ website: site, opportunityId: 'opp-x' }));
+      const patch = calls.find((c) => c.url.includes('/rest/opportunities/opp-x'));
+      expect(patch?.body.name, site).toBeUndefined();
+      expect(calls.some((c) => c.url.endsWith('/rest/companies')), site).toBe(false);
+    }
+  });
+
+  test('a company the visitor typed still wins', async () => {
+    const { calls } = await run({ ...lead, website: 'dreamcrafts.com' });
+    expect(calls.find((c) => c.url.endsWith('/rest/companies'))!.body.name).toBe('Tan Aircon Services');
+  });
+});
+
 test.describe('closer-lead: phone numbers typed without a country code', () => {
   test('a bare 8-digit number reaches Twenty as a +65 number', async () => {
     const { json, calls } = await run({ ...lead, whatsapp: '92259911' }, { twentyPhone: 'strict' });

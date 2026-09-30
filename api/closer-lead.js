@@ -61,6 +61,22 @@ function send(res, status, obj) {
 // Twenty rejects a company whose name already exists. Falling over at that point
 // used to abandon the whole write, leaving an orphan Person and no deal, so the
 // SECOND lead from any domain we already knew never reached the pipeline.
+// A social page or a free inbox is not a business name: "Fb", "No" and "Gmail" are worse
+// than the person's own name on a deal. Everything else becomes Title Case words, so
+// tan-aircon.sg reads as Tan Aircon.
+const NOT_A_BUSINESS = new Set(['fb', 'facebook', 'instagram', 'ig', 'tiktok', 'wa', 'whatsapp',
+  'gmail', 'yahoo', 'hotmail', 'outlook', 'icloud', 'google', 'linktr', 'linktree', 'carousell',
+  'shopee', 'lazada', 'wix', 'wixsite', 'blogspot', 'wordpress', 'no', 'none', 'na', 'nil']);
+
+function companyFromWebsite(raw) {
+  const label = String(raw || '')
+    .replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/^@/, '')
+    .replace(/\/.*$/, '').split('.')[0].trim().toLowerCase();
+  if (label.length < 3 || NOT_A_BUSINESS.has(label)) return '';
+  return label.split(/[-_]+/).filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
 async function findCompanyId(key, name) {
   try {
     const r = await fetch(`${TWENTY_BASE}/rest/companies?filter=name[eq]:${encodeURIComponent(name)}&limit=1`, {
@@ -134,12 +150,8 @@ module.exports = async (req, res) => {
 
   // The form no longer asks for a company: derive it from the website, else use their name.
   const websiteRaw = clean(body.website, 200);
-  const companyFromSite = websiteRaw
-    .replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/.*$/, '').split('.')[0]
-    .replace(/[-_]+/g, ' ').trim();
-  const company = clean(body.company, 160)
-    || (companyFromSite ? companyFromSite.charAt(0).toUpperCase() + companyFromSite.slice(1) : '')
-    || name;
+  const companyFromSite = companyFromWebsite(websiteRaw);
+  const company = clean(body.company, 160) || companyFromSite || name;
   const email = clean(body.email, 160);
   const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
   const utm = UTM_KEYS
@@ -212,9 +224,24 @@ module.exports = async (req, res) => {
       if (existingId) {
         // Second post from the same visitor: fill in the deal we opened at step 1
         // rather than creating a second one for the same person.
+        // Step 1 had no website, so the deal was named after the person. Now we know the
+        // business, so rename it and link the company. Otherwise every ad deal reads
+        // "Lee Richard - 41 Closer" and the pipeline tells you nothing at a glance.
+        const rename = {};
+        if (companyFromSite && companyFromSite !== name) {
+          let companyId = null;
+          try {
+            companyId = await create(key, 'companies', { name: company, ...(domain ? { domainName: { primaryLinkUrl: domain } } : {}) });
+          } catch {
+            companyId = await findCompanyId(key, company);
+          }
+          rename.name = `${company} - 41 Closer (ad landing page)`;
+          if (companyId) rename.companyId = companyId;
+        }
         oppId = await patch(key, 'opportunities', existingId, {
           statusNotes: notes.slice(0, 2500),
           nextAction,
+          ...rename,
         });
       } else {
         // Twenty cannot place a bare 8-digit number and refuses the whole person, which
