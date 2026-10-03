@@ -61,14 +61,14 @@ The exact terms for "AI that replaces a sales hire" are **exploding in the US an
 
 ### Cluster C — content hooks (job-board SERP — DON'T target to rank, USE as the emotional hook)
 These are where the pain is *felt*. Write content that ranks for the *adjacent* solution term but opens with this pain:
-- "cost to hire a sales rep singapore" / "sales rep salary singapore" → the S$3k-5k/mo number is the hook that makes 41 Closer's S$690/mo look obvious.
+- "cost to hire a sales rep singapore" / "sales rep salary singapore" → the S$3k-5k/mo number is the hook that makes 41 Closer's S$390/mo look obvious.
 - "sales coordinator" (210/mo), "sales admin" (50/mo) → job-seeker intent, but the *job description* tells us exactly what 41 Closer automates. Mine these for feature language.
 
 ---
 
 ## RECOMMENDED ACTIONS
 1. **Build `/ai-sdr-singapore` + `/ai-receptionist-singapore`** — two new 41 Closer landing pages targeting the emerging AI-native terms before SG demand peaks. Highest forward leverage.
-2. **Write `/blog/ai-sales-agent-vs-hiring-salesperson`** — the money comparison: "AI sales agent vs hiring a salesperson (real 2026 Singapore cost)". Ranks for the winnable "hire a salesperson" SERP AND does the S$690 vs S$3,000/mo math (Hormozi value framing). This is the highest-converting piece.
+2. **Write `/blog/ai-sales-agent-vs-hiring-salesperson`** — the money comparison: "AI sales agent vs hiring a salesperson (real 2026 Singapore cost)". Ranks for the winnable "hire a salesperson" SERP AND does the S$390 vs S$3,000/mo math (Hormozi value framing). This is the highest-converting piece.
 3. **Add the hire-intercept angle to `/ai-sales-agent-singapore`** — it already ranks pos 4.7; add "the alternative to hiring a sales rep" framing + the cost comparison.
 4. **GEO:** these are also perfect ICP-GEO queries — "should I hire a salesperson or use an AI sales agent in Singapore?" Add answer-capsules so AI recommends 41 Closer for the hire-vs-AI decision.
 

@@ -8,7 +8,7 @@
 // The tier is the monthly enquiry value: enquiries a week x 4.3 x average sale. That
 // figure is the only thing that really decides whether a Closer pays for itself.
 //
-//   A   S$1M a month or more    guarantee territory, call within the hour
+//   A   S$1M a month or more    top of the queue, call within the hour
 //   B   S$100k a month or more  a Closer clearly pays for itself
 //   C   below that              still books, but check it can pay back before quoting
 //
@@ -30,7 +30,7 @@
   // The old rule gated on volume AND ticket separately, which threw out a business
   // doing 35 enquiries a week at S$5,000 a sale: S$753k a month walking past. Tiering
   // on the value itself does not have that blind spot.
-  var TIER_A_FLOOR = 1000000;   // S$1M a month of enquiry value: guarantee territory
+  var TIER_A_FLOOR = 1000000;   // S$1M a month of enquiry value: call within the hour
   var TIER_B_FLOOR = 100000;    // S$100k a month: a Closer clearly pays for itself
 
   var money = function (n) { return 'S$' + Math.round(n).toLocaleString('en-SG'); };
@@ -43,7 +43,7 @@
 
     if (value >= TIER_A_FLOOR) {
       return { qualified: true, tier: 'A', value: value,
-               reason: 'About ' + money(value) + ' a month through WhatsApp. Guarantee territory, call first' };
+               reason: 'About ' + money(value) + ' a month through WhatsApp. Call this one first' };
     }
     if (value >= TIER_B_FLOOR) {
       return { qualified: true, tier: 'B', value: value,

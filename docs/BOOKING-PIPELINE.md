@@ -280,8 +280,8 @@ The ad account can only optimise for what we report. Three events, deepest last:
 | Event | Fires | Value | Why |
 |---|---|---|---|
 | `Lead` | every form submit, including tier C | none | Volume, so the pixel keeps learning. No value, so Meta never bids to buy more tier C. |
-| `QualifiedLead` | tier A and B only | S$96 | **This is the event ad sets should optimise on.** MODELLED, not measured: base case 5% book x 20% close x S$9,600 build fee. See the warning below. |
-| `Schedule` | a call is confirmed | S$500 | Set by the ads contract, not derived. The funnel implies nearer S$2,000, so this UNDERSTATES a booked call about 4x: safe for bidding, wrong for reading ROAS. Sent by the browser AND the cron, same id. |
+| `QualifiedLead` | tier A and B only | S$149 | **This is the event ad sets should optimise on.** MODELLED, not measured: base case 5% book x 20% close x S$14,900, the published first year on Pro. See the warning below. |
+| `Schedule` | a call is confirmed | S$500 | Set by the ads contract, not derived. The funnel implies nearer S$3,000, so this UNDERSTATES a booked call about 6x: safe for bidding, wrong for reading ROAS. Sent by the browser AND the cron, same id. |
 
 ⚠️ **No ad-sourced client has ever been traced.** Checked 13 Sep 2026 against Hermes and
 Twenty: no lead carrying an ad referral has reached a won stage, the Hertz deal has
@@ -291,7 +291,7 @@ leadSource "WhatsApp inbound" with no Hermes lead record and no ad referral, and
 Raise these values to a measured rate only once a traced ad-sourced deal closes.
 
 The two values are therefore modelled, so treat them as direction not law. What actually
-steers Meta's bidding is the ratio between them (about 1:21), and that holds across every
+steers Meta's bidding is the ratio between them (about 1:20), and that holds across every
 scenario in the numbers doc. The absolute figures only change how ROAS reads in Ads Manager.
 The value lives in `VALUE_QUALIFIED_LEAD` in code and is deliberately NOT set on the Meta
 custom conversion: a fixed value there would override what we send and freeze it.

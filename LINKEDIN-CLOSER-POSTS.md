@@ -18,7 +18,7 @@ a real price, and follow up if you go quiet.
 
 If it can sell you, it can sell for you.
 
-We build it, run it, and tune it. You do not manage anything. From $690 a month.
+We build it, run it, and tune it. You do not manage anything. From $390 a month.
 
 Go on. Message it and see.
 
@@ -102,7 +102,7 @@ and follows up tomorrow if you went quiet. That is what a good salesperson does.
 
 It does not get tired. It does not forget to follow up. It does not go home at 6.
 
-We build it on your real business and run it for you. From $690 a month.
+We build it on your real business and run it for you. From $390 a month.
 
 Text +65 8012 4848 and watch it work.
 

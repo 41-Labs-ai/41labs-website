@@ -28,17 +28,21 @@ const CURRENCY = 'SGD';
 // Values Meta optimises against. Set by the ads-side contract at
 // 41closer-marketing/ads/2026-09-batch/CONVERSION-TRACKING-SPEC.md: a flat S$500 on
 // Schedule, to be tuned later. Kept deliberately as the spec says rather than as the
-// funnel implies: 20% of calls close x S$9,600 build fee would put a booked call
-// nearer S$2,000, so this UNDERSTATES a booked call by about 4x. That is safe for
+// funnel implies: 20% of calls close x S$14,900 first year on Pro would put a booked
+// call nearer S$3,000, so this UNDERSTATES a booked call by about 6x. That is safe for
 // bidding and wrong for reading ROAS, so raise it once the campaign has data.
 const VALUE_SCHEDULE = 500;
 
 // QualifiedLead is modelled, not measured: as of 13 Sep 2026 no ad-attributed lead has
 // ever reached a won stage. The Hertz deal has leadSource "WhatsApp inbound" in Twenty,
 // no Hermes lead record and no ad referral, and only 83 of 1,157 non-demo July leads
-// (7%) carry an ad referral at all. So this uses the modelled base case from
-// 41 Labs/41-CLOSER-NUMBERS.md section 3: 5% book x 20% close x S$9,600 = S$96.
-const VALUE_QUALIFIED_LEAD = 96;
+// (7%) carry an ad referral at all.
+//
+// Re-derived 1 Oct 2026. The old figure multiplied by a S$9,600 build fee, which the
+// new price card deleted: the build is included and the plan is the only revenue. So
+// the closed-client figure is now the published first year on Pro, S$14,900 (pricing/
+// 41-CLOSER-PRICING.md). Base case stays 5% book x 20% close = S$149.
+const VALUE_QUALIFIED_LEAD = 149;
 
 const sha256 = (v) => crypto.createHash('sha256').update(v).digest('hex');
 

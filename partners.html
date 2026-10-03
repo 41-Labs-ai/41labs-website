@@ -366,7 +366,7 @@
                         <div class="pp-deal">You introduced <b>one client</b>. We closed it and switched it on. Here is what hits your account.</div>
                         <div class="pp-row upfront">
                             <span>20% of their first invoice</span>
-                            <span class="amt">+$2,218</span>
+                            <span class="amt">+$298</span>
                         </div>
                         <div class="pp-row m1">
                             <span>Month 1 &middot; 10% recurring</span>
@@ -382,7 +382,7 @@
                         </div>
                         <div class="pp-total">
                             <span>Year one, one client</span>
-                            <b>~$4,000</b>
+                            <b>~$2,100</b>
                         </div>
                     </div>
                     <p class="pp-ledger-cap">One intro. <b>Paid for twelve months.</b></p>
@@ -505,7 +505,7 @@
                     <a class="clo-tier-cta primary" href="#apply">Become a partner</a>
                 </div>
             </div>
-            <p class="clo-tiers-note">First invoice means your client's first payment to us, including the one-time setup fee. Recurring share is paid for twelve months while the client stays. Full terms in the partner agreement.</p>
+            <p class="clo-tiers-note">First invoice means your client's first payment to us, including any one-time fee to connect their own systems. Recurring share is paid for twelve months while the client stays. Full terms in the partner agreement.</p>
         </div>
     </section>
 
@@ -525,8 +525,9 @@
                         <div class="pp-field">
                             <div class="pp-field-label">Which plan they take</div>
                             <div class="pp-toggle" id="pp-plan" role="group" aria-label="Which plan the client takes">
-                                <button data-plan="min">41 Closer Minimum</button>
-                                <button data-plan="pro" class="on">41 Closer Pro</button>
+                                <button data-plan="starter">Starter</button>
+                                <button data-plan="pro" class="on">Pro</button>
+                                <button data-plan="scale">Scale</button>
                             </div>
                         </div>
                         <div class="pp-field">
@@ -549,7 +550,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="pp-calc-foot">Based on real 41 Closer pricing. Minimum is $690 a month plus a $4,800 setup. Pro is $1,490 a month plus a $9,600 setup. First invoice counts the setup plus the first month. Recurring runs for twelve months per client. Your numbers go up further when clients renew past the first year or take a higher plan.</p>
+                <p class="pp-calc-foot">Based on real 41 Closer pricing. Starter is $690 a month, Pro is $1,490 a month, Scale is $4,300 a month. The build is included, so there is no setup fee and the first invoice is the first month. Recurring runs for twelve months per client. Your numbers go up further when clients renew past the first year, move up a plan, or pay us a one-time fee to connect their own systems, which counts in your first invoice share too.</p>
             </div>
         </div>
     </section>
@@ -856,15 +857,14 @@
     <!-- Earnings calculator -->
     <script>
         (function(){
-            var PLANS = { min: { monthly: 690, setup: 4800 }, pro: { monthly: 1490, setup: 9600 } };
+            var PLANS = { starter: { monthly: 690 }, pro: { monthly: 1490 }, scale: { monthly: 4300 } };
             var RATE = { first: 0.20, rec: 0.10 };
             var state = { plan: 'pro', n: 5 };
 
             function money(v){ return '$' + Math.round(v).toLocaleString('en-US'); }
             function render(){
                 var p = PLANS[state.plan];
-                var firstInvoice = p.setup + p.monthly;
-                var upfront = RATE.first * firstInvoice * state.n;
+                var upfront = RATE.first * p.monthly * state.n;
                 var monthly = RATE.rec * p.monthly * state.n;
                 var year1 = upfront + (monthly * 12);
                 document.getElementById('pp-upfront').textContent = money(upfront);

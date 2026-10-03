@@ -27,7 +27,7 @@ const GOALS = {
   scale: 'Handle more without hiring', freeteam: 'Free the team from repetitive chats', unsure: 'Wants to see what it can do',
 };
 const NEXT = {
-  A: 'TIER A: guarantee-eligible. Call within 1 hour, even if they booked.',
+  A: 'TIER A: highest enquiry value in the queue. Call within 1 hour, even if they booked.',
   B: 'TIER B: confirm the call is booked. If not, WhatsApp them within 1 working hour.',
   C: 'TIER C: low enquiry value. They can book like anyone else, but check the maths pays back before you quote a price.',
 };

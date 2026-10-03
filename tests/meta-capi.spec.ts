@@ -74,7 +74,7 @@ test.describe('Lead vs QualifiedLead', () => {
     expect(ev.custom_data.tier).toBe('C');
   });
 
-  test('QualifiedLead carries the expected build revenue behind one qualified lead', () => {
+  test('QualifiedLead carries the expected revenue behind one qualified lead', () => {
     const ev = capi.buildQualifiedLeadEvent({ eventId: 'evt-1', eventTimeSec: 1, tier: 'A' });
     expect(ev.event_name).toBe('QualifiedLead');
     // different event_id from the Lead, or Meta drops it as a duplicate
@@ -92,14 +92,16 @@ test.describe('Lead vs QualifiedLead', () => {
   // Two different sources of truth, on purpose.
   // QualifiedLead is MODELLED from our own funnel: as of 13 Sep 2026 no ad-attributed
   // lead has ever reached a won stage, so there is no measured rate to use.
-  test('QualifiedLead is the modelled base-case rate times the S$9,600 build fee', () => {
-    const BUILD_FEE = 9600, BOOKS = 0.05, CLOSES = 0.20;   // 41-CLOSER-NUMBERS.md section 3
-    expect(capi.VALUE_QUALIFIED_LEAD).toBe(Math.round(BOOKS * CLOSES * BUILD_FEE));
+  // Re-derived 1 Oct 2026: the build fee is gone, so the closed-client figure is the
+  // published first year on Pro. If the price card moves, this test fails first.
+  test('QualifiedLead is the modelled base-case rate times the first year on Pro', () => {
+    const PRO_YEAR = 14900, BOOKS = 0.05, CLOSES = 0.20;   // pricing/41-CLOSER-PRICING.md
+    expect(capi.VALUE_QUALIFIED_LEAD).toBe(Math.round(BOOKS * CLOSES * PRO_YEAR));
   });
 
   // Schedule is SET BY THE ADS CONTRACT, not derived: a flat S$500 to start.
-  // Worth knowing it understates a booked call by roughly 4x against our own funnel
-  // (20% close x S$9,600 is nearer S$1,900), which is safe for bidding and wrong for
+  // Worth knowing it understates a booked call by roughly 6x against our own funnel
+  // (20% close x S$14,900 is nearer S$3,000), which is safe for bidding and wrong for
   // reading ROAS. Changing it is an ads-side decision, so the test pins the contract.
   test('Schedule carries the flat S$500 the tracking spec asks for', () => {
     expect(capi.VALUE_SCHEDULE).toBe(500);
