@@ -70,7 +70,7 @@ for (const P of PAGES) {
       await expect(page.locator('body')).toHaveAttribute('data-variant', P.variant);
     });
 
-    test('offer is a free demo; no price anywhere; guarantee matches the SOW', async ({ page }) => {
+    test('offer is a free demo; no price anywhere; no guarantee', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
       const text = await page.locator('body').innerText();
@@ -78,6 +78,10 @@ for (const P of PAGES) {
       expect(text).not.toContain('9,600');
       expect(text).not.toContain('1,490');
       expect(text).not.toMatch(/setup fee back|money back|refund/i);
+      // The price card removed the S$20,000 revenue guarantee on 1 Oct 2026 and
+      // replaced it with nothing. No refund, no free month, no service credit.
+      expect(text).not.toMatch(/guarantee/i);
+      expect(text).not.toContain('20,000');
     });
 
     test('house style: no em dashes, no hype words', async ({ page }) => {
@@ -417,7 +421,7 @@ test.describe('long form follows the event opt-in structure', () => {
     const d = page.locator('#different');
     await expect(d).toContainText(/12,868 live products/);      // connected to their systems
     await expect(d).toContainText(/Nothing to learn/i);          // done for you
-    await expect(d).toContainText(/S\$20,000 in booked sales/);  // money on the result
+    await expect(d).toContainText(/only commitment you ever make/); // nothing to commit to
     await expect(page.locator('#faq')).toContainText(/different from the WhatsApp tools/i);
     await expect(page.locator('#hero .hero-sub')).toContainText(/run it for you/i);
   });

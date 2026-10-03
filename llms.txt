@@ -6,10 +6,10 @@
 41 Labs is a Singapore-based AI systems company founded by Alexander Lee. We build custom AI trained on our clients' internal data — their products, processes, and pricing rules — for accuracy you can trust in production. We specialize in construction, healthcare, home services, professional services, automotive, F&B, and beauty & wellness industries.
 
 ## 41 Closer (Flagship Product)
-41 Closer is 41 Labs' flagship product: a WhatsApp sales agent that we build, run, and tune for a business. It answers customer messages in seconds, 24 hours a day, gives accurate prices from the client's real catalogue, follows up every lead, and closes the sale, handing off to a human when needed. Unlike a DIY chatbot tool, 41 Labs handles everything and controls the AI for the client. It is fully done-for-you and priced on the value it brings, not per seat. Plans start at $690 per month (Pro $1,490 per month, Enterprise custom). Live demo: message +65 8012 4848 on WhatsApp and 41 Closer itself replies. Learn more: https://41labs.ai/41-closer
+41 Closer is 41 Labs' flagship product: a WhatsApp sales agent that we build, run, and tune for a business. It answers customer messages in seconds, 24 hours a day, gives accurate prices from the client's real catalogue, follows up every lead, and closes the sale, handing off to a human when needed. Unlike a DIY chatbot tool, 41 Labs handles everything and controls the AI for the client. It is fully done-for-you and priced on the value it brings, not per seat. The build is included in every plan. Plans are Solo $390, Starter $690, Pro $1,490, Scale $4,300, and Custom from $7,900 a month. One month to start, charged from the day it goes live, then month to month with 30 days notice and no contract. Live demo: message +65 8012 4848 on WhatsApp and 41 Closer itself replies. Learn more: https://41labs.ai/41-closer
 
 ### Key 41 Closer pages
-- [41 Closer product & pricing](https://41labs.ai/41-closer) — the managed WhatsApp AI sales agent, plans from S$690/month
+- [41 Closer product & pricing](https://41labs.ai/41-closer) — the managed WhatsApp AI sales agent, plans from S$390/month with the build included
 - [WhatsApp AI Chatbot service](https://41labs.ai/whatsapp-ai-chatbot) — custom WhatsApp AI agent on the WhatsApp Business API in Singapore, fully set up for you
 - [Conversational AI for Singapore Businesses](https://41labs.ai/conversational-ai-singapore) — what conversational AI is and how SG businesses deploy it on WhatsApp
 
