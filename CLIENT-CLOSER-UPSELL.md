@@ -4,7 +4,7 @@ Your 50+ existing clients already trust you and already have a system from us in
 They are the fastest yes for 41 Closer. Send these one at a time, personalised. Warmest first.
 House voice: plain English, short sentences, no em dashes, concrete, soft CTA, signed Alexander.
 
-Recurring revenue math: even 10 clients on the $390/month plan is $6,900/month recurring.
+Recurring revenue math: even 10 clients on the $690/month plan is $6,900/month recurring.
 
 ---
 
@@ -72,6 +72,6 @@ Founder, 41 Labs
 - Lead with the outcome (stop losing WhatsApp leads), not the tech.
 - The demo IS the pitch: get them to text +65 8012 4848.
 - "We build it and run it, same as before" removes their effort objection.
-- Price only after they have seen it work. From $390/month, Pro $1,490/month.
+- Price only after they have seen it work. From $690/month, Pro $1,490/month.
 - For high-volume trades (aircon, renovation, suppliers) lean on the "50 messages a day, your
   team stops being a switchboard" angle.

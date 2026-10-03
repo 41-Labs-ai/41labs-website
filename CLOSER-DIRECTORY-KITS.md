@@ -16,7 +16,7 @@ Turnkey copy-paste kit. Each platform below has the exact "submit / get listed" 
 - **Live demo (WhatsApp):** https://wa.me/6580124848
 - **Contact:** Alexander Lee — alexander@41labs.ai
 - **Founded / HQ:** Singapore
-- **Pricing:** From S$390/month, fully managed (setup, training and monthly management included). Pro from S$1,490/month. Enterprise custom.
+- **Pricing:** From S$690/month, fully managed (setup, training and monthly management included). Pro from S$1,490/month. Enterprise custom.
 
 **Tagline (60 char):**
 > The managed WhatsApp AI agent that closes your leads
@@ -28,7 +28,7 @@ Turnkey copy-paste kit. Each platform below has the exact "submit / get listed" 
 > 41 Closer is a managed, done-for-you WhatsApp AI sales agent for Singapore and SEA businesses. It answers every enquiry in seconds, qualifies the buyer, books the call or takes the order, and hands your team the hot leads. 41 Labs sets it up, trains it, and runs it for you.
 
 **Long description (~120 words):**
-> 41 Closer is a managed WhatsApp AI sales agent built for Singapore and SEA businesses that lose deals because replies come too late. Every enquiry gets an answer in seconds, day or night. The agent asks the right qualifying questions, gives accurate pricing and product answers from your own information, books the call straight into your calendar, and passes hot leads to your closers. It speaks in your brand voice, not a robotic script. This is done-for-you, not another dashboard to learn: 41 Labs sets it up, trains it on your business, connects it to your WhatsApp, and manages it every month. Built and run by 41 Labs in Singapore, with more than 50 AI systems in production. From S$390 per month.
+> 41 Closer is a managed WhatsApp AI sales agent built for Singapore and SEA businesses that lose deals because replies come too late. Every enquiry gets an answer in seconds, day or night. The agent asks the right qualifying questions, gives accurate pricing and product answers from your own information, books the call straight into your calendar, and passes hot leads to your closers. It speaks in your brand voice, not a robotic script. This is done-for-you, not another dashboard to learn: 41 Labs sets it up, trains it on your business, connects it to your WhatsApp, and manages it every month. Built and run by 41 Labs in Singapore, with more than 50 AI systems in production. From S$690 per month.
 
 **Key features (written as outcomes — pick 5-7):**
 - Every WhatsApp enquiry answered in seconds, 24/7, so you stop losing leads to slow replies
@@ -107,7 +107,7 @@ Turnkey copy-paste kit. Each platform below has the exact "submit / get listed" 
 
 These are the pages AI engines actually quote when someone asks "best WhatsApp AI agent". Priority = **independent** review sites (not competitor-owned blogs). Competitor-owned roundups (respond.io, Wati, Kommunicate, BotPenguin, DM Champ) will not add a rival — skip those for outreach.
 
-**How to pitch (all of them):** short email/contact-form note — "We run 41 Closer, a *managed* done-for-you WhatsApp AI sales agent for Singapore/SEA SMEs, from S$390/mo. Your 2026 roundup covers builders like Wati and SleekFlow but no managed option — happy to give you demo access and a data sheet so you can review it. Live demo: wa.me/6580124848." Attach logo + the short description.
+**How to pitch (all of them):** short email/contact-form note — "We run 41 Closer, a *managed* done-for-you WhatsApp AI sales agent for Singapore/SEA SMEs, from S$690/mo. Your 2026 roundup covers builders like Wati and SleekFlow but no managed option — happy to give you demo access and a data sheet so you can review it. Live demo: wa.me/6580124848." Attach logo + the short description.
 
 ### A. Chatimize — "7 Best WhatsApp Chatbots (2026)"
 - **URL:** https://chatimize.com/best-whatsapp-chatbots/

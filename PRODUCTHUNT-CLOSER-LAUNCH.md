@@ -10,7 +10,7 @@ Everything Alexander needs to run the 41 Closer launch on Product Hunt. Copy-pas
 | What it is | A fully managed AI sales agent that lives on your WhatsApp |
 | One-liner | It closes, it doesn't just chat. |
 | Live demo | Text +65 8012 4848 and 41 Closer replies to you itself |
-| Pricing | From $390/month. Pro $1,490/month. Enterprise custom. |
+| Pricing | From $690/month. Pro $1,490/month. Enterprise custom. |
 | Site | https://41labs.ai/41-closer |
 | Maker | Alexander Lee |
 | Proof | Built by 41 Labs. 50+ AI systems delivered, 100% still in production. |
@@ -100,7 +100,7 @@ Prepare these before launch day. Gallery images should be at least 1270x760 pixe
 
 4. **How done-for-you works in 3 steps.** Three panels: 1) We learn your prices and your sales process. 2) We build and run 41 Closer on your WhatsApp. 3) We tune it as you go. One line under the panels: "Nothing for your team to build or manage."
 
-5. **Pricing.** Three tiers shown plainly: from $390/month, Pro $1,490/month, Enterprise custom. One line: "Fully managed. We build it, run it, and tune it."
+5. **Pricing.** Three tiers shown plainly: from $690/month, Pro $1,490/month, Enterprise custom. One line: "Fully managed. We build it, run it, and tune it."
 
 6. **Proof.** A bold stat panel: "50+ AI systems delivered. 100% still in production." Under it, "Built and run by 41 Labs, Singapore." Ends the gallery on credibility.
 
@@ -117,7 +117,7 @@ Keep them short and honest. Reply to every real question. Paste and lightly edit
 > No. It uses AI, but it is not a raw model you chat with. It is set up with your real prices and your actual sales process, and our team tunes it to your business so it closes and knows when to bring in a person. You are not getting a generic bot, you are getting a managed sales agent. Text it and see: +65 8012 4848.
 
 **"What does it cost?"**
-> Plans start at $390/month. Pro is $1,490/month. Enterprise is custom. That is fully managed, so it includes us building it, running it, and tuning it. There is nothing for your team to build.
+> Plans start at $690/month. Pro is $1,490/month. Enterprise is custom. That is fully managed, so it includes us building it, running it, and tuning it. There is nothing for your team to build.
 
 **"Do I have to manage it?"**
 > No. That is the whole point. We build it, run it, and tune it. Your team does not touch anything. You get faster replies, quotes, follow ups, closed sales, and a clean handoff to your people when a human is needed.
