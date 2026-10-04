@@ -43,4 +43,14 @@ function boundEventIds(notes) {
     .filter(Boolean);
 }
 
-module.exports = { LANDING_FORM_LINE, parseLeadNotes, hasMarker, addMarker, removeMarker, boundEventIds };
+// When the lead last cancelled a booking ("[cancelled@<iso>]"), as ms, or NaN.
+// The latest one wins: cancel twice and the second is chased on its own clock.
+function cancelledAt(notes) {
+  const stamps = String(notes || '').split('\n')
+    .map((l) => (l.trim().match(/^\[cancelled@(.+)\]$/) || [])[1])
+    .map((v) => Date.parse(v || ''))
+    .filter((ms) => Number.isFinite(ms));
+  return stamps.length ? Math.max(...stamps) : NaN;
+}
+
+module.exports = { LANDING_FORM_LINE, parseLeadNotes, hasMarker, addMarker, removeMarker, boundEventIds, cancelledAt };

@@ -226,6 +226,27 @@ test.describe('a moved booking', () => {
 });
 
 test.describe('a cancelled booking', () => {
+  test('lets go of the call the cron bound as well as the one we bound', async () => {
+    // The cron binds the same call under the Google event id. Leaving that behind left
+    // the deal looking booked, and the nudge skips any deal with a call attached, so
+    // nobody who cancelled was ever chased for a new time.
+    const booked = { ...OPP, stage: 'MEETING',
+      statusNotes: `${OPP.statusNotes}\n[booked:cal-booking-1]\n[booked:_gcal_event_id]`
+        + '\n[sent:booked@2026-09-25T05:00:00.000Z]' };
+    const { calls } = await run(body('BOOKING_CANCELLED'), { opp: booked });
+    const notes = String(patchCall(calls)!.body.statusNotes);
+    expect(notes).not.toContain('[booked:cal-booking-1]');
+    expect(notes).not.toContain('[booked:_gcal_event_id]');
+    // Rebooking the same slot is confirmed again, so the claim on it goes too.
+    expect(notes).not.toContain('[sent:booked@2026-09-25T05:00:00.000Z]');
+  });
+
+  test('records when they cancelled, so the chase runs off that and not the form', async () => {
+    const booked = { ...OPP, stage: 'MEETING', statusNotes: `${OPP.statusNotes}\n[booked:cal-booking-1]` };
+    const { calls } = await run(body('BOOKING_CANCELLED'), { opp: booked });
+    expect(String(patchCall(calls)!.body.statusNotes)).toMatch(/\[cancelled@\d{4}-\d\d-\d\dT[\d:.]+Z\]/);
+  });
+
   test('puts the deal back so they can be chased again', async () => {
     const booked = { ...OPP, stage: 'MEETING', statusNotes: `${OPP.statusNotes}\n[booked:cal-booking-1]` };
     const { json, calls } = await run(body('BOOKING_CANCELLED'), { opp: booked });

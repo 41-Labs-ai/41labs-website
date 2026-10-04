@@ -306,3 +306,16 @@ test.describe('calendar paging', () => {
     expect(items.length).toBeLessThan(100);
   });
 });
+
+test.describe('cancellation marker', () => {
+  test('reads when the booking was cancelled, and ignores anything else', () => {
+    const n = 'Form: 41labs.ai/ai-closer\n[booked:e1]\n[cancelled@2026-10-04T08:15:00.000Z]';
+    expect(notes.cancelledAt(n)).toBe(Date.parse('2026-10-04T08:15:00.000Z'));
+    expect(Number.isFinite(notes.cancelledAt('Form: 41labs.ai/ai-closer'))).toBe(false);
+  });
+
+  test('the latest cancellation wins, so a second one is chased again', () => {
+    const n = '[cancelled@2026-10-01T00:00:00.000Z]\n[cancelled@2026-10-04T00:00:00.000Z]';
+    expect(notes.cancelledAt(n)).toBe(Date.parse('2026-10-04T00:00:00.000Z'));
+  });
+});

@@ -599,6 +599,73 @@ test.describe('finish_booking nudge', () => {
   });
 });
 
+test.describe('chasing a lead who cancelled', () => {
+  // Cal.com puts the deal back to SCREENING and stamps when. Until 4 Oct 2026 the deal
+  // kept the call the cron had bound, so the nudge skipped it, and the clock ran from
+  // the form submit, which by then was days old. Nobody who cancelled was ever chased.
+  const cancelled = (o: any = {}) => opp('o1', {
+    stage: 'SCREENING',
+    createdAt: iso(NOW - 6 * 24 * HOUR),
+    tier: o.tier ?? 'A',
+    statusNotes: `${LANDING_NOTES(o.tier ?? 'A')}\n[cancelled@${iso(o.at ?? NOW - 30 * MIN)}]`,
+  });
+
+  test('chased 30 minutes after the cancellation, not 6 days after the form', async () => {
+    const w = makeWorld({ opps: [cancelled()], events: [] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(1);
+  });
+
+  test('not in the first 15 minutes: they may be picking a new time right now', async () => {
+    const w = makeWorld({ opps: [cancelled({ at: NOW - 5 * MIN })], events: [] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
+  });
+
+  test('a day later it is a human job, not a nudge', async () => {
+    const w = makeWorld({ opps: [cancelled({ at: NOW - 26 * HOUR })], events: [] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
+  });
+
+  test('tier C is chased too: they had a call in the diary and dropped it', async () => {
+    const w = makeWorld({ opps: [cancelled({ tier: 'C' })], events: [] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(1);
+  });
+
+  test('chased once, and once more if they cancel a second time', async () => {
+    const w = makeWorld({ opps: [cancelled()], events: [] });
+    await w.run();
+    await w.run(NOW + 5 * MIN);
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(1);
+
+    const again = { ...w.store.get('o1') };
+    again.statusNotes = `${again.statusNotes}\n[cancelled@${iso(NOW + 2 * HOUR)}]`;
+    const w2 = makeWorld({ opps: [again], events: [] });
+    await w2.run(NOW + 2 * HOUR + 30 * MIN);
+    expect(hermesCalls(w2.calls, 'finish_booking')).toHaveLength(1);
+  });
+
+  test('rebooked before we got to it: never tell a booker to book', async () => {
+    const w = makeWorld({ opps: [cancelled()], events: [booking('e9')] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
+    expect(hermesCalls(w.calls, 'booked')).toHaveLength(1);
+  });
+
+  test('a deal that still has a call attached is left alone', async () => {
+    const stillBooked = opp('o1', {
+      stage: 'SCREENING',
+      createdAt: iso(NOW - 6 * 24 * HOUR),
+      statusNotes: `${LANDING_NOTES('A')}\n[booked:e1]\n[cancelled@${iso(NOW - 30 * MIN)}]`,
+    });
+    const w = makeWorld({ opps: [stillBooked], events: [] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
+  });
+});
+
 test.describe('reminders', () => {
   // A booking made days ago that the cron already processed.
   const bookedOpp = (id = 'o1', startMs = Date.parse('2026-09-14T07:00:00Z')) => opp(id, {

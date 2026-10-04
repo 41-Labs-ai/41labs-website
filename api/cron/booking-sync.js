@@ -264,8 +264,12 @@ async function runBookingSync({ env, fetchImpl, now }) {
     }
   }
 
-  // finish_booking: tier A/B, or stopped after the contact step, 15 min to 24 h old,
-  // still SCREENING, no booking. Tier C already got a message when they submitted.
+  // finish_booking: 15 min to 24 h old, still SCREENING, no booking, and either
+  // tier A/B, stopped after the contact step, or cancelled a call. Tier C already got a
+  // message when they submitted, so they are only chased if they had a call and dropped
+  // it: that is the highest intent we ever see from one.
+  // The clock runs from the cancellation where there is one, because by then the form
+  // is usually days old and this window only covers the first 24 hours.
   const bookedUnderName = (name) => {
     const n = name.toLowerCase();
     return n.length >= 3 && unmatchedBookings.some((ev) => `${ev.summary || ''}\n${ev.description || ''}`.toLowerCase().includes(n));
@@ -274,14 +278,18 @@ async function runBookingSync({ env, fetchImpl, now }) {
     if (opp.stage !== 'SCREENING' || boundThisRun.has(opp.id)) continue;
     if (notesLib.boundEventIds(opp.statusNotes).length) continue;
     const { tier, partial } = notesLib.parseLeadNotes(opp.statusNotes);
-    if (tier !== 'A' && tier !== 'B' && !partial) continue;
-    const age = t - Date.parse(opp.createdAt);
+    const cancelled = notesLib.cancelledAt(opp.statusNotes);
+    const dropped = Number.isFinite(cancelled);
+    if (!dropped && tier !== 'A' && tier !== 'B' && !partial) continue;
+    const age = t - (dropped ? cancelled : Date.parse(opp.createdAt));
     if (!(age >= FINISH_MIN_AGE && age <= FINISH_MAX_AGE)) continue;
     // A booking under their name we couldn't match (different email, no phone):
     // they probably did book. Never tell a booker to book. Left for a human.
     if (bookedUnderName(contactOf(opp).fullName)) continue;
     try {
-      const status = await once(opp, 'sent:finish_booking', hermesOn, () =>
+      // Keyed on the cancellation, so a lead who drops a second call is chased again.
+      const key = dropped ? `sent:finish_booking@${iso(cancelled)}` : 'sent:finish_booking';
+      const status = await once(opp, key, hermesOn, () =>
         postHermesIntake({ event: 'finish_booking', lead: hermesLead(opp) }, { env, fetchImpl }));
       if (status === 'sent') summary.finishBooking.push(opp.id);
     } catch (e) {

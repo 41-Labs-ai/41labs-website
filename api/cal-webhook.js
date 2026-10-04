@@ -136,7 +136,16 @@ module.exports = async (req, res) => {
 
   if (trigger === 'BOOKING_CANCELLED') {
     action = 'cancelled';
-    notes = notesLib.removeMarker(notes, bookedKey);
+    // Let go of every claim on this call, not just the one this endpoint made. The cron
+    // binds the same booking under the Google event id, and the nudge skips any deal
+    // with a call attached, so leaving it behind meant nobody who cancelled was ever
+    // chased for a new time. The claim on the slot goes too: rebooking it is a booking
+    // like any other and deserves its confirmation.
+    for (const id of notesLib.boundEventIds(notes)) notes = notesLib.removeMarker(notes, `booked:${id}`);
+    if (startIso) notes = notesLib.removeMarker(notes, `sent:booked@${startIso}`);
+    // Stamped so the chase runs from the cancellation. The form submit is usually days
+    // old by then, and the nudge only looks at the first 24 hours.
+    notes = notesLib.addMarker(notes, `cancelled@${new Date().toISOString()}`);
     fields.stage = 'SCREENING';
     fields.followUp = null;
     fields.nextAction = 'Booking cancelled by the lead. Chase for a new time.';
