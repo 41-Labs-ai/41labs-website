@@ -74,7 +74,15 @@ async function run(raw: string, opts: { env?: any; sig?: string; opp?: any; twen
       return { ok: true, status: 200, json: async () => ({ data: { updateOpportunity: {} } }) };
     }
     if (url.includes('/rest/opportunities')) {
-      return { ok: true, status: 200, json: async () => ({ data: { opportunities: opp ? [opp] : [] } }) };
+      // Twenty expands a relation only when the caller asks for it. Without depth the
+      // reply carries pointOfContactId and a null pointOfContact. This fake used to hand
+      // back the full contact whatever was asked, which hid a Hermes send that had been
+      // failing on every single booking since the endpoint shipped.
+      const depth = Number(new URL(url).searchParams.get('depth') || 0);
+      const shape = (o: any) => (depth >= 1 ? o
+        : { ...o, pointOfContact: null, pointOfContactId: 'person-1', company: null });
+      return { ok: true, status: 200,
+        json: async () => ({ data: { opportunities: opp ? [shape(opp)] : [] } }) };
     }
     return { ok: true, status: 200, json: async () => ({ ok: true, events_received: 1 }), text: async () => '{}' };
   };
@@ -160,6 +168,32 @@ test.describe('a new booking', () => {
     expect(h!.body.booking.start).toBe('2026-09-25T05:00:00.000Z');
   });
 
+  test('the lead it hands over carries the phone, or Hermes has nobody to message', async () => {
+    const { calls } = await run(body('BOOKING_CREATED'));
+    const h = hermesCall(calls, 'booked');
+    // Hermes refuses a lead with no phone, and a refusal here releases the claim and
+    // leaves the confirmation to the five-minute cron. Chantal Choo booked at 23:16 on
+    // 2 Oct 2026 and heard nothing until 05:50 the next morning.
+    expect(h!.body.lead.phone).toBe('+6598529367');
+    expect(h!.body.lead.name).toBe('Alan Ong');
+    expect(h!.body.lead.email).toBe('onggl@cdgtaxi.com');
+  });
+
+  test('asks Twenty to expand the contact', async () => {
+    const { calls } = await run(body('BOOKING_CREATED'));
+    const list = calls.find((c) => c.method === 'GET' && c.url.includes('/rest/opportunities'));
+    expect(new URL(list!.url).searchParams.get('depth')).toBe('1');
+  });
+
+  test('stays quiet when the cron already confirmed this call', async () => {
+    const claimed = { ...OPP, stage: 'MEETING',
+      statusNotes: `${OPP.statusNotes}\n[sent:booked@2026-09-25T05:00:00.000Z]` };
+    const { calls } = await run(body('BOOKING_CREATED'), { opp: claimed });
+    // Both paths announce the same booking under different ids. They are only safe
+    // because they claim the call itself: the lead and the time it starts.
+    expect(hermesCall(calls, 'booked')).toBeUndefined();
+  });
+
   test('the same webhook twice changes nothing the second time', async () => {
     const raw = body('BOOKING_CREATED');
     const first = await run(raw);
@@ -181,7 +215,13 @@ test.describe('a moved booking', () => {
     expect(patchCall(calls)!.body.followUp).toBe('2026-09-26T06:57:00.000Z');
     // Already told Meta about this booking. Moving it is not a second conversion.
     expect(capiCall(calls)).toBeUndefined();
-    expect(hermesCall(calls, 'rescheduled')).toBeTruthy();
+    // Hermes knows five events and 'rescheduled' is not one of them, so asking for it
+    // was a 400 every time. A moved call is a booking at a new time.
+    const h = hermesCall(calls, 'booked');
+    expect(h).toBeTruthy();
+    expect(h!.body.booking.start).toBe('2026-09-26T06:57:00.000Z');
+    expect(String(patchCall(calls)!.body.statusNotes))
+      .toContain('[sent:booked@2026-09-26T06:57:00.000Z]');
   });
 });
 
@@ -193,7 +233,9 @@ test.describe('a cancelled booking', () => {
     const p = patchCall(calls)!;
     expect(p.body.stage).toBe('SCREENING');
     expect(String(p.body.statusNotes)).not.toContain('[booked:cal-booking-1]');
-    expect(hermesCall(calls, 'cancelled')).toBeTruthy();
+    // Nothing to tell the Closer: Hermes has no cancelled event, so this was a 400 on
+    // every cancellation. Chasing them again is a human's job, from the CRM.
+    expect(hermesCall(calls)).toBeUndefined();
   });
 });
 

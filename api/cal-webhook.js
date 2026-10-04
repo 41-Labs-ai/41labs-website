@@ -11,8 +11,9 @@
 // who books with a different address was simply lost.
 //
 // The cron stays as the backstop and as the clock for reminders. This is the fast, exact
-// path. Both claim their work with the same markers, so whichever arrives first wins and
-// the other does nothing.
+// path. The two see the same booking under different ids (Cal.com's uid here, the Google
+// event id there), so the only claim they can share is the call itself: the deal plus the
+// time it starts. Key anything on an id and both paths will announce the same booking.
 //
 // Setup: Cal.com, Settings, Webhooks. Point it at https://41labs.ai/api/cal-webhook,
 // subscribe to BOOKING_CREATED, BOOKING_RESCHEDULED and BOOKING_CANCELLED, and put the
@@ -63,7 +64,11 @@ const isoOrNull = (v) => {
 // somebody else's pipeline would be worse than not matching at all.
 async function candidates(env, fetchImpl) {
   const since = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString();
-  const url = `${twentyBase(env)}/rest/opportunities?order_by=createdAt[DescNullsLast]&limit=120`;
+  // depth=1 expands pointOfContact and company. Without it Twenty returns
+  // pointOfContactId alone, which left every booking handed to Hermes with no name,
+  // no phone and no email: Hermes refused it, the claim was released, and the
+  // confirmation fell to the cron. It also killed the attendee-email fallback below.
+  const url = `${twentyBase(env)}/rest/opportunities?order_by=createdAt[DescNullsLast]&limit=120&depth=1`;
   const r = await fetchImpl(url, { headers: { Authorization: `Bearer ${env.TWENTY_API_KEY}` } });
   if (!r.ok) throw new Error(`twenty ${r.status}`);
   const d = await r.json();
@@ -154,13 +159,14 @@ module.exports = async (req, res) => {
     && !!env.META_CAPI_TOKEN;
   if (willSendMeta) notes = notesLib.addMarker(notes, capiKey);
 
-  // The Closer gets told about a booking once too. Cal.com retries a webhook it thinks
-  // failed, and a retry must not send "you are booked in" a second time. Cancelled and
-  // rescheduled are keyed separately, because a call really can move more than once.
-  const hermesKey = action === 'booked'
-    ? `sent:hermes_booked:${bookingId}`
-    : `sent:hermes_${action}:${bookingId}@${startIso || 'none'}`;
-  const willTellHermes = hermesConfigured(env) && !notesLib.hasMarker(before, hermesKey);
+  // The Closer gets told about a booking once, by whichever path sees it first: this
+  // webhook or the five-minute cron. They see the same booking under different ids, so
+  // the claim is on the call itself, the deal plus the time it starts. A call that
+  // really moves has a new start and is announced again.
+  // Hermes has no cancelled event, so a cancellation is a CRM change only.
+  const hermesKey = startIso ? `sent:booked@${startIso}` : '';
+  const willTellHermes = action !== 'cancelled' && !!hermesKey
+    && hermesConfigured(env) && !notesLib.hasMarker(before, hermesKey);
   if (willTellHermes) notes = notesLib.addMarker(notes, hermesKey);
 
   fields.statusNotes = notes;
@@ -211,7 +217,9 @@ module.exports = async (req, res) => {
     const nm = c.name || {};
     const ph = c.phones || {};
     hermes = await postHermesIntake({
-      event: action,
+      // 'rescheduled' is not an event Hermes knows. A moved call is a booking at a
+      // new time, and its own idempotency is per lead, event and start.
+      event: 'booked',
       lead: {
         name: `${nm.firstName || ''} ${nm.lastName || ''}`.trim(),
         phone: ph.primaryPhoneNumber ? `${ph.primaryPhoneCallingCode || ''}${ph.primaryPhoneNumber}` : '',
@@ -220,9 +228,7 @@ module.exports = async (req, res) => {
         tier: parsed.tier,
         twentyOpportunityId: opp.id,
       },
-      ...(action === 'cancelled' ? {} : {
-        booking: { start: startIso, end: isoOrNull(p.endTime), meetLink: meta.videoCallUrl || p.videoCallUrl || '' },
-      }),
+      booking: { start: startIso, end: isoOrNull(p.endTime), meetLink: meta.videoCallUrl || p.videoCallUrl || '' },
     }, { env, fetchImpl }).catch((e) => `failed:${String(e.message || e).slice(0, 60)}`);
     if (hermes !== 'sent' && crm === 'ok') {
       try {

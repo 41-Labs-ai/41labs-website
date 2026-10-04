@@ -106,7 +106,17 @@ function makeWorld(o: WorldOpts = {}) {
     }
     if (url.startsWith('https://www.googleapis.com/calendar/v3/')) {
       if (o.calendar === 'events500') return json(404, { error: { message: 'Not Found' } });
-      return json(200, { items: events });
+      // Google pages at maxResults and hands back a nextPageToken. This fake used to
+      // return everything in one reply whatever was asked, so nothing ever proved the
+      // cron reads page two. A recurring series expands to one item per occurrence:
+      // on 4 Oct 2026 the two-day window held 737 events against a cap of 250, and
+      // real bookings sat on page three where the cron could not see them.
+      const u = new URL(url);
+      const max = Number(u.searchParams.get('maxResults') || 250);
+      const from = Number(u.searchParams.get('pageToken') || 0);
+      const page = events.slice(from, from + max);
+      const next = from + max < events.length ? String(from + max) : null;
+      return json(200, { items: page, ...(next ? { nextPageToken: next } : {}) });
     }
     if (url.includes('/rest/opportunities')) {
       if (method === 'GET') {
@@ -237,6 +247,19 @@ test.describe('calendar read', () => {
     expect(r.errors.join(' ')).toMatch(/calendar_not_configured/);
   });
 
+  test('reads past the first page, so a busy calendar cannot hide a booking', async () => {
+    // 300 instances of a weekly team meeting, all updated at once, then the booking.
+    const noise = Array.from({ length: 300 }, (_, i) =>
+      booking(`noise-${i}`, { summary: '41 labs Eng sync', description: '', guestEmail: null }));
+    const w = makeWorld({
+      opps: [opp('o1', { createdAt: iso(NOW - 20 * MIN) })],
+      events: [...noise, booking('e1')],
+    });
+    await w.run();
+    expect(hermesCalls(w.calls, 'booked')).toHaveLength(1);
+    expect(w.store.get('o1').stage).toBe('MEETING');
+  });
+
   test('Twenty list failure: no throw, nothing sent', async () => {
     const w = makeWorld({ opps: [opp('o1')], events: [booking('e1')], twentyList: '500' });
     const r = await w.run();
@@ -289,6 +312,45 @@ test.describe('new booking -> MEETING + CAPI Schedule + Hermes booked', () => {
     });
     expect(h[0].body.lead.twentyOpportunityId).toBe('o1');
     expect(h[0].body.lead.phone).toBe('+6591234567');
+  });
+
+  test('says nothing when Cal.com already confirmed this call', async () => {
+    // The two paths see the same booking under two different ids: Cal.com's own uid and
+    // the Google event id. They can only stay out of each other's way by claiming the
+    // call itself, which is the lead plus the time it starts.
+    const already = opp('o1', {
+      stage: 'MEETING',
+      statusNotes: `${LANDING_NOTES('A')}\n[booked:cal-uid-1]\n[sent:booked@2026-09-14T07:00:00.000Z]`,
+    });
+    const w = makeWorld({ opps: [already], events: [booking('e1')] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'booked')).toHaveLength(0);
+    // It still binds the event and keeps the time right. Only the message is skipped.
+    expect(w.store.get('o1').followUp).toBe('2026-09-14T07:00:00.000Z');
+  });
+
+  test('a deal still carrying the old per-event marker is not confirmed again', async () => {
+    // The claim used to be keyed on the Google event id. Four deals with calls in the
+    // next three days were carrying it when the key changed, and reading only the new
+    // one would have told every one of them "you are booked in" a second time.
+    const already = opp('o1', {
+      stage: 'MEETING',
+      statusNotes: `${LANDING_NOTES('A')}\n[booked:e1]\n[sent:booked:e1]`,
+    });
+    const w = makeWorld({ opps: [already], events: [booking('e1')] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'booked')).toHaveLength(0);
+  });
+
+  test('a call that moves is confirmed again, because the time changed', async () => {
+    const moved = Date.parse('2026-09-15T07:00:00Z');
+    const already = opp('o1', {
+      stage: 'MEETING',
+      statusNotes: `${LANDING_NOTES('A')}\n[sent:booked@2026-09-14T07:00:00.000Z]`,
+    });
+    const w = makeWorld({ opps: [already], events: [booking('e1', { start: moved })] });
+    await w.run();
+    expect(hermesCalls(w.calls, 'booked')).toHaveLength(1);
   });
 
   test('matched by phone from the booking form when the guest used a different email', async () => {
@@ -539,17 +601,17 @@ test.describe('finish_booking nudge', () => {
 
 test.describe('reminders', () => {
   // A booking made days ago that the cron already processed.
-  const bookedOpp = (id = 'o1') => opp(id, {
+  const bookedOpp = (id = 'o1', startMs = Date.parse('2026-09-14T07:00:00Z')) => opp(id, {
     stage: 'MEETING',
     createdAt: iso(NOW - 3 * 24 * HOUR),
-    statusNotes: LANDING_NOTES('A', '\n[booked:e1]\n[sent:capi_schedule]\n[sent:booked:e1]'),
+    statusNotes: LANDING_NOTES('A', `\n[booked:e1]\n[sent:capi_schedule]\n[sent:booked@${iso(startMs)}]`),
   });
   const oldBooking = (startMs: number) => booking('e1', { start: startMs, created: NOW - 3 * 24 * HOUR });
 
   const kinds = (w: any) => hermesCalls(w.calls).map((c: Call) => c.body.event);
 
   test('23.5h before: reminder_24h once, with the booking details', async () => {
-    const w = makeWorld({ opps: [bookedOpp()], events: [oldBooking(NOW + 23.5 * HOUR)] });
+    const w = makeWorld({ opps: [bookedOpp('o1', NOW + 23.5 * HOUR)], events: [oldBooking(NOW + 23.5 * HOUR)] });
     await w.run();
     expect(kinds(w)).toEqual(['reminder_24h']);
     const h = hermesCalls(w.calls, 'reminder_24h')[0];
@@ -560,19 +622,19 @@ test.describe('reminders', () => {
   });
 
   test('24.5h before: too early for reminder_24h', async () => {
-    const w = makeWorld({ opps: [bookedOpp()], events: [oldBooking(NOW + 24.5 * HOUR)] });
+    const w = makeWorld({ opps: [bookedOpp('o1', NOW + 24.5 * HOUR)], events: [oldBooking(NOW + 24.5 * HOUR)] });
     await w.run();
     expect(kinds(w)).toEqual([]);
   });
 
   test('22.5h before: window passed, no reminder_24h', async () => {
-    const w = makeWorld({ opps: [bookedOpp()], events: [oldBooking(NOW + 22.5 * HOUR)] });
+    const w = makeWorld({ opps: [bookedOpp('o1', NOW + 22.5 * HOUR)], events: [oldBooking(NOW + 22.5 * HOUR)] });
     await w.run();
     expect(kinds(w)).toEqual([]);
   });
 
   test('57 minutes before: reminder_1h once', async () => {
-    const w = makeWorld({ opps: [bookedOpp()], events: [oldBooking(NOW + 57 * MIN)] });
+    const w = makeWorld({ opps: [bookedOpp('o1', NOW + 57 * MIN)], events: [oldBooking(NOW + 57 * MIN)] });
     await w.run();
     expect(kinds(w)).toEqual(['reminder_1h']);
     await w.run(NOW + 2 * MIN);
@@ -580,10 +642,10 @@ test.describe('reminders', () => {
   });
 
   test('61 minutes before: too early; 54 minutes before: window passed', async () => {
-    const a = makeWorld({ opps: [bookedOpp()], events: [oldBooking(NOW + 61 * MIN)] });
+    const a = makeWorld({ opps: [bookedOpp('o1', NOW + 61 * MIN)], events: [oldBooking(NOW + 61 * MIN)] });
     await a.run();
     expect(kinds(a)).toEqual([]);
-    const b = makeWorld({ opps: [bookedOpp()], events: [oldBooking(NOW + 54 * MIN)] });
+    const b = makeWorld({ opps: [bookedOpp('o1', NOW + 54 * MIN)], events: [oldBooking(NOW + 54 * MIN)] });
     await b.run();
     expect(kinds(b)).toEqual([]);
   });
@@ -603,12 +665,14 @@ test.describe('reminders', () => {
   });
 
   test('rescheduled to a new time: reminders re-arm for the new slot', async () => {
-    const w = makeWorld({ opps: [bookedOpp()], events: [oldBooking(NOW + 57 * MIN)] });
+    const w = makeWorld({ opps: [bookedOpp('o1', NOW + 57 * MIN)], events: [oldBooking(NOW + 57 * MIN)] });
     await w.run();
     // Alexander moves the call by 3 hours; the 1h reminder should fire again for the new time.
     const w2events = [oldBooking(NOW + 3 * HOUR + 57 * MIN)];
     const moved = makeWorld({ opps: [w.store.get('o1')], events: w2events });
     await moved.run(NOW + 3 * HOUR);
-    expect(kinds(moved)).toEqual(['reminder_1h']);
+    // The new time is confirmed as well as reminded: the claim is on the call, and
+    // this is a different call from the one we announced.
+    expect(kinds(moved)).toEqual(['booked', 'reminder_1h']);
   });
 });

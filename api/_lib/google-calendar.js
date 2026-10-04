@@ -84,13 +84,29 @@ async function getAccessToken(sa, opts = {}) {
   throw lastErr;
 }
 
+// Google answers a page at a time and hands back a nextPageToken. Reading only the
+// first page loses bookings without a word: singleEvents expands a recurring series
+// into one item per occurrence, every occurrence carries the series' update time, so
+// one edit to the weekly team sync put 737 events into the cron's two-day window
+// against a page of 250. Two real bookings sat past the cut and were confirmed a day
+// late. The cap stops a runaway calendar, not a busy one.
+const MAX_PAGES = 8;
+
 async function listEvents({ token, calendarId, params, fetchImpl }) {
-  const q = new URLSearchParams({ singleEvents: 'true', maxResults: '250', ...params });
-  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?${q}`;
-  const r = await fetchWithTimeout(fetchImpl, url, { headers: { Authorization: `Bearer ${token}` } }, 8000);
-  if (!r.ok) throw new Error(`calendar events ${r.status}`);
-  const j = await r.json();
-  return Array.isArray(j.items) ? j.items : [];
+  const items = [];
+  let pageToken = '';
+  for (let page = 0; page < MAX_PAGES; page += 1) {
+    const q = new URLSearchParams({ singleEvents: 'true', maxResults: '250', ...params });
+    if (pageToken) q.set('pageToken', pageToken);
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?${q}`;
+    const r = await fetchWithTimeout(fetchImpl, url, { headers: { Authorization: `Bearer ${token}` } }, 8000);
+    if (!r.ok) throw new Error(`calendar events ${r.status}`);
+    const j = await r.json();
+    if (Array.isArray(j.items)) items.push(...j.items);
+    pageToken = j.nextPageToken || '';
+    if (!pageToken) break;
+  }
+  return items;
 }
 
 // BOOKING_EVENT_MATCH: comma-separated, case-insensitive, matched against the

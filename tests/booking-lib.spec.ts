@@ -262,3 +262,47 @@ test.describe('calendar scope negotiation', () => {
     expect(n).toBe(1);                               // no pointless retries across scopes
   });
 });
+
+test.describe('calendar paging', () => {
+  // A recurring series expands into one item per occurrence, and every occurrence
+  // carries the series' update time. Editing the weekly team sync on 4 Oct 2026 put
+  // 737 events into the cron's two-day window against a page of 250, and two real
+  // bookings sat past the cut. Nobody saw it: the reply still came back 200 with a
+  // nextPageToken nothing read, and the only sign was a confirmation 30 hours late.
+  const pagedFetch = (total: number) => {
+    const urls: string[] = [];
+    const f = async (url: string) => {
+      urls.push(url);
+      const u = new URL(url);
+      const max = Number(u.searchParams.get('maxResults') || 250);
+      const from = Number(u.searchParams.get('pageToken') || 0);
+      const items = Array.from({ length: Math.max(0, Math.min(max, total - from)) },
+        (_, i) => ({ id: `e${from + i}` }));
+      const next = from + max < total ? String(from + max) : undefined;
+      return { ok: true, status: 200, json: async () => ({ items, ...(next ? { nextPageToken: next } : {}) }) };
+    };
+    return { f, urls };
+  };
+
+  test('follows nextPageToken instead of stopping at the first page', async () => {
+    const { f, urls } = pagedFetch(737);
+    const items = await gcal.listEvents({ token: 'tok', calendarId: 'a@b.c', fetchImpl: f, params: {} });
+    expect(items).toHaveLength(737);
+    expect(urls.length).toBeGreaterThan(1);
+    expect(items[736].id).toBe('e736');
+  });
+
+  test('one page is still one request', async () => {
+    const { f, urls } = pagedFetch(12);
+    const items = await gcal.listEvents({ token: 'tok', calendarId: 'a@b.c', fetchImpl: f, params: {} });
+    expect(items).toHaveLength(12);
+    expect(urls).toHaveLength(1);
+  });
+
+  test('stops rather than paging forever on a calendar that never ends', async () => {
+    const f = async () => ({ ok: true, status: 200,
+      json: async () => ({ items: [{ id: 'x' }], nextPageToken: 'always' }) });
+    const items = await gcal.listEvents({ token: 'tok', calendarId: 'a@b.c', fetchImpl: f, params: {} });
+    expect(items.length).toBeLessThan(100);
+  });
+});

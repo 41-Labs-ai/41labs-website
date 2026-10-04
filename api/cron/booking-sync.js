@@ -6,7 +6,7 @@
 // and then, once each:
 //   1. moves the deal to MEETING, sets nextAction + followUp        (Twenty)
 //   2. sends the Meta CAPI "Schedule" event (dedupe id schedule_<oppId>)
-//   3. tells Hermes: 'booked'
+//   3. tells Hermes: 'booked' (unless api/cal-webhook.js got there first)
 // It also nudges tier A/B leads who never booked ('finish_booking', 15 min to
 // 24 h after the form) and sends 'reminder_24h' / 'reminder_1h' before calls.
 //
@@ -234,8 +234,14 @@ async function runBookingSync({ env, fetchImpl, now }) {
       // includes anything updated in the last two days, so it can hold a finished call,
       // and "you are booked in" about a call that is over reads as nobody paying
       // attention. The reminders are already bounded by their own windows.
-      if (startMs > t) {
-        await once(opp, `sent:booked:${ev.id}`, hermesOn, () =>
+      // Claimed on the call, not on the event id: api/cal-webhook.js announces the same
+      // booking under Cal.com's own uid, and whichever gets here first is the only one
+      // that speaks. Deals announced before that claim existed carry the old per-event
+      // marker, honoured here so changing the key cannot re-announce a call we already
+      // announced. Safe to delete after 20 Oct 2026: this query only looks back 14 days.
+      const announcedBefore = notesLib.hasMarker(opp.statusNotes, `sent:booked:${ev.id}`);
+      if (startMs > t && !announcedBefore) {
+        await once(opp, `sent:booked@${startIso}`, hermesOn, () =>
           postHermesIntake({ event: 'booked', lead: hermesLead(opp), booking: bookingOf(ev) }, { env, fetchImpl }));
       }
 
