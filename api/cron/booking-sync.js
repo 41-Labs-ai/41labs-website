@@ -238,7 +238,11 @@ async function runBookingSync({ env, fetchImpl, now }) {
       // booking under Cal.com's own uid, and whichever gets here first is the only one
       // that speaks. Deals announced before that claim existed carry the old per-event
       // marker, honoured here so changing the key cannot re-announce a call we already
-      // announced. Safe to delete after 20 Oct 2026: this query only looks back 14 days.
+      // announced. It covers the deal's whole booking, so moving one of those four calls
+      // is deliberately not announced either: Alexander is telling those leads himself.
+      // Safe to delete after 20 Oct 2026, when the last of them leaves the 14-day window.
+      // Every booking made after this shipped is claimed by start time, so a move is
+      // announced at its new time like any other.
       const announcedBefore = notesLib.hasMarker(opp.statusNotes, `sent:booked:${ev.id}`);
       if (startMs > t && !announcedBefore) {
         await once(opp, `sent:booked@${startIso}`, hermesOn, () =>
