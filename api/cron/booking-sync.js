@@ -108,28 +108,37 @@ async function readBookings({ env, fetchImpl, t }) {
   // New bookings (updated in the last 2 days) + anything starting in the next
   // 25h (for reminders on bookings made days ago).
   const [recent, upcoming] = await Promise.all([
-    gcal.listEvents({ token, calendarId, fetchImpl, params: { updatedMin: iso(t - 2 * DAY), orderBy: 'updated' } }),
+    gcal.listEvents({ token, calendarId, fetchImpl, params: { updatedMin: iso(t - 2 * DAY), orderBy: 'updated', showDeleted: 'true' } }),
     gcal.listEvents({ token, calendarId, fetchImpl, params: { timeMin: iso(t), timeMax: iso(t + 25 * HOUR), orderBy: 'startTime' } }),
   ]);
   const byId = new Map();
   for (const ev of [...recent, ...upcoming]) if (ev && ev.id) byId.set(ev.id, ev);
   const match = env.BOOKING_EVENT_MATCH || '41 Closer';
-  return [...byId.values()]
+  const all = [...byId.values()];
+  // A deleted call comes back as a bare { id, status: 'cancelled' } with no title to
+  // match on, so the only way to know it was one of ours is the deal bound to that id.
+  // Deletion counts as an update, so it lands in the two-day window and the five-minute
+  // cron cannot miss it. Absence is never treated as deletion: a short read would then
+  // wipe every booking we have.
+  const gone = new Set(all.filter((ev) => ev.status === 'cancelled').map((ev) => ev.id));
+  const bookings = all
     .filter((ev) => gcal.isBookingEvent(ev, match) && Number.isFinite(eventStart(ev)))
     .sort((a, b) => eventStart(a) - eventStart(b));
+  return { bookings, gone };
 }
 
 async function runBookingSync({ env, fetchImpl, now }) {
   const t = now();
-  const summary = { ok: true, errors: [], booked: [], unmatched: [], finishBooking: [], reminders: [], sends: [] };
+  const summary = { ok: true, errors: [], booked: [], unbooked: [], unmatched: [], finishBooking: [], reminders: [], sends: [] };
   const fail = (msg) => { summary.ok = false; summary.errors.push(String(msg).slice(0, 300)); };
   if (!env.TWENTY_API_KEY) { fail('twenty_not_configured'); return summary; }
 
   // Calendar first: if we can't see bookings we can't know who booked, so we
   // touch nothing (no stage moves, and above all no "finish your booking" nudges).
   let bookings;
+  let gone;
   try {
-    bookings = await readBookings({ env, fetchImpl, t });
+    ({ bookings, gone } = await readBookings({ env, fetchImpl, t }));
   } catch (e) {
     fail(`calendar: ${e && e.message ? e.message : e}`);
     return summary;
@@ -261,6 +270,36 @@ async function runBookingSync({ env, fetchImpl, now }) {
       }
     } catch (e) {
       fail(`opp ${opp.id} / event ${ev.id}: ${e && e.message ? e.message : e}`);
+    }
+  }
+
+  // A call deleted from the calendar. api/cal-webhook.js covers the lead cancelling;
+  // this covers the call being deleted here, which left the deal at MEETING pointing at
+  // a call that no longer existed. No reminder could fire for it either, because the
+  // event is gone, so the lead simply never heard another word.
+  for (const opp of opps) {
+    // A live call matched this deal this run, so whatever else is on it, it is booked.
+    if (boundThisRun.has(opp.id)) continue;
+    const bound = notesLib.boundEventIds(opp.statusNotes);
+    if (!bound.some((id) => gone.has(id))) continue;
+    // Let go of every claim on the call, the way a cancellation does. One booking is
+    // claimed twice, once under Cal.com's uid and once under the Google event id, and
+    // leaving either behind is a deal that still looks booked, which is never chased.
+    let notes = opp.statusNotes;
+    for (const id of bound) notes = notesLib.removeMarker(notes, `booked:${id}`);
+    // Rebooking the same slot is a booking like any other, so its claim goes too.
+    const start = Date.parse(opp.followUp || '');
+    if (Number.isFinite(start)) notes = notesLib.removeMarker(notes, `sent:booked@${iso(start)}`);
+    try {
+      await patch(opp, {
+        statusNotes: notes,
+        stage: 'SCREENING',
+        followUp: null,
+        nextAction: 'Call deleted from the calendar. Chase for a new time.',
+      });
+      summary.unbooked.push(opp.id);
+    } catch (e) {
+      fail(`opp ${opp.id} / unbook: ${e && e.message ? e.message : e}`);
     }
   }
 

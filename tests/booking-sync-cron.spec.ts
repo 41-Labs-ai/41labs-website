@@ -42,7 +42,8 @@ function opp(id: string, o: any = {}) {
     createdAt: o.createdAt ?? iso(NOW - 2 * HOUR),
     statusNotes: o.statusNotes ?? LANDING_NOTES(o.tier ?? 'A'),
     nextAction: 'TIER A: call',
-    followUp: null,
+    // The call the deal has on record. Set on any deal the cron has already bound.
+    followUp: o.followUp ?? null,
     company: { name: o.company ?? 'Tan Aircon' },
     pointOfContact: {
       name: { firstName: o.firstName ?? 'Tan', lastName: o.lastName ?? 'Wei Ming' },
@@ -596,6 +597,78 @@ test.describe('finish_booking nudge', () => {
     const w = makeWorld({ opps: [opp('o1', { createdAt: iso(NOW - 16 * MIN) })], events: [], env: { HERMES_INTAKE_KEY: '' } });
     await w.run();
     expect(w.store.get('o1').statusNotes).not.toContain('finish_booking');
+  });
+});
+
+test.describe('a call deleted from the calendar', () => {
+  // Cal.com's webhook covers the lead cancelling. This covers Alexander deleting the
+  // call himself, which left the deal at MEETING pointing at a call that no longer
+  // existed, no reminders (the event is gone, so nothing fires) and the lead never
+  // hearing another word.
+  // Every live deal carries two markers for one booking: Cal.com's own uid and the
+  // Google event id. Only the Google one can ever come back deleted.
+  const bound = (o: any = {}) => opp('o1', {
+    stage: 'MEETING',
+    createdAt: iso(NOW - 3 * 24 * HOUR),
+    followUp: '2026-09-14T07:00:00.000Z',
+    statusNotes: `${LANDING_NOTES('A')}\n[booked:cal-uid-1]\n[booked:${o.id ?? 'e1'}]`
+      + '\n[sent:booked@2026-09-14T07:00:00.000Z]',
+  });
+  const deleted = (id = 'e1') => ({ id, status: 'cancelled' });
+
+  test('puts the deal back and lets go of the call', async () => {
+    const w = makeWorld({ opps: [bound()], events: [deleted('e1')] });
+    await w.run();
+    const o = w.store.get('o1');
+    expect(o.stage).toBe('SCREENING');
+    expect(o.followUp).toBe(null);
+    expect(o.nextAction).toMatch(/deleted from the calendar/i);
+    expect(o.statusNotes).not.toContain('[booked:e1]');
+    // Cal.com's claim on the same call goes too, or the deal still looks booked and
+    // the nudge skips it, which is the whole fault this is here to fix.
+    expect(o.statusNotes).not.toContain('[booked:cal-uid-1]');
+    // Rebooking the same slot is a booking like any other, so its claim goes too.
+    expect(o.statusNotes).not.toContain('[sent:booked@2026-09-14T07:00:00.000Z]');
+  });
+
+  test('the deal is left chaseable, not still holding a call', async () => {
+    const w = makeWorld({ opps: [bound()], events: [deleted('e1')] });
+    await w.run();
+    // The nudge skips any deal with a call attached, so this is the assertion that
+    // decides whether anyone is ever chased after a call disappears.
+    const notes = String(w.store.get('o1').statusNotes);
+    expect(notes.match(/^\[booked:/gm)).toBe(null);
+  });
+
+  test('a booking simply absent from the page is never treated as deleted', async () => {
+    // Only an explicit cancelled status counts. Reading absence as deletion would wipe
+    // every booking the moment a calendar read came back short.
+    const w = makeWorld({ opps: [bound()], events: [] });
+    await w.run();
+    expect(w.store.get('o1').stage).toBe('MEETING');
+    expect(w.store.get('o1').statusNotes).toContain('[booked:e1]');
+  });
+
+  test('somebody else\'s deleted event leaves our deal alone', async () => {
+    const w = makeWorld({ opps: [bound()], events: [deleted('not-ours')] });
+    await w.run();
+    expect(w.store.get('o1').stage).toBe('MEETING');
+  });
+
+  test('asks the calendar for deleted events, or it can never see one', async () => {
+    const w = makeWorld({ opps: [], events: [] });
+    await w.run();
+    const lists = w.calls.filter((c) => c.url.startsWith('https://www.googleapis.com/calendar/v3/'));
+    expect(lists.some((l) => new URL(l.url).searchParams.get('showDeleted') === 'true')).toBe(true);
+  });
+
+  test('deleted and rebooked in the same run: the new call wins, no chase', async () => {
+    const w = makeWorld({ opps: [bound()], events: [deleted('e1'), booking('e2')] });
+    await w.run();
+    const o = w.store.get('o1');
+    expect(o.stage).toBe('MEETING');
+    expect(o.statusNotes).toContain('[booked:e2]');
+    expect(hermesCalls(w.calls, 'finish_booking')).toHaveLength(0);
   });
 });
 
