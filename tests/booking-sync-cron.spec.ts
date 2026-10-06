@@ -781,13 +781,45 @@ test.describe('reminders', () => {
     expect(kinds(w)).toEqual(['reminder_1h']);
   });
 
-  test('61 minutes before: too early; 54 minutes before: window passed', async () => {
+  test('61 minutes before: too early; 44 minutes before: window passed', async () => {
     const a = makeWorld({ opps: [bookedOpp('o1', NOW + 61 * MIN)], events: [oldBooking(NOW + 61 * MIN)] });
     await a.run();
     expect(kinds(a)).toEqual([]);
-    const b = makeWorld({ opps: [bookedOpp('o1', NOW + 54 * MIN)], events: [oldBooking(NOW + 54 * MIN)] });
+    const b = makeWorld({ opps: [bookedOpp('o1', NOW + 44 * MIN)], events: [oldBooking(NOW + 44 * MIN)] });
     await b.run();
     expect(kinds(b)).toEqual([]);
+  });
+
+  test('more than one run can serve the 1h reminder, and only one sends it', async () => {
+    // The window used to be 55 to 60 minutes wide, which a cron on a five-minute tick
+    // can only ever reach once. One failed run and the lead got no reminder at all,
+    // with no retry, because by the next tick the window had passed. Lee Yi Xuan booked
+    // a 4pm call at 9:29am on 6 Oct, so the 3pm run was the only chance she had.
+    // A five-minute cron does not tick on the hour exactly: a real run lands at about
+    // 59.5 minutes out, then 54.5, 49.5, 45. Every one of them has to be able to serve
+    // the reminder. Under the old window only the first could, so a single failed run
+    // meant the lead got nothing.
+    for (const out of [59.5, 54.5, 49.5, 45]) {
+      const start = NOW + out * MIN;
+      const w = makeWorld({ opps: [bookedOpp('o1', start)], events: [oldBooking(start)] });
+      await w.run();
+      expect(kinds(w), `${out} minutes before the call`).toEqual(['reminder_1h']);
+    }
+  });
+
+  test('a failed run does not cost the lead the reminder', async () => {
+    const start = NOW + 59.5 * MIN;
+    const down = makeWorld({ opps: [bookedOpp('o1', start)], events: [oldBooking(start)], hermes: '500' });
+    await down.run();
+    expect(hermesCalls(down.calls, 'reminder_1h')).toHaveLength(1);
+    // The claim is released, so the next run retries rather than counting it as sent.
+    expect(down.store.get('o1').statusNotes).not.toContain('[sent:reminder_1h');
+
+    // The next tick is 54.5 minutes out. Under the old window that was already too late
+    // and the lead simply never got a reminder.
+    const up = makeWorld({ opps: [down.store.get('o1')], events: [oldBooking(start)] });
+    await up.run(NOW + 5 * MIN);
+    expect(kinds(up)).toEqual(['reminder_1h']);
   });
 
   test('full timeline over the 5-minute cron: booked, reminder_24h, reminder_1h, each exactly once', async () => {

@@ -30,7 +30,11 @@ const DAY = 24 * HOUR;
 const FINISH_MIN_AGE = 15 * MIN;
 const FINISH_MAX_AGE = 24 * HOUR;
 const R24 = { key: 'reminder_24h', from: 23 * HOUR, to: 24 * HOUR };
-const R1 = { key: 'reminder_1h', from: 55 * MIN, to: 60 * MIN };
+// Wide enough that more than one five-minute run can serve it. At 55 to 60 minutes
+// exactly one tick ever landed inside, so a single failed run cost the lead the
+// reminder with no retry, and the window for a 4pm call was one pass at 3pm.
+// The marker still keeps it to one send.
+const R1 = { key: 'reminder_1h', from: 45 * MIN, to: 60 * MIN };
 // No 24h reminder when the booking itself was made less than this before the
 // call: the booking confirmation just went out.
 const R24_MIN_LEAD = 25 * HOUR;
