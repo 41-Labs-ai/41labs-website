@@ -91,6 +91,25 @@ async function findCompanyId(key, name) {
   }
 }
 
+// The person Twenty already holds, by the email the form gave. Twenty refuses a
+// duplicate person outright, and that refusal used to kill the whole CRM write: no
+// deal, so the booking cron had nothing to nudge, so a returning lead never got a
+// single message (Zaf at Fashion in Flowers, three submissions, one deal).
+async function findPersonId(key, email) {
+  if (!email) return null;
+  try {
+    const r = await fetch(`${TWENTY_BASE}/rest/people?filter=emails.primaryEmail[eq]:${encodeURIComponent(email)}&limit=1`, {
+      headers: { Authorization: `Bearer ${key}` },
+    });
+    if (!r.ok) return null;
+    const d = await r.json();
+    const rows = (d && d.data && d.data.people) || [];
+    return rows.length && rows[0].id ? rows[0].id : null;
+  } catch {
+    return null;
+  }
+}
+
 async function patch(key, object, id, record) {
   const r = await fetch(`${TWENTY_BASE}/rest/${object}/${id}`, {
     method: 'PATCH',
@@ -253,8 +272,17 @@ module.exports = async (req, res) => {
         try {
           personId = await create(key, 'people', phone ? { ...person, phones: { primaryPhoneNumber: `+${phone}` } } : person);
         } catch (phoneErr) {
-          if (!phone || !/phone/i.test(String(phoneErr))) throw phoneErr;
-          personId = await create(key, 'people', person);
+          if (phone && /phone/i.test(String(phoneErr))) {
+            personId = await create(key, 'people', person);
+          } else if (/duplicate/i.test(String(phoneErr))) {
+            // Someone who has filled the form before. Their deal is the point, not a
+            // second contact row, so use the one we already hold. A lookup that comes
+            // back empty leaves the deal without a contact, which still beats no deal.
+            personId = await findPersonId(key, email);
+            if (!personId) crmError = `contact not linked: ${String(phoneErr).slice(0, 120)}`;
+          } else {
+            throw phoneErr;
+          }
         }
         // A company we already have is the normal case for a repeat domain, not an error.
         let companyId = null;
@@ -273,8 +301,8 @@ module.exports = async (req, res) => {
           statusNotes: notes.slice(0, 2500),
           nextAction: nextAction,
           firstContactAt: new Date().toISOString(),
-          pointOfContactId: personId,
-          ...(companyId ? { companyId } : {}),   // a deal with no company beats no deal
+          ...(personId ? { pointOfContactId: personId } : {}),  // and a deal with no
+          ...(companyId ? { companyId } : {}),   // contact or company beats no deal
         });
       }
       result = { ok: true, id: oppId };

@@ -713,6 +713,70 @@ test.describe('what the visitor did before they filled the form', () => {
   });
 });
 
+// Twenty rejects a PERSON whose email it already holds, and that killed the whole
+// write: no deal, so the five-minute cron had nothing to nudge, so the lead never got
+// a single message. Zaf at Fashion in Flowers submitted three times (30 Sep, 2 Oct,
+// 6 Oct). Only the first created a deal. The other two heard nothing, and the alert
+// email said "Add this lead to Twenty by hand", which nobody did.
+test.describe('a person we already know must not kill the lead', () => {
+  const dupPerson = async (body: any, opts: { findable?: boolean } = {}) => {
+    const calls: Call[] = [];
+    const origFetch = globalThis.fetch;
+    const saved: Record<string, string | undefined> = {};
+    for (const k of ENV_KEYS) { saved[k] = process.env[k]; delete process.env[k]; }
+    Object.assign(process.env, { TWENTY_API_KEY: 'test-key' });
+    let n = 0;
+    (globalThis as any).fetch = async (url: string, init: any) => {
+      calls.push({ url, method: init?.method, headers: init?.headers || {}, body: parseBody(init?.body) });
+      if (url.includes('/rest/people') && init?.method === 'POST') {
+        return { ok: false, status: 400, text: async () => '{"statusCode":400,"messages":["A duplicate entry was detected"]}', json: async () => ({}) };
+      }
+      if (url.includes('/rest/people') && (!init?.method || init.method === 'GET')) {
+        const rows = opts.findable === false ? [] : [{ id: 'existing-person-id' }];
+        return { ok: true, status: 200, json: async () => ({ data: { people: rows } }), text: async () => '' };
+      }
+      if (url.includes('/rest/')) {
+        n += 1;
+        const obj = url.split('/rest/')[1].split('?')[0];
+        return { ok: true, status: 201, json: async () => ({ data: { [obj]: { id: `${obj}-id-${n}` } } }), text: async () => '' };
+      }
+      return { ok: true, status: 200, json: async () => ({ ok: true }), text: async () => '{}' };
+    };
+    delete require.cache[require.resolve(HANDLER)];
+    const handler = require(HANDLER);
+    const res = fakeRes();
+    try { await handler({ method: 'POST', body, headers: {} }, res); }
+    finally {
+      (globalThis as any).fetch = origFetch;
+      for (const k of ENV_KEYS) { if (saved[k] === undefined) delete process.env[k]; else process.env[k] = saved[k]; }
+    }
+    return { json: JSON.parse(res.body || '{}'), calls };
+  };
+
+  test('the deal is still created, against the contact we already hold', async () => {
+    const { json, calls } = await dupPerson(lead);
+    expect(json.ok).toBe(true);
+    const opp = calls.find((c) => c.url.endsWith('/rest/opportunities'))!;
+    expect(opp).toBeTruthy();
+    expect(opp.body.pointOfContactId).toBe('existing-person-id');
+  });
+
+  test('it looks the person up by the email the form gave', async () => {
+    const { calls } = await dupPerson(lead);
+    const lookup = calls.find((c) => c.url.includes('/rest/people?') && (!c.method || c.method === 'GET'))!;
+    expect(lookup).toBeTruthy();
+    expect(decodeURIComponent(lookup.url)).toContain('wm@tanaircon.sg');
+  });
+
+  test('a deal with no contact still beats no deal at all', async () => {
+    // The lookup can come back empty (a duplicate on something other than the email).
+    // Losing the contact link is survivable. Losing the lead is not.
+    const { json, calls } = await dupPerson(lead, { findable: false });
+    expect(json.ok).toBe(true);
+    expect(calls.find((c) => c.url.endsWith('/rest/opportunities'))).toBeTruthy();
+  });
+});
+
 // Twenty rejects a company whose name already exists. create() ran people ->
 // companies -> opportunities with no recovery, so the SECOND lead from any domain
 // we already know died after the Person was written, leaving an orphan contact and
