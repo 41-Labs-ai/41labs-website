@@ -66,7 +66,7 @@
 41 Labs builds AI agents — autonomous systems that reason, decide, and act across business systems. Unlike chatbots that follow scripts, AI agents can handle complex multi-step workflows: reading documents, querying databases, making decisions, and executing actions. 41 Labs is a Singapore-registered AI company (41 LABS PTE. LTD., UEN 202623048N). Our flagship product is 41 Closer.
 
 ## Blog — In-Depth Guides
-- [PSG Grant for AI in Singapore (2026)](https://41labs.ai/blog/psg-grant-ai-automation-singapore) — Get up to 50% funding (S$30K/yr cap) for AI; what qualifies, eligibility, and PSG vs EDGE
+- [PSG Grant for AI: Closed September 2026, What Replaces It](https://41labs.ai/blog/psg-grant-ai-automation-singapore) — PSG closed on 29 September 2026; pre-approved AI tools are now funded under the EDGE grant, up to 70% for SMEs
 - [Best AI Chatbots for Business in Singapore (2026)](https://41labs.ai/blog/best-ai-chatbots-for-business-singapore) — Honest comparison of Intercom Fin, Zendesk AI, Ada, Tidio, Gorgias, ManyChat and custom agents — by use case, price, and when off-the-shelf beats a custom build
 - [WhatsApp Business API in Singapore (2026)](https://41labs.ai/blog/whatsapp-business-api-ai-automation-singapore) — What the WhatsApp Business API is, the 2026 per-message pricing model and categories, the BSP requirement, and how to add an AI agent on top
 - [AI for HR & Recruitment in Singapore (2026)](https://41labs.ai/blog/ai-for-hr-recruitment-singapore) — How Singapore HR teams use AI for screening, sourcing and onboarding — 30-50% faster hiring, plus the bias and TAFEP/PDPA fair-hiring risks to manage

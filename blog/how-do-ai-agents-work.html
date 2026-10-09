@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://41labs.ai/blog/img/how-do-ai-agents-work.webp">
     <meta property="og:site_name" content="41 Labs">
     <meta property="article:published_time" content="2026-07-24T08:00:00+08:00">
-    <meta property="article:modified_time" content="2026-07-24T08:00:00+08:00">
+    <meta property="article:modified_time" content="2026-10-09T09:00:00+08:00">
     <meta property="article:author" content="https://www.linkedin.com/in/leejunweialexander/">
 
     <!-- Twitter -->
@@ -62,7 +62,7 @@
     "url": "https://41labs.ai"
   },
   "datePublished": "2026-07-24T08:00:00+08:00",
-  "dateModified": "2026-07-24T08:00:00+08:00",
+  "dateModified": "2026-10-09T09:00:00+08:00",
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://41labs.ai/blog/how-do-ai-agents-work"
@@ -95,7 +95,7 @@
       "name": "How accurate are AI agents?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "As accurate as the data behind them. An agent quoting from a clean, current price list gets prices right all day. The same agent pointed at a stale spreadsheet is confidently wrong, which does more damage than no answer at all. Accuracy also drops on ambiguous messages, so a well-built agent hands those to a human instead of guessing. This is why 41 Labs builds a working prototype on a client's real data before any payment: the prototype surfaces the messy data on day one, while it is still cheap to fix. On our best live deployment, 64.1% of handled chats end in a sale, with humans covering the tricky ones."
+        "text": "As accurate as the data behind them. An agent quoting from a clean, current price list gets prices right all day. The same agent pointed at a stale spreadsheet is confidently wrong, which does more damage than no answer at all. Accuracy also drops on ambiguous messages, so a well-built agent hands those to a human instead of guessing. This is why 41 Labs builds the agent on your real product list before any payment, and you message it yourself: that surfaces the messy data on day one, while it is still cheap to fix. On our best live deployment, 64.1% of handled chats end in a sale, with humans covering the tricky ones."
       }
     },
     {
@@ -227,7 +227,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <header class="post-header">
                 <div class="post-meta">
                     <span class="post-category">AI Systems</span>
-                    <span class="post-date">Last updated: July 24, 2026</span>
+                    <span class="post-date">Updated October 2026</span>
                     <span class="post-read-time">10 min read</span>
                 </div>
                 <h1>How Do AI Agents Work? A Plain-English Explainer for Business Owners</h1>
@@ -330,7 +330,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p>Your data in clean shape. A price list in a spreadsheet the agent can read. Delivery rules and policies written down, out of the owner's head. The 20 questions customers actually ask, with the answers your best salesperson gives. We have watched builds stall for weeks because the prices existed nowhere outside one person's memory. The model itself is rented from Anthropic, OpenAI, or Google for cents per conversation, and it is the cheapest part of the whole build. The data work is yours. It is also where projects die.</p>
                 <p>A channel. Web chat is the easy one. WhatsApp is where the money is for most businesses we serve, and it brings extra plumbing: the WhatsApp Business API, Meta's approval process, per-conversation fees on top of whatever tool you use.</p>
                 <p>Someone watching the numbers. A production agent needs a person who reads transcripts weekly, catches wrong answers, and tunes the instructions. Every failed chatbot we have been asked to rescue skipped this part. Every one.</p>
-                <p>For the full build path, from picking the agent's one job through going live, we wrote a step-by-step guide on <a href="/blog/how-to-create-an-ai-agent" style="color:#22c55e;font-weight:600;">how to create an AI agent</a>, DIY costs included. On cost, simple FAQ tools run US$29 to US$79 a month. Our managed agent goes live in 48 hours from S$690 a month, and fully custom builds take 3 to 8 weeks at S$7,000 to S$25,000.</p>
+                <p>For the full build path, from picking the agent's one job through going live, we wrote a step-by-step guide on <a href="/blog/how-to-create-an-ai-agent" style="color:#22c55e;font-weight:600;">how to create an AI agent</a>, DIY costs included. On cost, simple FAQ tools run US$29 to US$79 a month. Our managed agent, 41 Closer, goes live in 48 hours from S$690 a month with the build included. The Pro plan at S$1,490 a month connects to your own systems, reads live stock, prices or availability, and writes orders and bookings back.</p>
 
                 <h2>Agent, chatbot, or automation: which do you need?</h2>
                 <p>Match the tool to the money inside the conversation.</p>
@@ -348,7 +348,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p>No. A production agent does not quietly retrain itself on your conversations. It behaves the same way today as it did yesterday, until someone deliberately updates its data or its instructions. That is by design. An agent that changed its own behaviour week to week could never be trusted with prices, bookings, and payments. In practice a person reads the transcripts, spots wrong or awkward answers, and updates the prompt or the data. On the agents 41 Labs runs, that tuning happens weekly. So the agent does improve over time, but every improvement is a change a human chose to make, and drift stays under control.</p>
 
                 <h3>How accurate are AI agents?</h3>
-                <p>As accurate as the data behind them. An agent quoting from a clean, current price list gets prices right all day. The same agent pointed at a stale spreadsheet is confidently wrong, which does more damage than no answer at all. Accuracy also drops on ambiguous messages, so a well-built agent hands those to a human instead of guessing. This is why 41 Labs builds a working prototype on a client's real data before any payment: the prototype surfaces the messy data on day one, while it is still cheap to fix. On our best live deployment, 64.1% of handled chats end in a sale, with humans covering the tricky ones.</p>
+                <p>As accurate as the data behind them. An agent quoting from a clean, current price list gets prices right all day. The same agent pointed at a stale spreadsheet is confidently wrong, which does more damage than no answer at all. Accuracy also drops on ambiguous messages, so a well-built agent hands those to a human instead of guessing. This is why 41 Labs builds the agent on your real product list before any payment, and you message it yourself: that surfaces the messy data on day one, while it is still cheap to fix. On our best live deployment, 64.1% of handled chats end in a sale, with humans covering the tricky ones.</p>
 
                 <h3>What is the difference between an AI agent and ChatGPT?</h3>
                 <p>ChatGPT is a general language model you chat with. It has no access to your stock, your prices, or your calendar, and it cannot take actions in your systems. An AI agent wraps that same kind of model with your business data, tools it may use, and rules it must follow. Ask ChatGPT what a sofa costs and you get a generic essay. Put the same question to an agent connected to a furniture catalogue and you get the price, a delivery option, and an offer to hold one. The engine is similar. The wiring around it, your data, your tools, your rules, is the part you are actually buying.</p>

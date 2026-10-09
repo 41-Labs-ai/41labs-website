@@ -46,7 +46,7 @@
       "date": "2026-07-25",
       "author": "Alexander Lee",
       "category": "ai-systems",
-      "excerpt": "Yes, under two conditions. The worked payback math with assumptions labeled, when AI loses money, and how long until it pays for itself. Real numbers from 50+ deployments.",
+      "excerpt": "Is AI profitable? Honest math from real deployments: quoting cut from 3 hours to 5 minutes, lead response from 24 hours to under 2 minutes, conversion up 40%. Published costs, worked payback arithmetic, and the honest conditions where AI loses money.",
       "readTime": "10 min",
       "image": "/blog/img/is-ai-profitable.webp"
     },
@@ -122,11 +122,11 @@
     },
     {
       "slug": "does-ai-automation-work",
-      "title": "Does AI Automation Actually Work? Real Numbers From 50+ Builds",
+      "title": "Does AI Automation Actually Work? The Real Numbers",
       "date": "2026-07-24",
       "author": "Alexander Lee",
       "category": "ai-systems",
-      "excerpt": "Most AI projects never ship. Ours are all still running. The honest answer to whether AI automation works, what results look like, where it fails, and the conservative ROI math.",
+      "excerpt": "Does AI automation actually work? The honest answer with real numbers: 80% of AI projects never ship industry-wide. Quote time cut from 3 hours to 5 minutes, lead response from 24 hours to under 2 minutes, conversion up 40%.",
       "readTime": "9 min",
       "image": "/blog/img/does-ai-automation-work.webp"
     },
@@ -326,7 +326,7 @@
       "date": "2026-07-02",
       "author": "Alexander Lee",
       "category": "insights",
-      "excerpt": "What AI consulting and implementation really costs in Singapore, how to procure it, day-rate vs fixed-scope, and how the EDG grant cuts it by up to 70%.",
+      "excerpt": "What AI consulting and implementation really costs in Singapore, how to procure it, day-rate vs fixed-scope, and how the EDGE grant cuts it by up to 70%.",
       "readTime": "7 min read",
       "image": ""
     },
@@ -376,7 +376,7 @@
       "date": "2026-07-02",
       "author": "Alexander Lee",
       "category": "insights",
-      "excerpt": "An honest comparison of 41 Labs and Techtiq Solutions: services, delivery models, timelines, pricing transparency, and EDG grant support for Singapore SMEs.",
+      "excerpt": "An honest comparison of 41 Labs and Techtiq Solutions: services, delivery models, timelines, pricing transparency, and EDGE grant support for Singapore SMEs.",
       "readTime": "10 min read",
       "image": ""
     },
@@ -396,17 +396,17 @@
       "date": "2026-07-02",
       "author": "Alexander Lee",
       "category": "insights",
-      "excerpt": "Honest 2026 comparison of 41 Labs, Analytico, and GetAIReady for Singapore SMEs: services, delivery model, timelines, pricing transparency, demos, and EDG grant support.",
+      "excerpt": "Honest 2026 comparison of 41 Labs, Analytico, and GetAIReady for Singapore SMEs: services, delivery model, timelines, pricing transparency, demos, and EDGE grant support.",
       "readTime": "12 min read",
       "image": ""
     },
     {
       "slug": "psg-grant-ai-automation-singapore",
-      "title": "PSG Grant for AI in Singapore (2026): Get 50% Funding for AI Automation",
+      "title": "PSG Grant for AI: Closed September 2026, What Replaces It",
       "date": "2026-06-19",
       "author": "Alexander Lee",
       "category": "insights",
-      "excerpt": "The Productivity Solutions Grant (PSG) covers up to 50% of AI adoption costs for Singapore SMEs, capped at S$30,000 a year. Here's exactly what AI qualifies, who's eligible, how to apply — and when you need EDG instead.",
+      "excerpt": "PSG closed on 29 September 2026. Pre-approved AI tools are now funded under the EDGE grant, up to 70% for SMEs. What carried over and what to apply for now.",
       "readTime": "8 min read",
       "image": ""
     },
@@ -572,11 +572,11 @@
     },
     {
       "slug": "edg-grant-ai-automation-singapore",
-      "title": "EDG Grant for AI Automation: How Singapore Businesses Get Up to 70% Funding",
+      "title": "EDGE Grant for AI Automation in Singapore (replaces EDG)",
       "date": "2026-02-18",
       "author": "Alexander Lee",
       "category": "insights",
-      "excerpt": "Singapore businesses can get up to 50% funding (up to 70% for qualifying SMEs) for AI and innovation projects through the Enterprise Development Grant (EDG). Here's how the grant works, what qualifies, and how to apply.",
+      "excerpt": "EDG, PSG and MRA closed on 29 September 2026. The EDGE grant replaces them, up to 70% of qualifying costs for SMEs. What AI qualifies, who is eligible, how to apply.",
       "readTime": "7 min read",
       "image": ""
     },
@@ -692,11 +692,11 @@
     },
     {
       "slug": "what-is-ai-quote-automation",
-      "title": "AI Quote Automation: What It Is and How Singapore Firms Use It",
+      "title": "AI Quote Automation: What It Is, How It Works (2026)",
       "date": "2026-10-09",
       "author": "Alexander Lee",
       "category": "insights",
-      "excerpt": "How an AI agent reads an enquiry, prices it from your list or your live systems, and sends the quote in minutes. Who it is for in Singapore, what changed for one client, what it costs, and how the EDG grant applies.",
+      "excerpt": "AI quote automation reads an enquiry, prices it from your list or systems and sends the quote in minutes. How Singapore firms use it, the cost and the EDGE grant.",
       "readTime": "7 min read",
       "image": ""
     },
