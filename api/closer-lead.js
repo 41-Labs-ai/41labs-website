@@ -301,6 +301,8 @@ module.exports = async (req, res) => {
           statusNotes: notes.slice(0, 2500),
           nextAction: nextAction,
           firstContactAt: new Date().toISOString(),
+          // Due the moment it arrives: a paid lead must show on the follow-up board today.
+          followUp: new Date().toISOString(),
           ...(personId ? { pointOfContactId: personId } : {}),  // and a deal with no
           ...(companyId ? { companyId } : {}),   // contact or company beats no deal
         });

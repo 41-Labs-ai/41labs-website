@@ -201,6 +201,8 @@ test.describe('POST /api/closer-lead', () => {
     expect(opp.body.nextAction).toMatch(/^TIER A/);
     expect(opp.body.statusNotes).toContain('after 9pm');
     expect(opp.body.statusNotes).toContain('fbclid=abc123');
+    // A paid lead is due the moment it arrives, so it shows on the follow-up board today.
+    expect(Math.abs(Date.parse(opp.body.followUp) - Date.now())).toBeLessThan(60_000);
   });
 
   test('stores the visitor user agent so the booking CAPI event can send client_user_agent', async () => {
