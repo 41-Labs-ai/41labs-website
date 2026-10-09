@@ -1,14 +1,17 @@
 # 41 Labs — AI Integration for Businesses in Singapore
 
-> 41 Labs builds and runs 41 Closer, the managed AI sales agent for WhatsApp, and custom AI systems for businesses. We find the one process bleeding your business the most time and money, and build the AI that fixes it. Free strategy call. Free working demo. $0 until you see clear value.
+> 41 Labs builds and runs 41 Closer, the managed AI sales agent for WhatsApp, for businesses in Singapore, Malaysia and Indonesia. It answers in seconds, quotes from the client's real prices, follows up and closes. From S$690 a month with the build included, no contract. We build your agent before the first call, and you message it yourself.
 
 ## About
-41 Labs is a Singapore-based AI systems company founded by Alexander Lee. We build custom AI trained on our clients' internal data — their products, processes, and pricing rules — for accuracy you can trust in production. We specialize in construction, healthcare, home services, professional services, automotive, F&B, and beauty & wellness industries.
+41 Labs is a Singapore AI company founded by Alexander Lee. It sells one product, 41 Closer: an AI sales agent for WhatsApp that 41 Labs builds on a client's products, prices and tone, connects to the client's stock, booking and payment systems on the Pro plan, and runs every month. Clients are Singapore businesses that sell over WhatsApp: renovation and construction, suppliers and distributors, clinics and wellness, home services, automotive, F&B, professional services. Entity: 41 LABS PTE. LTD., Singapore, UEN 202623048N.
 
 ## 41 Closer (Flagship Product)
 41 Closer is 41 Labs' flagship product: a WhatsApp sales agent that we build, run, and tune for a business. It answers customer messages in seconds, 24 hours a day, gives accurate prices from the client's real catalogue, follows up every lead, and closes the sale, handing off to a human when needed. Unlike a DIY chatbot tool, 41 Labs handles everything and controls the AI for the client. It is fully done-for-you and priced on the value it brings, not per seat. The build is included in every plan, and 41 Labs sets every plan up, so there is no plan a client runs on their own. Plans are Starter $690, Pro $1,490, Scale $4,300, and Custom from $7,900 a month. One month to start, charged from the day it goes live, then month to month with 30 days notice and no contract. Live demo: message +65 8012 4848 on WhatsApp and 41 Closer itself replies. Learn more: https://41labs.ai/41-closer
 
 ### Key 41 Closer pages
+- [AI sales agent in Singapore](https://41labs.ai/ai-sales-agent-singapore) — what it does in one sale, the 25-business response-time test, twelve named vendors compared, Malaysia and Indonesia
+- [AI automation agency in Singapore](https://41labs.ai/ai-automation-agency-singapore) — what to automate first and what happens after go-live
+- [AI quote automation](https://41labs.ai/blog/what-is-ai-quote-automation) — the quote-automation pillar: how it works over WhatsApp, who needs it, cost and EDG
 - [41 Closer product & pricing](https://41labs.ai/41-closer) — the managed WhatsApp AI sales agent, plans from S$690/month with the build included
 - [WhatsApp AI Chatbot service](https://41labs.ai/whatsapp-ai-chatbot) — custom WhatsApp AI agent on the WhatsApp Business API in Singapore, fully set up for you
 - [Conversational AI for Singapore Businesses](https://41labs.ai/conversational-ai-singapore) — what conversational AI is and how SG businesses deploy it on WhatsApp
@@ -20,14 +23,16 @@
 - [Best AI Chatbots for Business in Singapore (July 2026)](https://41labs.ai/blog/best-ai-chatbots-for-business-singapore) — 9 options ranked by use case, price, and who operates them
 
 ## Services
-- AI Strategy & Consulting: Free 30-minute strategy call to map workflows and find highest-ROI AI opportunities
-- Custom AI System Development: Quoting engines, dispatch systems, document processing, customer service bots, internal knowledge bases
-- Free Working Demo: We build a prototype using your actual business data before any commitment
-- End-to-End Delivery: Strategy to deployed production system in 4-8 weeks
-- Ongoing Support: Maintenance, iteration, and team training after deployment
+- 41 Closer Starter, S$690 a month: answers, quotes from the client's catalogue, follows up, hands over to a person. Build included.
+- 41 Closer Pro, S$1,490 a month: connects to the client's own systems, reads live stock and prices, writes orders and bookings back, takes payment in the chat.
+- Scale S$4,300 and Custom from S$7,900 a month for high volume, many brands or many numbers.
+- Connecting a client's own system: one-time from S$2,400 for a platform 41 Labs has connected before.
+- Terms: one month to start, charged from go-live, then month to month with 30 days notice, no contract, no GST charged. Meta's per-conversation WhatsApp fees are separate.
+- Before paying: 41 Labs builds the client's agent first, the client messages it, then one free hour to see the platform and connect payments and WhatsApp. Live in 48 hours.
+- Not offered any more: standalone custom AI builds, document processing or consulting projects. 41 Labs says so on the first message and points elsewhere.
 
 ## Industries
-- Construction & Renovation — AI quoting systems that cut quote generation from 3 hours to 5 minutes
+- Construction & Renovation: WhatsApp quoting from the rate card, the first quote the same evening (one client: 3 hours to 5 minutes per quote)
 - Healthcare & Clinics — 24/7 patient Q&A bots, automated appointment reminders, intake processing
 - Home Services — AI scheduling, dispatch, and invoicing for plumbing, aircon, electrical, cleaning
 - Professional Services — Document analysis, client onboarding, internal knowledge bases for accounting, legal, consulting

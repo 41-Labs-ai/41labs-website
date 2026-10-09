@@ -49,7 +49,7 @@
     },
     {
       "source": "/services/quote-automation",
-      "destination": "/ai-quote-automation-singapore",
+      "destination": "/blog/what-is-ai-quote-automation",
       "permanent": true
     },
     {
@@ -94,6 +94,11 @@
     {
       "source": "/blog/saas-founders-entering-singapore",
       "destination": "/locations/singapore",
+      "permanent": true
+    },
+    {
+      "source": "/ai-quote-automation-singapore",
+      "destination": "/blog/what-is-ai-quote-automation",
       "permanent": true
     }
   ],
