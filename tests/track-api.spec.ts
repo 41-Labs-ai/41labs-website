@@ -52,12 +52,29 @@ const beacon = {
   page: '/ai-closer',
   variant: 'long',
   ga: '1234567.7654321',
+  gaSid: '1759900000',   // gtag.js ran and set _ga_<id>; without it the beacon is dropped (see below)
   ids: { fbp: 'fb.1.1.2', fbc: 'fb.1.3.4' },
   attr: { first: { utm_content: 'ad_stalk1', fbclid: 'abc' }, last: { utm_content: 'ad_stalk1' } },
   journey: { ms: 251000, engagedMs: 170000, scroll: 86, visits: 2, sections: [['proof-2', 52000], ['hero', 41000]], marks: [['scroll_depth', 12]] },
 };
 
 const GA_ENV = { GA4_MEASUREMENT_ID: 'G-TEST', GA4_API_SECRET: 'secret' };
+
+// A beacon that arrives before gtag.js has set the _ga_ cookie carries no GA session id.
+// Forwarding it made GA4 open a sourceless session with no page and no country: 519 of
+// them in Sep 2026, the whole "Unassigned" channel. Without a session to attach to, the
+// event has no home in any report, so it is dropped.
+test('a beacon without a GA session id is not forwarded to GA4', async () => {
+  const { res, calls } = await run({ ...beacon, gaSid: '' }, { env: GA_ENV });
+  expect(res.statusCode).toBe(204);
+  expect(calls.length).toBe(0);
+});
+
+test('a beacon with a GA session id is forwarded with that session_id', async () => {
+  const { calls } = await run({ ...beacon, gaSid: '1759900000' }, { env: GA_ENV });
+  expect(calls.length).toBe(1);
+  expect(calls[0].body.events[0].params.session_id).toBe('1759900000');
+});
 const gaCall = (calls: Call[]) => calls.find((c) => c.url.includes('google-analytics.com'));
 
 test.describe('accepting the beacon', () => {
@@ -104,9 +121,11 @@ test.describe('forwarding to GA4', () => {
     expect(gaCall(calls)!.body.client_id).toBe('1234567.7654321');
   });
 
-  test('falls back to our own visitor id when GA has not set a cookie yet', async () => {
-    const { calls } = await run({ ...beacon, ga: '' }, { env: GA_ENV });
-    expect(gaCall(calls)!.body.client_id).toBe('visitor-1');
+  test('a visitor GA never saw (no _ga and no session cookie) is not forwarded at all', async () => {
+    // Before Oct 2026 this fell back to our own visitor id, which gave GA4 a client with
+    // no session, no page and no source: the phantom "Unassigned" sessions.
+    const { calls } = await run({ ...beacon, ga: '', gaSid: '' }, { env: GA_ENV });
+    expect(gaCall(calls)).toBeUndefined();
   });
 
   test('does nothing at all when GA4 is not configured', async () => {

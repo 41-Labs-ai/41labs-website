@@ -66,6 +66,12 @@ async function sendGa4(body, journey, env, fetchImpl) {
   const id = env.GA4_MEASUREMENT_ID || DEFAULT_GA4;
   const clientId = str(body.ga, 60) || str(body.vid, 60);
   if (!clientId) return 'skipped';
+  // No GA session id means gtag.js never ran for this visitor (bounced before the
+  // deferred loader fired, or blocked it). Forwarding anyway made GA4 open a session
+  // with no page, no source and no country: 519 of them in Sep 2026, the entire
+  // "Unassigned" channel. An event with no session to join has no home in any
+  // report, so it is dropped rather than counted as a visit from nowhere.
+  if (!str(body.gaSid, 60)) return 'skipped';
   const url = `${GA_ENDPOINT}?measurement_id=${encodeURIComponent(id)}&api_secret=${encodeURIComponent(secret)}`;
   const payload = { client_id: clientId, events: [{ name: 'closer_journey', params: gaParams(body, journey) }] };
   const ctrl = new AbortController();

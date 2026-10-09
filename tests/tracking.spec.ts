@@ -152,5 +152,21 @@ test.describe('GA4 page_view', () => {
           .filter((a: any) => a[0] === 'event' && a[1] === 'page_view'));
       expect(events.length, `page_view count on ${path}`).toBe(1);
     });
+    // GA4 takes a session's landing page, source and medium from its FIRST page_view.
+    // In Sep 2026 27% of sessions had landing page "(not set)" because click and
+    // journey events queued ahead of the deferred loader's page_view. The page_view
+    // must therefore be the first event in the queue, not the first after loading.
+    test(`${path}: page_view is the first event in the dataLayer`, async ({ page }) => {
+      await page.route(/googletagmanager\.com/, (r) =>
+        r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+      await page.route(/connect\.facebook\.net|clarity\.ms|fonts\.g/, (r) => r.abort());
+      await page.goto(path);
+      await page.mouse.click(200, 300);
+      await page.waitForTimeout(600);
+      const firstEvent = await page.evaluate(() =>
+        (window as any).dataLayer.map((a: any) => Array.from(a))
+          .filter((a: any) => a[0] === 'event').map((a: any) => a[1])[0]);
+      expect(firstEvent, `first GA event on ${path}`).toBe('page_view');
+    });
   }
 });

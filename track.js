@@ -17,8 +17,7 @@
     // Queue GA config at LOAD time so it always precedes click events. Before
     // this, a visitor whose very first interaction was a conversion click had
     // the event pushed to dataLayer ahead of the deferred loader's config, so
-    // GA4 dropped it — which is why whatsapp_click barely registered. We send
-    // no page_view here (the deferred loader still sends exactly one) and use
+    // GA4 dropped it — which is why whatsapp_click barely registered. We use
     // beacon transport so events survive the tab backgrounding when WhatsApp
     // opens. This queues only — it does NOT load gtag.js early (CWV preserved).
     var GA_MEASUREMENT_ID = 'G-VQQ49H8N1L';
@@ -32,6 +31,13 @@
 
     window.gtag('js', new Date());
     window.gtag('config', GA_MEASUREMENT_ID, { send_page_view: false, transport_type: 'beacon' });
+    // The page_view is queued HERE, immediately after config, not in the deferred
+    // loader. GA4 takes a session's landing page, source and medium from its first
+    // page_view; when the page_view only arrived at load() time, any click, scroll
+    // or journey event queued before it became the session's first hit and 27% of
+    // sessions reported landing page "(not set)" (Oct 2026 audit). The queue keeps
+    // order, so this is the first hit gtag.js sends whenever it finally loads.
+    window.gtag('event', 'page_view');
     if (ADS_READY) { window.gtag('config', AW_ID); }
 
     function track(name, params) {
