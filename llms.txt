@@ -11,7 +11,7 @@
 ### Key 41 Closer pages
 - [AI sales agent in Singapore](https://41labs.ai/ai-sales-agent-singapore) — what it does in one sale, the 25-business response-time test, twelve named vendors compared, Malaysia and Indonesia
 - [AI automation agency in Singapore](https://41labs.ai/ai-automation-agency-singapore) — what to automate first and what happens after go-live
-- [AI quote automation](https://41labs.ai/blog/what-is-ai-quote-automation) — the quote-automation pillar: how it works over WhatsApp, who needs it, cost and EDG
+- [AI quote automation](https://41labs.ai/blog/what-is-ai-quote-automation) — the quote-automation pillar: how it works over WhatsApp, who needs it, cost and EDGE
 - [41 Closer product & pricing](https://41labs.ai/41-closer) — the managed WhatsApp AI sales agent, plans from S$690/month with the build included
 - [WhatsApp AI Chatbot service](https://41labs.ai/whatsapp-ai-chatbot) — custom WhatsApp AI agent on the WhatsApp Business API in Singapore, fully set up for you
 - [Conversational AI for Singapore Businesses](https://41labs.ai/conversational-ai-singapore) — what conversational AI is and how SG businesses deploy it on WhatsApp
@@ -40,6 +40,24 @@
 - F&B & Restaurants — Demand forecasting, reservation management, menu Q&A bots
 - Beauty & Wellness — 24/7 booking assistant, no-show reminders, client preference tracking
 
+### Trade pages written from our calls (one per trade we spoke to)
+- [AI Agent for Aesthetic Clinics in Singapore](https://41labs.ai/industries/ai-for-aesthetic-clinics-singapore) — Answer the 9pm pico laser price question and book the consultation. 41 Closer is a managed WhatsApp AI agent for aesthetic clinics, from S$690 a month.
+- [AI Agent for Bakeries and Cafes in Singapore](https://41labs.ai/industries/ai-for-bakeries-and-cafes-singapore) — Stop losing Sunday night orders. 41 Closer answers bakery and cafe WhatsApp enquiries, quotes from your price list and takes the event brief, from S$690 a month.
+- [AI Agent for Car Rental Companies in Singapore](https://41labs.ai/industries/ai-for-car-rental-companies-singapore) — Answers rental enquiries at 11pm and qualifies the driver before you wake up. 41 Closer, the WhatsApp AI agent for car rental companies, from S$690 a month.
+- [AI Agent for Preschools and Student Care Centres in Singapore](https://41labs.ai/industries/ai-for-childcare-centres-singapore) — Answer parents the minute they ask about places, fees and visits. 41 Closer books the centre visit for preschools and student care centres, from S$690 a month.
+- [AI Agent for Gyms and Fitness Studios in Singapore](https://41labs.ai/industries/ai-for-gyms-fitness-studios-singapore) — Answer the 9pm trial and PT price enquiry and book the consultation while your admin is off. 41 Closer for gyms and fitness studios in Singapore, from S$690 a month.
+- [AI Agent for Immigration Consultants in Singapore](https://41labs.ai/industries/ai-for-immigration-consultants-singapore) — Every paid PR lead answered in minutes and chased until it books. 41 Closer qualifies, books the consult, never promises an outcome. From S$690 a month.
+- [AI Agent for Jewellery Retailers in Singapore](https://41labs.ai/industries/ai-for-jewellery-retailers-singapore) — Answer 'got this in 18K?' at night with the photo, the price and the outlet that has it. 41 Closer for jewellery retailers and pawnbrokers, from S$690 a month.
+- [AI Agent for Maid Agencies in Singapore](https://41labs.ai/industries/ai-for-maid-agencies-singapore) — Answer families at 11pm, quote levy, salary and agency fee from your sheet, show approved biodata, book interviews. 41 Closer for maid agencies, from S$690 a month.
+- [AI Agent for Pet Shops and Groomers in Singapore](https://41labs.ai/industries/ai-for-pet-businesses-singapore) — Book grooming slots and keep pet food deliveries moving while your hands are busy. 41 Closer answers the WhatsApp of pet businesses in Singapore. From S$690 a month.
+- [AI Agent for Property Agents in Singapore](https://41labs.ai/industries/ai-for-property-agents-singapore) — Answer every listing enquiry in seconds, qualify the buyer and book the viewing. 41 Closer for property agents and teams in Singapore, from S$690 a month.
+- [AI Agent for Renovation Contractors in Singapore](https://41labs.ai/industries/ai-for-renovation-contractors-singapore) — Win the site visit while you are still on site. 41 Closer answers a renovation contractor's WhatsApp, gives your range and books the visit. From S$690 a month.
+- [AI Agent for Suppliers and Distributors in Singapore](https://41labs.ai/industries/ai-for-suppliers-distributors-singapore) — Quote from your catalogue, check stock per branch, take the deposit and pass the order to your team at 9pm. 41 Closer for suppliers, from S$690 a month.
+- [AI Agent for Swim Schools in Singapore](https://41labs.ai/industries/ai-for-swim-schools-singapore) — Answer parents at 10pm, place the child by age, collect the coach and slot preferences and take the trial request. 41 Closer for swim schools, from S$690 a month.
+- [AI Agent for Travel Agencies in Singapore](https://41labs.ai/industries/ai-for-travel-agencies-singapore) — Answer flight and tour enquiries on WhatsApp at any hour. 41 Closer prices live fares and states the fare rule for travel agencies in Singapore, from S$690 a month.
+- [AI Agent for Tuition Centres in Singapore](https://41labs.ai/industries/ai-for-tuition-centres-singapore) — Answer parents at 10pm, quote the right fee and book the trial lesson on WhatsApp. 41 Closer for tuition centres and institutes in Singapore, from S$690 a month.
+- [AI Agent for Yacht Charter Companies in Singapore](https://41labs.ai/industries/ai-for-yacht-charter-companies-singapore) — Answer 'available 15th sat?' at 11pm with the right boat, the price and the deposit link. 41 Closer for yacht charter companies in Singapore, from S$690 a month.
+
 ## Real Client Results
 - Avenue Engineering: AI-powered quoting system — reduced quote generation from hours to minutes
 - 365 Tow: AI dispatch and invoicing system for roadside assistance operations
@@ -48,7 +66,7 @@
 41 Labs builds AI agents — autonomous systems that reason, decide, and act across business systems. Unlike chatbots that follow scripts, AI agents can handle complex multi-step workflows: reading documents, querying databases, making decisions, and executing actions. 41 Labs is a Singapore-registered AI company (41 LABS PTE. LTD., UEN 202623048N). Our flagship product is 41 Closer.
 
 ## Blog — In-Depth Guides
-- [PSG Grant for AI in Singapore (2026)](https://41labs.ai/blog/psg-grant-ai-automation-singapore) — Get up to 50% funding (S$30K/yr cap) for AI; what qualifies, eligibility, and PSG vs EDG
+- [PSG Grant for AI in Singapore (2026)](https://41labs.ai/blog/psg-grant-ai-automation-singapore) — Get up to 50% funding (S$30K/yr cap) for AI; what qualifies, eligibility, and PSG vs EDGE
 - [Best AI Chatbots for Business in Singapore (2026)](https://41labs.ai/blog/best-ai-chatbots-for-business-singapore) — Honest comparison of Intercom Fin, Zendesk AI, Ada, Tidio, Gorgias, ManyChat and custom agents — by use case, price, and when off-the-shelf beats a custom build
 - [WhatsApp Business API in Singapore (2026)](https://41labs.ai/blog/whatsapp-business-api-ai-automation-singapore) — What the WhatsApp Business API is, the 2026 per-message pricing model and categories, the BSP requirement, and how to add an AI agent on top
 - [AI for HR & Recruitment in Singapore (2026)](https://41labs.ai/blog/ai-for-hr-recruitment-singapore) — How Singapore HR teams use AI for screening, sourcing and onboarding — 30-50% faster hiring, plus the bias and TAFEP/PDPA fair-hiring risks to manage
