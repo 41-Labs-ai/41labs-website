@@ -1,0 +1,188 @@
+{
+ "slug": "ai-for-yacht-charter-companies-singapore",
+ "trade": "yacht charter companies",
+ "trade_singular": "yacht charter company",
+ "audience": "Yacht charter and boat rental operators in Singapore",
+ "spoke_with": "one Singapore yacht charter operator (two calls, and the agent we built on their fleet)",
+ "title": "AI Agent for Yacht Charter Companies in Singapore | 41 Labs",
+ "desc": "Answer 'available 15th sat?' at 11pm with the right boat, the price and the deposit link. 41 Closer for yacht charter companies in Singapore, from S$690 a month.",
+ "h1": "AI Agent for Yacht Charter Companies in Singapore",
+ "hero_sub": "Your enquiries land at night and on weekends, when the crew is at sea and your admin is already at capacity, so the reply goes out the next day. 41 Closer answers 'available 15th sat?' with the right boat, the price, the slot and the deposit link, then tells your team the moment it is booked.",
+ "keywords": "ai agent for yacht charter singapore, whatsapp ai for boat rental singapore, yacht charter booking automation singapore, ai sales agent yacht charter, 41 closer yacht charter",
+ "wa_text": "Hi%2C%20I%20run%20a%20yacht%20charter%20company.%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20enquiries.",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent for WhatsApp, built on your fleet. It answers a charter enquiry at any hour with the boat that fits the group, the real price, the open slot and the add-ons, then takes the deposit and tells your team. Big groups and corporate events go to you with the headcount captured.",
+ "capsule_passage": "Charter enquiries arrive at night and on weekends, and they all need the same handful of answers: which boat, which slot, how many guests, what is included, what it costs and what happens if it rains. The operator we built for told us replies were going out the next day, because the admin was at capacity and the crew were on the water. A charter goes to whoever answers first with a real date and price. 41 Closer answers from your boat list, add-ons, slots and policies. It recommends one boat with its price and photo and offers the BBQ or the DJ that fits the occasion. It never invents a price or a free date it cannot see. On Starter, S$690 a month, your team confirm the slot and take the deposit. On Pro, S$1,490 a month, it checks your booking engine, takes the deposit in the chat and writes the booking back. Try it on +65 8012 4848, then we build yours before you pay.",
+ "enquiries_intro": "The questions the operator we built for told us come in every day, written the way customers type them",
+ "enquiries": [
+  "available 15th sat?",
+  "how many pax can go",
+  "price for 4 hours",
+  "got bbq?",
+  "can fishing?",
+  "what if rain",
+  "deposit how much",
+  "where do we board",
+  "can bring own food and drinks",
+  "45 of us for company d&d, can?"
+ ],
+ "enquiries_note": "<p>Every one of these needs the same small set of answers: which boat, which slot, how many guests, what is included, how much, and what happens if the weather turns. The operator we built for told us replies were going out the next day. The admin who knew the answers was already at capacity, and the crew who could check the boat were on the water. We also found three different WhatsApp numbers on their website, so the same question could land with three different people and be answered by none of them.</p>",
+ "dialogue_intro": "One exchange on Pro, connected to your booking calendar, the way it runs on your own WhatsApp number. Boats, prices and names are examples.",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, available 15th sat? birthday, about 20 pax"
+  },
+  {
+   "who": "agent",
+   "text": "Hi! Happy to help with the birthday. Saturday the 15th still has both slots open, 10am to 2pm and 4pm to 8pm. Which one suits you?"
+  },
+  {
+   "who": "customer",
+   "text": "evening. price for 4 hours?"
+  },
+  {
+   "who": "agent",
+   "text": "For 20 guests the catamaran fits well. It is S$1,500 for the 4 hour evening slot, captain and crew included, licensed for up to 40 guests. Here is the boat: [photo]"
+  },
+  {
+   "who": "customer",
+   "text": "got bbq? and what if rain"
+  },
+  {
+   "who": "agent",
+   "text": "Yes. The BBQ set is S$200 on top and the crew cook it on board. Rain is the captain's call on the day. If he calls it off, the team move you to a new date."
+  },
+  {
+   "who": "customer",
+   "text": "ok. deposit how much"
+  },
+  {
+   "who": "agent",
+   "text": "50% holds the slot, so S$850 now and the rest a week before you sail. Here is the link: [payment link]. The booking goes into our calendar the moment it is paid."
+  },
+  {
+   "who": "customer",
+   "text": "paid"
+  },
+  {
+   "who": "agent",
+   "text": "Thank you, you are booked. Saturday the 15th, 4pm to 8pm, 20 guests, BBQ added. You board at the marina this boat runs from, I will send the pin. Please arrive 15 minutes before 4pm. The team have your booking."
+  }
+ ],
+ "flow": [
+  {
+   "step": "It answers the availability question",
+   "detail": "It knows your slots, for example a morning and an evening slot every day, and it answers the date question first because that is what the customer asked. On Starter it works from the calendar you give us and your team confirm the slot. On Pro it reads your booking engine and only offers a slot that is open. In the agent we built, it is blocked from saying a date is free or taken when it cannot see a calendar."
+  },
+  {
+   "step": "It puts the group on the right boat and quotes the real price",
+   "detail": "The occasion, the guest count and the date decide the boat. It recommends one boat with a reason and gives the price for the slot in the same message. It sends the photo too, because people choose a boat with their eyes. Then it offers the one or two add-ons that fit, BBQ for a family day, DJ for a party, each with its own price. If two of your boats are the same model at the same price, it says so and does not invent a difference. If your boats leave from different marinas, it names the right one for the boat chosen."
+  },
+  {
+   "step": "It answers the policy questions on the spot",
+   "detail": "What if it rains, can we fish, can we bring our own food, can we bring the dog, how many can come, what time do we arrive. These are your published rules, so it answers them in the first reply and then asks for the date. It never hands a published policy to a human."
+  },
+  {
+   "step": "It takes the deposit and writes the booking",
+   "detail": "It recaps the boat, the date, the slot, the guest count and each add-on with its price, then sends the deposit or full payment link, whichever is your rule. On Pro the booking is written into your booking engine and your CRM, and your team are notified in the same turn with everything they need for the day."
+  },
+  {
+   "step": "It hands over what it should not price, and follows up the rest",
+   "detail": "A group above your guest cap, or an event you price by hand, gets the date, the headcount and a contact captured, then goes to your team with a note that a real number is coming. It does not guess. Anyone who goes quiet gets a follow-up, and a no on this date is left open for the next one."
+  }
+ ],
+ "systems": "On Starter it reads your boat list with photos, your prices per slot, your add-on list, your policies and the calendar link you give us. Bookings and deposits go to your team. On Pro it reads availability from your booking engine, writes the booking back, posts the customer and the booking to your CRM, and sends the deposit or payment link in the chat. The operator we built for runs a Rezdy booking engine and asked for Zoho CRM. Connecting a system we have connected before is a one-time S$2,400. A booking engine we have not connected before is scoped on the call first.",
+ "leaks": [
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days. <a href=\"/blog/whatsapp-response-time-singapore-study\">The study</a>.",
+  "The charter operator we built for told us replies were going out the next day, and that his admin was already at capacity. In his words, even 10% more enquiries would break the way they reply today.",
+  "The same operator's website carried three different WhatsApp numbers. The same question could land with three different people.",
+  "In a Singapore professional services firm, not a charter company, moving quotes to the agent cut quote time from 3 hours to 5 minutes, cut errors by 90% and raised sales capacity by 35%. <a href=\"/case-studies/quote-automation-professional-services\">The case</a>."
+ ],
+ "heard": [
+  {
+   "quote": "My admin already answers the same twenty questions all day. She is at capacity. Even 10% more enquiries would break us.",
+   "answer": "That is the case this was built for. The agent takes the repeat questions, which boat, which slot, how many guests, what is included, what if it rains, and only passes your admin the booking or the enquiry it cannot price. What it does not fix is the work after the booking, such as crew rostering and provisioning. If that is where your admin is stuck, this will not help, and we will say so on the call."
+  },
+  {
+   "quote": "Will my admin think this is here to replace her?",
+   "answer": "She might, and it is worth saying out loud with her before go-live. The agent answers the first twenty messages. She still confirms the slots and handles the changes, and the corporate clients still talk to her. The operator who raised this had an admin who was the bottleneck, so the aim was to give her the evenings back."
+  },
+  {
+   "quote": "Our invoicing and payment is still manual. Can it do that?",
+   "answer": "On Pro it sends the deposit or payment link in the chat and writes the booking into your booking engine or CRM, so nobody types the invoice. On Starter it hands the agreed booking to your team and they take payment the way they do today. If invoicing is the only thing you want fixed and you are happy with how enquiries are answered now, a booking engine with payment built in is cheaper than this. We will tell you that on the call."
+  },
+  {
+   "quote": "We do not have a live calendar. Where would it get availability from?",
+   "answer": "Then it does not pretend to. In the agent we built for an operator with no published calendar, it takes the date, quotes the charter and tells the customer the team confirm the slot once the booking is in. It is built to refuse to say a date is free or taken when it cannot see one. If you keep availability in a booking engine, Pro reads it live and the guessing stops."
+  },
+  {
+   "quote": "We want everything in our CRM.",
+   "answer": "On Pro it writes the booking and the customer into your CRM. The operator we spoke to runs Zoho, and that is the kind of system we connect. On Starter you get a summary handed to your team instead, with the date, the guest count, the boat and the contact."
+  },
+  {
+   "quote": "Can it collect reviews with a QR code on board?",
+   "answer": "No. It answers and books over WhatsApp. A Google review link on a printed QR code does the on-board review job, and it costs you nothing. Do not buy this for reviews."
+  }
+ ],
+ "plan_starter": "Answers every enquiry from your boat list, add-on prices, slots and policies. Recommends the right boat for the group with its price and photo, and follows up the ones who go quiet. The booking goes to your team to confirm the slot and take the deposit.",
+ "plan_pro": "Adds your booking engine and your CRM. Reads which slots are open, writes the booking back, posts the customer to your CRM, and sends the deposit or payment link in the chat. Connecting a system we have connected before is a one-time S$2,400.",
+ "faq": [
+  [
+   "Can an AI agent answer yacht charter enquiries on WhatsApp?",
+   "Yes, if it is built on your fleet. 41 Closer is loaded with your boats, your slots, your add-ons and your policies. It answers 'available 15th sat?', 'how many pax' and 'what if rain' from that, at any hour. It quotes the real price for the boat that fits the group. Anything it cannot price it hands to your team with the date and the headcount captured."
+  ],
+  [
+   "How does it know whether the boat is free on that date?",
+   "On Starter it works from the calendar you give us, and your team confirm the slot. It will not say a date is free when it cannot see one. On Pro it reads your booking engine live, so it knows which slots are open before it quotes. The operator we built for used Rezdy, and that is the kind of system Pro connects."
+  ],
+  [
+   "Can it take the deposit?",
+   "On Pro, yes. It sends the deposit or full payment link in the chat, whichever is your rule, and the booking is written back to your system. On Starter it hands the agreed booking to your team and they take payment as they do now."
+  ],
+  [
+   "What happens when someone asks for a corporate event bigger than my boat can take?",
+   "If the group is above the guest cap on your licence, it says so and offers the option you have for bigger groups, a dockside party for example. It never confirms a charter above the cap. For an event with no published price it captures the date, the headcount and a contact and sends them to you in the same turn. The customer is told a real number is coming from your team. It does not guess a price for an event that size."
+  ],
+  [
+   "How much does it cost for a yacht charter company?",
+   "Starter is S$690 a month. Pro is S$1,490 a month and adds your booking engine, your CRM and payment in the chat. The build is included, and connecting a system we have connected before is a one-time S$2,400. You pay for one month from go-live, then month to month with 30 days notice and no contract. No GST is charged."
+  ],
+  [
+   "Will it make up a boat feature or a price?",
+   "No. Every price it gives comes from the catalogue you gave us, and a figure that is not in there is blocked before the customer sees it. In our build for a charter operator, two of the boats were the same model at the same price, and the agent was tested to say so instead of inventing a difference. If the answer is not in your material it says the team will confirm and captures the details."
+  ],
+  [
+   "Can I try it before I pay?",
+   "Yes. Message +65 8012 4848 at any hour and the agent that replies is 41 Closer. Then send us your boat list, add-ons, slots and policies, and we build your own agent before any call. You message it yourself, and then we spend one free hour showing you the platform and connecting payments and your WhatsApp. Billing starts only when it goes live."
+  ],
+  [
+   "Does it handle the weekday enquiries while the crew is at sea?",
+   "Yes. It answers 24 hours a day, including when nobody is at a desk. The weekday enquiry that used to wait until the next day gets the boat, the price and the slot in the first reply. Your team see the booking when it lands."
+  ]
+ ],
+ "cta_text": "Send us your boat list, your add-ons, your slots and your rain policy. We build your agent before we ever get on a call. Then one free hour: you message your own agent, we show you the platform, and we connect payments and your WhatsApp.",
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/ai-appointment-booking",
+   "AI appointment and slot booking over WhatsApp"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans, prices and terms"
+  ],
+  [
+   "/ai-sales-agent-singapore",
+   "AI sales agent for Singapore businesses"
+  ],
+  [
+   "/case-studies/quote-automation-professional-services",
+   "Quote time from 3 hours to 5 minutes"
+  ]
+ ]
+}

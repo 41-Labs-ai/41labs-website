@@ -1,0 +1,81 @@
+{
+ "slug": "ai-for-gyms-fitness-studios-singapore",
+ "trade": "gyms and fitness studios",
+ "trade_singular": "gym or fitness studio",
+ "audience": "Owners of gyms, fitness studios and personal training businesses in Singapore",
+ "spoke_with": "one in-home personal training business in Singapore",
+ "title": "AI Agent for Gyms and Fitness Studios in Singapore | 41 Labs",
+ "desc": "Answer the 9pm trial and PT price enquiry and book the consultation while your admin is off. 41 Closer for gyms and fitness studios in Singapore, from S$690 a month.",
+ "h1": "AI Agent for Gyms and Fitness Studios in Singapore",
+ "hero_sub": "You run a gym or a studio, and the trial class enquiries land at 9pm after the admin has logged off and while the coaches are on the floor. 41 Closer answers on your own WhatsApp number and books the trial or consultation before the customer messages the next studio.",
+ "keywords": "ai agent for gyms singapore, whatsapp ai agent fitness studio singapore, personal training whatsapp chatbot singapore, ai trial class booking gym singapore, 41 closer gyms fitness",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent for WhatsApp, built and run by 41 Labs, for gyms, fitness studios and personal trainers in Singapore. It answers the 9pm price enquiry and asks the goal before it quotes. Then it books the trial or consultation while your admin is off and your coaches are on the floor.",
+ "capsule_passage": "A gym or studio gets the same messages every night: how much for personal training, got trial class, do you come to my condo, can my kids join. They arrive after the admin logs off and while the coaches are mid-session. One in-home personal training business told us it gets about five enquiries a week, closes two and loses three, and that a price sent on its own goes cold. 41 Closer answers in the customer's own chat. It asks the goal and the area first. Then it gives the price from your list and books the consultation or trial slot, and the booking lands in your inbox. Starter at S$690 a month does that from your price list and your calendar link. Pro at S$1,490 a month connects to your own booking or membership system, reads the live slots and writes the booking back. It takes the pack payment in the chat. Message +65 8012 4848 at any hour and see how it answers you first.",
+ "enquiries_intro": "The messages one in-home personal training business told us it gets, and the ones we built its agent to answer",
+ "enquiries": [
+  "how much for personal training?",
+  "just give me a ballpark first",
+  "it's for me, want to lose weight. which areas do you cover?",
+  "do you do basketball coaching for kids?",
+  "can a few of us from the same condo train together?",
+  "do i need to go to a gym or you come to me?",
+  "got trial session first?",
+  "how do i get started?"
+ ],
+ "enquiries_note": "<p>Every one of these comes from someone ready to spend money. They come in after the admin has logged off and while the coaches are at a client's home or on the studio floor. The business we spoke to runs one admin overseas on weekday office hours, so a Sunday night message waits until Monday. The owner also told us the worst reply is a bare price. The customer gets a number and never writes again.</p>",
+ "dialogue": [
+  {"who": "customer", "text": "hi how much for personal training?"},
+  {"who": "agent", "text": "Hi! A coach comes to your home or condo, so there is no gym to travel to. The price depends on your goal and how often you train. What are you hoping to work on?"},
+  {"who": "customer", "text": "come on, just a ballpark first"},
+  {"who": "agent", "text": "Fair enough. 1-to-1 at home is S$160 a session, and most people start with a 5-session pack. A group of friends shares that cost. Is the training for you?"},
+  {"who": "customer", "text": "yes for me. want to lose weight"},
+  {"who": "agent", "text": "Fat loss, noted. Which area are you in?"},
+  {"who": "customer", "text": "tanjong pagar"},
+  {"who": "agent", "text": "We cover the whole island, so that works. The first step is a free consultation so a coach can plan it around you. Which day and time suits you?"},
+  {"who": "customer", "text": "weekday evening after 7pm. this number is fine"},
+  {"who": "agent", "text": "Booked. A coach will call this number on a weekday evening after 7pm to set the plan and your first session. Your details are with the team now."}
+ ],
+ "flow": [
+  {"step": "It answers the price question with a conversation", "detail": "A customer asks how much for personal training. The agent answers with a question before a number. It says a coach comes to their home or condo, then asks what they are hoping to work on. This is the flow we built for the in-home trainer whose price enquiries went cold."},
+  {"step": "It qualifies the lead", "detail": "Who the training is for and what the goal is. Then the area, so you know which coach is near. For a kids enquiry it asks the child's age and the sport. You tell us the questions a coach needs answered before a first session, and it asks them."},
+  {"step": "It quotes from your price list, or books the consultation if you have none", "detail": "If you give us your session rate and your packs, it quotes them once it knows the goal. If you price every programme after a consultation, it says so and will not invent a figure even when the customer pushes for a ballpark. We tested that push before the trainer's demo and it still gave no figure."},
+  {"step": "It books the consultation or trial slot", "detail": "It takes the day, the time window and the best number to reach them. It confirms the booking back in one message. A 'New consultation booked' card then lands in your inbox for a coach to action. On Pro the slot is read from and written into your own booking system."},
+  {"step": "It follows up and hands over", "detail": "A customer who goes quiet after the price gets a follow-up. A question it has no answer for, such as your cancellation policy or a coach's qualifications, goes to a person, and the customer is told a coach will reply. Your team sees every chat in one inbox."}
+ ],
+ "systems": "On Starter it reads your price list, your class or session list, your packs, the areas you cover and your calendar link. It writes nothing into any system. On Pro it connects to your own booking or membership system. It reads the live slots and writes the booking back. It can take the pack payment in the chat. The trainer we built the demo for ran no system at all, so the demo booked into the inbox only.",
+ "leaks": [
+  "One in-home personal training business told us it gets about five enquiries a week, converts two and loses three.",
+  "The same business runs one admin on weekday office hours. A price enquiry on a Sunday night waits until Monday morning.",
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days. <a href=\"/blog/whatsapp-response-time-singapore-study\" style=\"color:#22c55e;font-weight:600;\">The study</a>.",
+  "The closest measured result we have is from a Singapore professional services firm: quote time went from 3 hours to 5 minutes. Errors fell 90% and sales capacity rose 35%. <a href=\"/case-studies/quote-automation-professional-services\" style=\"color:#22c55e;font-weight:600;\">The case study</a>."
+ ],
+ "h2_heard": "What a personal trainer said to us, and our answer",
+ "heard": [
+  {"quote": "My problem is getting enquiries in the first place. At five a week I can handle them myself.", "answer": "Then do not buy this yet. 41 Closer answers the enquiries that arrive and it does not create demand. One trainer told us exactly this on a call and paused the agent. He put the budget into video and ads instead. If all you want tonight is an auto-reply that says a coach will call tomorrow, the free away message in WhatsApp Business does that."},
+  {"quote": "People ask the price, I send it, and they disappear.", "answer": "A bare number is the easiest message to ignore. The agent asks the goal before it quotes, says a coach comes to them, then books the consultation in the same chat. That is the flow we built for the trainer who told us this, and we tested the after-hours price enquiry before his demo."},
+  {"quote": "My admin is overseas on office hours and my coaches are with clients. Nobody can answer at night.", "answer": "That is the gap it closes. It answers at 9pm on a Sunday and books the consultation, and the card is in your inbox when the admin logs on Monday. In our study of 25 Singapore businesses, only one replied to an evening enquiry within five minutes."},
+  {"quote": "I do not publish prices. Every programme is tailored.", "answer": "Then it will not quote one. We built this demo with no prices at all and it books the consultation instead. We pushed it for a ballpark figure and it still gave none. If you later want it to quote ranges, give us the ranges and it will."},
+  {"quote": "Can it sell the pack and take the money?", "answer": "On Pro, yes. It takes the payment in the chat and writes the booking into your system. On Starter it quotes the pack from your list and books the consultation, and your admin takes payment the way you do now."}
+ ],
+ "plan_starter": "Answers trial and PT enquiries at any hour from your price list and your class list. Asks the goal and the area, quotes the session or the pack, books the consultation or trial slot and follows up the quiet ones. Hands over to a coach when it does not know.",
+ "plan_pro": "Everything in Starter, plus a connection to your own booking or membership system. It reads the live slots and writes the booking back. It takes the pack payment in the chat.",
+ "faq": [
+  ["Can an AI agent answer trial class enquiries for my gym on WhatsApp?", "Yes. 41 Closer sits on your WhatsApp Business number and answers at any hour. It asks the customer's goal and quotes from your price list. Then it books the trial or consultation slot. Your coach sees the booking in the inbox the next morning, and you can take over any chat yourself."],
+  ["How much does a WhatsApp AI agent cost for a fitness studio in Singapore?", "Starter is S$690 a month. Pro is S$1,490 a month and connects to your own booking or membership system. The build is included and there is no setup fee. Connecting a system we have connected before is a one-time S$2,400. No GST is charged."],
+  ["Will it quote my session rate and my packs?", "Yes, from the price list you give us. It asks the goal before it quotes, because the trainer we built this for told us a bare price goes cold. If you price every programme after a consultation, it says so and books the consultation. It will not invent a figure."],
+  ["Can it book the trial into my calendar?", "On Starter it takes the day and time and confirms it back to the customer. A booking card then lands in your inbox for a coach to confirm. On Pro it reads the live slots in your own booking system and writes the booking back. Your admin does not retype anything."],
+  ["What if a customer asks something it does not know, like my cancellation policy?", "It hands over to a person and tells the customer a coach will reply. It does not guess. Before go-live we list the gaps, such as cancellation terms, group size limits, the age range for kids and payment methods, and you fill them in. Every answer it gives comes from what you told us."],
+  ["I only get a handful of enquiries a week. Is it worth it?", "Maybe not yet. One personal training business with about five enquiries a week told us its problem was volume and paused. The agent answers what comes in and it does not bring new leads. If most of your enquiries arrive after hours and you lose them, it pays for itself. If they arrive in office hours and your admin answers in minutes, spend the money on ads first."],
+  ["How long does it take to go live?", "48 hours from the day we get your price list and your class or session list. We build the agent first and you message it on our demo line. Then one free hour to walk through the platform and connect your WhatsApp and payments. You are charged from the day it goes live."],
+  ["Does it answer in Singlish or Chinese?", "It answers in English and the mixed English Singapore customers type. Ask us before counting on Chinese or Malay. It does not take voice calls."]
+ ],
+ "related": [
+  ["/ai-appointment-booking", "AI appointment booking on WhatsApp"],
+  ["/ai-lead-qualification", "How the agent qualifies a lead before it quotes"],
+  ["/blog/whatsapp-response-time-singapore-study", "How fast 25 Singapore businesses replied on WhatsApp"],
+  ["/industries/ai-for-physiotherapists-singapore", "AI agent for physiotherapists in Singapore"],
+  ["/41-closer", "41 Closer plans and terms"]
+ ]
+}

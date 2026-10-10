@@ -1,0 +1,176 @@
+{
+ "slug": "ai-for-maid-agencies-singapore",
+ "trade": "maid agencies",
+ "trade_singular": "maid agency",
+ "audience": "Employment agencies placing domestic helpers in Singapore",
+ "spoke_with": "two maid agencies in Singapore, one of which we built a preview for",
+ "title": "AI Agent for Maid Agencies in Singapore | 41 Labs",
+ "desc": "Answer families at 11pm, quote levy, salary and agency fee from your sheet, show approved biodata, book interviews. 41 Closer for maid agencies, from S$690 a month.",
+ "h1": "AI Agent for Maid Agencies in Singapore",
+ "hero_sub": "Your team answers 'any Indonesian with infant care experience?' all day, and the family that asks it on Saturday night waits until Monday. 41 Closer answers at once from your own fee sheet and approved biodata, then books the interview with your relationship manager.",
+ "keywords": "ai agent for maid agencies singapore, whatsapp ai for employment agency singapore, domestic helper agency chatbot, maid agency whatsapp automation, 41 closer maid agency",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent on your agency's WhatsApp number. It answers families at any hour, quotes the levy, salary range and agency fee from your own fee sheet, shows only the helper biodata your matching team has approved, and books the interview with your relationship manager. It never promises a MOM approval date.",
+ "capsule_passage": "Families message a maid agency at night and on weekends, often once a parent's care has become urgent. The questions repeat: what it costs, whether there is a Myanmar or Indonesian helper with the right experience, transfer or new, how long it takes, and when they can interview. Each one needs your fee sheet, your biodata list or a relationship manager's diary, so it waits for Monday. A family deciding on S$15,000 to S$20,000 for the first year asks another agency while it waits. In our study of 25 Singapore businesses, the median wait for a human reply on WhatsApp was 13.3 hours. 41 Closer answers in the family's own words, quotes your published figures as a guide, shows two approved profiles with their video interviews, and books the interview with a relationship manager. Starter works from your fee sheet and the biodata you send it. Pro reads your live catalogue and writes the booking back. From S$690 a month, build included. Test it on +65 8012 4848 first.",
+ "enquiries": [
+  "hi, my mum needs help at home. first time hiring, honestly no idea what it costs",
+  "got myanmar maid with experience?",
+  "any indonesian with infant care experience?",
+  "we need someone quite soon, our current helper is finishing. anyone available fast?",
+  "transfer or new, which one is faster?",
+  "how much is the salary and the agency fee?",
+  "how long does the processing take?",
+  "can i speak to her? can arrange interview?",
+  "do i need to pay the bond in cash? what about insurance?",
+  "my dad has dementia and can get agitated. can a helper manage that?"
+ ],
+ "enquiries_note": "Every one of these needs something only your office has: the fee sheet, the biodata list or a relationship manager's diary. At 9pm the relationship manager is with a family or off for the day, so the message sits until morning. One agency walked us through its four-step process: a relationship manager for each family, a matching team that recommends profiles, admin and processing, then deployment at the family's home. The night-time questions land on the first two steps, and both need a person at a desk. The other agency we spoke to had no system at all and only wanted a website and a way for families to reach it.",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, my mum needs help at home. first time hiring, honestly no idea what it costs"
+  },
+  {
+   "who": "agent",
+   "text": "Happy to help. Does your mum live with you? If she does, your household may qualify for the concessionary levy, S$60 a month instead of S$300."
+  },
+  {
+   "who": "customer",
+   "text": "yes she stays with us"
+  },
+  {
+   "who": "agent",
+   "text": "Then a rough monthly figure, as a guide: a Myanmar or Indonesian helper with elderly care experience is S$550 to S$700 in salary, plus the S$60 levy and insurance. Your relationship manager confirms the exact number. Does your mum need help getting around, or mostly cooking and company?"
+  },
+  {
+   "who": "customer",
+   "text": "mostly independent, just cooking, cleaning and company in the day"
+  },
+  {
+   "who": "agent",
+   "text": "I have two profiles your matching team approved for elderly care, each with a recorded video interview. I will send both now. Would you like to interview either of them?"
+  },
+  {
+   "who": "customer",
+   "text": "can i speak to the first one?"
+  },
+  {
+   "who": "agent",
+   "text": "Yes. I will set up a video interview and your relationship manager will join the call. What time tomorrow works for you?"
+  },
+  {
+   "who": "customer",
+   "text": "after 7pm?"
+  },
+  {
+   "who": "agent",
+   "text": "Booked for tomorrow at 7.30pm. Your relationship manager has the details and you will get a reminder before the call."
+  }
+ ],
+ "flow": [
+  {
+   "step": "It answers the cost question from your own fee sheet",
+   "detail": "Levy, salary range by nationality, agency fee, insurance and the security bond, all from the figures you give it, labelled as a guide. The one agency we built for publishes its fee table, so the agent quotes that table and nothing else. It never gives a MOM approval date, because that is not yours to promise either."
+  },
+  {
+   "step": "It asks one qualifying question and matches from approved biodata",
+   "detail": "Does mum need help getting around, or mostly cooking and company? Infant care or school-age children? Then it sends the profiles your matching team has approved for that need, with the recorded video interview. It does not describe a helper beyond her biodata. It says 'she is good with babies' only if that line is on the biodata you approved."
+  },
+  {
+   "step": "It books the interview with a relationship manager on the call",
+   "detail": "It offers times from your interview calendar and confirms the slot. On Starter that is your calendar link. On Pro it writes the interview into your booking system and the family's details into your CRM. The family gets a reminder before the call."
+  },
+  {
+   "step": "It offers the transfer route when the family needs someone soon",
+   "detail": "A helper already in Singapore means no flight. The agent says that, puts the profile on hold for the relationship manager, and leaves the timing to your team. One agency we built for publishes a 2 to 3 week range for transfers. The agent can repeat a range you publish, as your guide, and never turns it into a promise."
+  },
+  {
+   "step": "It hands over when the case needs a person",
+   "detail": "A father with dementia, or a family that had a bad experience with a previous helper. The agent says so plainly, takes the family's name and number, and tells your relationship manager the same minute. It does not give a quick yes on a case like that."
+  }
+ ],
+ "systems": "On Starter it reads your fee sheet (levy, salary bands by nationality, agency fee, insurance, bond, replacement terms), the nationalities you actually place, the biodata you send it as a list with video interview links, and your interview calendar link. On Pro it reads your live biodata catalogue so it only offers helpers who are still available, writes the interview into your booking system, puts a profile on hold, logs the family in your CRM, and takes the deposit or agency fee in the chat. It does not file MOM paperwork. Your admin team does that, and the agent tells the family which documents to have ready.",
+ "leaks": [
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days.",
+  "One agency we built for publishes an agency fee of S$1,000 to S$3,000 a placement. One family that gives up waiting on a Sunday night is that fee, gone to whoever replied first.",
+  "The same agency publishes a first-year cost of S$15,000 to S$20,000 for the family. A family about to spend that much asks several agencies the same question and goes with the one that answers.",
+  "In our quote automation case, a Singapore professional services firm cut its quote time from 3 hours to 5 minutes, errors fell 90% and sales capacity rose 35%."
+ ],
+ "heard": [
+  {
+   "quote": "I am not looking at a high upfront cost yet. The market has ready subscription models with no big commitment that allow minor tweaks to fit our operations.",
+   "answer": "There is no upfront cost. The build is included, Starter is S$690 a month, it runs month to month with 30 days notice and there is no contract. On the tweaks: a ready-made subscription gives you a generic script, and your fee table, the nationalities you place and your interview process are exactly the tweaks it cannot make. We build on your operations. That is what you are paying for. If all you want is a canned FAQ, a DIY tool is cheaper and you should take it."
+  },
+  {
+   "quote": "We do not really have anything yet. We just want awareness and a way for families to contact us.",
+   "answer": "Then do not buy this yet. Get a website with a WhatsApp button and a Google Business listing first, and let the enquiries come. Buy an agent when the messages arrive faster than your team can answer them, which usually shows up as weekend enquiries waiting until Monday."
+  },
+  {
+   "quote": "We are a mid-sized agency and we do not place Filipino workers.",
+   "answer": "Then the agent never offers one. It only works from the nationalities, salary bands and fees on your sheet, so a family asking for a Filipino helper is told plainly what you do place and offered that instead. Nothing from the wider market gets quoted as yours."
+  },
+  {
+   "quote": "Our edge is a personal relationship manager for every family and recorded video interviews. Where does a bot fit into that?",
+   "answer": "It sits in front of the relationship manager. The agent answers at 11pm, shows the approved profiles with the video interview, and books the relationship manager into the call, so she starts her day with an interview already in the diary. In the four-step process one agency walked us through (relationship manager, matching, admin, deployment), the agent covers the first reply and the booking. Your people keep everything after that."
+  }
+ ],
+ "plan_starter": "Answers from your fee sheet and nationality list, sends the approved biodata you give it with video interview links, books interviews through your calendar link, follows up with families who went quiet, and hands over to a relationship manager.",
+ "plan_pro": "Reads your live biodata catalogue so it only offers helpers who are still available, writes the interview and the family's details into your booking system or CRM, puts a profile on hold for the relationship manager, and takes the deposit or agency fee in the chat. Connecting a system we have connected before is a one-time S$2,400.",
+ "faq": [
+  [
+   "What does an AI agent for a maid agency actually do on WhatsApp?",
+   "It answers the family's first messages on your own WhatsApp number at any hour. It quotes the levy, salary range and agency fee from your fee sheet, asks one qualifying question, sends the biodata your matching team approved, and books the interview with a relationship manager. When the case needs a person, it takes the family's details and hands over. 41 Labs builds it and runs it for you."
+  ],
+  [
+   "Can it quote the levy, salary and agency fee correctly?",
+   "It quotes whatever is on the sheet you give us and labels it as a guide. For example, it can tell a family that the concessionary levy is S$60 a month instead of S$300 when a parent lives with them. The exact figure for that family is always confirmed by your relationship manager. If your fees change, you send us the new sheet and the agent changes with it."
+  ],
+  [
+   "Will it promise MOM approval dates or say a helper is good with babies?",
+   "No. It answers fees and process only, and it never gives an approval date. On helpers it shows the biodata your team approved and the recorded video interview, and it says nothing about a helper that is not on that biodata. A question it cannot answer from your material goes to a relationship manager with the family's name and number."
+  ],
+  [
+   "Can it show helper biodata and video interviews?",
+   "Yes. On Starter you send us the profiles you want it to offer, with the video interview links, and it sends the right ones for the family's need. On Pro it reads your live catalogue, so a helper who was placed yesterday is not offered today. A profile can be put on hold for the relationship manager to follow up."
+  ],
+  [
+   "What happens when a family messages on a Saturday night?",
+   "It answers within the minute, works out a guide cost, sends two approved profiles and offers the next interview slot in your calendar, which may be Monday. The family has a figure and an interview time instead of a silent chat. In our study of 25 Singapore businesses, one replied within five minutes and the median wait for a human reply was 13.3 hours."
+  ],
+  [
+   "How much does it cost and is there a contract?",
+   "Starter is S$690 a month and Pro is S$1,490 a month. The build is included, and the only one-time cost is S$2,400 to connect a system of your own that we have connected before. You start with one month, charged from go-live, then month to month with 30 days notice and no contract. No GST is charged. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost, up to 70% of qualifying costs."
+  ],
+  [
+   "We are a small agency with a few enquiries a day. Is it worth it?",
+   "If your team already answers every message within the hour, weekends included, do not buy this. A website with a WhatsApp button will serve you better for now. It pays when enquiries wait overnight or a relationship manager spends her day on the same cost question. Count last month's unanswered weekend messages and decide from that."
+  ],
+  [
+   "How fast can it go live and what do we need to send?",
+   "Live in 48 hours from your material. Send us your fee sheet, the nationalities you place, your replacement terms, the biodata you want offered and your interview calendar. We build the agent before we get on a call, you message it yourself, then one free hour to walk through the platform and connect payments and your WhatsApp. Message +65 8012 4848 first to see the agent answer you."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans, terms and what is included"
+  ],
+  [
+   "/ai-appointment-booking",
+   "AI appointment booking on WhatsApp"
+  ],
+  [
+   "/ai-lead-qualification",
+   "How the agent qualifies a lead before it books"
+  ],
+  [
+   "/industries/ai-for-cleaning-services-singapore",
+   "AI agent for cleaning services in Singapore"
+  ]
+ ]
+}

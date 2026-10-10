@@ -1,0 +1,186 @@
+{
+ "slug": "ai-for-aesthetic-clinics-singapore",
+ "trade": "aesthetic clinics",
+ "trade_singular": "aesthetic clinic",
+ "audience": "Aesthetic clinics, beauty salons and wellness studios in Singapore",
+ "spoke_with": "two aesthetics clinics (one with two centres) and one beauty salon in Singapore",
+ "title": "AI Agent for Aesthetic Clinics in Singapore | 41 Labs",
+ "desc": "Answer the 9pm pico laser price question and book the consultation. 41 Closer is a managed WhatsApp AI agent for aesthetic clinics, from S$690 a month.",
+ "h1": "AI Agent for Aesthetic Clinics in Singapore",
+ "hero_sub": "Your front desk is with a patient while three new messages asking how much for pico laser sit unanswered. 41 Closer answers each one with your published price and the consultation fee, offers a slot at any hour, and leaves every medical question to the doctor.",
+ "keywords": "ai agent for aesthetic clinics singapore, whatsapp ai for aesthetic clinic, ai receptionist aesthetic clinic singapore, whatsapp booking agent beauty salon singapore, ai chatbot aesthetic clinic moh, 41 closer aesthetic clinics",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent for WhatsApp that answers an aesthetic clinic's enquiries at any hour. It quotes your published treatment prices, explains what the consultation involves and sends your booking link. On Pro it books slots from your calendar and collects the consultation fee in the chat. It never diagnoses and never promises a result.",
+ "capsule_passage": "Patients message an aesthetic clinic the way they shop. How much is pico laser. Can I come this Saturday. One clinic we built a demo for handles 500 to 900 WhatsApp conversations a month, answers most the same day, and told us some slip through. When we sent one real enquiry to 25 Singapore businesses between 8pm and 11pm, the median wait for a human reply was 13.3 hours. In the scene we built for that clinic, a 9:41pm enquiry got an auto-reply promising the next working day, and the patient booked at another clinic. 41 Closer replies in seconds with the published price before GST and the consultation fee. It asks two or three questions, points to the treatment on your menu for that concern, and says the doctor decides at the consultation. Starter, S$690 a month, quotes from your price list and sends your booking link. Pro, S$1,490 a month, reads your calendar, books the consultation and collects the fee in the chat.",
+ "enquiries": [
+  "hi, how much is hifu for the full face? can i come this saturday?",
+  "how much is pico laser for pigmentation",
+  "how much is profhilo",
+  "which one is right for me",
+  "i'm 46, my jawline is sagging, what do you have",
+  "any discount?",
+  "请问童颜针多少钱",
+  "can i do the treatment on the same day as the consultation?",
+  "book me a consultation",
+  "i had filler last month and there's a hard lump"
+ ],
+ "enquiries_note": "<p>Every one of these is a price, a slot or a yes-or-no about the consultation. Every one of them is also a patient deciding which clinic to walk into this week. The clinic we built a demo for handles 500 to 900 WhatsApp conversations a month and replies to most the same day. The owner's own words were that some slip through. The two-centre business we spoke to in October had ads running and nobody with time to follow up. Your desk answers the phone, checks patients in and takes payment. A 9pm message gets the auto-reply, and the auto-reply says next working day.</p>",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, how much for pico laser? got slot this saturday?"
+  },
+  {
+   "who": "agent",
+   "text": "Evening! Pico laser for pigmentation starts from S$108 a session, before GST. The doctor confirms the number of sessions at your consultation, which is S$55. Is it pigmentation you want looked at, or something else?"
+  },
+  {
+   "who": "customer",
+   "text": "pigmentation on my cheeks, had it since last year"
+  },
+  {
+   "who": "agent",
+   "text": "Noted. The doctor examines it in person, so I will not guess over chat. Is there anything else you want the doctor to look at in the same visit?"
+  },
+  {
+   "who": "customer",
+   "text": "maybe pores also"
+  },
+  {
+   "who": "agent",
+   "text": "I have noted pores too. For Saturday I have 11:00am open for a consultation with the doctor. Does that work for you?"
+  },
+  {
+   "who": "customer",
+   "text": "11 works"
+  },
+  {
+   "who": "agent",
+   "text": "Saturday 11:00am is held for you. Here is the link for the S$55 consultation fee to secure the slot: (payment link). Once it is paid you get the confirmation here."
+  },
+  {
+   "who": "customer",
+   "text": "paid"
+  },
+  {
+   "who": "agent",
+   "text": "Confirmed, Saturday 11:00am with the doctor. If you need to change it, message me here and the clinic team will sort it out with you."
+  }
+ ],
+ "dialogue_note": "Try it on ours first: message +65 8012 4848 at any hour and the agent that replies is 41 Closer. One clinic owner questioned it for two hours before he asked for a walkthrough.",
+ "flow": [
+  {
+   "step": "It answers the price question first",
+   "detail": "A named treatment gets the published from-price, before GST, and the consultation fee in the same reply. It says the number of sessions is the doctor's call. It never offers a discount, a gift or a package deal in chat."
+  },
+  {
+   "step": "It asks two or three questions, then points to one treatment on your menu",
+   "detail": "Where, how long, what has been tried. Then one treatment from your published list, with the reason in plain words, and a line that the doctor confirms suitability at the consultation. It also asks whether there is anything else the doctor should look at in the same visit. It will not assess a photo. It says so and offers the consultation."
+  },
+  {
+   "step": "It offers a slot and secures it",
+   "detail": "On Starter it sends your booking link. On Pro it reads your calendar, offers real times, holds the slot and collects the consultation fee in the chat. The clinic demo asked for S$55 to secure the slot, which was that clinic's published fee."
+  },
+  {
+   "step": "It chases the enquiry that goes quiet",
+   "detail": "If the patient stops replying six to ten minutes after a price, the agent sends one nudge on its own. For enquiries that went cold months ago, it runs a campaign on Meta-approved templates with an opt-out on every message, from the contact export you give us."
+  },
+  {
+   "step": "It hands over the moment it should",
+   "detail": "A lump, swelling or pain after a treatment is urgent. The agent gives the clinic phone and alerts your team in the same turn, and your phone buzzes. You can pause the agent on any chat and take over yourself in the inbox."
+  }
+ ],
+ "systems": "On Starter it reads your treatment list with published prices, your opening hours and your booking link, and hands over to your desk in the inbox. On Pro it reads your Google Calendar for open consultation slots, writes the booking back and takes the consultation fee in the chat. If you run a salon POS for bookings and commissions, we quote the connection, and a system we have connected before is a one-time S$2,400. The two-centre business we spoke to chose to leave its POS alone. respond.io does not sync live: your contacts come over as an export, and one WhatsApp number can only sit on one API connection, so the patient-facing number moves to the agent.",
+ "leaks": [
+  "One clinic we built a demo for handles 500 to 900 WhatsApp conversations a month and replies to most the same day. The owner told us some slip through.",
+  "One aesthetics business with two centres wrote 150 or more enquiries a week on the form it sent us, with ads running and nobody with time to follow up.",
+  "One beauty salon told us its weekday appointments were below 40% of capacity and that it wanted five bookings a day.",
+  "When we sent one real enquiry to <a href=\"/blog/whatsapp-response-time-singapore-study\" style=\"color:#22c55e;font-weight:600;\">25 Singapore businesses between 8pm and 11pm</a>, one replied within five minutes, the median wait for a human reply was 13.3 hours, four never replied and the slowest took 13 days.",
+  "In the one case we have published, a <a href=\"/case-studies/quote-automation-professional-services\" style=\"color:#22c55e;font-weight:600;\">Singapore professional services firm</a> cut quote time from 3 hours to 5 minutes, with errors down 90% and sales capacity up 35%."
+ ],
+ "heard": [
+  {
+   "quote": "Can it diagnose or recommend a treatment?",
+   "answer": "No, by design. It quotes the published price, points to the treatment on your menu for the concern the patient named, and says the doctor decides at the consultation. It will not assess a photo, promise a result or predict how many sessions. That is the line we built to, and it is the reason a doctor-led clinic can run it at all."
+  },
+  {
+   "quote": "We are on respond.io today. Can we keep it?",
+   "answer": "One WhatsApp number can only sit on one API connection. So the patient-facing number moves to the agent, respond.io keeps your other channels, or a second number runs the agent. Your contacts come over as an export that we load for the first reactivation campaign. There is no live sync between the two systems."
+  },
+  {
+   "quote": "I want to overbook trials by two or three because people do not show up.",
+   "answer": "The agent books into the slots your calendar has open. Overbooking is not a feature. If you want it, we add two or three standby calendars per centre so bookings can go over capacity, and your desk manages the overlap on the day. We say that before you sign, not after."
+  },
+  {
+   "quote": "Can it reschedule, send reminders and show me every follow-up it sent?",
+   "answer": "It books. A cancellation or a change goes to your desk, not the agent. Appointment reminders are not built in today, and the report shows campaign sent and replied counts plus a stats bar, not a per-message log of every follow-up. If those three are the reason you are buying, wait."
+  },
+  {
+   "quote": "Our weekday chairs are under 40% full and all our marketing is Instagram.",
+   "answer": "Then an agent is the wrong first purchase. It only answers people who already message you. The salon that told us this got a website and search work from us instead, because its first problem was being found. Come back when WhatsApp fills up faster than your desk can clear it."
+  },
+  {
+   "quote": "Patients ask for discounts and instalment plans all the time.",
+   "answer": "It quotes the published price and never offers a discount, gift or package deal in chat. For a doctor-led clinic that is the compliance line we built to. If you take instalment plans on major bank cards, we write that into its knowledge and it says so when asked. For a salon or studio with its own promotions, we load whatever your price list says."
+  }
+ ],
+ "plan_starter": "Answers prices, hours and what the consultation involves from your treatment list, chases a quiet enquiry once, sends your booking link and hands over to your desk in the inbox.",
+ "plan_pro": "Adds live slots from your calendar, books the consultation, collects the consultation fee in the chat and writes the booking back. Connects your POS or booking system if you want it, quoted per system.",
+ "faq": [
+  [
+   "Can an AI agent answer WhatsApp enquiries for an aesthetic clinic in Singapore without breaking MOH rules?",
+   "Yes, if it stays off medical ground. 41 Closer quotes the published price before GST, explains what the consultation involves and books it. It never diagnoses and never promises a result. It will not read a photo or offer a discount. Anything medical goes to the doctor."
+  ],
+  [
+   "What does it say when a patient asks how much pico laser is at 9pm?",
+   "It replies in seconds with your from-price for that treatment, before GST, and the consultation fee. It says the doctor confirms the number of sessions at the consultation. Then it offers the next open slot or your booking link. In the demo we built for one clinic the example was from S$108 a session, that clinic's own published price."
+  ],
+  [
+   "Does it book the consultation or just send a link?",
+   "On Starter it sends your booking link. On Pro it reads your calendar, offers real times, holds the slot and collects the consultation fee in the chat. The clinic demo asked for S$55 to secure the slot, which was that clinic's published fee."
+  ],
+  [
+   "What happens when someone messages about pain or a lump after a treatment?",
+   "The agent treats it as urgent. It gives the clinic phone and alerts your team in the same turn, and your phone buzzes. You take over the chat in the inbox. It never tries to advise on the complaint."
+  ],
+  [
+   "Can it answer in Chinese?",
+   "In the demo we built for one clinic a patient asked for a price in Chinese and got the answer in Chinese. English and the mixed English Singapore customers type are standard. Ask us before you count on any other language."
+  ],
+  [
+   "How much does a WhatsApp AI agent cost for a clinic or salon?",
+   "Starter is S$690 a month and Pro is S$1,490 a month. The build is included and there is no setup fee. Connecting a system we have connected before is a one-time S$2,400. One month to start, charged from the day it goes live, then month to month with 30 days notice and no contract. No GST is charged, and eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost, up to 70% of qualifying costs."
+  ],
+  [
+   "We have two centres. Does it handle both?",
+   "Yes, with one choice to make first. Each centre runs as its own calendar inside one agent, or each centre gets its own workspace and number. We walk through both with you before the build. There is no separate outlet setting beyond those two."
+  ],
+  [
+   "How long before it is live on our number?",
+   "48 hours from your treatment list with published prices. We build the agent, you message it yourself, then one free hour where we show you the platform and connect payments and your WhatsApp. Billing starts the day it goes live. If the WhatsApp Business App is on that number today, tell us before we connect, because the API connection takes the number over."
+  ]
+ ],
+ "related": [
+  [
+   "/ai-appointment-booking",
+   "AI appointment booking on WhatsApp"
+  ],
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/blog/41-closer-vs-respond-io-vs-sleekflow",
+   "41 Closer vs respond.io vs SleekFlow"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ],
+  [
+   "/industries/ai-for-dentists-singapore",
+   "AI agent for dentists in Singapore"
+  ]
+ ]
+}

@@ -1,0 +1,184 @@
+{
+ "slug": "ai-for-immigration-consultants-singapore",
+ "trade": "immigration consultancies",
+ "trade_singular": "immigration consultancy",
+ "audience": "Immigration and PR consultancies in Singapore",
+ "spoke_with": "two immigration consultancies in Singapore, one of them at length",
+ "title": "AI Agent for Immigration Consultants in Singapore | 41 Labs",
+ "desc": "Every paid PR lead answered in minutes and chased until it books. 41 Closer qualifies, books the consult, never promises an outcome. From S$690 a month.",
+ "h1": "AI Agent for Immigration Consultants in Singapore",
+ "hero_sub": "Your ads bring in 300 to 400 PR leads a month, and your three salespeople follow each one up once, maybe twice. 41 Closer answers every lead in minutes on WhatsApp, asks the qualifying questions, books the consultation and keeps following up until the lead replies.",
+ "keywords": "ai agent for immigration consultants singapore, whatsapp ai for pr consultancy singapore, ai lead follow up immigration agency, ai sales agent pr application singapore, 41 closer immigration",
+ "wa_text": "Hi%2C%20I%20run%20an%20immigration%20consultancy%20and%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20leads.",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent on WhatsApp for immigration and PR consultancies in Singapore. It answers leads in minutes, asks the qualifying questions (nationality, pass type, years in Singapore, income band), books the consultation on Zoom or at your office, and follows up until the lead replies. It never assesses a case or promises an outcome.",
+ "capsule_passage": "The first message from a PR lead asks for an outcome or a price. \"I'm on S Pass three years, my wife is on DP, what's the chance of PR?\" \"How much do you charge?\" \"I applied before with another company and they promised me heaven and earth.\" Each lead goes to one of three salespeople, who follow up once, maybe twice, while the lead messages other agencies. 41 Closer replies at once. It asks nationality, pass type, years in Singapore and income band, one question at a time. It gives no odds. It quotes your fee from your price list, answers the objection in your words, books the consultation on Zoom or at your office, and follows up until the lead replies or says stop. Then your consultant takes over. Starter is S$690 a month. Pro, S$1,490, writes each lead and booking into your CRM. The build is included. Message +65 8012 4848 and the agent that replies is 41 Closer.",
+ "enquiries": [
+  "i'm on s pass 3 years, my wife is on dp. what's the chance of pr?",
+  "how much do you charge?",
+  "i already applied for pr with another company. they promised me heaven and earth, in the end no result. not comfortable paying again",
+  "i'm on work permit, can you help?",
+  "i'm from overseas, can i apply for pr in singapore?",
+  "11am tuesday can?",
+  "can you get back to me next week?"
+ ],
+ "enquiries_note": "<p>Every one of these arrives from an ad, and the person asking is messaging other agencies at the same time. Two of them ask for an outcome that nobody can promise. One asks for a price before any consultant has looked at the case. Some arrive in Chinese. In the consultancy we spoke to at length, an assignment tool hands each lead to one of three salespeople, and the salesperson follows up by hand when they get to it, once, maybe twice. That is why nobody answers at 9pm.</p>",
+ "dialogue_intro": "One exchange, the way it runs on your own WhatsApp number. Names, salaries and prices are examples.",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, i'm on s pass 3 years, my wife is on dp. what's our chance of pr?"
+  },
+  {
+   "who": "agent",
+   "text": "Hi. I cannot give you odds. ICA decides every application, and our consultant looks at your full profile before saying anything. Two quick questions so I book you with the right person. What is your nationality?"
+  },
+  {
+   "who": "customer",
+   "text": "indian. we want to apply together"
+  },
+  {
+   "who": "agent",
+   "text": "Noted, a joint application for you and your wife. Roughly what is your monthly salary? A range is fine."
+  },
+  {
+   "who": "customer",
+   "text": "around 7k. honestly i applied before with another agency, they promised me everything and it was rejected. not keen to pay again"
+  },
+  {
+   "who": "agent",
+   "text": "I understand, and nobody should have promised you an outcome. Our consultant will go through what happened last time and tell you plainly whether a second application makes sense. That conversation is on Zoom or at our office. Which do you prefer?"
+  },
+  {
+   "who": "customer",
+   "text": "zoom. how much do you charge?"
+  },
+  {
+   "who": "agent",
+   "text": "The PR application package is from S$2,800. The consultant confirms the exact fee at the consultation, once your case has been looked at. For Zoom I have Thursday 11am or Friday 4pm. Which works?"
+  },
+  {
+   "who": "customer",
+   "text": "thursday 11am"
+  },
+  {
+   "who": "agent",
+   "text": "Booked. Thursday 11am on Zoom, and the calendar invite is on its way. Our consultant takes it from here. If you need to change the time, message here."
+  }
+ ],
+ "flow": [
+  {
+   "step": "It answers the first message in minutes",
+   "detail": "Day or night, on your own WhatsApp number. The lead is messaging other agencies at the same time, so the first reply matters. It answers in English or the mixed English your leads type. If many of your leads write in Chinese, tell us before you count on it."
+  },
+  {
+   "step": "It asks the qualifying questions, one at a time",
+   "detail": "Nationality, pass type, years in Singapore, income band, and who is applying. It gives no odds and makes no assessment. Pass types your form turns away, such as Work Permit, get a polite no, so your consultants spend their time on cases they can take."
+  },
+  {
+   "step": "It quotes your fee and answers the objection",
+   "detail": "If you want the fee stated up front, it quotes from your price list. When a lead says another company promised them heaven and earth, it answers in your words, from the scripts and SOPs you give us, and says plainly that ICA decides."
+  },
+  {
+   "step": "It books the consultation",
+   "detail": "Zoom or your office, whichever the lead prefers. The lead picks a time, the calendar invite goes out, and the lead can change the time in the same chat. Once the consultation is booked, the agent stops selling and your consultant takes over."
+  },
+  {
+   "step": "It follows up until the lead replies",
+   "detail": "It tries again a few hours later and keeps trying over the following week, until they answer or ask it to stop. \"Get back to me next week\" sets a reminder for next week. Leads nobody has chased in months can be messaged again from an export of your old chats, with a WhatsApp approved message."
+  }
+ ],
+ "systems": "On Starter it reads your price list, your scripts and SOPs, and your calendar. On Pro it also writes each lead and booked consultation into your CRM, if it is one we have connected before, and can pass the record on by webhook to a tool like Zapier. It does not read your Facebook lead form and it does not connect to Privyr today, so ask us before you count on either. Email is not a channel. WhatsApp group chats are not either, that is a WhatsApp limit.",
+ "leaks": [
+  "One consultancy owner we spoke to pays for 300 to 400 leads a month. In his words, some get followed up \"once, maybe at most twice\", and \"it's quite a waste, because we spend good money for leads to come in\".",
+  "The same owner had so many leads that he paused his ads, and he asked whether the agent could chase the \"100 or maybe 50\" leads his team never followed up.",
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days.",
+  "A Singapore professional services firm cut its quote time from 3 hours to 5 minutes, with errors down 90% and sales capacity up 35%."
+ ],
+ "heard": [
+  {
+   "quote": "Some of the leads they follow up once, maybe at most twice, and it's quite a waste. We spend good money for leads to come in.",
+   "answer": "This is the case it is built for. Every lead gets a reply within minutes and a follow-up a few hours later, then again over the following week, until they answer or ask it to stop. Your salespeople stop being the reason a paid lead goes quiet. They get the booked consultations instead."
+  },
+  {
+   "quote": "Our leads come from a Facebook form. Privyr just assigns them to the three salespeople, nothing more.",
+   "answer": "Be careful here. The agent only talks to people who message your WhatsApp number. It does not read your lead form and it does not connect to Privyr. The fix is to switch the ads to click-to-WhatsApp, so the lead opens a chat instead of filling a form. If you want to keep the form and Privyr exactly as they are, a template message sent from Privyr is the cheaper fix and you do not need us."
+  },
+  {
+   "quote": "Clients tell us they already applied with another company, they were promised heaven and earth, and nothing came of it. Can it handle that?",
+   "answer": "Yes, in your words. You give us your scripts and SOPs, and it answers the way your best salesperson does. It says plainly that ICA decides every case and that nobody can promise approval, then offers the consultation. We would not build it to promise anything, even if asked."
+  },
+  {
+   "quote": "Can it tell the lead whether they qualify, or what their chances are?",
+   "answer": "No, and do not buy it for that. Eligibility is a judgement for your consultant, and the agent never gives odds. It asks the qualifying questions, nationality, pass type, years in Singapore and income band, and sorts out the pass types your form turns away. The judgement stays with your consultant at the consultation."
+  },
+  {
+   "quote": "After they sign, my admin chases degree certificates and passports for weeks. If it can do that, I can let that person go.",
+   "answer": "Not today, so do not count on it. The sales agent stops at the booked consultation. Chasing documents after signing is a separate piece of work we do not sell yet. If that is the main thing you want, this is not the right buy."
+  },
+  {
+   "quote": "Should the AI follow up after the consultation, or a person? It would be ridiculous to use AI for that too.",
+   "answer": "Agreed. Once the consultation is booked, it stops following up and your consultant owns the relationship. Each of your salespeople gets a login and sees every chat in the inbox, so nothing is hidden from them. The agent's job is the part before the consultation."
+  }
+ ],
+ "plan_starter": "Answers every WhatsApp enquiry in minutes, asks the qualifying questions, quotes from your price list, books the consultation on Zoom or at your office, follows up until the lead replies, and hands over to your consultant.",
+ "plan_pro": "Everything in Starter, plus your own systems. It writes each lead and booked consultation into your CRM and reads it back, so your sales team works from one record. Connecting a CRM we have connected before is a one-time S$2,400.",
+ "faq": [
+  [
+   "Can an AI agent tell a lead whether they qualify for Singapore PR?",
+   "No. Eligibility is a judgement call and ICA decides every application. 41 Closer asks the qualifying questions, nationality, pass type, years in Singapore and income band, and books the consultation. The assessment stays with your consultant. We would not build it any other way."
+  ],
+  [
+   "What does it say when a lead asks you to guarantee approval?",
+   "It says that nobody can guarantee approval and that ICA decides. Then it offers the consultation, where your consultant can look at the case properly. If the lead was promised results by another company before, it answers in your words from your scripts. It never promises an outcome."
+  ],
+  [
+   "Our leads come from Facebook lead forms. Can the agent message them first?",
+   "Not from the form. The agent only talks to people who message your WhatsApp number. Switch the ads to click-to-WhatsApp and every lead opens a chat with the agent instead of filling a form. For old leads, export the chats from your current number and we send them a WhatsApp approved message from a list."
+  ],
+  [
+   "Does it answer in Chinese?",
+   "It answers in English and the mixed English your leads type. If many of your leads write in Chinese, tell us before you count on it, and we set it up so your team reads every chat in English. A voice note is read too."
+  ],
+  [
+   "What happens after the consultation is booked?",
+   "The agent stops selling. The calendar invite goes out and your consultant takes over. The lead can still message the same number to change the time. The agent does not chase documents after signing."
+  ],
+  [
+   "How much does an AI agent for an immigration consultancy cost?",
+   "Starter is S$690 a month and Pro is S$1,490 a month. The build is included and there is no setup fee. Connecting a CRM we have connected before is a one-time S$2,400. One month to start, charged from go-live, then month to month with 30 days notice. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost, up to 70% of qualifying costs."
+  ],
+  [
+   "How long does it take to go live?",
+   "Live in 48 hours from your price list and scripts. We build the agent first and you message it yourself before you pay anything. Then one free hour where we walk you through the platform and connect your WhatsApp. Your team tests it on real leads before any client sees it."
+  ],
+  [
+   "Can my three salespeople all use it at the same time?",
+   "Yes. Each person gets their own login, and you choose whether they are an owner, an admin or staff. They see every chat in one inbox and can step in on any conversation. When the agent is unsure of an answer, it asks your team on WhatsApp and remembers the answer next time."
+  ]
+ ],
+ "related": [
+  [
+   "/ai-lead-qualification",
+   "AI lead qualification on WhatsApp"
+  ],
+  [
+   "/ai-appointment-booking",
+   "AI appointment booking on WhatsApp"
+  ],
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/case-studies/quote-automation-professional-services",
+   "Quote time from 3 hours to 5 minutes at a professional services firm"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ]
+ ],
+ "cta_h2": "See it answer your leads first"
+}

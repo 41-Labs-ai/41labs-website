@@ -1,0 +1,183 @@
+{
+ "slug": "ai-for-jewellery-retailers-singapore",
+ "trade": "jewellery retailers",
+ "trade_singular": "jewellery retailer",
+ "audience": "Jewellery retailers, gold shops and pawnbrokers in Singapore selling from a large catalogue across several outlets and online",
+ "spoke_with": "one jewellery and pawnbroking group in Singapore, over three calls",
+ "title": "AI Agent for Jewellery Retailers in Singapore | 41 Labs",
+ "desc": "Answer 'got this in 18K?' at night with the photo, the price and the outlet that has it. 41 Closer for jewellery retailers and pawnbrokers, from S$690 a month.",
+ "h1": "AI Agent for Jewellery Retailers in Singapore",
+ "hero_sub": "You sell jewellery across several outlets, and your WhatsApp fills up at night with photos and 'got this in 18K?' while nobody on shift can say which shop still has the piece. 41 Closer finds the piece in your catalogue, quotes the price in your record, names the outlet and takes a deposit to hold it, at any hour.",
+ "keywords": "ai agent for jewellery retailers singapore, whatsapp ai for jewellery shop singapore, ai sales agent pawnshop singapore, jewellery catalogue whatsapp agent, gold shop whatsapp ai, 41 closer jewellery",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent on WhatsApp for jewellery retailers and pawnbrokers in Singapore, run by 41 Labs. It finds a piece from a photo or a description and quotes the price in your record. It says which outlet holds the piece and takes a deposit to reserve it. Pawn ticket questions go to your staff.",
+ "capsule_passage": "A jewellery buyer on WhatsApp sends a photo or types what they want, say a flower pendant in 18K white gold under a set budget. One group we spoke to holds 100,000 pieces across dozens of outlets and adds a few hundred new pieces a month, so nobody on the phone knows what came in or which outlet has it. When we sent one enquiry to 25 Singapore businesses between 8pm and 11pm, the median wait for a human reply was 13.3 hours. 41 Closer searches your whole catalogue and replies with photos and the price in your record. It names the outlet and sends a payment link for a deposit to hold the piece. Once paid, the piece is hidden from online search and the shop gets a message. Starter works from a catalogue file you export, S$690 a month. Pro connects to your online store or stock system, S$1,490 a month. The build is included. Message +65 8012 4848 and the agent that replies is 41 Closer.",
+ "enquiries": [
+  "got this in 18K? (with a photo of a pendant)",
+  "looking for a flower design pendant, you have?",
+  "how many grams? how many pointers the diamond?",
+  "do you have this one? (a photo of a bracelet seen somewhere else)",
+  "which shop still has it?",
+  "what is the gold price today?",
+  "got anything around $800 for a gift?",
+  "can give best price?",
+  "can reserve for me? I come down tomorrow",
+  "my pawn ticket, when is it due?"
+ ],
+ "enquiries_note": "<p>Every one of these needs the record and the stock before anyone can reply. One group we spoke to described its records as a line like 18K diamond pendant, the carat and the gross weight, and that is all, so even a staff member cannot search for a flower design. It adds a few hundred new pieces a month, so nobody on shift remembers what came in or which outlet holds it. When we opened the chat widget on their website during the call, it said: we are offline, leave your message. The buyer who sent the photo at night is answered the next morning, if at all.</p>",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, got this in 18K white gold? (sends a photo of a flower pendant)"
+  },
+  {
+   "who": "agent",
+   "text": "Yes. Two flower pendants in 18K white gold are close to your photo, here are the pictures. The 0.40ct one is S$1,880 and the 0.20ct one is S$1,180. Which would you like to see?"
+  },
+  {
+   "who": "customer",
+   "text": "the 1,880 one. which shop has it?"
+  },
+  {
+   "who": "agent",
+   "text": "That piece is one of a kind and it is at the Tampines shop today. Shall I hold it for you to view?"
+  },
+  {
+   "who": "customer",
+   "text": "can give best price?"
+  },
+  {
+   "who": "agent",
+   "text": "S$1,880 is the price for this piece, and it comes with the certificate. I can hold it with a S$100 deposit that comes off the price. Shall I send the payment link?"
+  },
+  {
+   "who": "customer",
+   "text": "ok send"
+  },
+  {
+   "who": "agent",
+   "text": "Here is the link: [payment link]. Once paid, the pendant is marked reserved so nobody else is offered it online, and the Tampines team gets a message to take it off the counter. Which day will you come down?"
+  },
+  {
+   "who": "customer",
+   "text": "sat afternoon"
+  },
+  {
+   "who": "agent",
+   "text": "Saturday afternoon noted. Your reservation and the shop address will come as a message now. Reply here if anything changes before then."
+  }
+ ],
+ "flow": [
+  {
+   "step": "It finds the piece from a photo or a few words",
+   "detail": "The buyer sends a photo or types flower pendant, 18K white gold. The agent searches the whole catalogue on what the record holds and on what is visible in the photo, and replies in one message with the closest pieces, their photos and the prices in your record. When there are too many matches it asks one narrowing question, budget or diamond size, before it shows more."
+  },
+  {
+   "step": "It says which outlet holds it",
+   "detail": "Stock sits per outlet in the catalogue, so the reply says the piece is at your Tampines shop today, or that it is one of a kind. In the demo we built, a piece that has sold is hidden from search, and a second buyer asking for it is told it has just been taken."
+  },
+  {
+   "step": "It holds your price and takes the deposit",
+   "detail": "The agent quotes only what the record says. Pushed for a better price, it holds. When the buyer wants a person, it hands over, and the price stays where you set it. To hold a piece it sends a payment link for a deposit. Once paid, the piece is marked reserved and the outlet gets a WhatsApp message to take it off the counter."
+  },
+  {
+   "step": "It hands over what it should not answer",
+   "detail": "Pawn ticket questions and valuations of a customer's own gold go to your staff, with the chat so far. Gold by weight is handled the same way on Starter: the agent says the team will share the live rate and pings your staff. On Pro a live rate source can be connected, ask us before you count on it."
+  },
+  {
+   "step": "It follows up and keeps the lead",
+   "detail": "Every buyer's name and number are stored from the first message. A buyer who paid a deposit but has not come down is reminded. A buyer who stopped replying is followed up. Your staff see the whole chat when they take over, so the buyer never repeats the story."
+  }
+ ],
+ "systems": "On Starter it reads a catalogue file you export: item ID, title, description, purity, weight, carat, price, photo and the outlet that holds the piece, plus a daily list of what sold. On Pro it connects to your online store or stock system, so a counter sale takes the piece out of the chat and a WhatsApp reservation is written back. If your stock lives in custom in-house software and your IT will not open it, even read-only, start on Starter with the daily file. That is what the group we spoke to chose.",
+ "leaks": [
+  "One enquiry sent to 25 Singapore businesses between 8pm and 11pm: one replied within five minutes, the median wait for a human reply was 13.3 hours, four never replied and the slowest took 13 days. <a href=\"/blog/whatsapp-response-time-singapore-study\" style=\"color:#22c55e;font-weight:600;\">The study</a>.",
+  "One group we spoke to holds 100,000 pieces across dozens of outlets and adds a few hundred new pieces a month. Its records read 18K diamond pendant with a carat and a gross weight, so a buyer asking for a flower design cannot be matched by anyone on the phone, at any hour.",
+  "In our quote-automation case, a Singapore professional services firm in a different trade, quote time went from 3 hours to 5 minutes. Errors fell 90% and sales capacity rose 35%. <a href=\"/case-studies/quote-automation-professional-services\" style=\"color:#22c55e;font-weight:600;\">The case</a>."
+ ],
+ "heard": [
+  {
+   "quote": "Catalogue is very hard. We have 100,000 pieces and the record just says 18K diamond pendant.",
+   "answer": "The agent searches on what the record holds and on what is visible in the photo, so a flower design can be found even when the word flower is not in the title. The group we spoke to sent 100 pieces as they were, small thumbnails and bare titles, and we built the demo on those without a re-shoot. Purity, weight, carat and price come from your record only, the agent never guesses them. If a piece has no price in the record, the agent says so and hands it to your staff."
+  },
+  {
+   "quote": "What if someone buys it online and the shop sells the same piece at the counter that afternoon? Double sale.",
+   "answer": "On a daily file the agent takes a deposit and marks the piece reserved so no other buyer is offered it. The outlet gets a WhatsApp message to take it off the counter. There is still a window of up to a day between your sold file and that message. If you cannot live with that window, Pro connects to your stock system so a counter sale takes the piece out of the chat too. If your IT will not open the stock system at all, start on the daily file and the message to the shop."
+  },
+  {
+   "quote": "Our database is very big. If you connect live, the system will be slow.",
+   "answer": "The agent does not read 100,000 records on every message. The catalogue is indexed once, then searched by category and by what is in the photo, so a reply with pictures comes back in one turn. The demo we built runs on a real catalogue sample. Message the demo line and time it yourself."
+  },
+  {
+   "quote": "Gold price changes every day. How can a bot quote?",
+   "answer": "For diamond and gem pieces it quotes the price in your record, the same price your counter would give. For gold by weight on Starter it tells the buyer the team will share the live rate and pings your staff. On Pro we can connect the rate source you already use, and the quote is locked at the moment the buyer confirms. Tell us your rate source first, we do not promise a feed we have not seen."
+  },
+  {
+   "quote": "My staff say we already have a chatbot on the website.",
+   "answer": "When we opened it together on the call, it said we are offline, leave your message. That is a contact form, and a person answers it the next morning. If a form and a reply by mid-morning is fine for your buyers, keep it and do not buy this. The difference you are paying for is a reply at night with the photo, the price and the outlet that has the piece."
+  },
+  {
+   "quote": "Customers also ask about their pawn ticket and when it is due. A bot cannot handle those.",
+   "answer": "Agreed. The agent does not value a customer's own gold and does not answer pawn ticket questions. It recognises those messages and hands them to your counter staff, or to a separate number you give us, with the chat so far. If most of your WhatsApp traffic is pawn enquiries, it will spend its day handing over and you should not buy it for that line. Put it on the jewellery sales line."
+  }
+ ],
+ "plan_starter": "Reads a catalogue file you export, with purity, weight, carat, price, photo and outlet per piece, plus a daily sold list. Finds the piece from a photo or a description and quotes your record price. Names the outlet, takes a deposit by payment link and messages the shop. Follows up, and hands pawn and valuation questions to a person.",
+ "plan_pro": "Everything in Starter, plus a connection to your online store or stock system, so a counter sale takes the piece out of the chat and a WhatsApp reservation is written back to your stock. Connecting a store we have connected before is a one-time S$2,400. If your stock lives in custom in-house software, we look at it first and tell you the price before you commit.",
+ "faq": [
+  [
+   "Can an AI agent search a jewellery catalogue of 100,000 pieces on WhatsApp?",
+   "Yes, if the catalogue is in a file or a store it can read. The agent does not scan every record on each message. The catalogue is indexed once, then searched by category and by what is visible in the photo. The group we spoke to sent 100 pieces as they were, bare titles and small thumbnails, and we built the demo on those without a re-shoot. Hard facts like purity, weight and carat come from your record only, the agent never guesses them."
+  ],
+  [
+   "What stops a double sale, where the shop sells a piece someone has just bought online?",
+   "On Starter the agent takes a deposit by payment link and marks the piece reserved so no other buyer is offered it. Your outlet gets a WhatsApp message to take it off the counter. Between your daily sold file and that message there is still a window of up to a day. On Pro the agent connects to your stock system, so a counter sale takes the piece out of the chat within the conversation. If your IT will not open the stock system, start on Starter and accept the window."
+  ],
+  [
+   "Does it quote the live gold price?",
+   "For diamond and gem pieces it quotes the price in your record. For gold by weight on Starter it tells the buyer the team will share the live rate and hands the chat to your staff. On Pro we can connect the rate source you already use, and the quote is locked at the moment the buyer confirms. Tell us your rate source before you count on this."
+  ],
+  [
+   "Can it tell a customer which outlet has the piece?",
+   "Yes, when your catalogue file or stock system holds the outlet for each piece. The reply names the outlet and says if the piece is one of a kind. If your stock file does not record the outlet, the agent says the team will confirm and pings your staff."
+  ],
+  [
+   "Can it answer pawn ticket questions?",
+   "No. The agent does not value a customer's gold and does not answer questions about a pawn ticket or its due date. It recognises those messages and hands them to your counter staff, or to a separate number you give us, with the chat so far. Put the agent on your jewellery sales line and keep the pawn line with your staff."
+  ],
+  [
+   "What does an AI sales agent cost for a jewellery shop in Singapore?",
+   "41 Closer Starter is S$690 a month and works from a catalogue file you export. Pro is S$1,490 a month and connects to your online store or stock system. The build is included and there is no setup fee. Connecting a system we have connected before is a one-time S$2,400. You pay one month to start, from the day it goes live, then month to month with 30 days notice and no contract."
+  ],
+  [
+   "How long does it take to go live, and do we need our IT team?",
+   "Live in 48 hours from your product list. For Starter your IT team is not needed, a catalogue export and a daily sold list are enough. For Pro we need access to your store or stock system, which is a short task for whoever runs it. Before you pay, we build the agent and you message it. Then one free hour: we walk you through the platform and connect payments and your WhatsApp number."
+  ],
+  [
+   "Will the agent give discounts on its own?",
+   "No. It quotes the price in your record and holds it. If you give it a rule, such as a set discount above a set basket size, it applies only that rule. When a buyer pushes past the rule, it hands the chat to a person. It never invents a lower price."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ],
+  [
+   "/blog/what-is-ai-quote-automation",
+   "What AI quote automation is"
+  ],
+  [
+   "/case-studies/quote-automation-professional-services",
+   "Quote time from 3 hours to 5 minutes"
+  ],
+  [
+   "/industries/ai-for-suppliers-distributors-singapore",
+   "AI agent for suppliers and distributors with large catalogues"
+  ]
+ ]
+}

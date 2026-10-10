@@ -1,0 +1,187 @@
+{
+ "slug": "ai-for-childcare-centres-singapore",
+ "trade": "preschools and student care centres",
+ "trade_singular": "preschool or student care centre",
+ "audience": "Preschools, childcare centres and student care centres in Singapore",
+ "spoke_with": "one student care centre and one preschool in Singapore",
+ "title": "AI Agent for Preschools & Student Care in Singapore | 41 Labs",
+ "desc": "Answer parents the minute they ask about places, fees and visits. 41 Closer books the centre visit for preschools and student care centres, from S$690 a month.",
+ "h1": "AI Agent for Preschools and Student Care Centres in Singapore",
+ "hero_sub": "You run a preschool or a student care centre, and the parent who asked about a P1 place on Saturday night gets her answer on Monday, after she has booked a visit somewhere else. 41 Closer answers her in the first minute, quotes the fee from your own sheet, books the centre visit and tells you.",
+ "keywords": "ai agent for preschools singapore, ai agent for student care centres singapore, whatsapp ai for childcare centre singapore, ai chatbot preschool enrolment singapore, ai for student care enquiries, 41 closer",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI agent on your centre's WhatsApp. When a parent asks if there is a place for her child's level, it answers from your places list, quotes the fee from your fee sheet, answers the escort and hours questions, and books the centre visit. Anything it cannot answer goes to the principal with a summary.",
+ "capsule_passage": "A preschool or student care centre gets the same few questions from every parent. Is there a place for my child's level, what is the fee, do you escort from her school, when is the open house. They arrive in the evening and on weekends, when nobody is on the centre phone. One student care centre told us a reply within 24 to 48 hours is what keeps a parent, and that in intake season a parent who waits has already chosen another centre. 41 Closer answers each question in the first minute from your own fee sheet and places list. It books the centre visit on your calendar. It follows up the parent who goes quiet and hands special cases to the principal. Starter is S$690 a month and works from the sheets you give us. Pro is S$1,490 a month and reads your places live from your own system. Message +65 8012 4848 at any hour to test it on ours first.",
+ "enquiries_intro": "The questions the centres we spoke to told us parents ask, written the way parents type them",
+ "enquiries": [
+  "hi do you still have vacancy for p1 next year?",
+  "my son is 4, any space in k1 next term?",
+  "how much is the monthly fee",
+  "do you fetch from the primary school nearby?",
+  "got subsidy or not",
+  "when is the next open house",
+  "can we come see the centre this saturday?",
+  "till what time can i pick up my boy",
+  "can sign up for june holidays only?",
+  "do you provide lunch"
+ ],
+ "enquiries_note": "<p>Every one of these has an answer you already hold: the places left by level, the fee table, the schools you escort from, the hours, the next open house date. And every one comes from a parent close to deciding. They arrive after 7pm and on weekends, when the centre phone sits with a partner who also runs the floor from 1.30pm to 7pm with children in the room. One centre told us its ad leads were downloaded by hand from Ads Manager and checked once a day, and that a reply inside 24 to 48 hours is what keeps a parent. In intake season, in the owner's words, a parent who waits will already have found her centre.</p>",
+ "dialogue_intro": "One exchange, the way it runs on your own WhatsApp number. The fee, the times and the names are examples.",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, do you still have space for p1 next year? my girl starts at the primary school next to you in jan"
+  },
+  {
+   "who": "agent",
+   "text": "Hi! Yes, there are P1 places for January. Since she is at the school next door, our staff walk her over after dismissal. Will she need us five days a week, or fewer?"
+  },
+  {
+   "who": "customer",
+   "text": "5 days. how much is it a month? any subsidy?"
+  },
+  {
+   "who": "agent",
+   "text": "Five days is S$600 a month. Lunch and a tea break are included. There is no government subsidy on our programme, so that is the full fee. In the school holidays we open from 8am instead of 1.30pm."
+  },
+  {
+   "who": "customer",
+   "text": "ok. can we come and see the place this saturday?"
+  },
+  {
+   "who": "agent",
+   "text": "Yes. The principal shows families around on Saturday at 10am or 11.30am. Which one suits you?"
+  },
+  {
+   "who": "customer",
+   "text": "11.30 can"
+  },
+  {
+   "who": "agent",
+   "text": "Saturday 11.30am is yours. Can I take your name and your daughter's name for the visit?"
+  },
+  {
+   "who": "customer",
+   "text": "mdm lim, her name is xin yi"
+  },
+  {
+   "who": "agent",
+   "text": "Thank you, Mdm Lim. Saturday 11.30am with the principal is confirmed, and I have sent the address. If anything changes before Saturday, just message here."
+  }
+ ],
+ "flow": [
+  {
+   "step": "It answers the vacancy question",
+   "detail": "A parent asks if there is a place for P1 in January or for K1 next term. The agent checks the places list you gave us, or on Pro your live sheet, and says yes, no, or waitlist. Then it asks which school or how old the child is."
+  },
+  {
+   "step": "It quotes the fee and what is included",
+   "detail": "Five days or three, term time or holiday programme only, meals in or out. It quotes from your fee sheet and says plainly whether a subsidy applies, in your words. It never rounds a fee or guesses one."
+  },
+  {
+   "step": "It asks the one question that qualifies the lead",
+   "detail": "Which school, which level next year, and when the child starts. A parent with a real child answers in a line. The form-fillers who only wanted the fee drop out here, which one centre told us was many of its ad leads."
+  },
+  {
+   "step": "It books the centre visit or the open house slot",
+   "detail": "It offers two times from your calendar, takes the parent's name and the child's name, and confirms the slot in the chat. If the parent asked the fee and went quiet, it follows up."
+  },
+  {
+   "step": "It hands over to the principal",
+   "detail": "A subsidy question beyond your sheet, a child with late dismissal, special needs, a parent who wants to negotiate the fee. The agent says it will have the principal reply, and you get the whole conversation in one message with the name, the child's level and the visit time."
+  }
+ ],
+ "systems": "On Starter it reads your fee sheet, your places list by level, the schools you escort from, your hours and open house dates, and your calendar link for visits, all sent to us on WhatsApp. On Pro it reads and writes the Google Sheet you track places and visits in, or the enrolment system you already use, so the vacancy answer is live and every booked visit lands in your sheet. If you charge a registration fee, Pro takes it in the chat with a payment link.",
+ "leaks": [
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days. <a href=\"/blog/whatsapp-response-time-singapore-study\" style=\"color:#22c55e;font-weight:600;\">Read the study</a>.",
+  "One student care centre with about 60 places told us it loses 15 to 20 students a year and refills them in one October to December intake. A parent lost in that window is a place that stays empty until the next one.",
+  "The same centre told us a reply inside 24 to 48 hours is what keeps a parent. Its ad leads cost about S$12 each and were downloaded by hand from Ads Manager, then checked once a day.",
+  "One preschool with about 140 places and about 90 children enrolled told us about 3 in 100 enquiries become an enrolment, and that it had never measured what a new family costs because growth came from referrals.",
+  "In our quote automation case, a Singapore professional services firm went from 3 hours to 5 minutes per quote, with errors down 90% and sales capacity up 35%. <a href=\"/case-studies/quote-automation-professional-services\" style=\"color:#22c55e;font-weight:600;\">Read the case</a>."
+ ],
+ "heard": [
+  {
+   "quote": "We get four or five enquiries a month outside intake season. An auto-reply on WhatsApp Business is enough for that.",
+   "answer": "Then do not buy this yet. At four or five a month, a WhatsApp Business auto-reply and a habit of replying the same day will do, and it costs nothing. Buy it when the open house ads or the October to December intake push you past what one person can answer the same day. One centre told us it aimed for 50 to 60 enquiries in its fourth quarter. At that volume one person cannot answer the same day, and that is when it is worth S$690."
+  },
+  {
+   "quote": "Half the ad leads have odd names and never answer, even when we follow up every one.",
+   "answer": "The agent cannot fix a bad audience, so if the ads bring junk, fix the ads first. What it changes is the first minute. It asks the one question a real parent answers at once, which level and which school, and the form-fillers who only wanted the fee drop out on their own. Point the ad at WhatsApp rather than a lead form, because a form lead waits for a person to download it, and the agent can only answer a parent who messages."
+  },
+  {
+   "quote": "Our families come by referral. They want to talk to a person, not a bot.",
+   "answer": "They still will. A referred parent messages at 9pm asking if there is a place in K1, and what she wants at 9pm is the answer and a visit slot. The agent gives her both, says it is an assistant if she asks, and the principal meets her at the visit. One preschool told us it grew on referrals and still converted about 3 in 100 enquiries. Referred parents message at night too."
+  },
+  {
+   "quote": "My staff are not technical. They struggled to edit our own website. We cannot run another system.",
+   "answer": "You do not run anything. On Starter the only system is your own WhatsApp. When a fee changes or the open house date moves, you send it to us in a message and we update the agent. On Pro it reads from the sheet you already keep, so the only habit is keeping that sheet current."
+  },
+  {
+   "quote": "Can we claim a grant for this?",
+   "answer": "Yes, the EDGE grant, which replaced the EDG and PSG on 30 September 2026. Eligible Singapore SMEs can apply it to part of the cost, up to 70% of qualifying costs. We do not mark the price up for grants. One centre told us it was not eligible for the old PSG because of when it was incorporated, so check your own eligibility on the Business Grants Portal before you count on it."
+  },
+  {
+   "quote": "A parent replied to us with what looked like an AI message. Parents can tell.",
+   "answer": "They can, and the agent does not pretend. It answers as the centre, says it is an assistant when asked, and never invents a place or a fee, because it only answers from your sheet. That reply you saw came from Meta's own business auto-reply, which answers nothing. What a parent remembers is that she asked on Saturday night and had the answer and a visit slot before she put the phone down."
+  }
+ ],
+ "plan_starter": "Answers places by level, fees, escort schools, meals, hours and open house dates from the sheet you give us. Books centre visits on your calendar link. Follows up the parent who went quiet. Hands subsidy and special cases to the principal.",
+ "plan_pro": "Reads places by level live from your own Google Sheet or enrolment system and writes each booked visit and registration back into it. Takes the registration fee in the chat if you charge one. One-time S$2,400 to connect a system we have connected before.",
+ "faq": [
+  [
+   "Can an AI agent tell a parent whether we have a place for their child?",
+   "Yes, from the places list you give us, by level and by year. On Starter you send us the list on WhatsApp and update it when it changes. On Pro the agent reads the Google Sheet or system you track places in, so the answer is live. If a level is full it offers the waitlist and takes the parent's details for it."
+  ],
+  [
+   "How does it handle fees and subsidies?",
+   "It quotes from your own fee sheet, by days per week and by programme. It states what is included, such as meals or the holiday programme, in your words. On subsidies it says exactly what you tell it to say and no more. A family with a subsidy question that goes beyond your sheet is passed to the principal with the conversation attached."
+  ],
+  [
+   "Can it book centre visits and open house slots?",
+   "Yes. It offers times from your calendar link, takes the parent's name and the child's name, and confirms the slot in the chat. The visit lands on your calendar with the parent's number. For an open house it registers the family the same way."
+  ],
+  [
+   "What happens with a question it cannot answer, like a child with late dismissal or special needs?",
+   "It says it will have the principal reply and stops there. You get one message with the parent's name, the child's level, the question and the whole conversation. You reply to the parent yourself. It never guesses at a place, a fee or a yes."
+  ],
+  [
+   "How long does it take to set up for a preschool or student care centre?",
+   "Live in 48 hours from the day we have your fee sheet, places list, escort schools, hours and calendar link. We build the agent before you pay anything. You message it the way a parent would. Then one free hour where we walk you through the platform and connect your WhatsApp and payments."
+  ],
+  [
+   "What does 41 Closer cost for a childcare or student care centre?",
+   "Starter is S$690 a month. Pro is S$1,490 a month and connects to your own sheet or system. The build is included and there is no setup fee. Connecting a system we have connected before is a one-time S$2,400. One month to start, charged from go-live, then month to month with 30 days notice and no contract."
+  ],
+  [
+   "Does it work with the leads from our Facebook ads?",
+   "The agent answers every parent who messages your WhatsApp, including from a click-to-WhatsApp ad. A lead form entry sits in Ads Manager until a person opens it, which is where one centre's 24 to 48 hour delay came from. So point the ad at WhatsApp, and the first message is answered in the first minute. If your ads bring junk leads, the agent will not fix that, and we will tell you so."
+  ],
+  [
+   "Is this the same as the auto-reply on WhatsApp Business?",
+   "No. An auto-reply sends one fixed line and the parent still waits for a person. The agent reads the question and answers it from your sheet, asks which level and which school, and books the visit. If you only get a few enquiries a month, the auto-reply is enough and we will say so."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/ai-appointment-booking",
+   "AI appointment booking on WhatsApp"
+  ],
+  [
+   "/ai-lead-qualification",
+   "AI lead qualification: the one question that sorts real parents from form-fillers"
+  ],
+  [
+   "/industries/ai-for-tuition-centres-singapore",
+   "AI agent for tuition centres in Singapore"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ]
+ ]
+}

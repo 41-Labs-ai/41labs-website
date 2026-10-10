@@ -1,0 +1,192 @@
+{
+ "slug": "ai-for-swim-schools-singapore",
+ "trade": "swim schools",
+ "trade_singular": "swim school",
+ "audience": "Swim schools and sports coaching businesses in Singapore",
+ "spoke_with": "one private swim school in Singapore",
+ "title": "AI Agent for Swim Schools in Singapore | 41 Labs",
+ "desc": "Answer parents at 10pm, place the child by age, collect the coach and slot preferences and take the trial request. 41 Closer for swim schools, from S$690 a month.",
+ "h1": "AI Agent for Swim Schools in Singapore",
+ "hero_sub": "You run a swim school, you are the only one answering parents, and they message after 10pm when you are resting. 41 Closer answers them, places the child in the right programme, collects what a coach match needs and sends you the trial request, so you text your coaches once in the morning.",
+ "keywords": "ai agent for swim schools singapore, whatsapp ai for swim school, swim school whatsapp assistant singapore, ai for sports coaching singapore, swim lesson enquiry whatsapp, 41 closer swim school",
+ "wa_text": "Hi%2C%20I%20run%20a%20swim%20school.%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20parents.",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer answers the parents who message your swim school after 10pm, places the child in the right programme by age, collects the condo, the days, the coach preference and private or group, quotes from your price list, offers the trial lesson and sends you a complete trial request. You text your coaches once, in the morning.",
+ "capsule_passage": "The swim school owner we spoke to runs 10 to 15 freelance coaches and about 100 clients, and she answers every parent herself. Enquiries come in after 10pm, when she is resting, and she replies the next day. She closes maybe 20% to 30%, partly because a parent who wants a female coach on Saturday morning waits while she texts every coach. 41 Closer answers the moment the message lands. It places the child by age, collects the condo, the days, the coach preference and private or group one question at a time, quotes from your price list, answers the wet weather question and offers the trial lesson. You get a complete trial request and text your coaches once. Starter does this from your price list for S$690 a month. Pro connects your booking calendar or coach sheet, writes the booking back and takes the trial payment in the chat for S$1,490 a month. Test it first: message +65 8012 4848 and the agent that replies is 41 Closer.",
+ "h2_enquiries": "What your WhatsApp looks like after 10pm",
+ "enquiries_intro": "The messages one swim school told us it gets, and the ones we built its demo to handle",
+ "enquiries": [
+  "hi do you teach at condo pools? my son is 5, never had lessons before",
+  "how much are your lessons? just give me a rough price, 1 to 1 for an adult",
+  "female coach please",
+  "sat or sun morning, we stay in punggol",
+  "is the trial free? your facebook says 4 free lessons",
+  "do you teach in tampines? what if it rains during the lesson?",
+  "i have 2 kids, 6 and 9. can they be in the same group?",
+  "so the coach is confirmed for wednesday 5pm right? and you've booked it?",
+  "hi my son's coach was late twice last month, and i need to move this saturday's 9am lesson",
+  "im 29 and honestly terrified of water. never learned. is it too late"
+ ],
+ "enquiries_note": "<p>Every one of these needs the same five facts before a coach can be matched: who is learning and how old, which condo, which days, female or male coach, private or group. The owner we spoke to is the only person answering, has no admin, and gets the messages after 10pm when she is resting. She replies the next day, sends a Google Form for the day, time and location, reads it back, then texts her coaches to see who is free. The parent who wrote at 10pm is still waiting on all of that. The messages above are the shapes she described to us and the ones we built her demo to handle.</p>",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi do you teach at condo pools? my son is 5, never had lessons before"
+  },
+  {
+   "who": "agent",
+   "text": "Hi! Yes, we teach at condo pools across Singapore. At 5 he fits our Kids Swimming Lessons, for ages 4 to 12, and his coach checks his level in the first lesson. Which condo or area are you in?"
+  },
+  {
+   "who": "customer",
+   "text": "punggol. sat or sun morning"
+  },
+  {
+   "who": "agent",
+   "text": "Noted, Punggol, Saturday or Sunday morning. Would you prefer a female or male coach, or no preference?"
+  },
+  {
+   "who": "customer",
+   "text": "female coach please. how much is it ah"
+  },
+  {
+   "who": "agent",
+   "text": "A one to one lesson is S$60. A group lesson is S$40 per student. Lessons are billed in packages of 4. Would you like private one to one, or a group of 2 to 4?"
+  },
+  {
+   "who": "customer",
+   "text": "private 1 to 1 first. ok can, let's do the trial"
+  },
+  {
+   "who": "agent",
+   "text": "Sure. The trial is a single 45 minute lesson before you commit to a package. To pass it to our admin I just need your name, the name of your condo, and whether this WhatsApp number is the best one to reach you on."
+  },
+  {
+   "who": "customer",
+   "text": "Rachel, Waterway Cascadia, yes this number is fine"
+  },
+  {
+   "who": "agent",
+   "text": "Here is your trial request. Learner: son, 5. Programme: Kids Swimming Lessons. Where: Waterway Cascadia, Punggol. When: Saturday or Sunday morning. Coach: female. Class: private 1 to 1. Our admin will match a coach to those days and confirm the slot on WhatsApp. Thank you!"
+  }
+ ],
+ "dialogue_intro": "One exchange, the way it ran on the swim school demo we built. Prices, names and the condo are examples.",
+ "flow": [
+  {
+   "step": "It answers the first message and places the child",
+   "detail": "A parent writes 'do you teach at condo pools? my son is 5' and gets an answer in the same reply, not a request for their name. It recommends one programme by age (2 to 3 toddler, 4 to 12 kids, 13 to 17 teenager, adults, seniors) and says the coach checks the level in the first lesson. It never assigns a level or promises how many lessons it takes."
+  },
+  {
+   "step": "It collects the five details a coach match needs",
+   "detail": "Who is learning and how old, which condo or area, which days and time window, female or male coach, private or group. One question per message, skipping anything the parent already said. This replaces the Google Form one owner sends after the first message and then reads back by hand."
+  },
+  {
+   "step": "It quotes from your price list and answers the policy questions",
+   "detail": "Wet weather, cancellation notice, make-up lessons, two siblings in one group, certificates, all answered from the facts you give us. If you publish no prices, it says your admin sends the fee and never guesses. A parent who asks for a discount gets your price, the same every time."
+  },
+  {
+   "step": "It offers the trial and sends you the request",
+   "detail": "A single trial lesson before any package. It asks for the name, the condo and the contact number in one message, recaps the request to the parent, and sends you everything a coach needs on WhatsApp. If the parent goes quiet after the trial offer, it checks in after three hours and again the next day."
+  },
+  {
+   "step": "It hands over what it should not touch",
+   "detail": "An existing student's reschedule, an invoice question or a complaint about a coach goes to you with the student's name and the lesson time, after one line of acknowledgement. Someone trying to hire your coach privately is declined politely. It never says a slot is booked or a coach is confirmed when it cannot see your roster."
+  }
+ ],
+ "systems": "On Starter it reads the programme list, price list, areas and policies you give us, and hands every trial request to you on WhatsApp. On Pro it can read your booking calendar or coach availability sheet, write the trial booking back and take the trial payment in the chat. One owner asked for it to text each coach for a yes or no. That is not built, so ask us before you count on it.",
+ "h2_leaks": "Where the money leaks",
+ "leaks_intro": "What the owner we spoke to told us, and what we measured",
+ "leaks": [
+  "One swim school owner told us parents message after 10pm, when she is resting, and she answers the next day. She is the only person talking to clients and has no admin.",
+  "The same owner closes maybe 20% to 30% of enquiries, and said it depends on whether she can match a coach.",
+  "By her own count a student is worth about S$500 to S$600 over their stay, and about two new enquiries come in a day.",
+  "In <a href='/blog/whatsapp-response-time-singapore-study' style='color:#22c55e;font-weight:600;'>our study</a>, one enquiry sent to 25 Singapore businesses between 8pm and 11pm got one reply within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days.",
+  "A Singapore professional services firm, not a swim school, cut its quote time from 3 hours to 5 minutes with the same agent, with errors down 90% and sales capacity up 35%. <a href='/case-studies/quote-automation-professional-services' style='color:#22c55e;font-weight:600;'>The case</a>."
+ ],
+ "h2_heard": "What one swim school said to us, and our answer",
+ "heard": [
+  {
+   "quote": "My biggest concern is the PDPA. Whatever a parent shares is sensitive, their address, where they stay.",
+   "answer": "Fair, the agent collects a parent's address and a child's age, both sensitive. Your chats live in your own workspace and only the people you add to it can open them. When you stop, your data is exported to you. Ask for the written data policy before you sign anything and read it first."
+  },
+  {
+   "quote": "If after the first three months I feel it is not suitable, can I just stop?",
+   "answer": "Yes. There is no contract. You pay one month to start, charged from the day it goes live, then month to month with 30 days notice. Before any money moves, we build your agent and you message it yourself, so you know what you are buying."
+  },
+  {
+   "quote": "Parents ask for a male or female coach, and I have to text my coaches to find out who is free.",
+   "answer": "The agent asks for the coach preference up front, with the child's age, the condo and the days, so you text your coaches once with everything they need. It does not text your coaches for you. One owner asked for exactly that, a yes or no each coach taps, and it is not built. If that is the part you want gone, say so on the first call and we will tell you straight whether we can build it on Pro."
+  },
+  {
+   "quote": "Can I try it myself before I decide?",
+   "answer": "Yes, now. Message +65 8012 4848 and the agent that replies is 41 Closer. Before you pay anything, we build yours on your own programmes and price list, you message it, and then we spend one free hour walking you through the platform and connecting your WhatsApp."
+  },
+  {
+   "quote": "I get about two enquiries a day. Is it worth S$690 a month?",
+   "answer": "Check it against your own numbers. One owner put a student at about S$500 to S$600 over their stay, so two extra students a month pays for Starter. If you get a handful of messages a week and you answer them between lessons, do not buy this. A saved reply in the free WhatsApp Business app covers you."
+  },
+  {
+   "quote": "I type every invoice by hand and sometimes forget the 10% discount I promised.",
+   "answer": "Starter quotes from your price list, so the parent sees the same price every time and the promise is in the chat for you to read. On Pro the agent takes the trial payment in the chat. Invoices and receipts are not what it does. If invoicing is the job you want gone, a tool built for invoicing fits better, and we will say so on the call."
+  }
+ ],
+ "plan_starter": "Answers parents on your number, places the child by age, collects the five coach-match details, quotes from your price list, answers your policies, offers the trial and sends you the request. Checks in with a parent who goes quiet.",
+ "plan_pro": "Everything in Starter, plus it reads your booking calendar or coach availability sheet, writes the trial booking back and takes the trial payment in the chat. Connecting a system we have connected before is a one-time S$2,400.",
+ "faq": [
+  [
+   "Can an AI agent answer parents on WhatsApp for a swim school?",
+   "Yes. 41 Closer runs on your own WhatsApp number and answers each parent the moment the message lands, at 10pm or between your lessons. It places the child in a programme by age, collects what you need to match a coach and offers the trial lesson. You get the finished trial request and the whole chat. It is built and run by 41 Labs, so you do not set anything up yourself."
+  ],
+  [
+   "What does it do when a parent asks for a female coach on Saturday morning?",
+   "It notes the preference and the days, asks for the one detail still missing and then offers the trial. It never confirms a coach or a slot it cannot see. The request reaches you with the age, the condo, the days, the coach preference and private or group. You text your coaches once and confirm the slot yourself."
+  ],
+  [
+   "Will it book the trial lesson for me?",
+   "On Starter it takes the trial request and hands it to you on WhatsApp, with a recap to the parent that says you will confirm the coach and the slot. On Pro, with your booking calendar or coach sheet connected, it writes the booking back and can take the trial payment in the chat. Connecting a system we have connected before is a one-time S$2,400. If the parent goes quiet after the trial offer, it checks in after three hours and again the next day."
+  ],
+  [
+   "What does it cost for a swim school?",
+   "Starter is S$690 a month. Pro is S$1,490 a month. The build is included and there is no setup fee. You pay one month to start, charged from go-live, then month to month with 30 days notice and no contract. No GST is charged, and eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost."
+  ],
+  [
+   "What if a parent asks whether the trial is free this month?",
+   "If your price list says what the trial costs, it quotes that. If you have not told us, it says your admin confirms the fee and any current promotion, then carries on with the next question. It never invents a price or a promo. Anything it does not know goes to you with the parent's details, so nobody is left hanging."
+  ],
+  [
+   "Does it work for a tennis coach or a football academy?",
+   "The shape is the same. A parent gives the child's age, the location, the days, a coach preference and private or group, and you match a coach. We build it on your own sessions and price list. We have built this for a swim school, not yet for tennis or football, so you would be the first in your sport and we would tell you that on the call."
+  ],
+  [
+   "Does it reply in Chinese?",
+   "It replies in English and in the mixed English Singapore parents type. In the swim school demo it also replied in Chinese when a daughter wrote in Chinese about lessons for her mother. Ask us before you count on any other language."
+  ],
+  [
+   "How fast can it go live?",
+   "It is live within 48 hours of us getting your programme list and price list. Before you pay, we build the agent and you message it yourself. Then one free hour, where we walk you through the platform and connect payments and your WhatsApp number. Billing starts the day it goes live."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/ai-appointment-booking",
+   "AI appointment booking on WhatsApp"
+  ],
+  [
+   "/industries/ai-for-tuition-centres-singapore",
+   "AI agent for tuition centres in Singapore"
+  ],
+  [
+   "/industries/ai-for-gyms-fitness-studios-singapore",
+   "AI agent for gyms and fitness studios in Singapore"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ]
+ ]
+}

@@ -1,0 +1,182 @@
+{
+ "slug": "ai-for-tuition-centres-singapore",
+ "trade": "tuition centres",
+ "trade_singular": "tuition centre",
+ "audience": "Tuition centres, enrichment centres and private education institutes in Singapore",
+ "spoke_with": "a tuition chain, a children's drama school, two private education institutes and one trading class community in Singapore",
+ "title": "AI Agent for Tuition Centres in Singapore | 41 Labs",
+ "desc": "Answer parents at 10pm, quote the right fee and book the trial lesson on WhatsApp. 41 Closer for tuition centres and institutes in Singapore, from S$690 a month.",
+ "h1": "AI Agent for Tuition Centres in Singapore",
+ "hero_sub": "Your front desk closes at 7pm and the parents asking about the next intake message at 10pm. 41 Closer answers them on your own WhatsApp number, gives the class, the day and the fee, and books the trial lesson before your admin is back in the morning.",
+ "keywords": "ai agent for tuition centres singapore, whatsapp ai for tuition centre, ai chatbot enrichment centre singapore, ai enrolment assistant private education institute singapore, 41 closer tuition",
+ "wa_text": "Hi%2C%20I%20run%20a%20tuition%20centre.%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20parents.",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent on your tuition centre's WhatsApp number. It answers the parent who messages at 10pm about the next intake, gives the right class, day and fee from your timetable, books the trial lesson, and hands the chat to your admin with the questions already answered. 41 Labs builds it and runs it.",
+ "capsule_passage": "Parents ask the same things: is there a slot in the next intake, which level and which day, which branch is nearest, what the fee is and whether it can be paid by term, and whether their child can try one lesson first. Institutes get the same shape with a twist. The fee depends on age, citizenship and funding, and the student wants an appointment with a consultant. These messages arrive after the front desk closes. One institute we met answers its WhatsApp line on weekdays in office hours, and its enquiry form promises a consultant within three business days. 41 Closer answers in seconds from your timetable and fee sheet, asks the one question it needs, books the trial lesson or the consultation, and hands over with the context. Starter, S$690 a month, answers from what you send us and follows up. Pro, S$1,490 a month, writes the booking into your calendar and the lead into your CRM. Message +65 8012 4848 at any hour to test it.",
+ "h2_enquiries": "What your WhatsApp looks like at 10pm",
+ "enquiries_intro": "The questions tuition centres and institutes told us they get, written the way parents and students type them",
+ "enquiries": [
+  "hi, still got slots for the next intake? what are the fees",
+  "which branch is nearest to me?",
+  "can my son try one lesson first before we commit?",
+  "i'm 43, singaporean. how much is the course after subsidy?",
+  "i only got a D7 for english, can i still apply?",
+  "when is the next intake and what are the entry requirements?",
+  "can i use my skillsfuture credit for this?",
+  "do you run the course in chinese?",
+  "we are a school. can you run a drama workshop for our students, and how much per hour?",
+  "my credits are running low, how do i top up?"
+ ],
+ "enquiries_note": "<p>Every one of these has an answer that already sits in your fee sheet, your timetable or your funding table. The person who holds it is an admin or a consultant who works office hours. One institute we met answers its WhatsApp line Monday to Friday, 9am to 6.30pm, closed at weekends, and its enquiry form promises a consultant within three business days. Another told us the same fee, intake and entry questions come 20 to 30 times a week and eat the recruitment team's time. The institute that put a menu bot on its line found it replies in seconds and still leaves the fee question open, because the answer depends on age, citizenship and what the student scored.</p>",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, still got slots for the next intake? my daughter is in p5"
+  },
+  {
+   "who": "agent",
+   "text": "Hi! Yes. The next P5 Maths group starts on 3 November, Tuesday 5pm or Saturday 10am. Which area do you stay in, so I can pick the nearest branch?"
+  },
+  {
+   "who": "customer",
+   "text": "tampines. saturday is better"
+  },
+  {
+   "who": "agent",
+   "text": "Tampines has seats in the Saturday 10am group. The term fee is S$430, paid by the term. Would you like her to try one lesson first?"
+  },
+  {
+   "who": "customer",
+   "text": "yes. can she try before we pay?"
+  },
+  {
+   "who": "agent",
+   "text": "Of course. I can book her into this Saturday 10am as a trial. What is her name?"
+  },
+  {
+   "who": "customer",
+   "text": "mei ling"
+  },
+  {
+   "who": "agent",
+   "text": "Booked. Mei Ling, trial lesson, Saturday 10am, Tampines. I have sent the address and what to bring. Our admin will message you in the morning to confirm the seat."
+  }
+ ],
+ "flow": [
+  {
+   "step": "It answers the intake and schedule question",
+   "detail": "Which level, which day, which branch, and when the next intake starts, from the timetable you give us. One chain we spoke to wanted a nearest-branch finder for parents, so the agent asks where they stay and names the branch. For an institute it gives the intake dates and the entry requirement for the programme asked about."
+  },
+  {
+   "step": "It gives the right fee",
+   "detail": "A tuition centre's term fee comes straight from the fee sheet, with the term payment option if you offer one. An institute's funded fee depends on age, citizenship, employment and sponsorship, so the agent asks those first and quotes from your funding table, the way we built it for one training institute. It never guesses a fee it has not been given."
+  },
+  {
+   "step": "It asks one qualifying question at a time",
+   "detail": "Local or international, which programme, which child, which branch. When a student writes that they got a D7 for English, it knows the alternative entry route your rules allow instead of sending a menu. If three messages arrive in a row it reads all of them and replies once."
+  },
+  {
+   "step": "It books the trial lesson or the consultation",
+   "detail": "On Starter it sends your booking link. On Pro it writes the trial lesson or the career counselling appointment into your calendar and sends the address and what to bring. For institutes it books the consultant and stops there, because enrolment and the funding tier are confirmed by a person on documents."
+  },
+  {
+   "step": "It follows up and hands over",
+   "detail": "A parent who goes quiet gets a follow-up. A question it has not been taught is paused and sent to your admin, and the answer is remembered for next time. Your team gets the chat with the context already gathered."
+  }
+ ],
+ "systems": "On Starter it reads what you send us: the fee sheet, the timetable by level and branch, the intake dates, the funding table and your booking link. On Pro it reads and writes your own systems. For the institutes we built for, that was the recruitment team's calendar, so the appointment lands in it, and the CRM the team already uses, so the lead and the chat arrive with the context. For a tuition chain it can take the term fee by payment link in the chat, and if you want it to answer top-up questions from the real credit balance, that is a connection to the system that holds it, and we tell you the price before we build it. Course fees that are invoiced stay invoiced, and the agent books the consultant instead.",
+ "leaks": [
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days. <a href=\"/blog/whatsapp-response-time-singapore-study\">The study</a>.",
+  "One private education institute told us it gets 20 to 30 enquiries a week, mainly on WhatsApp, and that every programme is S$20,000 and above. One enquiry that books an appointment and enrols covers the Starter plan for more than two years.",
+  "One institute we met answers its WhatsApp line Monday to Friday, 9am to 6.30pm, and its enquiry form promises a consultant within three business days. A career switcher who messages on Saturday waits until Monday.",
+  "One tuition chain with 18 centres ran 18 admin staff. After we built its admin system it kept two, one to cover when the other is on leave. That was back-office software, and it shows how much of a centre's admin is repeated answers and chasing.",
+  "In our quote automation case, a Singapore professional services firm cut quote time from 3 hours to 5 minutes, with errors down 90% and sales capacity up 35%. A fee question is the same shape of work. <a href=\"/case-studies/quote-automation-professional-services\">The case</a>."
+ ],
+ "h2_heard": "What tuition centres and institutes said to us, and our answer",
+ "heard": [
+  {
+   "quote": "Our lead volume is too low for the cost. Our admin can handle it by hand.",
+   "answer": "Then keep doing that. If you get a handful of enquiries a week and your admin answers them the same day, S$690 a month does not pay for itself. One chain with branches told us exactly this and deferred the chatbot, and we agreed. It starts to pay when the messages come after the desk closes, or across branches where nobody owns the reply."
+  },
+  {
+   "quote": "We are a small class community. Some months we get no new students at all.",
+   "answer": "Then do not buy this. We told that community to use an off-the-shelf CRM at S$20 to S$90 a month to track students and leads, and to follow up by hand. An agent that answers in seconds is worth paying for when there are enquiries waiting for an answer."
+  },
+  {
+   "quote": "We tried the DIY chatbot tools. Some functions are there, some are not.",
+   "answer": "A flow builder sends a menu. It cannot work out a funded fee from age and citizenship, or read a D7 and know which entry route applies. We build the agent on your fees and rules, run it for you, and tune it on your real chats. If a menu bot already answers everything your students ask, keep the menu bot."
+  },
+  {
+   "quote": "With the last tool we never knew what the bill would be each month.",
+   "answer": "Starter is S$690 a month and Pro is S$1,490, flat. No GST is charged. You pay one month to start, then month to month with 30 days notice."
+  },
+  {
+   "quote": "Every programme is S$20,000 and up. I do not want a bot closing that.",
+   "answer": "It should not, and for the institutes we built for it does not. Its job there is to answer, qualify and book the appointment with your consultant, then hand over with the context. For a tuition centre the end of the chat is a booked trial lesson. Enrolment stays with a person."
+  },
+  {
+   "quote": "I need to show management that this amount makes sense for the problem it solves, and that it scales.",
+   "answer": "Count last month's enquiries that came after hours or at weekends, and how many of those booked. That is the number to put in front of management. Then we build your agent on your own fees and timetable before you pay, and you message it yourself. A working agent on your own programmes answers both questions better than a document."
+  }
+ ],
+ "plan_starter": "Answers every parent in seconds from the timetable, fee sheet, branch list and policies you send us. Quotes the term fee, says which branch and which day, sends your booking link for the trial lesson, follows up the parent who goes quiet, and hands over to your admin with the chat.",
+ "plan_pro": "Everything in Starter, plus it writes the trial lesson or the counselling appointment into your calendar, puts the lead and the conversation into the CRM your team already uses, and takes the term fee by payment link in the chat. Connecting a system we have connected before is a one-time S$2,400.",
+ "faq": [
+  [
+   "What does an AI agent do for a tuition centre in Singapore?",
+   "It answers parents on your WhatsApp number at any hour. It tells them which level and day is available, which branch is nearest, what the term fee is and whether it can be paid by term, from the timetable and fee sheet you give it. It books the trial lesson and hands the chat to your admin with the answers already given. 41 Closer is built and run by 41 Labs, so there is no tool for you to set up."
+  ],
+  [
+   "Can it quote the fee, or does it only take a message?",
+   "It quotes the fee from your fee sheet, the same way your admin would. If the fee depends on the level, the branch or the number of lessons, it asks which one first. If it has not been given a fee it says so and asks your admin rather than guessing."
+  ],
+  [
+   "Can it book a trial lesson or an appointment into our calendar?",
+   "Yes. On Starter it sends your booking link and follows up if the parent does not book. On Pro it writes the trial lesson or the counselling appointment into your calendar and sends the address and what to bring. For the private education institutes we built for, the appointment goes into the recruitment team's calendar and the consultant takes it from there."
+  ],
+  [
+   "We are a private education institute with funded fees. Can it quote the subsidised fee?",
+   "It quotes from your funding table once it has asked the questions the fee depends on, such as age, citizenship, employment status and whether an employer is sponsoring. That is how we built it for one training institute, where the fee for the same course changes with age and citizenship. Confirming the funding tier on documents stays with your consultant, so the agent books that appointment instead of enrolling anyone. Course fees that are invoiced stay invoiced."
+  ],
+  [
+   "How much does 41 Closer cost for a tuition centre?",
+   "Starter is S$690 a month and Pro is S$1,490 a month, with the build included and no setup fee. Connecting a system of your own that we have connected before is a one-time S$2,400. You pay one month to start, charged from go-live, then month to month with 30 days notice and no contract. No GST is charged. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost, up to 70% of qualifying costs."
+  ],
+  [
+   "Does it reply in Chinese or Malay?",
+   "It replies in English and in the mixed English that Singapore parents and students type. If a share of your enquiries come in Chinese or Malay, tell us before we build and we test it with you first rather than promising it. One institute we met offers courses in Chinese and Malay, and that is exactly the case we would test on your own messages before go-live."
+  ],
+  [
+   "What happens when a parent asks something it has not been taught?",
+   "It pauses, tells the parent it will check, and sends the question to your admin on WhatsApp. When your admin answers, the agent replies to the parent and remembers the answer for the next time. Fee exemptions, appeals and anything that needs a judgement call go to a person every time."
+  ],
+  [
+   "How fast can it be live, and what do we need to send?",
+   "Your timetable by level and branch, your fee sheet, your intake dates and the policies you want it to hold, such as term payment and make-up lessons. We build the agent from that before we ever get on a call, and it is live within 48 hours of the list. You message it yourself first, then we spend one free hour walking you through the platform and connecting your payments and your WhatsApp number. Billing starts the day it goes live."
+  ]
+ ],
+ "cta_text": "Send us your timetable, fee sheet and branch list. We build your agent before we ever get on a call. Then one free hour: you message your own agent, we show you the platform, and we connect payments and your WhatsApp.",
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp after 8pm"
+  ],
+  [
+   "/ai-appointment-booking",
+   "AI appointment booking on WhatsApp"
+  ],
+  [
+   "/industries/ai-for-childcare-centres-singapore",
+   "AI agent for childcare centres in Singapore"
+  ],
+  [
+   "/blog/41-closer-vs-wati-vs-manychat",
+   "41 Closer compared with Wati and ManyChat"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ]
+ ]
+}

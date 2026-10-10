@@ -1,0 +1,198 @@
+{
+ "slug": "ai-for-bakeries-and-cafes-singapore",
+ "trade": "bakeries and cafes",
+ "trade_singular": "bakery or cafe",
+ "audience": "Bakeries, cafes, dessert shops and small food brands in Singapore that take orders and event enquiries over WhatsApp",
+ "spoke_with": "a home bakery, a gelato shop with an events side, a food gifting brand, and a bakery we met at a trade event, all in Singapore",
+ "title": "AI Agent for Bakeries and Cafes in Singapore | 41 Labs",
+ "desc": "Stop losing Sunday night orders. 41 Closer answers bakery and cafe WhatsApp enquiries, quotes from your price list and takes the event brief, from S$690 a month.",
+ "h1": "AI Agent for Bakeries and Cafes in Singapore",
+ "hero_sub": "You bake in the morning and answer event enquiries between batches, and the corporate order that came in on Sunday night is still sitting there on Monday. 41 Closer answers it on your WhatsApp number the moment it arrives, quotes from your price list, checks the date against your lead time and hands you a complete brief to confirm.",
+ "cta": "Message the agent on WhatsApp",
+ "wa_text": "Hi%2C%20I%20run%20a%20bakery.%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers.",
+ "keywords": "ai agent for bakeries singapore, ai for bakery whatsapp orders, whatsapp ai for cafes singapore, ai for corporate gifting enquiries, ai for dessert shop orders, 41 closer bakery, ai sales agent f&b singapore, ai chatbot bakery singapore",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent that answers your bakery's WhatsApp at any hour. It quotes cakes, party cups and gift boxes from your price list, checks the date against your lead time, answers dairy-free and nut questions, and takes the event brief for you to confirm. Retail orders close with a payment link in the chat.",
+ "capsule_passage": "A bakery or cafe gets the same enquiries every week: a custom cake for Saturday, 200 cups for an office party, 80 gift boxes with a logo, is it halal, got nut-free. Each one needs a price, a date check and a dietary answer before anyone can reply, and the person holding all three is in the kitchen. One gelato shop with an events side gets 20 to 30 enquiries a week, answered by the owner and one colleague, and an enquiry left too long is a lost sale. 41 Closer sorts the enquiry by quantity and date, quotes from your list with the maths shown, checks lead time and allergens, then takes the brief and tells your team. Starter is S$690 a month and works from the price list you give us. Pro is S$1,490 a month and reads your Shopify stock, writes orders into your CRM and takes payment in the chat. Message +65 8012 4848 to try it on a bakery enquiry first.",
+ "h2_enquiries": "What your WhatsApp looks like on Sunday night",
+ "enquiries_intro": "The messages bakeries, cafes and gifting brands told us they get, in the customer's words",
+ "enquiries": [
+  "hi do you do corporate orders? we need about 200 cups for an office party",
+  "can i choose my own flavours for the box of 12?",
+  "can i pick the delivery date? need it on saturday",
+  "my daughter is dairy free, what can she have?",
+  "got nut free option or not?",
+  "is it halal?",
+  "are you available on 26 december for the ice cream cart?",
+  "80 gift boxes with our logo and a card inside, how much?"
+ ],
+ "enquiries_note": "<p>Every one of these needs three things before it can be answered: a price, a date check against your lead time, and a rule about allergens or minimum quantity. The person who holds all three is you, and you are in the kitchen or asleep. The gelato shop we spoke to has the owner and one colleague answering 20 to 30 of these a week over email and WhatsApp, on top of marketing and the online shop. They told us that when nobody replies in time the sale is lost, and that the two of them spent last Christmas and Chinese New Year on last-minute messages. The home bakery told us most orders already come from repeat customers on WhatsApp, and that its web shop could not do the two things the owner wanted, a pick-and-mix box and a delivery date the customer picks.</p>",
+ "dialogue_intro": "A Sunday night corporate order, the way it runs on your own WhatsApp number. Prices, flavours and names are examples.",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, do you do corporate orders? we need about 200 cups for an office party"
+  },
+  {
+   "who": "agent",
+   "text": "Yes, we do. For 200 cups the usual format is party cups delivered in a chest freezer, so the gelato stays frozen through the party. What is the date?"
+  },
+  {
+   "who": "customer",
+   "text": "18th next month, starts around 3pm"
+  },
+  {
+   "who": "agent",
+   "text": "The 18th at 3pm works. We need 5 to 10 working days for 200 cups and you are inside that. Classic flavours are $4.60 a cup, so 200 cups is 200 x $4.60 = $920 before delivery. Which flavours would you like?"
+  },
+  {
+   "who": "customer",
+   "text": "mango, dark chocolate and hazelnut. a few colleagues dont take dairy"
+  },
+  {
+   "who": "agent",
+   "text": "Mango sorbet and dark chocolate sorbet are dairy free. Hazelnut contains milk and tree nuts, so I will note that on the order. Where is the office, so I can check the delivery fee?"
+  },
+  {
+   "who": "customer",
+   "text": "raffles place, CBD. can we confirm?"
+  },
+  {
+   "who": "agent",
+   "text": "CBD delivery carries a $70 surcharge, so the total is $920 + $70 = $990. An event order is confirmed once our events team has checked the date and payment is made. Can I have your name and company for the confirmation?"
+  },
+  {
+   "who": "customer",
+   "text": "jasmine, from a law firm at raffles place. you can reach me on this number"
+  },
+  {
+   "who": "agent",
+   "text": "Thanks Jasmine. I have sent the brief to our events team: 200 party cups, mango sorbet, dark chocolate sorbet and hazelnut, the 18th at 3pm, Raffles Place, $990 with CBD delivery. They will confirm the date with you in the morning and send the payment link then."
+  }
+ ],
+ "dialogue_note": "Try it on ours first: message +65 8012 4848 at any hour and the agent that replies is 41 Closer.",
+ "h2_flow": "What it does inside a bakery sale",
+ "flow_intro": "Step by step, in the order a cake or event enquiry actually runs",
+ "flow": [
+  {
+   "step": "It sorts the enquiry by size and date first",
+   "detail": "A single cake, a box of 12, 200 party cups and a wedding of 300 guests each follow a different path. The agent asks the quantity and the date before anything else, the way your enquiry form does, and recommends the format that fits. In the gelato demo, guest count decides whether it offers party cups, a chest freezer package or a live scoop station."
+  },
+  {
+   "step": "It quotes from your price list and shows the maths",
+   "detail": "200 classic cups at $4.60 is $920, and it writes the sum out so the customer can check it. It never invents a figure. For an item you have not priced, a live scoop station or a custom cake design, it takes the details and tells the customer your team will quote."
+  },
+  {
+   "step": "It checks lead time, delivery and dietary rules",
+   "detail": "You give us the rules once. In the demo they are 5 to 10 working days for an event order, 1 to 2 months for a wedding of 100 guests or more, next-day delivery for retail orders placed before 4pm, free delivery over $80, and a $70 surcharge for Sentosa or the CBD. Dairy-free and nut questions are answered by product, from your own descriptions."
+  },
+  {
+   "step": "It takes the brief and tells your team",
+   "detail": "Name, contact, event type, date, start and end time, venue and guest count, the same fields as your enquiry form, captured in the chat and sent to your events person. An event order is never confirmed in the chat. Your team confirms the date and sends the payment link. If the customer goes quiet after the quote, the agent follows up."
+  },
+  {
+   "step": "Retail orders close in the chat",
+   "detail": "A pint, a cake on the menu or a gift set gets a price, a photo and a payment link in one turn. On Pro the order is written into your system and the stock is updated, so you wake up to the order and the money, with nothing to type in."
+  }
+ ],
+ "systems": "On Starter it reads the menu, price list, lead times and delivery rules you give us, and sends a payment link for retail orders. On Pro it connects to your own systems. The owners we spoke to run Shopify stores, one with a CRM and a customer email tool beside it, one with no CRM at all. Pro reads live stock and prices from Shopify, checks whether the event cart or freezer is already booked on the date asked, writes the order and the customer into your CRM, and takes payment in the chat. Connecting a system we have connected before, Shopify for example, is a one-time S$2,400.",
+ "h2_leaks": "Where the money leaks",
+ "leaks_intro": "What the owners we spoke to told us, and what we measured",
+ "leaks": [
+  "One gelato shop with an events side gets 20 to 30 enquiries a week over email and WhatsApp. The owner and one colleague answer all of them, on top of marketing and the online shop.",
+  "The same shop told us that when nobody replies in time the sale is lost, and that the two people answering spent last Christmas and Chinese New Year replying to last-minute messages themselves.",
+  "A home bakery told us most of its orders come from repeat customers on WhatsApp. Its web shop could not offer a pick-and-mix box of 12 or let the customer choose a delivery date, and the owner did not want to install more apps to fix it.",
+  "A food gifting brand selling through supermarkets and Shopee told us the website was fine, what it wanted was AI support to close sales. It planned to bring an agent in once daily leads passed about 20.",
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied and the slowest took 13 days. <a href=\"/blog/whatsapp-response-time-singapore-study\">Read the study</a>.",
+  "In our quote automation case a Singapore professional services firm cut quote time from 3 hours to 5 minutes, with errors down 90% and sales capacity up 35%. A corporate gifting quote has the same shape: quantity, options, delivery, one number. <a href=\"/case-studies/quote-automation-professional-services\">Read the case</a>."
+ ],
+ "h2_heard": "What bakery, cafe and gifting owners said to us, and our answer",
+ "heard_intro": "Paraphrased from our calls. No business is named.",
+ "heard": [
+  {
+   "quote": "My boss is very price sensitive. I need every cost broken down before I can bring this to him.",
+   "answer": "Here is all of it. Starter is S$690 a month, Pro is S$1,490 a month, and the build is included, so there is no setup fee. If we connect a system of yours, Shopify for example, that is a one-time S$2,400. No GST is charged, there is no contract, and you can stop with 30 days notice."
+  },
+  {
+   "quote": "I messaged the demo and it did not reply to me. Then it came after a while.",
+   "answer": "That happened on one of our calls and it is a fair complaint. When the agent has to look up your catalogue before it answers, the reply takes a few seconds rather than arriving instantly, and on that day it took longer than it should have. Message +65 8012 4848 and time it yourself before you decide."
+  },
+  {
+   "quote": "I am not that kind of tech savvy. I do not want to install apps and deal with configuration.",
+   "answer": "You do not touch the software. Send us your menu, prices, lead times and delivery rules, a photo of the price board or a voice note is fine, and we build the agent. When something changes, a new flavour or a Christmas set, you message us in plain English and we update it. There is a dashboard to see the conversations and we walk you through it in the free hour, but you never configure anything in it, and support is a person."
+  },
+  {
+   "quote": "We only get a few orders a week and most are repeat customers who WhatsApp us anyway.",
+   "answer": "Then do not buy this yet. If you answer every enquiry yourself the same day and nothing slips, S$690 a month costs more than it earns you. The gifting brand we spoke to set its own line at about 20 enquiries a day before bringing an agent in. Our line is simpler: when orders are being lost because nobody could reply, it pays for itself, and before that it does not."
+  },
+  {
+   "quote": "We are a premium brand. A wedding enquiry should get a personal touch. Can it flag those for a person?",
+   "answer": "Yes, and the gelato demo is built that way. An event order is never confirmed in the chat. The agent qualifies the enquiry, takes the full brief and sends it to your events person, who confirms the date and sends the payment link. You set the line, by guest count or by value, above which a person takes over, and retail orders close in the chat without you."
+  },
+  {
+   "quote": "SleekFlow is cheaper. Why would I pay more for this?",
+   "answer": "If what you need is a shared inbox so two people can answer the same WhatsApp number, SleekFlow or respond.io fits better and costs less. They do not write the reply, you still do. 41 Closer is the reply: it quotes, checks the date and takes the brief while you are in the kitchen. <a href=\"/blog/41-closer-vs-respond-io-vs-sleekflow\">Read our comparison</a> before you choose."
+  }
+ ],
+ "plan_starter": "Answers from your menu, price list, lead times and delivery rules. Quotes party cups, boxes and cakes with the maths shown. Takes the event brief and hands it to you. Sends a payment link for retail orders. Follows up when a customer goes quiet.",
+ "plan_pro": "Everything in Starter, plus it reads live stock and prices from your Shopify store, checks whether the event cart or freezer is already booked that day, writes the order and the customer into your CRM, and takes payment in the chat.",
+ "faq": [
+  [
+   "Can an AI agent take custom cake orders over WhatsApp?",
+   "Yes. For a cake on your menu it quotes the price, asks the date and the message on the cake, and sends a payment link in the chat. For a custom design it collects the brief, size, flavour, date, reference photo and delivery address, and hands it to you to price and confirm. It never invents a price for something you have not priced. You decide which cakes it can close on its own."
+  ],
+  [
+   "How does it handle minimum quantities and lead time?",
+   "You give us the rules once and it applies them before it quotes. In our gelato demo the rules are 5 to 10 working days for an event order and 1 to 2 months for a wedding of 100 guests or more. If the date asked is too close, the agent says so and offers the next date that works, or passes the enquiry to you. Minimum order quantities work the same way."
+  ],
+  [
+   "Can it answer halal, nut-free and dairy-free questions correctly?",
+   "It answers from your own product list, by product. In the demo it names the dairy-free sorbets and says where a flavour contains milk and tree nuts, because that is in the product descriptions we loaded. If you are not halal certified it says so plainly. When a customer asks something not in your list, it asks you, and your answer is added so the next customer gets it straight away."
+  ],
+  [
+   "What happens when a company asks for corporate gift boxes?",
+   "It asks how many boxes, the budget per box, the delivery date and whether they want a logo or a card inside, then quotes from your price list with the sum written out. It collects the delivery address or the list of addresses and sends the brief to you. On Pro it writes the order into your system and takes the deposit in the chat. One gifting brand told us the website was never the problem, closing the sale was."
+  ],
+  [
+   "How fast can a bakery be live?",
+   "48 hours from the day we have your menu and price list. Before you pay anything we build the agent and you message it yourself. Then one free hour where we walk you through the platform and connect payments and your WhatsApp number. It runs on the number your customers already have."
+  ],
+  [
+   "What does it cost for a small bakery or cafe?",
+   "Starter is S$690 a month and answers, quotes and follows up from the price list you give us. Pro is S$1,490 a month and connects to your own systems. The build is included, there is no setup fee, and connecting a system we have connected before is a one-time S$2,400. There is no contract and you can stop with 30 days notice. No GST is charged."
+  ],
+  [
+   "I only want a pick-and-mix box and a delivery date picker on my web shop. Is this for me?",
+   "No. A Shopify app does that for less than we cost, and one home bakery we spoke to needed exactly that and nothing more. 41 Closer is for the enquiries that arrive on WhatsApp while you are baking, the ones a web shop never sees. Buy it when those are what you cannot keep up with."
+  ],
+  [
+   "Does it work with my Shopify store and my CRM?",
+   "On Pro, yes. It reads live stock and prices from your Shopify store, writes the order and the customer into your CRM, and takes payment in the chat. Connecting a system we have connected before is a one-time S$2,400. Starter does not connect to anything, it works from the price list you send us. Ask us before you count on a system we have not named here."
+  ]
+ ],
+ "cta_h2": "See it answer a cake enquiry first",
+ "cta_text": "Send us your menu, your price list and your lead times. We build your agent before we ever get on a call. Then one free hour: you message your own agent, we show you the platform, and we connect payments and your WhatsApp.",
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/case-studies/quote-automation-professional-services",
+   "Quote time from 3 hours to 5 minutes: the case study"
+  ],
+  [
+   "/blog/41-closer-vs-respond-io-vs-sleekflow",
+   "41 Closer vs respond.io vs SleekFlow"
+  ],
+  [
+   "/ai-lead-qualification",
+   "How the agent qualifies an enquiry before you see it"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ]
+ ]
+}

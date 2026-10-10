@@ -1,0 +1,186 @@
+{
+ "slug": "ai-for-suppliers-distributors-singapore",
+ "trade": "suppliers and distributors",
+ "trade_singular": "supplier or distributor",
+ "audience": "Hardware, tools, building materials and trade goods suppliers and distributors in Singapore",
+ "spoke_with": "eight suppliers and distributors, from a multi-branch hardware wholesaler and a steel supplier to an FMCG distributor, an electronics distributor and a lighting and bathroom showroom",
+ "title": "AI Agent for Suppliers and Distributors in Singapore | 41 Labs",
+ "desc": "Quote from your catalogue, check stock per branch, take the deposit and pass the order to your team at 9pm. 41 Closer for suppliers, from S$690 a month.",
+ "h1": "AI Agent for Suppliers and Distributors in Singapore",
+ "hero_sub": "Your counter closes at 6, and at 9pm a contractor messages for the price and stock of a part he needs on site by 8am. 41 Closer answers from your own catalogue, checks stock, takes the deposit and passes the order to your team before you open.",
+ "keywords": "ai agent for suppliers singapore, ai agent for distributors singapore, whatsapp ai for hardware supplier, ai sales agent building materials singapore, whatsapp order automation autocount, ai quotation whatsapp wholesale singapore, 41 Closer",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent on WhatsApp for suppliers and distributors in Singapore. It finds the product a contractor asks for by name, code or photo, quotes from your catalogue, checks stock per branch, applies your delivery and deposit rules, takes payment in the chat and passes the confirmed order to your team, 24 hours a day.",
+ "capsule_passage": "A hardware or materials supplier gets the same messages every night: got stock, how much, which branch, can deliver tomorrow, can quote 10 pieces. One multi-branch hardware supplier with about 40,000 products told us it gets 30 to 50 WhatsApp enquiries a day, and before the agent every message after 5pm was lost. Our own test found the same pattern across Singapore: a human reply at night takes a median of 13.3 hours. 41 Closer answers in seconds. It finds the item in your catalogue, shows the price and picture, checks stock, adds up a list, applies your delivery fee and deposit rule, and sends the order to your team. Starter, S$690 a month, works from the price list you give us. Pro, S$1,490 a month, reads live stock from AutoCount or Shopify, takes payment in the chat and writes the order back. We build it before you pay. Message +65 8012 4848 and ask for a cordless drill to see it answer.",
+ "enquiries": [
+  "got 18v cordless drill? how much",
+  "price for this one (with a photo of the part)",
+  "which branch got stock, i come collect now",
+  "need something to cut metal, what you recommend",
+  "can quote 10 pcs for my worksite",
+  "same order as last month, can deliver thursday",
+  "deliver to hdb can? got lift",
+  "can give discount or not, i take 50",
+  "can pay later? we got account with you",
+  "send me the collection address"
+ ],
+ "enquiries_note": "<p>Every one of these needs a lookup before anyone can answer: the right item among tens of thousands of products, the price for that customer, and the stock at the right branch. The people who can do that lookup go home at 6. The multi-branch hardware supplier we work with told us its staff search faster by hand than any tool during the day, that stock across its branches is updated by hand and is often out of date, and that every enquiry after 5pm used to be a lost lead. The FMCG distributor said someone has to read each WhatsApp order and key it into SAP. The messages do not stop at 6. The answering does.</p>",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi got 18v cordless drill? need 2 sets by tmr"
+  },
+  {
+   "who": "agent",
+   "text": "Yes, in stock at our main branch tonight. 18V brushless driver drill with 2 batteries, S$289 a set. Want me to hold 2 sets for you?"
+  },
+  {
+   "who": "customer",
+   "text": "ok. also 5 box 6mm wedge anchor and 1 cut off saw 14 inch"
+  },
+  {
+   "who": "agent",
+   "text": "Added. 2 x 18V drill S$578, 5 x M6 wedge anchor box S$190, 1 x 355mm cut-off saw S$420. Total S$1,188, delivery free over S$300. Deliver or collect?"
+  },
+  {
+   "who": "customer",
+   "text": "deliver to tuas, can reach by 10am?"
+  },
+  {
+   "who": "agent",
+   "text": "Our driver covers Tuas, Monday to Friday. Standard delivery is within 3 working days. For a 10am slot tomorrow I will check with the team. What is the site address and company name?"
+  },
+  {
+   "who": "customer",
+   "text": "blk 5 tuas south ave 3, ABC engineering. no account, pay by paynow"
+  },
+  {
+   "who": "agent",
+   "text": "For orders above S$1,000 we collect a deposit first. Here is the payment link for the deposit, balance on delivery. Once it is paid I will send the order to our team to confirm stock and the 10am slot."
+  },
+  {
+   "who": "customer",
+   "text": "paid"
+  },
+  {
+   "who": "agent",
+   "text": "Received, thank you. Order sent to our team with your address and the 10am request. They will confirm on this chat first thing in the morning. If you need anything else tonight, just message here."
+  }
+ ],
+ "flow": [
+  {
+   "step": "It finds the product",
+   "detail": "By name, product code or a photo, from your own catalogue. It shows the price, the picture and the product link. If the term is ambiguous (safety boots or safety shoes), it asks one question. If an item has no price on your list, it says the team will confirm and hands over. It never invents a price."
+  },
+  {
+   "step": "It checks stock and adds up the list",
+   "detail": "On Pro it reads stock per branch from AutoCount, so a contractor hears which branch has the item tonight. Send it a list of eight anchors with quantities and it searches each one, prices each one and shows a running total with the items it could not find flagged."
+  },
+  {
+   "step": "It applies your delivery and deposit rules",
+   "detail": "Free delivery above a threshold you set, a fee below it, the areas your driver does not go, void deck only for HDB blocks. Below S$200 it just collects payment, above S$1,000 it collects a deposit first, if that is your rule. On Pro the payment link goes out in the chat."
+  },
+  {
+   "step": "It confirms the order and passes it to your team",
+   "detail": "Your team gets the order summary on WhatsApp within the minute: customer, company, items, quantities, prices, delivery address, deposit status. On Pro the order is written back to your system so nobody keys it in twice. An account customer, a credit request, a discount request or a same-day job goes straight to a salesperson with the order already written up."
+  },
+  {
+   "step": "It follows up and hands over",
+   "detail": "A quote nobody answered gets a follow-up after 24 hours and again after a week, naming the items. A complaint, a return, a project price or anything outside your catalogue goes to a person. When a customer asks for a person, it connects them and stops."
+  }
+ ],
+ "systems": "On Starter it reads the price list or product export you give us, your collection addresses, your delivery rules and your deposit rules, and it sends every order summary to your team on WhatsApp. On Pro it reads your Shopify catalogue and the stock and price per branch in AutoCount, takes the deposit through HitPay or the payment link you already use, and writes the confirmed order and a CRM note back. SAP, Odoo and other ERPs we scope first and price in writing before you decide.",
+ "leaks": [
+  "A multi-branch hardware supplier with about 40,000 products told us it gets 30 to 50 WhatsApp enquiries a day, and before the agent every message after 5pm was a lost lead.",
+  "That supplier now reports sales up around 20%, which it puts down to the instant reply.",
+  "A steel supplier handles 10 to 20 quotations a day for about 20 orders a month, and told us he does not want to hire salespeople for the small orders.",
+  "An FMCG distributor has two or three admin staff in every company it owns doing nothing but reading WhatsApp orders and keying them into SAP.",
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours. Four never replied. <a href=\"/blog/whatsapp-response-time-singapore-study\">The study</a>.",
+  "In our quote automation case, a professional services firm cut quote time from 3 hours to 5 minutes, with errors down 90% and sales capacity up 35%. <a href=\"/case-studies/quote-automation-professional-services\">The case</a>."
+ ],
+ "heard": [
+  {
+   "quote": "I worry they take my data and sell it to my competitors.",
+   "answer": "Your catalogue, your prices and your chat history sit in your own workspace, and we sign an NDA before we see a file. Nobody else sees your price list and no other client's agent can read it. If a vendor cannot put that in writing, do not give them your price list."
+  },
+  {
+   "quote": "My staff search faster by hand than any AI. They know every code.",
+   "answer": "On day one that is often true for a counter veteran who knows every part. The agent works the hours your staff are off the counter, 6pm to 8am and the weekend, when nobody is searching at all. The hardware supplier started it after hours only and trained the staff before widening it, and you can do the same."
+  },
+  {
+   "quote": "Don't be helpful. I want it to sell.",
+   "answer": "We agree. Once it has found the item it asks for the quantity, then the delivery address, then it applies your deposit rule and sends the payment link. On anything it cannot settle on its own, an account price or credit terms, it hands over with the order already written up so your salesperson closes rather than starts again."
+  },
+  {
+   "quote": "Our IT will not open a port to the accounting server. Too dangerous.",
+   "answer": "You do not have to. We read stock through your accounting vendor's web API or a scheduled export, and nothing opens into your server. If your vendor has no API yet, Starter runs on the price and stock export you send us until they do."
+  },
+  {
+   "quote": "Our dealers order by email and phone. They do not use WhatsApp.",
+   "answer": "Then do not buy this. 41 Closer is a WhatsApp agent, and if your trade buyers do not message you there, it will sit idle. A shared inbox with a proper order form will serve you better until your buyers move. We told a power track distributor the same thing when their leads came in by email and phone."
+  },
+  {
+   "quote": "We do not want unforeseen expenses.",
+   "answer": "The price is the plan, and a one-time S$2,400 if you connect a system we have connected before. There is no setup fee. One month to start, then month to month with 30 days notice. A system we have not connected before gets scoped and priced in writing before you say yes."
+  }
+ ],
+ "plan_starter": "Answers product and price questions from the price list or product export you give us, adds up a list, applies your delivery and deposit rules, sends the order summary to your team on WhatsApp and follows up on quotes nobody answered.",
+ "plan_pro": "Reads live stock and price per branch from AutoCount or your Shopify catalogue, takes the deposit or full payment in the chat, writes the confirmed order back so nobody keys it in twice, and notes the customer in your CRM. Connecting AutoCount or Shopify is a one-time S$2,400.",
+ "faq": [
+  [
+   "Can an AI agent read my stock in AutoCount and quote on WhatsApp?",
+   "Yes, on Pro. It reads stock and price per branch from AutoCount through the vendor's web API or a scheduled export. It quotes the price on your list and never invents one. If an item has no price, it tells the customer the team will confirm and hands over. Connecting AutoCount is a one-time S$2,400 because we have connected it before."
+  ],
+  [
+   "What happens when a contractor sends a photo of a part at 9pm?",
+   "It identifies the product from the photo and searches your catalogue. It shows the closest matches with price and picture. If it is not sure, it says so and shows the options. If the part is not in your catalogue, it passes the photo to your team."
+  ],
+  [
+   "Will it give my wholesale price to a walk-in customer?",
+   "No. It quotes the retail price you give it. When a customer says they have an account, it stops quoting and passes the full order to your salesperson to apply the account price. If you want it to quote account prices itself, we scope that with you first."
+  ],
+  [
+   "How does it handle delivery charges and deposits?",
+   "You give it the rules. For example, free delivery above S$300, a fee below that, the areas your driver does not go, and void deck only for HDB blocks. Below S$200 it just collects payment and above S$1,000 it collects a deposit first, if that is your rule. On Pro the payment link goes out in the chat. A same-day request goes to your team."
+  ],
+  [
+   "Does it key the order into my system or does my admin still do it?",
+   "On Starter it sends the order summary to your team on WhatsApp and your admin keys it in. On Pro it writes the confirmed order back to your system and notifies your team. An FMCG distributor told us it has two or three admin staff per company just keying WhatsApp orders into SAP. That is the step Pro removes."
+  ],
+  [
+   "How much does an AI sales agent cost for a hardware supplier in Singapore?",
+   "Starter is S$690 a month and Pro is S$1,490 a month. The build is included and there is no setup fee. Connecting a system we have connected before is a one-time S$2,400. It is one month to start, then month to month with 30 days notice. No GST is charged. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost, up to 70% of qualifying costs."
+  ],
+  [
+   "How long does it take to go live?",
+   "It is live in 48 hours from your product list. We build it before you pay, you message it yourself, and then we spend one free hour with you on the platform, payments and your WhatsApp number. Connecting AutoCount or Shopify is added after that."
+  ],
+  [
+   "What if my buyers write in Chinese or Malay?",
+   "It answers in English and the mixed English Singapore customers type. If your buyers write mostly in Chinese or Malay, tell us before you count on it, and we will test it on your real messages first."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/what-is-ai-quote-automation",
+   "What AI quote automation is and what it reads"
+  ],
+  [
+   "/case-studies/quote-automation-professional-services",
+   "Quote time from 3 hours to 5 minutes: the case"
+  ],
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ],
+  [
+   "/blog/41-closer-vs-respond-io-vs-sleekflow",
+   "41 Closer compared with respond.io and SleekFlow"
+  ]
+ ]
+}

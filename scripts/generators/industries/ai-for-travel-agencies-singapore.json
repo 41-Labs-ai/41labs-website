@@ -1,0 +1,176 @@
+{
+ "slug": "ai-for-travel-agencies-singapore",
+ "trade": "travel agencies and tour operators",
+ "trade_singular": "travel agency",
+ "audience": "Travel agencies and tour operators in Singapore",
+ "spoke_with": "one corporate travel agency and one tour operator in Singapore",
+ "title": "AI Agent for Travel Agencies in Singapore | 41 Labs",
+ "desc": "Answer flight and tour enquiries on WhatsApp at any hour. 41 Closer prices live fares and states the fare rule for travel agencies in Singapore, from S$690 a month.",
+ "h1": "AI Agent for Travel Agencies in Singapore",
+ "hero_sub": "Your consultants spend the day on 'what time is the cheapest flight to Jakarta on the 14th' and 'can I change my ticket', and every reply starts with a login to the terminal. 41 Closer answers on WhatsApp at any hour, prices the flight on your own Amadeus office with the change fee from the airline's rule, then holds the seats for a consultant to issue.",
+ "keywords": "ai agent for travel agencies singapore, whatsapp ai for travel agency, ai flight enquiry amadeus whatsapp, ai for tour operators singapore, ai travel sales agent singapore, 41 closer travel",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent for WhatsApp, built and run by 41 Labs, for travel agencies and tour operators in Singapore. It answers the flight or tour enquiry at any hour, prices it from your own Amadeus office or your rate sheet, and states the fare rule in plain English. A consultant issues the ticket.",
+ "capsule_passage": "At a corporate travel desk the enquiry is a route, two dates and a cabin, then 'is it refundable' and 'can I change it'. One agency told us flights are 95% of its email and it handles about 100 enquiries a day across four consultants. A tour operator gets 'a trip for two in autumn', and the details arrive in pieces over two days. 41 Closer takes the first reply. It asks for what is missing, prices the flight on your Amadeus office, states the change fee from the airline's rule, holds the seats and hands over to a consultant. For a tour it recommends from your packages, quotes by group size and takes the deposit. Starter at S$690 a month works from the rate sheet you give us. Pro at S$1,490 a month connects your Amadeus office or booking system. Message +65 8012 4848 and the agent that replies is 41 Closer.",
+ "enquiries": [
+  "show me all the sq flights to hong kong on 3 nov, boss wants to pick the timing",
+  "is option 1 refundable, what does it cost to change",
+  "how long is that ticket valid for",
+  "2 adults and 1 child to tokyo, 9 to 14 nov",
+  "check my booking, surname tan. is it ticketed already?",
+  "can my client use the lounge with krisflyer gold",
+  "can i keep the unused ticket for next year",
+  "a trip for 2 people in autumn, something with mountains, can you recommend",
+  "actually, my brother might join. and we are vegetarian",
+  "can we upgrade to 4 star, and can you send pictures of the rooms"
+ ],
+ "enquiries_note": "<p>Every one of these needs a system before it can be answered. The flight questions need a login to the terminal and a read of the fare rule, and one agency told us flights are 95% of its email, with about 100 of these a day across four consultants. The tour questions arrive in pieces, the operator's own process document calls it dripping information, and its overseas travellers write while Singapore is asleep. At 9pm there is one duty phone on rotation, so the client who asked at 9pm gets the terminal answer the next morning.</p>",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi need the cheapest flight to jakarta on the 14th, back on the 16th. 1 pax economy, morning if can"
+  },
+  {
+   "who": "agent",
+   "text": "Singapore to Jakarta, out 14 Nov, back 16 Nov, one adult, economy, morning out. Three options, totals with tax: 1. Singapore Airlines 07:40, 25kg bag, S$412. 2. Garuda 09:35, 23kg bag, S$368. 3. Singapore Airlines 17:20, 25kg bag, S$355, if the evening works. Which one?"
+  },
+  {
+   "who": "customer",
+   "text": "option 2. is it refundable? boss might change the dates"
+  },
+  {
+   "who": "agent",
+   "text": "Option 2 is non refundable, so no cash back on the fare if cancelled. A date change is a S$75 reissue fee plus any fare difference, from the airline's own rule. The ticket stays valid for 12 months from issue. Go with option 2?"
+  },
+  {
+   "who": "customer",
+   "text": "ok go ahead. traveller lim mei ling, 3 aug 1985, passport E1234567B, email meiling@example.com"
+  },
+  {
+   "who": "agent",
+   "text": "Thanks. Does this trip need an approval code from your company before I hold it?"
+  },
+  {
+   "who": "customer",
+   "text": "no code, boss already approved"
+  },
+  {
+   "who": "agent",
+   "text": "Seats held. Reference KXR4TD, Lim Mei Ling, Garuda 09:35 out 14 Nov, back 16 Nov. Ticketing deadline is 13 Nov. Your consultant will issue the ticket and handle payment, and the e-ticket comes to this email. Anything else for this trip?"
+  }
+ ],
+ "flow": [
+  {
+   "step": "It reads the request and asks only for what is missing",
+   "detail": "Route, dates, passenger count and cabin. For a tour: dates, group size, hotel tier and nationality, because the visa rule differs by passport. One question at a time, in the customer's own words, and nothing asked twice."
+  },
+  {
+   "step": "It prices on your own systems",
+   "detail": "On your Amadeus office it returns up to three options with times, bag allowance and total, or the whole day's schedule when the boss wants to pick the timing. For a tour it quotes your 3-star package by group size, with the inclusions, and tells the customer a person will confirm rooms on a 4 or 5-star upgrade."
+  },
+  {
+   "step": "It answers the fare question from the airline's rule",
+   "detail": "Refundable or not, the change fee and how long the ticket is valid, quoted word for word from the published fare rule. It never rounds and never converts the currency. Processing a refund or a reissue stays with a consultant."
+  },
+  {
+   "step": "It takes the details and holds the seats",
+   "detail": "Traveller name, passport and the approval code if your client needs one. It holds the seats and returns the booking reference. For a tour it takes the 50% deposit and notes the balance due 40 days before departure, your own terms."
+  },
+  {
+   "step": "It hands over and follows up",
+   "detail": "A consultant issues the ticket and takes payment, by BSP or card, the way you do now. Lounge and visa questions, group trips, budget carriers and anything it is unsure of go to a person. A quiet prospect gets a follow-up on a schedule that stops the moment they reply."
+  }
+ ],
+ "systems": "On Starter it reads the package list, rate sheet and fare notes you give us and sends your own booking or deposit link. On Pro it reads your Amadeus office for live fares, schedules and fare rules, holds seats and looks up a booking by reference and surname. For a tour operator, Pro reads your reservation system for packages, festival dates and prices by group size, writes the booking back and takes the deposit in the chat. Your shared inbox tool, accounting system and email are separate steps we scope with you.",
+ "leaks": [
+  "One real enquiry sent to 25 Singapore businesses between 8pm and 11pm: one replied within five minutes, the median wait for a human reply was 13.3 hours and four never replied. <a href=\"/blog/whatsapp-response-time-singapore-study\" style=\"color:#22c55e;font-weight:600;\">Read the study</a>.",
+  "One corporate travel agency told us flights are 95% of its email and it handles about 100 enquiries a day across four consultants, each one a terminal login before a reply.",
+  "The same operator's overseas enquiries land while Singapore is asleep, so the reply waits for the morning.",
+  "At a Singapore professional services firm, quote time went from 3 hours to 5 minutes, errors fell 90% and sales capacity rose 35%. <a href=\"/case-studies/quote-automation-professional-services\" style=\"color:#22c55e;font-weight:600;\">Read the case</a>."
+ ],
+ "heard": [
+  {
+   "quote": "Our clients mostly email us. WhatsApp is a minority.",
+   "answer": "Then be careful. 41 Closer works on WhatsApp, and if your clients will only ever email, do not buy it for that desk. One agency with mostly email clients chose to start on its WhatsApp line anyway and look at email later, because the urgent and after-hours requests already arrive there. Email as a second channel is a separate piece of work we scope with you."
+  },
+  {
+   "quote": "Lounge access, visas, membership rules. They change every week. It will guess and cost me a client.",
+   "answer": "It does not guess. Lounge, membership and visa questions go to a person every time, by rule, and the desk we built for one agency refuses them on purpose. Your ops head's rules go in as rules, so the three-hour connection limit or the six-month passport check holds at 11pm without anyone remembering it."
+  },
+  {
+   "quote": "I am not letting a bot issue tickets or charge a card.",
+   "answer": "Neither are we. The desk prices the flight, states the fare rule and holds the seats. A consultant releases the booking, issues the ticket and takes the payment, by BSP or card, as they do today. That was the agency's own decision on our last call and it is how the demo runs."
+  },
+  {
+   "quote": "Someone books with a stolen card, the ticket is issued, and the chargeback lands on us a week later.",
+   "answer": "This does not fix card fraud, and we will not pretend it does. The agent never asks for a card number in the chat, and ticketing stays with your consultant and your checks. If a chargeback every month or two is your biggest cost, a payment provider's fraud screening is the first thing to look at, before an AI agent."
+  },
+  {
+   "quote": "We have contracted fares with the airlines. Your prices will look wrong next to my terminal.",
+   "answer": "They will, until the contracted fares are switched on. Out of the box it searches published fares on your own office ID. Tell us which airlines you hold private fares with before your team tests it, and we start there."
+  },
+  {
+   "quote": "Every trip we sell is custom. People arrive with a ChatGPT itinerary that does not work.",
+   "answer": "That is the case it was built for at one tour operator. It asks who is travelling and how many days they have, then recommends one of your own packages for that length of trip, at your price for that group size. A 4 or 5-star upgrade goes to a person to confirm rooms, and it will not sell a festival trip inside three months of the date, because your rule says the rooms are gone."
+  }
+ ],
+ "plan_starter": "Answers tour and flight enquiries from the package list, rate sheet and fare notes you give us, asks the qualifying questions, sends your booking or deposit link and follows up. No live fare search. Hands to a consultant for anything else.",
+ "plan_pro": "Adds your Amadeus office: live fares, the whole day's schedule, fare rules, holds and booking lookup. Or your reservation system: packages, festival dates, prices by group size, the booking written back and the deposit taken in the chat. Connecting Amadeus is a one-time S$2,400. A custom reservation system is scoped first.",
+ "faq": [
+  [
+   "Can an AI agent search live flights on my Amadeus for a WhatsApp enquiry?",
+   "Yes. The desk we built for one Singapore agency searches and prices on the agency's own office ID, any airline in the GDS. It returns up to three options with times, bag allowance and total, or the whole day's schedule with open booking classes. It also prices child and infant fares. Amadeus gives test access first and certifies the connection before production, so plan for that step."
+  ],
+  [
+   "Can it tell my client the cancellation fee and the change fee?",
+   "Yes, from the airline's published fare rule. It states whether the fare is refundable, the reissue fee and how long the ticket is valid, in the airline's own words, never rounded and never converted. Stating the condition is the agent's job. Processing the refund or the change stays with a consultant."
+  ],
+  [
+   "Will it issue tickets or take card payments?",
+   "No. It holds the seats and returns the booking reference, then a consultant issues the ticket and takes payment by BSP or card. That is how the agency we built it for wanted it, and it is how the demo runs. Ticketing through the connection can be switched on later, once Amadeus certifies it and only if you ask for it."
+  ],
+  [
+   "What does it do for a tour operator rather than a corporate desk?",
+   "It asks for dates, group size, hotel tier and nationality, then recommends one of your packages for that length of trip. It quotes the 3-star price by group size from your rate sheet, with the inclusions. It takes the 50% deposit and notes the balance due 40 days before departure, if those are your terms. A 4 or 5-star upgrade and the passport details go to a person. A quiet prospect gets a follow-up, and the follow-ups stop the moment they reply."
+  ],
+  [
+   "What does it cost for a travel agency?",
+   "Starter is S$690 a month and works from the rate sheet and fare notes you give us. Pro is S$1,490 a month and connects your Amadeus office or your reservation system. The build is included, with no setup fee, and connecting Amadeus is a one-time S$2,400. One month to start, charged from go-live, then month to month with 30 days notice and no contract. No GST is charged. Amadeus bills its own usage under your contract."
+  ],
+  [
+   "How fast can it go live?",
+   "Starter is live in 48 hours from the package list and rate sheet. Pro on Amadeus depends on Amadeus: test access first, then a certification step before production. We build your agent before you pay, you message it yourself, then one free hour to walk through the platform and connect payments and your WhatsApp."
+  ],
+  [
+   "Does it answer in Chinese or Bahasa?",
+   "It answers in English and the mixed English Singapore customers type. Ask us before counting on Chinese, Bahasa or any other language. We test it on your own messages first and tell you what it can and cannot hold."
+  ],
+  [
+   "How do I test it before I pay anything?",
+   "Message +65 8012 4848 at any hour and the agent that replies is 41 Closer. Send a flight request the way a client would and ask it the change fee. Then send us your rate sheet and how you sell, and we build your own agent before we ever get on a call."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/case-studies/quote-automation-professional-services",
+   "Quote time from 3 hours to 5 minutes at a Singapore professional services firm"
+  ],
+  [
+   "/blog/what-is-ai-quote-automation",
+   "What AI quote automation is and when it fits"
+  ],
+  [
+   "/ai-lead-qualification",
+   "AI lead qualification on WhatsApp"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ]
+ ]
+}

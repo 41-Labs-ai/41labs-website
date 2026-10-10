@@ -1,0 +1,179 @@
+{
+ "slug": "ai-for-renovation-contractors-singapore",
+ "trade": "renovation contractors",
+ "trade_singular": "renovation contractor",
+ "audience": "Renovation, interior design and home-improvement contractors in Singapore",
+ "spoke_with": "five Singapore businesses in renovation and home improvement: an electrical and renovation contractor, an owner with an awnings and blinds business and a roofing company, a renovation materials supplier, a commercial design and build firm and a microcement contractor",
+ "title": "AI Agent for Renovation Contractors in Singapore | 41 Labs",
+ "desc": "Win the site visit while you are still on site. 41 Closer answers a renovation contractor's WhatsApp, gives your range and books the visit. From S$690 a month.",
+ "h1": "AI Agent for Renovation Contractors in Singapore",
+ "hero_sub": "You price from floor plans and site visits, and your WhatsApp fills with 'how much for 4-room HDB?' while you are on site. 41 Closer answers while you work: it asks what you would ask, gives the range you set and books the site visit.",
+ "keywords": "ai agent for renovation contractors singapore, whatsapp ai for renovation company singapore, ai quoting renovation singapore, ai for interior design firm singapore, hdb renovation whatsapp chatbot, ai for microcement contractor singapore, ai for electrical contractor singapore, ai for design and build firm singapore",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI sales agent for WhatsApp, run by 41 Labs for renovation contractors in Singapore. It answers the enquiries that arrive while you are on site and asks for the area, the surface and the scope. It gives the range you set and books the site visit. When a quote goes quiet, it checks in.",
+ "capsule_passage": "Renovation enquiries on WhatsApp open with a price question, and the answer depends on what the customer has not told you: area, surface, finish, HDB or condo. One electrical and renovation contractor we spoke to sends about 500 quotations a month on the phone that runs 500 or more job-site groups. One microcement contractor told us quotes go out and get forgotten. When we sent one enquiry to 25 Singapore businesses between 8pm and 11pm, the median wait for a human reply was 13.3 hours. 41 Closer answers in seconds and asks what you would ask. It gives the range or per-point rate you set, then books the site visit into your calendar. Nine days after a quote goes out with no reply, it checks in. Starter, S$690 a month, works from your price list and calendar link. Pro, S$1,490 a month, reads and writes your job sheet and calendar and takes the deposit in the chat. Message +65 8012 4848 and the agent that replies is 41 Closer.",
+ "enquiries": [
+  "how much for 4 room hdb?",
+  "can you go over my existing tiles? dont want to hack everything",
+  "just give me a price lah. how much for 500 sqft living room",
+  "how much per lighting point? hdb 4 room",
+  "can send me your catalogue?",
+  "can use outside or not? worried about cracking in the sun and rain",
+  "how long does installation take",
+  "opening a cafe, need the floor and counter done before we open",
+  "the signage light blew again, still under warranty?",
+  "attached the floor plan, can quote?"
+ ],
+ "enquiries_note": "<p>Every one of these wants a number before the customer will talk, and the number depends on what they have not told you: the area, the surface underneath, the finish, HDB or condo, and whether you need to see the site first. They arrive while you are on site. One electrical and renovation contractor told us he sends about 500 quotations a month and runs 500 or more job-site WhatsApp groups, so a customer's message sits under a day of site photos. The ones that come in after dinner usually wait until the next morning. In our study the median wait for a human reply was 13.3 hours, and by then the customer has messaged other contractors.</p>",
+ "dialogue_intro": "One exchange, the way it runs on your own WhatsApp number. It mirrors the demo we built for a floor and wall coating contractor. Times and names are examples, and the price rule is whatever you set.",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi, sent you a photo of my bathroom. can you go over the existing tiles? dont want to hack everything"
+  },
+  {
+   "who": "agent",
+   "text": "Yes. It goes straight over existing tiles, so there is no hacking and no debris. Are you doing the floor, the walls, or both, and roughly how big is it?"
+  },
+  {
+   "who": "customer",
+   "text": "both. around 40 sqft. how much ah"
+  },
+  {
+   "who": "agent",
+   "text": "A bathroom that size is usually about a week on site. On price, I would rather give you a real number than a guess, because it moves with the surface underneath and the finish you pick. Our team quotes after a free site visit. Saturday 11am or Sunday 2pm?"
+  },
+  {
+   "who": "customer",
+   "text": "saturday can"
+  },
+  {
+   "who": "agent",
+   "text": "Booked, Saturday 11am. I have sent your address and photo to the team. If you have the floor plan, send it here and the quote goes out faster."
+  },
+  {
+   "who": "customer",
+   "text": "ok. can they also look at the kitchen floor while they are there?"
+  },
+  {
+   "who": "agent",
+   "text": "Yes. I have added the kitchen floor to Saturday's visit so one quote covers both. Anything else you want them to see?"
+  }
+ ],
+ "flow": [
+  {
+   "step": "It answers the first question from your own answers",
+   "detail": "Over existing tiles, outdoors, waterproof, how long it takes, what the warranty covers. You give us the answers once, the way you already say them, and it gives them back in seconds at any hour. It does not make up an answer you did not give it."
+  },
+  {
+   "step": "It asks what you would ask before pricing",
+   "detail": "Floor, walls or both. Rough area. What is there now. HDB or condo. Which finish. Then it asks for a photo or the floor plan, because that is what you need before you can price."
+  },
+  {
+   "step": "It holds your price",
+   "detail": "If you price per point or per square foot, it gives your rate and works out the customer's own total from it. If you only quote after a site visit, it says so, explains what moves the price, and books the visit instead. Either way it never invents a number."
+  },
+  {
+   "step": "It books the site visit",
+   "detail": "It offers the slots from your calendar, confirms, and sends your team the address, the photo and what the customer wants. A shop or cafe job gets flagged to you as commercial."
+  },
+  {
+   "step": "It chases the quote that went quiet",
+   "detail": "Nine days after a quote goes out with no reply, it checks in and offers start weeks when the customer comes back. One honest limit: after 24 hours of silence WhatsApp only allows an approved template. We set the template up."
+  }
+ ],
+ "systems": "On Starter it reads what you give us: your price list or per-point rate card, your catalogue, your usual answers and your calendar link. On Pro it connects to your own systems. For this trade that has meant the Google Sheet or Excel tracker where quotes and maintenance jobs are logged, read and written back, and the Google Calendar your team books site visits into. Pro also takes the deposit in the chat.",
+ "leaks": [
+  "One electrical and renovation contractor sends about 500 quotations a month and runs 500 or more active job-site WhatsApp groups. The person who prices is the person on site.",
+  "One owner with an awnings and blinds business and a roofing company spends about S$1,005 a month on Facebook ads for about 40 qualified leads a month. About half become site visits. His words for the rest were that tracking and follow-up needed improving.",
+  "One microcement contractor gets 20 to 50 WhatsApp enquiries a week on jobs he puts at S$10,000 and up. What costs him most, in his own words, is that he forgets to follow up.",
+  "One commercial design and build firm takes between one and five maintenance requests a day from past clients. They arrive on several salespeople's WhatsApp, get copied by hand into a group chat and an Excel tracker, and get lost when staff are busy.",
+  "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours. Four never replied, and the slowest took 13 days.",
+  "In a different trade, a Singapore services firm cut quote time from 3 hours to 5 minutes with 41 Labs quote automation, with errors down 90% and sales capacity up 35%."
+ ],
+ "heard": [
+  {
+   "quote": "The catalogue is the priority. Sending the PDF every time is the pain.",
+   "answer": "We load your catalogue once and the agent sends the right finish, range or page in the chat, with the photo. If what you really need is a catalogue on a website that people browse before they call you, a website with a WhatsApp button is cheaper and we have built those. Buy this when the enquiries you cannot answer in time are what you lose."
+  },
+  {
+   "quote": "I would rather pay on results. Can we do success-based billing?",
+   "answer": "No. There is no guarantee and no pay-per-lead. You pay one month at a time from the day it goes live and stop with 30 days notice. Before any money moves, we build your agent and you message it yourself. If you want to pay per lead, this is the wrong product for you."
+  },
+  {
+   "quote": "A monthly fee forever feels like paying a worker's salary.",
+   "answer": "What you are paying for is the 11pm reply and the chase nine days later, which nobody on your team is doing now. If your admin already answers every enquiry within the hour and chases every quote, you do not need this. Starter is S$690 a month, charged from go-live, and you can stop with 30 days notice."
+  },
+  {
+   "quote": "I cannot give a price without seeing the site. Every job is different.",
+   "answer": "Then it does not give one. It collects the area, what is there now, the finish and a photo, then books the site visit so you walk in knowing the job. If you price per point, it gives your rate instead. You set the rule and it follows it."
+  },
+  {
+   "quote": "Quotes go out and then I forget to follow up.",
+   "answer": "It checks in nine days after the quote, or on the day you choose, and tells your team when the customer comes back. After 24 hours of silence WhatsApp only allows an approved template. On a flooring job that is worth it. On a small repair call-out you may decide it is not, and you tell us which jobs to chase."
+  },
+  {
+   "quote": "My jobs run in hundreds of WhatsApp groups. Can it sit inside those?",
+   "answer": "No. It sits on one customer-facing number and handles enquiries, quotes and site visits. It does not join job-site groups and it does not talk to your workers. The contractor who asked us this needed a floor plan quoting tool for his own staff, which is a different build, and we told him so."
+  }
+ ],
+ "plan_starter": "Answers from your usual answers, catalogue and price list or per-point rate card. Collects area, surface, finish and a photo. Books the site visit from your calendar link. Checks in on quiet quotes. Hands commercial jobs and anything it cannot answer to you.",
+ "plan_pro": "Everything in Starter, plus it connects to your own systems. It reads and writes the Google Sheet or Excel tracker you log quotes and maintenance jobs in, books into your team's Google Calendar, logs each maintenance request with its photo, and takes the deposit in the chat. Connecting a system we have connected before is a one-time S$2,400.",
+ "faq": [
+  [
+   "Can an AI agent quote a renovation job on WhatsApp?",
+   "It can quote what you can quote without seeing the site. If you price per point or per square foot, it gives your rate and totals the customer's list. If you only price after a site visit, it collects the area, the surface, the finish and a photo, then books the visit. It never invents a number. In a different trade, a Singapore services firm using 41 Labs quote automation cut quote time from 3 hours to 5 minutes."
+  ],
+  [
+   "How much does a WhatsApp AI agent cost for a renovation contractor in Singapore?",
+   "41 Closer Starter is S$690 a month. Pro is S$1,490 a month and connects to your own systems. The build is included and there is no setup fee. Connecting a system we have connected before is a one-time S$2,400. No GST is charged."
+  ],
+  [
+   "Will it give my customers the wrong price?",
+   "It only gives prices you have given it. If your rule is no price before a site visit, it holds that line and books the visit. If a customer pushes for a number, it explains what moves the price and asks for a photo. You can read every conversation and change the rule any time."
+  ],
+  [
+   "Can it book site visits into my calendar?",
+   "Yes. On Starter it offers slots from your calendar link and confirms the booking in the chat. On Pro it books straight into your team's Google Calendar and sends the address, the photo and the customer's notes to whoever is going. One commercial design and build firm told us its admin was booking maintenance visits by hand in Sheets and Google Calendar, which is the job this takes over."
+  ],
+  [
+   "Can it chase quotes that went quiet?",
+   "Yes. It checks in nine days after the quote, or on the day you set, and tells your team the moment the customer replies. WhatsApp only allows free-form messages for 24 hours after the customer last wrote. After that it sends an approved template. We set the template up as part of the build."
+  ],
+  [
+   "Does it handle warranty and maintenance requests after the project?",
+   "Yes, on Pro. It takes the request, asks for the location, the item and a photo, checks the handover date against the warranty terms you give it, and logs the job on your sheet with the photo attached. One design and build firm told us requests reached several salespeople and got lost in a WhatsApp group of six to eight workers. It does not dispatch your workers for you. A person still assigns the job."
+  ],
+  [
+   "Does it understand the way Singapore customers type?",
+   "Yes. It reads English and the mixed English Singapore customers type, including 'how much ah' and 'can or not'. If many of your customers write in another language, ask us before counting on it. It replies in plain English in the tone you set."
+  ],
+  [
+   "How fast can it go live and what do I need to send?",
+   "Live in 48 hours from your price list or rate card, your catalogue and your usual answers. A voice note of how you quote is fine. Before you pay, we build the agent and you message it yourself. Then one free hour where we walk you through the platform and connect payments and your WhatsApp number. The first month is charged from the day it goes live."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/blog/what-is-ai-quote-automation",
+   "What AI quote automation is and when it fits"
+  ],
+  [
+   "/case-studies/quote-automation-professional-services",
+   "Quote time from 3 hours to 5 minutes at a Singapore services firm"
+  ],
+  [
+   "/industries/ai-for-electricians-singapore",
+   "AI agent for electricians in Singapore"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans and terms"
+  ]
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "vendors_checked": "9 October 2026",
+ "vendors": [
+  {"name":"41 Closer (41 Labs)","what":"Managed AI sales agent for WhatsApp. Built on your prices and tone, run by our team, from S$690 a month with the build included. Reads live stock and writes orders back on Pro.","suits":"A business where nobody will build or babysit flows, and each enquiry is worth real money."},
+  {"name":"Voltade","what":"DIY platform. Volty, an AI agent for WhatsApp and email with a CRM built in, usage priced, from S$199 a month (voltade.com/sg). Singapore company.","suits":"A team that will set it up and run it, and wants the CRM in the same tool."},
+  {"name":"SleekFlow","what":"DIY omnichannel inbox and official WhatsApp provider with AI agents included. Pro from S$209 a month billed yearly, AI add-on from S$129 (Singapore pricing page).","suits":"A team with someone who owns the inbox and the flows, and uses Shopify or HubSpot."},
+  {"name":"respond.io","what":"DIY omnichannel inbox with workflow automation and AI agents. Starter US$79 a month. Headquartered in Kuala Lumpur.","suits":"Multi-channel teams that will build their own automations."},
+  {"name":"Wati","what":"DIY WhatsApp platform: broadcasts, no-code chatbots, team inbox, an AI agent add-on priced separately. Plan prices load by region on their site.","suits":"Broadcast-heavy teams that want a no-code builder."},
+  {"name":"ChatDaddy","what":"DIY WhatsApp CRM and automation with an AI agent feature. Mini US$59 a month billed annually.","suits":"A small team that wants CRM and automation in one and will configure it."},
+  {"name":"Pepper Cloud","what":"DIY CRM with WhatsApp built in and an AI assistant. Singapore company, IMDA pre-approved. Pricing on request.","suits":"A sales team that wants the CRM first and WhatsApp inside it."},
+  {"name":"AI Super","what":"WhatsApp AI agent with setup included, S$229 a month. Singapore company.","suits":"A small business that wants a packaged agent at a fixed price and will manage it afterwards."},
+  {"name":"Swop Labs","what":"WhatsApp and voice AI front desk with booking sync, from S$49 a month. Built in Singapore.","suits":"Bookings-led businesses such as clinics and salons."},
+  {"name":"DoubleAM","what":"Managed, done-for-you AI automation agency built on GoHighLevel. Singapore office. Pricing on request.","suits":"A business that wants the whole funnel run for it, not only the WhatsApp reply."},
+  {"name":"Digital Sales Singapore","what":"Managed outsourced sales desk with AI replies and WhatsApp follow-up, from S$1,000 a month plus ad spend.","suits":"A business that wants lead generation and replies handled together."},
+  {"name":"Olano","what":"Managed AI agents scoped per client, connected to live prices and stock. No price list. Singapore studio.","suits":"A larger business with its own systems and a custom scope."}
+ ],
+ "meta_ai": {
+  "table_note": "Its self-serve version answers from your catalogue and past chats and does not connect to a CRM, stock or booking system. The enterprise platform can, with a developer and a WhatsApp Business Platform account. It starts free, with paid Meta One tiers from US$14.99 a month (Meta announcements, 3 Jun and 15 Sep 2026).",
+  "faq_answer": "Meta's Business Agent answers from your catalogue and your past chats, inside WhatsApp, and the self-serve version does not connect to a CRM, a stock system or a booking system (Meta's announcement of 3 Jun 2026 and vendor write-ups since). If every answer your customers need lives in a catalogue, it may be enough, and it starts free. 41 Closer is run by a team, quotes from your price rules, follows up on its own, and on Pro reads live stock and writes orders and bookings back to your own systems. Meta's enterprise platform can connect systems too, but it needs a developer and a WhatsApp Business Platform account."
+ },
+ "region": {
+  "rows": [
+   {"country":"Singapore","app":"WhatsApp. About four in five people use it every month (Digital 2026, Nov 2025).","note":"Our home market. 41 Closer runs on your own business number."},
+   {"country":"Malaysia","app":"WhatsApp. About nine in ten internet users monthly (latest published figure is from 2024).","note":"Same product and setup, onboarded remotely, billed in Singapore dollars."},
+   {"country":"Indonesia","app":"WhatsApp. About nine in ten active on it monthly (Digital 2026, Nov 2025).","note":"Same product and setup. Ask us about Bahasa before you count on it."},
+   {"country":"Thailand","app":"LINE. 56 million monthly users, about 83% of internet users (Digital 2026).","note":"WhatsApp is not the main channel. We do not build for LINE today."},
+   {"country":"Vietnam","app":"Zalo. 78 million monthly users, about 91% of internet users (Digital 2026).","note":"WhatsApp is not the main channel. We do not build for Zalo today."},
+   {"country":"Philippines","app":"Messenger for consumers, Viber for business messaging (DataReportal, Infobip 2026).","note":"WhatsApp is growing fast there but is not where buyers are yet."}
+  ],
+  "para": "WhatsApp is the most-used app in Singapore, Malaysia and Indonesia, so 41 Closer works the same way in all three: your own number, built in 48 hours, run from Singapore, billed in Singapore dollars. We have no office in Malaysia or Indonesia and do not pretend to. The agent answers in English and the mixed English your customers actually type. If your customers write mainly in Bahasa, ask us before you count on it.",
+  "faq_answer": "Yes, where WhatsApp is the channel. WhatsApp is the most-used app in Malaysia and Indonesia, about nine in ten internet users monthly, so the setup is the same as in Singapore: your own WhatsApp Business number, built in 48 hours, run by us from Singapore, billed in Singapore dollars. We have no office in either country. It answers in English and the mixed English your customers type. If your customers write mainly in Bahasa, ask us before you count on it. In Thailand, Vietnam and the Philippines the main apps are LINE, Zalo and Messenger, and we do not build for those today.",
+  "sources": "DataReportal Digital 2026 country reports (Nov 2025) and the We Are Social and Meltwater summaries of them. Infobip Messaging Trends 2026 via newsbytes.ph (Jun 2026). Malaysia's WhatsApp share is a 2024 figure, the latest published."
+ }
+}

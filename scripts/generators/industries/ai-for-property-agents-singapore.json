@@ -1,0 +1,180 @@
+{
+ "slug": "ai-for-property-agents-singapore",
+ "trade": "property agents",
+ "trade_singular": "property team",
+ "audience": "Property agents, agency team leaders and new-launch marketing teams in Singapore",
+ "spoke_with": "two property agents in Singapore, one leading a team and one marketing new launches",
+ "title": "AI Agent for Property Agents in Singapore | 41 Labs",
+ "desc": "Answer every listing enquiry in seconds, qualify the buyer and book the viewing. 41 Closer for property agents and teams in Singapore, from S$690 a month.",
+ "h1": "AI Agent for Property Agents in Singapore",
+ "hero_sub": "You lead a property team, your agents get listing enquiries at 11pm asking still available and can view this weekend, and the follow-up stops after one message. 41 Closer answers in seconds, asks the questions you want answered before a call, then books the viewing and chases the buyer who goes quiet.",
+ "cta": "See it answer a listing enquiry",
+ "wa_text": "Hi%2C%20I%20lead%20a%20property%20team.%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20our%20listing%20enquiries.",
+ "keywords": "ai agent for property agents singapore, whatsapp ai for property agents, ai for real estate agents singapore, property listing enquiries ai, ai viewing booking property agent, 41 Closer",
+ "date_txt": "10 October 2026",
+ "date_iso": "2026-10-10T09:00:00+08:00",
+ "capsule_direct": "41 Closer is a managed AI agent on your team's WhatsApp. It answers a listing enquiry in seconds from the facts you give it, asks the qualifying questions you want before a call, books the viewing and chases the buyer who goes quiet. It never negotiates price or gives an opinion on value. That stays with your registered salesperson.",
+ "capsule_passage": "A buyer sees a listing at night and messages still available, what floor, can view this weekend. Your agents are at viewings or on calls, so the message waits, and the follow-up stops after one message. The team leader we spoke to runs follow-up by hand, with voice notes and call scheduling, and it slips when the week gets busy. 41 Closer replies within seconds from the listing facts you give it. It asks for budget, bedrooms, own stay or investment and whether they own a property now, before any call. Then it books the viewing and chases if the buyer goes quiet. Negotiating price and advising on value are a registered salesperson's work under CEA rules, so the agent does neither and hands those chats to your agent. Starter is S$690 a month, from a listing sheet and a calendar link. Pro is S$1,490 a month and writes each buyer into your CRM and the agent's calendar. Message +65 8012 4848 to test it on ours.",
+ "enquiries_intro": "The messages that land on your agents' phones, the way buyers type them",
+ "enquiries": [
+  "still available?",
+  "what floor?",
+  "can view this weekend?",
+  "what is the psf?",
+  "got agent fee?",
+  "how to register for the new launch?"
+ ],
+ "enquiries_note": "<p>Every one of these is a fact from the listing or a request for a slot. None of them needs an agent's judgement, and all of them arrive while your agents are at a viewing, on a call or at a showflat. The team leader we spoke to told us follow-up on the team is done by hand, with voice notes and Zoom scheduling, and it slips when the week gets busy. The new-launch agent we spoke to pays for every one of these messages, about S$15 a click on Google and S$3,000 to S$4,000 a month on Meta ads, so an enquiry that waits until morning has already been paid for.</p>",
+ "dialogue": [
+  {
+   "who": "customer",
+   "text": "hi saw your listing for the 3 bedder. still available? what floor"
+  },
+  {
+   "who": "agent",
+   "text": "Yes, still available. Mid floor, 3 bedrooms, 1,076 sq ft, asking S$1.45M, about S$1,347 psf. Are you buying for own stay or investment?"
+  },
+  {
+   "who": "customer",
+   "text": "own stay. owner can nego?"
+  },
+  {
+   "who": "agent",
+   "text": "I do not discuss price. Mei Ling will talk to you about that directly. I can book you a viewing first, does this Saturday work?"
+  },
+  {
+   "who": "customer",
+   "text": "sat afternoon can. got agent fee?"
+  },
+  {
+   "who": "agent",
+   "text": "No agent fee for buyers on this listing. Saturday 2pm or 4pm is open, which one?"
+  },
+  {
+   "who": "customer",
+   "text": "4pm"
+  },
+  {
+   "who": "agent",
+   "text": "Booked for Saturday 4pm. One more thing so Mei Ling can prepare: do you currently own a property?"
+  },
+  {
+   "who": "customer",
+   "text": "yes a hdb, will sell after"
+  },
+  {
+   "who": "agent",
+   "text": "Noted. Mei Ling has the full chat and will confirm the block and unit with you on Friday. See you Saturday 4pm."
+  }
+ ],
+ "dialogue_intro": "One exchange, the way it runs on your team's WhatsApp number. Prices, unit details and names are examples.",
+ "flow": [
+  {
+   "step": "It answers the listing question",
+   "detail": "Still available, what floor, size, asking price, psf, agent fee, launch date. It answers from the listing sheet you give it and nothing else. If the answer is not on the sheet it says it will check and hands the chat to the agent."
+  },
+  {
+   "step": "It asks your qualifying questions",
+   "detail": "Budget, bedrooms, own stay or investment, whether they own a property now, which area. The team leader we spoke to wanted exactly these filled in before any call, so the agents stop asking them by voice note. One question at a time, in the buyer's own words back to them."
+  },
+  {
+   "step": "It books the viewing or the call",
+   "detail": "On Starter it sends your calendar link and confirms the slot the buyer picks. On Pro it books straight into the listing agent's calendar and writes the buyer into your CRM, so the Zoom scheduling the team leader described happens without an agent touching it."
+  },
+  {
+   "step": "It chases the buyer who goes quiet",
+   "detail": "A buyer who asked for a weekend slot and stopped replying gets a short follow-up, then another, until the viewing is confirmed or they say no. This is the step the team leader told us slips when the week gets busy."
+  },
+  {
+   "step": "It hands over anything that needs a licence",
+   "detail": "Owner can nego, what is my flat worth, what should I offer: all of it goes to your registered salesperson with the full chat. The agent does not negotiate, does not value and does not advise on an offer."
+  }
+ ],
+ "systems": "On Starter it reads your listing sheet (availability, floor, size, asking price, psf, your agent fee rule, launch dates and showflat hours) and your calendar link. On Pro it writes each qualified buyer into your CRM and books viewings and calls straight into the listing agent's calendar. Connecting a system we have connected before is a one-time S$2,400. It does not read property portals, so your listing sheet is what it works from.",
+ "leaks": [
+  "<a href=\"/blog/whatsapp-response-time-singapore-study\" style=\"color:#22c55e;font-weight:600;\">We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm</a>. One replied within five minutes. The median wait for a human reply was 13.3 hours. Four never replied at all.",
+  "One new-launch agent we spoke to spends S$3,000 to S$4,000 a month on ads, mostly on Meta, and about S$15 a click on Google. In the month before one launch that brought 35 enquiries. Each one that sits unanswered overnight has already been paid for.",
+  "The same agent pays S$9,000 a month to an outsourced marketing team and said the cash from a launch can take up to a year to arrive. The cost of a lead lands long before the commission does.",
+  "<a href=\"/case-studies/ai-real-estate-property-management\" style=\"color:#22c55e;font-weight:600;\">A Singapore property management firm</a> took tenant response time from 24 hours to 15 minutes and lifted its lease renewal rate by 22 percentage points. That is a property management result, not a sales result, but it shows what a fast first reply does to a tenant who is deciding whether to stay."
+ ],
+ "heard": [
+  {
+   "quote": "My associates already auto-blast messages tailored to each client. Is this not the same thing?",
+   "answer": "No. A blast is one message to many people, and when a buyer replies nobody is there to answer. 41 Closer replies to one buyer about one listing and asks the next question until a viewing is booked or the buyer says no. If all you want is to send a broadcast, a WhatsApp broadcast list or a blast tool is cheaper and you should use that instead."
+  },
+  {
+   "quote": "I follow up with voice notes. It is more personal than a typed reply.",
+   "answer": "Keep doing that. The agent does not send voice notes and does not make calls, it types. It gets the buyer to the point where your voice note is worth sending, with the qualifying questions already answered. You send the voice note to a buyer with a viewing booked, not to one who asked what floor and vanished."
+  },
+  {
+   "quote": "My associate tried an AI tool and the summary it gave was not exact.",
+   "answer": "That happens when a tool is left to guess. 41 Closer answers only from the listing sheet you give it, and when a question is outside the sheet it says it will check and hands the chat to the agent. You see every handover with the full conversation. It can still get something wrong, which is one more reason price and offers are kept away from it."
+  },
+  {
+   "quote": "I already pay S$9,000 a month for a marketing team plus ads. I cannot add a cost before the commission comes in.",
+   "answer": "Then look at what happens to the enquiries you already pay for. That agent had 35 enquiries land in the month before one launch, and 41 Closer does not make more enquiries, it answers the ones you have. If your problem is too few leads, spend on ads, this is not it. If the problem is leads landing and going cold, this is it, at S$690 a month with no contract."
+  },
+  {
+   "quote": "CEA will not let a bot negotiate for me.",
+   "answer": "Correct, and it does not. The agent answers listing facts, asks your qualifying questions, books the viewing and chases. The moment a buyer asks whether the owner can negotiate, or a seller asks what their flat is worth, it says that is for the agent and hands over the chat. Your registered salesperson does every part of the job that needs a licence."
+  },
+  {
+   "quote": "I have a few listings and I reply fast myself.",
+   "answer": "Then do not buy this. One agent with a handful of listings who replies within minutes loses nothing to a slow reply. This is for a team leader whose agents each carry listings and ad spend and cannot be on their phones at every viewing."
+  }
+ ],
+ "plan_starter": "Answers from your listing sheet: available, floor, size, asking price, psf, your agent fee rule, launch dates. Asks your qualifying questions, sends your calendar link for the viewing, chases the buyer who goes quiet and hands anything about price to the agent with the full chat.",
+ "plan_pro": "Everything in Starter, plus it writes each qualified buyer into your CRM and books the viewing straight into the listing agent's calendar. Connecting a system we have connected before is a one-time S$2,400.",
+ "faq": [
+  [
+   "Our agents get lots of enquiries about property listings. What should we do with them?",
+   "Answer each one within minutes, ask the qualifying questions before anyone calls, and book the viewing in the same chat. That is what 41 Closer does on your team's WhatsApp number. Your agents then spend their time on buyers who have a budget, a slot and a reason to move. The buyer who asked what floor at 11pm gets an answer at 11pm instead of the next afternoon."
+  ],
+  [
+   "Can an AI answer property enquiries on WhatsApp without breaking CEA rules?",
+   "Yes, as long as it stays on listing facts and bookings. 41 Closer answers availability, floor, size, asking price, psf and agent fee from the sheet you give it. It does not negotiate, does not give an opinion on value and does not advise on an offer. Those stay with your registered salesperson, and the agent hands the chat over the moment a buyer or seller asks."
+  ],
+  [
+   "What does it say when a buyer asks if the owner can nego?",
+   "It says it does not discuss price and that the agent will speak to them directly. Then it offers a viewing slot so the buyer sees the unit first. The agent gets the chat with the buyer's budget and ownership status already filled in. Nothing about price is said until a licensed person says it."
+  ],
+  [
+   "Does it work for new launches as well as resale listings?",
+   "Yes. For a launch you give it the project facts, unit types, the preview and launch dates and how you want interest registered. It registers the buyer, asks your qualifying questions and books the showflat visit or the call. The new-launch agent we spoke to had 35 enquiries land in the month before one launch, which is the month they most need answering."
+  ],
+  [
+   "Does it run on one team number or on each agent's number?",
+   "It runs on one WhatsApp Business number. Most teams put it on the number their listings and ads point to, and it hands each buyer to the agent who owns that listing with the full chat. If every agent needs it on their own number, ask us first and we will tell you honestly whether that fits."
+  ],
+  [
+   "Can it book the viewing straight into my agent's calendar?",
+   "On Starter it sends your calendar link and confirms the slot the buyer picks. On Pro it books the viewing or the call straight into the listing agent's calendar and writes the buyer into your CRM. Connecting a system we have connected before is a one-time S$2,400."
+  ],
+  [
+   "How much does an AI agent for a property team cost in Singapore?",
+   "Starter is S$690 a month and Pro is S$1,490 a month. The build is included and there is no setup fee. You pay for one month from the day it goes live, then month to month with 30 days notice and no contract. No GST is charged. We build your agent first, you message it, then one free hour to walk through the platform and connect your WhatsApp before any money moves."
+  ],
+  [
+   "Can it reply in Chinese or Malay?",
+   "It replies in English and in the mixed English that Singapore buyers type. If a large share of your buyers write in Chinese or Malay, ask us before counting on it. We will tell you what we have tested rather than promise it."
+  ]
+ ],
+ "related": [
+  [
+   "/blog/whatsapp-response-time-singapore-study",
+   "How fast 25 Singapore businesses replied on WhatsApp"
+  ],
+  [
+   "/ai-lead-qualification",
+   "How the agent qualifies a buyer before your agent calls"
+  ],
+  [
+   "/ai-appointment-booking",
+   "How it books viewings and calls into a calendar"
+  ],
+  [
+   "/41-closer",
+   "41 Closer plans, prices and terms"
+  ]
+ ]
+}

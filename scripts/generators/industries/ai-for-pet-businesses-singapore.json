@@ -1,0 +1,88 @@
+{
+  "slug": "ai-for-pet-businesses-singapore",
+  "trade": "pet businesses",
+  "trade_singular": "pet business",
+  "audience": "Pet grooming salons, pet shops and pet food delivery or subscription businesses in Singapore",
+  "spoke_with": "two pet food businesses and one grooming salon in Singapore",
+  "title": "AI Agent for Pet Shops and Groomers in Singapore | 41 Labs",
+  "desc": "Book grooming slots and keep pet food deliveries moving while your hands are busy. 41 Closer answers the WhatsApp of pet businesses in Singapore. From S$690 a month.",
+  "h1": "AI Agent for Pet Shops and Groomers in Singapore",
+  "hero_sub": "You groom dogs or deliver pet food, and your phone fills with 'got slot sat?' and 'can change my delivery to thursday?' while your hands are busy with a dog or a delivery run. 41 Closer answers on your WhatsApp number, books the slot or moves the delivery, and passes you the messages that need a person.",
+  "keywords": "ai agent for pet shops singapore, ai for pet groomers singapore, whatsapp ai pet food delivery singapore, ai chatbot pet grooming booking, ai for pet food subscription, 41 closer pet businesses",
+  "wa_text": "Hi%2C%20I%20run%20a%20pet%20business%20and%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers.",
+  "date_txt": "10 October 2026",
+  "date_iso": "2026-10-10T09:00:00+08:00",
+  "capsule_direct": "41 Closer is a managed AI sales agent on WhatsApp for pet shops, groomers and pet food businesses in Singapore. It answers the Saturday slot question at any hour, quotes from your grooming menu or product list, books the slot, moves a delivery, changes a subscription and hands complaints to you. 41 Labs builds it and runs it.",
+  "capsule_passage": "A groomer's enquiries are about one thing: is there a slot, and how much for this breed. A pet food business gets the other kind: which delivery window, can I move it to Thursday, can I go to two deliveries a week, is it back in stock, where is my order. One fresh dog food business told us it handles 120 to 140 orders a week and that the messages are overwhelming. One grooming owner was losing bookings because replies came too slowly and the evenings went on enquiries. 41 Closer answers from your menu, product list and delivery policy. It offers the open slots, takes the window and the subscription change, and sends complaints to you with the order number. Starter is S$690 a month and works from the lists you give us. Pro is S$1,490 a month and reads your calendar, WooCommerce or delivery sheet, then writes the booking or the change back. Message +65 8012 4848 and the agent that replies is 41 Closer.",
+  "enquiries": [
+    "got slot this sat for a full groom?",
+    "how much for a shih tzu bath and nail trim?",
+    "can change my delivery to thursday? not home wed",
+    "can i go to two deliveries a week?",
+    "my order confirmed already? which time slot you coming?",
+    "the salmon bowls back in stock? last time sold out",
+    "got promo now for the trial bundle?",
+    "want to pre order the big bag, how?",
+    "i wont be home in the morning, can come evening instead?",
+    "my dog dont want to eat it, can refund?"
+  ],
+  "enquiries_note": "<p>Every one of these needs a look at something: the Saturday calendar, the delivery sheet, the stock count, the price list. One grooming owner told us replies were too slow because enquiries were answered between dogs and again in the evening. One fresh food business with 120 to 140 orders a week said the messages were overwhelming, and about two days of every week go on confirming delivery windows alone. By 9pm the person who knows the answer has closed the shop, and the customer who asked has messaged another groomer.</p>",
+  "dialogue_intro": "One exchange on a pet food delivery number, the way it runs on your own WhatsApp. Prices and names are examples. For a groomer the same agent quotes by breed and size and holds the slot.",
+  "dialogue": [
+    {"who": "customer", "text": "hi can change my delivery this week to thursday? not home on wed"},
+    {"who": "agent", "text": "Can do. Thursday is a delivery day for your area. Which window works, morning, afternoon or evening?"},
+    {"who": "customer", "text": "evening. also can i go to two deliveries a week? my freezer too small for the full box"},
+    {"who": "agent", "text": "Done, Thursday evening. Someone needs to be home, the food is fresh and sits in an ice box for an hour or two at most. For two deliveries a week I split your plan in half, same price, a smaller box twice. Start from next week?"},
+    {"who": "customer", "text": "yes pls. and the salmon bowls got stock? last time out"},
+    {"who": "agent", "text": "Yes, the salmon bowls are in stock, S$7.50 a bowl. Want me to add some to Thursday?"},
+    {"who": "customer", "text": "add 6"},
+    {"who": "agent", "text": "Added. Six salmon bowls, S$45, here is the payment link: [link]. Thursday evening, someone home, and two deliveries a week from next week. Anything else?"},
+    {"who": "customer", "text": "thanks. btw last week the chicken smelled off. not happy"},
+    {"who": "agent", "text": "Sorry about that. I have passed it to the team with your order number, and someone will message you."}
+  ],
+  "flow": [
+    {"step": "It answers the slot or delivery question first", "detail": "A groomer's customer asks for Saturday. The agent reads your calendar and offers the open slots. A pet food customer asks to move to Thursday. The agent knows the delivery day for each area and the windows you run, and takes the window."},
+    {"step": "It quotes from your price list, by breed and size or by bowl and weight", "detail": "Your grooming menu with the small, medium and large prices, or your product list with the 200g and 500g prices, is what it quotes from. For fresh food it also reads your feeding guide and tells a customer how much a 10kg dog eats in a day."},
+    {"step": "It asks the one question that changes the answer", "detail": "Breed and size before a grooming price. Whether someone will be home before a fresh food delivery. Which window before it confirms. One question at a time, the way you would ask it."},
+    {"step": "It books, moves or changes, then confirms", "detail": "On Pro it writes the slot into your calendar, moves the delivery in your sheet or WooCommerce, splits the subscription into two deliveries a week and sends the payment link for an added item. On Starter it confirms the request with the customer and sends it to you to key in. Either way the customer gets one clear confirmation message."},
+    {"step": "It follows up and hands over", "detail": "A quiet enquiry gets a nudge. A subscriber gets a stock reminder or a renewal reminder through an approved WhatsApp template. A complaint or a refund request goes to you with the order number, and so does a question about a dog's health condition. The agent does not answer those."}
+  ],
+  "systems": "On Starter it reads what you send us: your grooming menu, product list, feeding guide, delivery policy and calendar link. Prices and stock change when you tell us. On Pro it reads your booking calendar and writes the slot in, and it reads WooCommerce or your delivery spreadsheet for live stock, the next delivery date and the subscription, then writes the change back. It sends a card or PayNow payment link in the chat. Shopee chat stays inside Shopee, so it cannot reach those buyers.",
+  "leaks": [
+    "One fresh dog food business handles 120 to 140 orders a week on WooCommerce and a spreadsheet, and puts about two days of every week into messaging customers to confirm delivery windows.",
+    "One pet food brand gets around 10 leads a day from its website, yet website sales are under 1% of its revenue. Most sales go through Shopee, Lazada and events, and Shopee hides the buyer's details so the brand cannot message them again.",
+    "The same brand had 2,000 attendees to follow up after one event. The follow-ups are still typed one by one from a spreadsheet and a browser extension.",
+    "We sent one real enquiry to 25 Singapore businesses between 8pm and 11pm. One replied within five minutes. The median wait for a human reply was 13.3 hours, four never replied, and the slowest took 13 days. <a href=\"/blog/whatsapp-response-time-singapore-study\" style=\"color:#22c55e;font-weight:600;\">The study</a>.",
+    "In a Singapore professional services firm we took quote time from 3 hours to 5 minutes, cut errors by 90% and raised sales capacity by 35%. <a href=\"/case-studies/quote-automation-professional-services\" style=\"color:#22c55e;font-weight:600;\">The case</a>."
+  ],
+  "heard": [
+    {"quote": "We do not want customers ordering over WhatsApp. Orders stay on the website.", "answer": "Then we do not build ordering. One fresh food business asked for exactly this, so the agent was scoped for delivery windows, FAQs and subscription changes, with every order still placed on WooCommerce. You decide what the agent may do on its own and what it must send to the website or to you."},
+    {"quote": "Our customers can tell when it is a bot. No emojis and no canned lines.", "answer": "Agreed, and one pet brand gave us that exact rule: no emojis beyond a plain smiley. The agent answers from your product list and the customer's own details, the dog's breed and the last order, so the reply is about their dog. If a reply still reads canned when you test it, we change it in the free hour."},
+    {"quote": "Most of our orders come from Shopee and the chat is inside Shopee.", "answer": "Then this agent will not reach those buyers. Shopee keeps its chat inside the app and hides the buyer's details, so no outside tool can message them. 41 Closer works on the customers who reach you on WhatsApp, your website and at events. If nearly all your buyers are on Shopee and never message you directly, do not buy this yet."},
+    {"quote": "Complaints need a person. I do not want an AI arguing with a customer over a bag of food.", "answer": "It will not argue. A complaint is a handover: the agent apologises once, takes the order number and sends it to you. It offers no refund and makes no excuse. You reply from your own phone and the agent stays out of that thread."},
+    {"quote": "I am one groomer with one table. Is S$690 a month worth it for me?", "answer": "Count the bookings you lose. If enquiries are few and you answer them within minutes from the table, a WhatsApp Business auto-reply and a booking link will do, and you should keep your money. It is worth paying for when the Saturday slot question comes while you are mid-groom and the customer has booked elsewhere by the time you reply. One grooming owner told us the replies were too slow and the evenings went on enquiries, and that is the case it is built for."},
+    {"quote": "We are already on WooCommerce with subscriptions. Will it break what we have?", "answer": "No. On Pro it reads the subscription from WooCommerce and writes the delivery change or the added item back, so WooCommerce stays the one place your orders live. On Starter it does not touch WooCommerce at all. It tells you what the customer wants changed and you key it in."}
+  ],
+  "plan_starter": "Answers from your grooming menu, product list, feeding guide and delivery policy. Quotes by breed and size or by bowl and weight. Offers slots from your calendar link, takes the delivery window and the subscription change as a request and sends it to you. Follows up a quiet enquiry and hands complaints to you.",
+  "plan_pro": "Everything in Starter. Reads your calendar and writes the booking in. Reads WooCommerce or your delivery sheet for live stock, the next delivery date and the subscription, then writes the change back. Sends a payment link in the chat for an added item or a booking deposit if you take one.",
+  "h2_heard": "What groomers and pet food owners said to us, and our answer",
+  "h2_faq": "AI agent for pet shops and groomers: questions owners ask",
+  "faq": [
+    ["Can an AI agent take grooming bookings on WhatsApp?", "Yes. The customer asks for Saturday, the agent asks the breed and size, quotes from your menu and offers the open slots. On Pro it writes the booking into your calendar and sends the confirmation. On Starter it confirms with the customer and sends you the booking to key in. It answers in English and the mixed English Singapore customers type."],
+    ["Can it change a customer's delivery day or subscription?", "Yes. It knows which day you deliver to each area and which windows you run, so it can move a delivery to Thursday evening and remind the customer that someone must be home. It can switch a plan to two deliveries a week. On Pro the change is written into WooCommerce or your delivery sheet. On Starter you get the request and make the change yourself."],
+    ["Can it tell a customer whether something is in stock?", "On Starter it answers from the product list you give us, and you tell us when something sells out. On Pro it reads live stock from WooCommerce, so the answer is right the moment the customer asks. If a product is out, it takes the reminder request, and the back in stock message goes out through an approved template when you tell us it has returned."],
+    ["Can it send stock reminders and subscription reminders to past customers?", "Yes, through WhatsApp message templates that Meta approves first. Approval takes time, so we submit the templates during the build. It sends to customers who gave you their WhatsApp number through your website, your shop or an event. It cannot send to Shopee buyers, because Shopee hides the buyer's details."],
+    ["Does it work with Shopee or Lazada chat?", "No. Shopee keeps its chat inside the app, and no outside tool can reply there. 41 Closer runs on your WhatsApp number and, if you want, your website. If most of your customers buy on marketplaces, start by moving them to your WhatsApp with a card in the parcel, and then the agent has someone to talk to."],
+    ["Do I need a new WhatsApp number for the agent?", "We recommend one. The agent runs on the WhatsApp Business API, and past chats on your current number do not carry over to it. Your existing number keeps working on your phone. You put the new number on your website, your packaging and your booking page, and the agent answers there. If you want it on your current number instead, ask us first, because connecting it changes how that number works."],
+    ["How much does an AI agent for a pet shop or groomer cost in Singapore?", "Starter is S$690 a month and Pro is S$1,490 a month, with the build included and no setup fee. Connecting a system we have connected before is a one-time S$2,400. You pay one month from go-live, then month to month with 30 days notice and no contract. No GST is charged. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost, up to 70% of qualifying costs."],
+    ["How fast can it go live?", "Starter goes live within 48 hours of receiving your grooming menu or product list and your delivery policy. Connecting your calendar, WooCommerce or delivery sheet on Pro takes longer, and one option we offered a pet food business was to start on FAQs and delivery questions while that connection is built. Before you pay anything, we build the agent, you message it, and we spend one free hour walking you through the platform and connecting payments and your WhatsApp."]
+  ],
+  "cta_text": "Send us your grooming menu or product list and your delivery policy. We build your agent before we ever get on a call. Then one free hour: you message your own agent, we show you the platform, and we connect payments and your WhatsApp.",
+  "related": [
+    ["/ai-appointment-booking", "AI appointment booking on WhatsApp"],
+    ["/blog/whatsapp-response-time-singapore-study", "How fast 25 Singapore businesses replied on WhatsApp"],
+    ["/industries/ai-for-veterinary-clinics-singapore", "AI agent for veterinary clinics in Singapore"],
+    ["/blog/41-closer-vs-wati-vs-manychat", "41 Closer vs Wati vs ManyChat"],
+    ["/41-closer", "41 Closer plans and terms"]
+  ]
+}
