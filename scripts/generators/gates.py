@@ -76,7 +76,7 @@ def check(html, *, max_words, faq, max_faq=8, max_answer_words=60, price_token="
         g = fk_grade(sents)
         if g > max_grade:
             problems.append(f"reading grade {g}, limit {max_grade}")
-    ctas = len(re.findall(cta_pattern, html))
+    ctas = sum(1 for tag in re.findall(r"<a\b[^>]*>", html) if "wa.me" in tag and re.search(r'class="[^"]*(?:clo-btn-xl|clo-btn-ghost|clo-tier-cta|btn-primary)[^"]*"', tag))
     if ctas > max_ctas:
         problems.append(f"{ctas} WhatsApp CTAs, limit {max_ctas}")
     return problems, dict(words=len(words), sentences=len(sents), median_sentence=statistics.median(lens) if lens else 0,
