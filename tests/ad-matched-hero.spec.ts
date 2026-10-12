@@ -28,10 +28,15 @@ const activeTab = (page: Page) => page.locator('.wa-tab.on').getAttribute('data-
 const visibleSlot = (page: Page) =>
   page.locator('.wa-slot:not([hidden])').first().getAttribute('data-chat');
 
+// cold_fleet sent 67 people to the page in four weeks, the third highest of any ad,
+// and booked nothing. Every one of them clicked an ad about their vehicles and landed
+// on a conversation about servicing an aircon. The car chat was already sitting there.
 for (const [ad, chat] of [
   ['cold_carrental', 'car'],
   ['cold_reno', 'renovation'],
   ['cold_clinic', 'clinic'],
+  ['cold_fleet', 'car'],
+  ['cold_dealership', 'car'],
 ] as const) {
   test(`${ad} opens on the ${chat} conversation`, async ({ page }) => {
     await open(page, `?utm_source=facebook&utm_content=${ad}`);

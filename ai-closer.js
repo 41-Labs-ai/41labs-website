@@ -433,7 +433,7 @@ window.BOOKING_URL = window.BOOKING_URL || 'alexander-lee-41labs/closer-call';
     // Open on the conversation that matches the ad they came from. Everyone used to see
     // the Aircon chat first; cold_carrental, the best ad in the account, sent two car
     // rental owners to an aircon conversation. Ads with no matching chat keep the default.
-    var AD_CHAT = { cold_carrental: 'car', cold_reno: 'renovation', cold_clinic: 'clinic' };
+    var AD_CHAT = { cold_carrental: 'car', cold_fleet: 'car', cold_dealership: 'car', cold_reno: 'renovation', cold_clinic: 'clinic' };
     var fromAd = '';
     try { fromAd = new URLSearchParams(location.search).get('utm_content') || attr.utm_content || ''; } catch (e) {}
     var matched = AD_CHAT[fromAd];
