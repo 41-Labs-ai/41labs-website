@@ -139,7 +139,7 @@ test('form submit fires form_submit', async ({ page }) => {
 // gtag keeps the first config's setting, so no page_view was ever sent. GA4's
 // Pages and screens report was empty site-wide. The loader now sends one explicitly.
 test.describe('GA4 page_view', () => {
-  for (const path of ['/index.html', '/ai-closer.html', '/41-closer.html']) {
+  for (const path of ['/index.html', '/ai-closer.html', '/41-closer.html', '/ai-closer-fleet.html']) {
     test(`${path} sends exactly one page_view to GA4`, async ({ page }) => {
       await page.route(/googletagmanager\.com/, (r) =>
         r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));

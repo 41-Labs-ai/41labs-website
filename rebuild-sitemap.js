@@ -34,6 +34,12 @@ const SKIP_FILES = new Set([
   '404.html', 'sitemap.html', 'dashboard.html', 'post.html', 'brandbook.html',
 ]);
 
+// Per-ad lane pages (ai-closer-<lane>.html, built by scripts/build_lane_pages.py).
+// They are the same page in one industry's language, they carry a canonical back to
+// /ai-closer, and they exist only as paid destinations. In the sitemap they would
+// compete with the page they point at.
+const isLanePage = (name) => /^ai-closer-[a-z0-9-]+\.html$/.test(name) && name !== 'ai-closer-sf.html';
+
 // Priority by location. Root landing pages outrank blog posts.
 const PRIORITY = {
   '': '0.9', blog: '0.8', 'case-studies': '0.8',
@@ -72,7 +78,7 @@ const walk = (dir, rel = '') => {
     if (entry.isDirectory()) {
       if (SKIP_DIRS.has(entry.name)) continue;
       out.push(...walk(abs, rel ? `${rel}/${entry.name}` : entry.name));
-    } else if (entry.name.endsWith('.html') && !SKIP_FILES.has(entry.name)) {
+    } else if (entry.name.endsWith('.html') && !SKIP_FILES.has(entry.name) && !isLanePage(entry.name)) {
       out.push({ abs, rel });
     }
   }
