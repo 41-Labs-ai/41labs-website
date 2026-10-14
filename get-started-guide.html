@@ -78,6 +78,7 @@
         .gsg h2 { font-size: 1.6rem; font-weight: 800; line-height: 1.25; margin: 56px 0 12px; letter-spacing: -.01em; }
         .gsg h2 .num { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #0b2a16; font-size: 1.05rem; margin-right: 10px; vertical-align: 3px; }
         .gsg h3 { font-size: 1.18rem; font-weight: 700; margin: 32px 0 8px; }
+        .gsg h4 { font-size: 1.02rem; font-weight: 700; margin: 22px 0 6px; }
         .gsg p, .gsg li { color: #333; }
         .gsg p { margin-bottom: 14px; }
         .gsg ul, .gsg ol { margin: 0 0 16px 1.3em; }
@@ -165,7 +166,8 @@
                 </li>
                 <li><a href="#whatsapp">Step 2. Connect your WhatsApp number</a>
                     <ul>
-                        <li><a href="#keep-the-app">Keep the WhatsApp Business app</a></li>
+                        <li><a href="#keep-the-app">Keep the WhatsApp Business app (default)</a></li>
+                        <li><a href="#not-on-whatsapp">My number is not on WhatsApp</a></li>
                         <li><a href="#fix-closed-business">The Facebook window closed at a business screen</a></li>
                         <li><a href="#fix-closed-number">The Facebook window closed at Add phone number</a></li>
                         <li><a href="#fix-closed-code">The Facebook window closed at Verify your number</a></li>
@@ -261,10 +263,40 @@
         <p>This is the number your customers message. There are two paths:</p>
         <ul>
             <li><strong>Your number is on the WhatsApp Business app today.</strong> Choose <a href="#keep-the-app">Keep the WhatsApp Business app</a>. This is the default path.</li>
-            <li><strong>Your number is not on WhatsApp.</strong> Choose <strong>My number is not on WhatsApp</strong> and do the steps below.</li>
+            <li><strong>Your number is not on WhatsApp.</strong> Choose <a href="#not-on-whatsapp">My number is not on WhatsApp</a>.</li>
         </ul>
 
-        <h3>Have these ready</h3>
+        <div class="gsg-note" id="keep-the-app">
+            <h3>Keep the WhatsApp Business app (the default path)</h3>
+            <p>Use this path when your number is on the WhatsApp Business app today. The step shows this path first. Choose <strong>Keep the WhatsApp Business app</strong>.</p>
+            <p><strong>Do not delete your WhatsApp account on this path.</strong> You keep the app and your chats.</p>
+            <p>Have these ready:</p>
+            <ol>
+                <li>The phone with the WhatsApp Business app. Update the app to the latest version first.</li>
+                <li>A Facebook login that is an admin of your business.</li>
+            </ol>
+            <p>Tap <strong>Keep the WhatsApp Business app</strong>. A Facebook window opens. Do each step it shows. Keep the phone with the app near you: the app also shows steps to do.</p>
+            <p>You keep the app on your phone. The AI answers on the same number. When you reply to a chat from the app, the AI stops in that chat.</p>
+
+            <h4>After you connect: 3 rules</h4>
+            <ol>
+                <li>Turn off the <strong>Greeting message</strong> and the <strong>Away message</strong> in the WhatsApp Business app.</li>
+                <li>Do not reply from WhatsApp for Windows or from a WearOS watch. Reply from the app on your phone.</li>
+                <li>Open the WhatsApp Business app on your phone at least one time every 14 days.</li>
+            </ol>
+
+            <h4>If the Facebook window closes early on this path</h4>
+            <ul>
+                <li><strong>Choose your business, Choose your WhatsApp account, Fill in your business profile or Allow access.</strong> Use the same fixes as the other path: see <a href="#fix-closed-business">Closed at a business screen</a>.</li>
+                <li><strong>Add phone number.</strong> This usually means the number is not on the WhatsApp Business app, or the app is out of date. Update the WhatsApp Business app on the phone, then tap <strong>Start again</strong>. If the number is not on WhatsApp, choose <strong>My number is not on WhatsApp</strong>.</li>
+                <li><strong>Verify your number.</strong> This usually means the step in the WhatsApp Business app did not finish. Keep the phone with the app near you, tap <strong>Start again</strong>, and do each step that the app shows.</li>
+            </ul>
+        </div>
+
+        <h3 id="not-on-whatsapp">My number is not on WhatsApp</h3>
+        <p>Use this path only when your number is not on the WhatsApp app or the WhatsApp Business app. Choose <strong>My number is not on WhatsApp</strong>.</p>
+
+        <h4>Have these ready</h4>
         <ol>
             <li><strong>Your Facebook login.</strong> It must be an admin of your business on Facebook.</li>
             <li><strong>The phone with your business number.</strong> Facebook sends a code to it, by text or by call.</li>
@@ -277,7 +309,7 @@
             <figcaption>Step 2 lists what to have ready.</figcaption>
         </figure>
 
-        <h3>Do the steps in the Facebook window</h3>
+        <h4>Do the steps in the Facebook window</h4>
         <p>Tap <strong>Connect your number</strong>. A Facebook window opens. It has these screens:</p>
         <ol>
             <li><strong>Choose your business.</strong> Choose your business on Facebook.</li>
@@ -289,20 +321,8 @@
         </ol>
         <p>When this is done, the step shows your number and a new two-step PIN. You see the PIN <strong>one time only</strong>. Write it down and keep it in a safe place.</p>
 
-        <div class="gsg-note" id="keep-the-app">
-            <h3>Keep the WhatsApp Business app</h3>
-            <p>Use this path when your number is on the WhatsApp Business app today. Choose <strong>Keep the WhatsApp Business app</strong>.</p>
-            <p>Have these ready:</p>
-            <ol>
-                <li>The phone with the WhatsApp Business app. Update the app to the latest version first.</li>
-                <li>A Facebook login that is an admin of your business.</li>
-            </ol>
-            <p>You keep the app on your phone. The AI answers on the same number. When you reply to a chat from the app, the AI stops in that chat.</p>
-            <p>The Facebook window has the same screens. If it closes early, use the same fixes below.</p>
-        </div>
-
         <h3>If the Facebook window closes early</h3>
-        <p>The step tells you the name of the screen where the window closed. We only know the screen, not the cause. Below is the usual cause and the fix for each screen.</p>
+        <p>These fixes are for both paths, except where a fix says otherwise. On the Keep the WhatsApp Business app path, use <a href="#keep-the-app">its own fixes</a> for Add phone number and Verify your number. The step tells you the name of the screen where the window closed. We only know the screen, not the cause. Below is the usual cause and the fix for each screen.</p>
         <figure>
             <img src="/img/guide/whatsapp-closed.webp" width="1152" height="1110" loading="lazy" decoding="async"
                  alt="Step 2 with a red box: The Facebook window closed at Choose your WhatsApp account. This usually means no WhatsApp Business account was picked. Below are the Start again button and a How to fix this link.">
@@ -323,6 +343,7 @@
         <div class="gsg-fix" id="fix-closed-number">
             <h3><span class="tag">Fix</span>Closed at Add phone number</h3>
             <p>Most often the number is still on the WhatsApp app or the WhatsApp Business app, or it belongs to a different Facebook account.</p>
+            <p><strong>On the Keep the WhatsApp Business app path, do not delete your account.</strong> Read <a href="#keep-the-app">Keep the WhatsApp Business app</a> instead.</p>
             <ul>
                 <li><strong>The number is on the app.</strong> Open WhatsApp on that phone. Go to Settings, Account, Delete my account. Save your chats first. Then tap <strong>Start again</strong>.</li>
                 <li><strong>The number belongs to a different Facebook account.</strong> <a href="#help">Ask for help</a>.</li>

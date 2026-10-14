@@ -95,6 +95,30 @@ test.describe('Get started guide', () => {
     }
   });
 
+  test('the keep-the-app path comes first and never tells the owner to delete the account', async ({ page }) => {
+    await page.goto('/get-started-guide');
+    // Hermes shows "Keep the WhatsApp Business app" first; the guide must match.
+    const order = await page.evaluate(() => {
+      const keep = document.getElementById('keep-the-app')!;
+      const classic = document.getElementById('not-on-whatsapp')!;
+      return !!(keep.compareDocumentPosition(classic) & Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+    expect(order).toBe(true);
+    const keep = await page.locator('#keep-the-app').innerText();
+    expect(keep).not.toMatch(/Delete my account/i);
+    expect(keep).toMatch(/Greeting message/);
+    expect(keep).toMatch(/14 days/);
+    // Its own fixes for the two screens where the classic fix would be wrong.
+    expect(keep).toMatch(/Add phone number\.\s+This usually means/);
+    expect(keep).toMatch(/Verify your number\.\s+This usually means/);
+    // The classic fix that says "Delete my account" warns this path first.
+    const warn = page.locator('#fix-closed-number a[href="#keep-the-app"]');
+    await expect(warn).toHaveCount(1);
+    const text = await page.locator('#fix-closed-number').innerText();
+    expect(text.indexOf('do not delete your account')).toBeGreaterThan(-1);
+    expect(text.indexOf('do not delete your account')).toBeLessThan(text.indexOf('Delete my account'));
+  });
+
   test('nothing scrolls sideways at 375px, even with a long business name and a Chinese name', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/get-started-guide');
