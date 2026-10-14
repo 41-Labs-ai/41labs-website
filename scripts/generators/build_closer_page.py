@@ -82,7 +82,7 @@ def steps_html():
     return "".join(f'''<div class="clo-step"><div class="clo-step-num">{i}</div><h3>{h}</h3><p>{p}</p></div>''' for i, (h, p) in enumerate(STEPS, 1))
 
 MIDDLE = f'''
-    <section class="clo-section--tight clo-deep">
+    <section id="capsule" class="clo-section--tight clo-deep">
         <div class="clo-wrap">
             <p class="clo-lead" style="font-size:1.15rem;"><strong style="color:#fff;">{CAPSULE}</strong></p>
             <p class="clo-lead">{CAPSULE_2} <a href="/blog/whatsapp-response-time-singapore-study" style="color:var(--accent);text-decoration:underline;">Read the study</a>.</p>

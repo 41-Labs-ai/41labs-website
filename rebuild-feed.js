@@ -34,7 +34,9 @@ for (const file of files) {
 // Sort by date descending
 items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
-const now = new Date().toUTCString();
+// The newest article's date, not the clock. A clock stamp changes feed.xml on
+// every rebuild, so CI's "generated files are up to date" check could never pass.
+const now = items.length ? items[0].pubDate : new Date(0).toUTCString();
 
 let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
