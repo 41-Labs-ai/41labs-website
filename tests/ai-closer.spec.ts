@@ -60,21 +60,26 @@ const fbqEvents = (page: Page) =>
 
 for (const P of PAGES) {
   test.describe(P.name, () => {
-    test('ad-only: noindex, message-matched "Not just a chatbot", one form, no nav', async ({ page }) => {
+    test('ad-only: noindex, message-matched "AI sales team", one form, no nav', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path + QS);
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
-      await expect(page.locator('body')).toContainText('Not just a chatbot');
+      await expect(page.locator('body')).toContainText(/AI sales team/i);
       await expect(page.locator('form')).toHaveCount(1);
       await expect(page.locator('header nav a')).toHaveCount(0);
       await expect(page.locator('body')).toHaveAttribute('data-variant', P.variant);
     });
 
-    test('offer is a free demo; no price anywhere; no guarantee', async ({ page }) => {
+    // 15 Oct 2026: the offer is the build call. Build included, live on one call, from
+    // S$299 a month (Start, the price card's entry plan). The page now says the same as the ads.
+    test('offer is the build call: live on one call, from S$299, free to try, no guarantee', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
       const text = await page.locator('body').innerText();
       expect(text).toMatch(/free/i);
+      expect(text).toMatch(/from S\$299 a month/i);
+      expect(text).toMatch(/live on one call|live by the end of one call/i);
+      expect(text).not.toMatch(/leak audit/i);
       expect(text).not.toContain('9,600');
       expect(text).not.toContain('1,490');
       expect(text).not.toMatch(/setup fee back|money back|refund/i);
@@ -302,7 +307,7 @@ test.describe('long form follows the event opt-in structure', () => {
     const hrefs = await ctas.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
     expect(new Set(hrefs)).toEqual(new Set(['#qualify']));
     const words = await ctas.allInnerTexts();
-    for (const w of words) expect(w.trim().toLowerCase()).toMatch(/^get my free demo/);
+    for (const w of words) expect(w.trim().toLowerCase()).toMatch(/^book my build call/);
   });
 
   // The escape hatch under the form is gone: it offered a way out at the exact moment
@@ -424,6 +429,17 @@ test.describe('long form follows the event opt-in structure', () => {
     await expect(d).toContainText(/only commitment you ever make/); // nothing to commit to
     await expect(page.locator('#faq')).toContainText(/different from the WhatsApp tools/i);
     await expect(page.locator('#hero .hero-sub')).toContainText(/run it for you/i);
+  });
+
+  // The ads sell "your AI sales team, live on one call". The page a visitor lands on must
+  // say the same thing in its title and headline, or he thinks he clicked the wrong link.
+  test('title and headline match the ads', async ({ page }) => {
+    await page.goto('/ai-closer.html');
+    await expect(page).toHaveTitle(/AI Sales Team/);
+    await expect(page).not.toHaveTitle(/Leak Audit/i);
+    await expect(page.locator('#hero h1')).toContainText(/AI sales team/i);
+    await expect(page.locator('#hero .aud')).toContainText(/S\$30,000\+ a month/);
+    await expect(page.locator('#final')).not.toContainText(/leak audit/i);
   });
 });
 
@@ -785,9 +801,9 @@ test.describe('the audience band names who this is for', () => {
     await stubNetwork(page);
     await page.goto('/ai-closer.html');
     const aud = page.locator('#hero .aud');
-    await expect(aud).toContainText(/S\$300k to S\$5M a year/);
+    // 15 Oct 2026: the same callout as the ads, word for word.
+    await expect(aud).toContainText(/S\$30,000\+ a month/);
     await expect(aud).toContainText(/WhatsApp/);
-    await expect(aud).toContainText(/Not just a chatbot/);   // ad message match
   });
 });
 
