@@ -433,6 +433,20 @@ test.describe('long form follows the event opt-in structure', () => {
     await expect(page.locator('#hero .hero-sub')).toContainText(/run it for you/i);
   });
 
+  // 16 Oct 2026 (Caleb / Brunson opt-in logic): give him strong reasons to leave his details.
+  // A stack of what he gets free, a real price anchor (the build was S$4,800 on the price card
+  // until 1 Oct), the reason we need his website, and that he keeps it all either way.
+  test('the offer section stacks what he gets, free, with a real anchor', async ({ page }) => {
+    await page.goto('/ai-closer.html');
+    const get = page.locator('#get');
+    await expect(get).toContainText(/What you get, free/i);
+    await expect(get.locator('.stack li')).toHaveCount(3);
+    await expect(get).toContainText(/S\$4,800/);
+    await expect(get).toContainText(/keep (all|everything)/i);
+    await expect(get).toContainText(/why we ask for your website/i);
+    await expect(page.locator('#qualify .fcard-list li')).toHaveCount(3);
+  });
+
   // The ads sell "your AI sales team, live on one call". The page a visitor lands on must
   // say the same thing in its title and headline, or he thinks he clicked the wrong link.
   test('title and headline match the ads', async ({ page }) => {
