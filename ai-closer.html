@@ -516,6 +516,11 @@
         .wa-tab.on { background: var(--primary-soft); color: var(--accent-deep); border-color: rgba(21,128,61,.3); }
 
         @media (max-width: 640px) { #hero h1 br { display: none; } }
+        .hero-grid > * { min-width: 0; }
+        .vbox-body > * { min-width: 0; max-width: 100%; }
+        .chats > *, .chatfig { min-width: 0; max-width: 100%; }
+        @media (max-width: 360px) { .wa-bar { padding-left: 14px; padding-right: 14px; } }
+        @media (max-width: 360px) { .vbox-body { padding-left: 6px; padding-right: 6px; } .wa-tabs { flex-wrap: wrap; justify-content: center; } }
 
         /* numbered steps */
         .numlist li::before { background: var(--primary-soft); color: var(--accent-deep); border-radius: 999px; font-weight: 600; }
