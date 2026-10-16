@@ -193,6 +193,9 @@ test.describe('POST /api/closer-lead', () => {
     expect(opp.body.pointOfContactId).toMatch(/^people-id/);
     expect(opp.body.companyId).toMatch(/^companies-id/);
     expect(opp.body.leadSource).toContain('41closer_lp_2026-09');
+    // Alexander, 9 Oct 2026: "all leads own by me". A new ad lead with no owner sits on
+    // nobody's list. Owner = his Twenty workspace member, overridable by env.
+    expect(opp.body.ownerId).toBe('588b83d8-524c-49cf-9143-e594171ce77f');
     expect(opp.body.statusNotes).toContain('50-150');
     expect(opp.body.statusNotes).toContain('Qualified: yes');
     expect(opp.body.statusNotes).toContain('Tier: A');

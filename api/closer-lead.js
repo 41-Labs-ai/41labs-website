@@ -15,6 +15,9 @@ const { cleanJourney, journeyNote } = require('./_lib/journey');
 const { buildLeadEvent, buildQualifiedLeadEvent, sendCapiEvent } = require('./_lib/meta-capi');
 
 const TWENTY_BASE = process.env.TWENTY_BASE_URL || 'https://twenty-server-production-bb71.up.railway.app';
+// Every new ad lead is owned by Alexander ("all leads own by me", 9 Oct 2026), so it lands on
+// his follow-up list the moment it arrives. His Twenty workspace member id; override by env.
+const LEAD_OWNER_ID = process.env.TWENTY_LEAD_OWNER_ID || '588b83d8-524c-49cf-9143-e594171ce77f';
 
 const ENQUIRIES = { under20: 'Under 20', '20to50': '20-50', '50to150': '50-150', '150plus': '150+' };
 const SALE = { under500: 'Under S$500', '500to2k': 'S$500-2,000', '2kto10k': 'S$2,000-10,000', '10kplus': 'S$10,000+' };
@@ -295,6 +298,7 @@ module.exports = async (req, res) => {
         oppId = await create(key, 'opportunities', {
           name: `${company} - 41 Closer (ad landing page)`,
           stage: 'SCREENING',
+          ownerId: LEAD_OWNER_ID,
           productLine: 'CLOSER_41',
           waitingOn: 'US',
           leadSource: `Meta ad landing page${utm.length ? ' | ' + utm.join(' ') : ''}`.slice(0, 500),
