@@ -12,7 +12,9 @@
     <meta property="og:title" content="See What an AI Sales Team Would Do for You">
     <meta property="og:description" content="A free 30-minute call. We look at where your enquiries slip and show you your own AI sales team. No pressure, no contract.">
     <meta property="og:image" content="https://41labs.ai/og-image.jpg?v=2">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo-icon.png">
+    <link rel="icon" href="assets/brand/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="assets/brand/icon.png">
+    <link rel="apple-touch-icon" href="assets/brand/apple-icon.png">
 
 
     <script>/* deferred analytics for Core Web Vitals: load on first interaction or after 4s.
@@ -429,12 +431,69 @@
             html { scroll-behavior: auto; }
             .reveal, .msg { opacity: 1; transform: none; transition: none; }
         }
-    </style>
+    
+        /* ===== 41 Sales Team design language v1.0 (website, ch. 17), 16 Oct 2026 =====
+           Light theme with the wash behind the hero, sentence case (no capitals), 700 headlines,
+           green fills only the main button, primary-text for green words, tokens below. */
+        :root {
+            --accent: #4ade80; --accent-hover: #22c55e; --accent-deep: #15803d;
+            --primary-foreground: #0b2614; --primary-soft: rgba(74,222,128,.20);
+            --bg: #f5f7f6; --text: #17201b; --ink: #17201b; --dark: #17201b; --text-2: #444f49; --subtle: #68726c;
+            --line: rgba(23,32,27,.09);
+        }
+        body *:not(.wa):not(.wa *) { text-transform: none !important; }
+        h1, h2, h3, h2.caps { font-weight: 700; letter-spacing: -0.02em; }
+        .hero-wins b, .leak-side b, .track-item b, .stat b, .stack-total .p, .calc-out .num, .seal, .week-head, .result-top h3 { font-weight: 700; }
+        .kicker, .result-tag, .leak-cap, .vs-tag, .vs-who, .seen-label, .prehead { letter-spacing: 0; font-weight: 600; }
+        .kicker, .result-tag { color: var(--accent-deep); }
+        /* hero: light, on the wash */
+        #hero { background: var(--bg); color: var(--text); }
+        #hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(60% 55% at 8% 0%, rgba(74,222,128,.30), transparent 70%),
+                        radial-gradient(55% 50% at 95% 5%, rgba(125,211,252,.34), transparent 70%),
+                        radial-gradient(60% 50% at 50% 100%, rgba(253,214,150,.38), transparent 70%); }
+        .hero-bg { display: none; }
+        .hero-sub { color: var(--text-2); }
+        .hero-wins b { color: var(--accent-deep); }
+        .hero-wins span { color: var(--text-2); }
+        #hero h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.08; }
+        #hero .hl, section:not(.dark) .hl { color: var(--accent-deep); }
+        .aud { background: var(--primary-soft); color: var(--accent-deep); font-style: normal; font-weight: 600; border-radius: 999px; width: fit-content; max-width: 100%; padding: 8px 18px; }
+        .vbox { background: #fff; border-color: var(--line); }
+        .vbox-title { background: var(--primary-soft); color: var(--text); font-weight: 600; }
+        .vnote { color: var(--text-2); border-top-color: var(--line); }
+        .fcard { box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 10px 28px rgba(0,0,0,.08); border: 1px solid var(--line); border-radius: 24px; }
+        .fcard-head .free { background: var(--primary-soft); color: var(--accent-deep); font-weight: 600; letter-spacing: 0; border-radius: 999px; padding: 4px 12px; }
+        /* header logo */
+        .brand { gap: 0; }
+        .brand img { width: auto; height: 32px; border-radius: 0; background: none; padding: 0; }
+        /* buttons: pills, green fill, dark green text, no heavy border */
+        .btn { font-weight: 600; }
+        .btn-primary, .btn-cta { color: var(--primary-foreground); box-shadow: 0 6px 18px rgba(74,222,128,.28); }
+        .btn-cta { border: 0; letter-spacing: 0; min-height: 56px; }
+        .btn-primary:hover, .btn-cta:hover { transform: translateY(1px); }
+        .numlist li::before { background: var(--primary-soft); color: var(--accent-deep); border-radius: 999px; font-weight: 600; }
+        section.dark { background: #0f1513; color: #eef3f0; }
+        section.dark .sub { color: #bac4be; }
+        /* green only on the main button, links and "paid" (design language ch. 3) */
+        #hero .hl, section:not(.dark) .hl, .hero-wins b { color: var(--text); }
+        .wa-tab.on { background: var(--primary-soft); color: var(--accent-deep); }
+        /* Inter only, no green fills outside the main button */
+        :root { --mono: var(--font); }
+        .tagnum { font-family: var(--font); font-weight: 600; background: var(--primary-soft); border-radius: 999px; letter-spacing: 0; }
+        .result-top .big { font-family: var(--font); }
+        .gbox { background: #fff; color: var(--text); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 10px 28px rgba(0,0,0,.08); }
+        .gbox .seal, .seal { background: var(--primary-soft); color: var(--accent-deep); font-weight: 600; }
+        .gbox .fine { color: var(--subtle); opacity: 1; }
+        .week-head { background: var(--primary-soft); color: var(--text); font-weight: 600; }
+        .mark { background: linear-gradient(transparent 62%, var(--primary-soft) 62%); }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
 </head>
 <body data-variant="long">
 
 <header class="top">
-    <div class="wrap"><div class="brand"><img src="logo-icon.png" alt="" width="30" height="30">41 Closer <span>by 41 Labs</span></div></div>
+    <div class="wrap"><a class="brand" href="/" aria-label="41 Sales Team by 41 Labs"><img src="assets/brand/41salesteam-logo-black.png" alt="41 Sales Team" width="130" height="32"></a></div>
 </header>
 
 <main>
@@ -457,7 +516,7 @@
             <div class="vcol">
                 <div class="vbox">
                     <div class="vbox-title">See it work: a Saturday booking request, handled on WhatsApp in minutes</div>
-                    <div class="vbox-body"><!-- WA-HERO --><div class="wa-tabs" role="tablist" aria-label="Pick your kind of business"><button type="button" class="wa-tab" data-chat="servicing">Aircon</button><button type="button" class="wa-tab" data-chat="renovation">Renovation</button><button type="button" class="wa-tab" data-chat="clinic">Clinic</button><button type="button" class="wa-tab on" data-chat="car">Car rental</button></div><div class="wa-slot" data-chat="servicing" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a aircon business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">CA</div><div class="wa-who"><div class="wa-name">CoolAir Services</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, still open? Need 3 aircon units serviced.<span class="wa-meta">02:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes, we can help. Is it a condo or landed, and which area?<span class="wa-meta">02:02</span></div><div class="wa-msg wa-out">Condo, Tampines<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<span class="wa-meta">02:03</span></div><div class="wa-msg wa-out">10am please<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Done. You&#x27;re booked for Saturday 10am. I&#x27;ll send a reminder the day before.<span class="wa-meta">02:03</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot" data-chat="renovation" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a renovation business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">MI</div><div class="wa-who"><div class="wa-name">Meridian Interiors</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, how much to redo a 4 room HDB kitchen?<span class="wa-meta">23:41 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Evening! Happy to help. Are you keeping the current layout, or moving the sink and hob?<span class="wa-meta">23:41</span></div><div class="wa-msg wa-out">Keeping layout. Just cabinets and countertop<span class="wa-meta">23:42 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That helps. Quartz or sintered stone for the top, and are you after laminate or spray paint carpentry?<span class="wa-meta">23:42</span></div><div class="wa-msg wa-out">Quartz, laminate is fine<span class="wa-meta">23:43 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted. Our designer can do a site measure this week. Thursday 11am or Saturday 2pm?<span class="wa-meta">23:43</span></div><div class="wa-msg wa-out">Saturday<span class="wa-meta">23:44 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Booked for Saturday 2pm. I have sent the details here and our designer will bring samples.<span class="wa-meta">23:44</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot" data-chat="clinic" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a clinic business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">OA</div><div class="wa-who"><div class="wa-name">Orchard Aesthetics</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Do you have any slots this week for a consult?<span class="wa-meta">21:18 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes. Is this your first visit with us, and what would you like to treat?<span class="wa-meta">21:18</span></div><div class="wa-msg wa-out">First time. Acne scars<span class="wa-meta">21:19 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Thanks. Our doctor will assess the scar type first, then recommend the right treatment. The consult is S$55 and goes toward your treatment if you proceed.<span class="wa-meta">21:19</span></div><div class="wa-msg wa-out">Ok can. Thursday evening?<span class="wa-meta">21:20 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Thursday 7pm or 7.30pm are open. Which suits you?<span class="wa-meta">21:20</span></div><div class="wa-msg wa-out">7pm<span class="wa-meta">21:20 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Booked for Thursday 7pm. Our clinic is at Orchard, and I have sent the address here.<span class="wa-meta">21:21</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot on" data-chat="car"><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the 41 Closer replies for a car rental business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">LC</div><div class="wa-who"><div class="wa-name">Lion City Rentals</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi need a car from 18 to 21 Dec<span class="wa-meta">01:12 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Sure. How many passengers, and are you driving into Malaysia?<span class="wa-meta">01:12</span></div><div class="wa-msg wa-out">5 pax, yes going JB<span class="wa-meta">01:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day, and a Honda Stepwagon at S$135 a day. Both include the Malaysia permit.<span class="wa-meta">01:13</span></div><div class="wa-msg wa-out">Sienta ok. How to confirm?<span class="wa-meta">01:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through.<span class="wa-meta">01:14</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><!-- /WA-HERO --></div>
+                    <div class="vbox-body"><!-- WA-HERO --><div class="wa-tabs" role="tablist" aria-label="Pick your kind of business"><button type="button" class="wa-tab" data-chat="servicing">Aircon</button><button type="button" class="wa-tab" data-chat="renovation">Renovation</button><button type="button" class="wa-tab" data-chat="clinic">Clinic</button><button type="button" class="wa-tab on" data-chat="car">Car rental</button></div><div class="wa-slot" data-chat="servicing" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the AI sales team replies for a aircon business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">CA</div><div class="wa-who"><div class="wa-name">CoolAir Services</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, still open? Need 3 aircon units serviced.<span class="wa-meta">02:02 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes, we can help. Is it a condo or landed, and which area?<span class="wa-meta">02:02</span></div><div class="wa-msg wa-out">Condo, Tampines<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Got it. For 3 units in Tampines I can hold Saturday 10am or 2pm. Which works?<span class="wa-meta">02:03</span></div><div class="wa-msg wa-out">10am please<span class="wa-meta">02:03 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Done. You&#x27;re booked for Saturday 10am. I&#x27;ll send a reminder the day before.<span class="wa-meta">02:03</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot" data-chat="renovation" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the AI sales team replies for a renovation business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">MI</div><div class="wa-who"><div class="wa-name">Meridian Interiors</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi, how much to redo a 4 room HDB kitchen?<span class="wa-meta">23:41 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Evening! Happy to help. Are you keeping the current layout, or moving the sink and hob?<span class="wa-meta">23:41</span></div><div class="wa-msg wa-out">Keeping layout. Just cabinets and countertop<span class="wa-meta">23:42 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">That helps. Quartz or sintered stone for the top, and are you after laminate or spray paint carpentry?<span class="wa-meta">23:42</span></div><div class="wa-msg wa-out">Quartz, laminate is fine<span class="wa-meta">23:43 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted. Our designer can do a site measure this week. Thursday 11am or Saturday 2pm?<span class="wa-meta">23:43</span></div><div class="wa-msg wa-out">Saturday<span class="wa-meta">23:44 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Booked for Saturday 2pm. I have sent the details here and our designer will bring samples.<span class="wa-meta">23:44</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot" data-chat="clinic" hidden><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the AI sales team replies for a clinic business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">OA</div><div class="wa-who"><div class="wa-name">Orchard Aesthetics</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Do you have any slots this week for a consult?<span class="wa-meta">21:18 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Yes. Is this your first visit with us, and what would you like to treat?<span class="wa-meta">21:18</span></div><div class="wa-msg wa-out">First time. Acne scars<span class="wa-meta">21:19 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Thanks. Our doctor will assess the scar type first, then recommend the right treatment. The consult is S$55 and goes toward your treatment if you proceed.<span class="wa-meta">21:19</span></div><div class="wa-msg wa-out">Ok can. Thursday evening?<span class="wa-meta">21:20 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Thursday 7pm or 7.30pm are open. Which suits you?<span class="wa-meta">21:20</span></div><div class="wa-msg wa-out">7pm<span class="wa-meta">21:20 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Booked for Thursday 7pm. Our clinic is at Orchard, and I have sent the address here.<span class="wa-meta">21:21</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><div class="wa-slot on" data-chat="car"><div class="wa wa-live" role="img" aria-label="Example WhatsApp chat: a customer enquires and the AI sales team replies for a car rental business"><div class="wa-bar"><span>9:41</span><span class="wa-icons"><svg viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="5" y="5" width="3" height="6" rx=".8"/><rect x="10" y="2.5" width="3" height="8.5" rx=".8"/><rect x="15" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11"><path d="M8 10.5l2.2-2.6a3 3 0 00-4.4 0zM8 3.8a7 7 0 015 2.1l1.4-1.6A9.2 9.2 0 008 1.6a9.2 9.2 0 00-6.4 2.7L3 5.9a7 7 0 015-2.1z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill-opacity=".4"/></svg></span></div><div class="wa-head"><svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><div class="wa-av" style="background:#075E54">LC</div><div class="wa-who"><div class="wa-name">Lion City Rentals</div><div class="wa-status-line">online</div></div><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg><svg class="wa-act" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round"><path d="M5.2 3.5h3l1.6 4.2-2.1 1.5a11 11 0 005.1 5.1l1.5-2.1 4.2 1.6v3a2.4 2.4 0 01-2.6 2.4C9.7 18.8 5.2 14.3 4.7 6.1a2.4 2.4 0 01.5-2.6z"/></svg></div><div class="wa-body"><div class="wa-day">Today</div><div class="wa-msg wa-out">Hi need a car from 18 to 21 Dec<span class="wa-meta">01:12 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Hi! Sure. How many passengers, and are you driving into Malaysia?<span class="wa-meta">01:12</span></div><div class="wa-msg wa-out">5 pax, yes going JB<span class="wa-meta">01:13 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">Noted. For 5 with Malaysia use I have a Toyota Sienta at S$105 a day, and a Honda Stepwagon at S$135 a day. Both include the Malaysia permit.<span class="wa-meta">01:13</span></div><div class="wa-msg wa-out">Sienta ok. How to confirm?<span class="wa-meta">01:14 <svg class="wa-ticks" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7.5M6.5 8.5l1 1 6.5-8"/></svg></span></div><div class="wa-msg wa-in">A S$200 deposit holds it. Here is the secure payment link, and the car is reserved the moment it goes through.<span class="wa-meta">01:14</span></div></div><div class="wa-input"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div class="wa-field"></div><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></div></div></div><!-- /WA-HERO --></div>
                     <div class="vnote">Example chat. On your demo it answers enquiries like the ones your business gets.</div>
                 </div>
             </div>
@@ -465,10 +524,10 @@
             <div class="fcard" id="qualify">
                 <span id="book" aria-hidden="true"></span>
                 <div class="fcard-head">
-                    <span class="free">FREE</span>
+                    <span class="free">Free</span>
                     <h2>What you get, free</h2>
                     <ul class="fcard-list">
-                        <li>Your own AI sales team, built on your website before we meet (until 1 October, from S$4,800)</li>
+                        <li>Your own AI sales team, built on your website before we meet (we used to charge S$4,800 for this, now included)</li>
                         <li>Your numbers: what slow and after-hours replies cost you a month</li>
                         <li>A straight answer in writing, yours to keep either way</li>
                     </ul>
@@ -486,7 +545,7 @@
                                     <p class="jobs-error" id="cl-email-error" hidden></p></div>
                                 <div class="field full"><label for="cl-whatsapp">WhatsApp number</label>
                                     <input id="cl-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+65 9123 4567" required aria-describedby="cl-whatsapp-help cl-whatsapp-error">
-                                    <small class="help" id="cl-whatsapp-help">Your Closer picks up the conversation here.</small>
+                                    <small class="help" id="cl-whatsapp-help">Your AI picks up the conversation here.</small>
                                     <p class="jobs-error" id="cl-whatsapp-error" hidden></p></div>
                                 <div class="hp" aria-hidden="true"><label>Leave this field empty <input type="text" name="url_hp" tabindex="-1" autocomplete="off" aria-hidden="true"></label></div>
                                 <input type="hidden" name="_subject" value="New 41 Closer lead (ad landing page)">
@@ -498,7 +557,7 @@
                                 <div class="field full"><label for="cl-website">Your website</label>
                                     <input id="cl-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourcompany.com" required
                                            aria-describedby="cl-website-help cl-website-error">
-                                    <small class="help" id="cl-website-help">We build your Closer on it, so it answers with your own products and prices.</small>
+                                    <small class="help" id="cl-website-help">We build your AI on it, so it answers with your own products and prices.</small>
                                     <p class="jobs-error" id="cl-website-error" hidden>That does not look like a website. Try something like yourcompany.com</p></div>
                                 <div class="field"><label for="cl-enquiries">WhatsApp enquiries a week</label>
                                     <select id="cl-enquiries" name="enquiries" required><option value="" disabled selected>Choose one</option><option value="under20">Under 20</option><option value="20to50">20 to 50</option><option value="50to150">50 to 150</option><option value="150plus">Over 150</option></select></div>
@@ -523,7 +582,7 @@
                         <div id="cl-book" hidden>
                             <span class="ok-badge">&#10003; You qualify</span>
                             <div id="cl-cal-head">
-                                <h3>Pick a time. We build your Closer before we meet.</h3>
+                                <h3>Pick a time. We build your AI before we meet.</h3>
                                 <p>30 minutes on Google Meet with Alexander. We look at your business first. If it fits and you want it, it can go live in one call.</p>
                             </div>
                             <div id="cl-cal"></div>
@@ -533,12 +592,12 @@
                         </div>
                         <div id="cl-notyet" hidden>
                             <h3>Thanks, <span class="cl-first"></span>.</h3>
-                            <p>From your answers, building you a Closer may not pay for itself yet. We'll look properly and come back to you within one working day either way, with the numbers we worked out on your business.</p>
+                            <p>From your answers, building your AI sales team may not pay for itself yet. We'll look properly and come back to you within one working day either way, with the numbers we worked out on your business.</p>
                         </div>
                     </div>
                 </form>
                 <div class="promise">
-                    <div class="seal">NO&#8209;PITCH<br>PROMISE</div>
+                    <div class="seal">No&#8209;pitch<br>promise</div>
                     <p><b>If it isn't a fit, we'll say so on the call.</b> You keep the numbers we worked out on your business either way.</p>
                 </div>
             </div>
@@ -586,7 +645,7 @@
             <div class="stat"><b>45,355</b><span>customer messages handled on one client's WhatsApp</span></div>
             <div class="stat"><b>1 in 4</b><span>of their enquiries arrived outside office hours</span></div>
             <div class="stat"><b>19 seconds</b><span>median first reply, 9 in 10 under half a minute</span></div>
-            <div class="stat"><b>20</b><span>businesses have had a Closer built on their own data, across 17 industries</span></div>
+            <div class="stat"><b>20</b><span>businesses have had an AI sales team built on their own data, across 17 industries</span></div>
         </div>
         <p class="stats-note">Measured from our own systems on 13 September 2026. The message, after-hours and speed figures come from one Singapore distributor's live line over four and a half months.</p>
     </div>
@@ -599,9 +658,9 @@
             <h2 class="caps center">What you get, free</h2>
             <p class="sub center">Three things, before you pay anything. You keep all of them, whether or not you go ahead.</p>
             <div class="get-grid">
-                <figure class="get-photo" style="margin:0"><img src="assets/closer/stage-smeicc-2026-pitch.webp" alt="Alexander Lee presenting 41 Closer on stage" width="1500" height="2000" loading="lazy"><figcaption class="photo-cap">Alexander showing 41 Closer on stage</figcaption></figure>
+                <figure class="get-photo" style="margin:0"><img src="assets/closer/stage-smeicc-2026-pitch.webp" alt="Alexander Lee presenting our AI sales team on stage" width="1500" height="2000" loading="lazy"><figcaption class="photo-cap">Alexander presenting our AI sales team on stage</figcaption></figure>
                 <ol class="numlist stack">
-                    <li><div><b>Your own AI sales team, built on your business.</b>We build it from your website before we meet, so on the call you message it from your own phone and ask it your hardest questions. Until 1 October this build cost from S$4,800. Now it is included.</div></li>
+                    <li><div><b>Your own AI sales team, built on your business.</b>We build it from your website before we meet, so on the call you message it from your own phone and ask it your hardest questions. We used to charge S$4,800 for this build. Now it is included.</div></li>
                     <li><div><b>Your numbers.</b>How fast your WhatsApp replies today, how many enquiries you are likely losing after hours, and what they are worth a month. Worked out on your own figures.</div></li>
                     <li><div><b>A straight answer, in writing.</b>After the call you get a one-page summary: what we would set up and what it would cost, from S$299 a month, or a clear "not a fit". If it fits and you are ready, it can go live in one call.</div></li>
                 </ol>
@@ -624,7 +683,7 @@
                 <div class="leak-pair">
                     <div class="leak-side"><b class="was">7 hours</b><span>before</span></div>
                     <span class="leak-arrow" aria-hidden="true">&rarr;</span>
-                    <div class="leak-side"><b class="now">19 sec</b><span>with a Closer</span></div>
+                    <div class="leak-side"><b class="now">19 sec</b><span>with your AI</span></div>
                 </div>
                 <p class="leak-note">By 9:03am when someone replied, they had messaged two competitors. Another enquiry waited 23 hours and had already booked elsewhere.</p>
             </figure>
@@ -646,7 +705,7 @@
                     <span class="leak-arrow" aria-hidden="true">&rarr;</span>
                     <div class="leak-side"><b class="now">Instant</b><span>12,868 products</span></div>
                 </div>
-                <p class="leak-note">Their salespeople left customers waiting while they looked up stock and compared options. The Closer reads the same pricing system and answers in the same breath.</p>
+                <p class="leak-note">Their salespeople left customers waiting while they looked up stock and compared options. The AI reads the same pricing system and answers in the same breath.</p>
             </figure>
         </div>
     </div>
@@ -683,7 +742,7 @@
         <div class="track reveal">
             <p class="track-lead">Where the experience comes from</p>
             <div class="track-grid">
-                <div class="track-item"><b>20</b><span>businesses have had a Closer built on their own data, across 17 industries</span></div>
+                <div class="track-item"><b>20</b><span>businesses have had an AI sales team built on their own data, across 17 industries</span></div>
                 <div class="track-item"><b>45,355</b><span>real customer messages handled on one client's live WhatsApp line</span></div>
                 <div class="track-item"><b>12,868</b><span>live products one agent quotes from, synced from their own system daily</span></div>
                 <div class="track-item"><b>19 sec</b><span>median first reply, nine in ten under half a minute</span></div>
@@ -732,7 +791,7 @@
                     <span class="vs-verdict">The customer messages someone else</span>
                 </div>
                 <div class="vs-card vs-good">
-                    <span class="vs-who">A Closer we tuned on your sales process</span>
+                    <span class="vs-who">An AI we tuned on your sales process</span>
                     <p>"Yes, 4mm is in stock at Woodlands, 340 pieces. At 200 you are on the trade tier: S$4.20 each, S$840. Want me to hold them?"</p>
                     <span class="vs-verdict">The customer buys</span>
                 </div>
@@ -741,17 +800,17 @@
 
         <div class="four">
             <div class="card reveal">
-                <span class="tagnum">01 &middot; WE LEARN HOW YOU SELL</span>
+                <span class="tagnum">We learn how you sell</span>
                 <h3>We read your real chats before we build anything</h3>
-                <p>We go through your last few hundred conversations and sit with whoever closes best. What they ask, in what order, what they say to "how much", when they push for the deposit. That becomes the Closer's playbook, not a generic script.</p>
+                <p>We go through your last few hundred conversations and sit with whoever closes best. What they ask, in what order, what they say to "how much", when they push for the deposit. That becomes your AI's playbook, not a generic script.</p>
             </div>
             <div class="card reveal">
-                <span class="tagnum">02 &middot; WE ARE THE EXPERTS</span>
+                <span class="tagnum">We are the experts</span>
                 <h3>Tuned every week, by the people who build these for a living</h3>
                 <p>Setting up a chatbot takes an afternoon. Making one sell like your best closer takes tuning, and your team has better things to do. We do this across 20 businesses, so what works in one gets tried in yours.</p>
             </div>
             <div class="card reveal">
-                <span class="tagnum">03 &middot; CONNECTED</span>
+                <span class="tagnum">Connected</span>
                 <h3>Plugged into the systems that hold your prices</h3>
                 <p>Most tools answer from a document. Ours reads your live price list, your stock by branch and your calendar. One client's agent quotes from <b>12,868 live products</b>, synced daily. Their previous vendor took a setup fee and could not handle the catalogue at all.</p>
                 <div class="conn">
@@ -764,7 +823,7 @@
                 </div>
             </div>
             <div class="card reveal">
-                <span class="tagnum">04 &middot; NOTHING TO LEARN</span>
+                <span class="tagnum">Nothing to learn</span>
                 <h3>Nothing to learn, and nothing to commit to</h3>
                 <p>No new app for your team, no new number for your customers. You get one dashboard that reads like WhatsApp, so there is nothing to learn to use it. The build is included, billing starts the day it goes live, and <b>one month is the only commitment you ever make</b>.</p>
             </div>
@@ -781,9 +840,9 @@
         <p class="sub center">It's rarely the price. A customer who messages you is ready to talk right now. What happens in the next few minutes decides it.</p>
         <figure class="why-photo reveal"><img src="assets/closer/talk-mandala-club-2026-05-13-close.webp" alt="Alexander Lee presenting at a 41 Labs talk, slide reads: every SME loses revenue in the same 4 places" width="1333" height="2000" loading="lazy"><figcaption class="photo-cap">"Every SME loses revenue in the same 4 places: speed, coverage, follow-up, qualification."</figcaption></figure>
         <div class="three">
-            <div class="card reveal"><span class="tagnum">01 &middot; SPEED</span><h3>Whoever replies first usually wins</h3><p>The customer who messages at 11pm has messaged two other businesses too. The first real answer gets the booking.</p></div>
-            <div class="card reveal"><span class="tagnum">02 &middot; CERTAINTY</span><h3>"Let me check" loses to a clear answer</h3><p>A reply with a real price, a real slot and a next step lets them say yes in the chat. A vague reply sends them back to shopping.</p></div>
-            <div class="card reveal"><span class="tagnum">03 &middot; FOLLOW-UP</span><h3>Quiet isn't the same as no</h3><p>Plenty of buyers go quiet because life got busy. One polite follow-up at the right time brings a lot of them back.</p></div>
+            <div class="card reveal"><span class="tagnum">Speed</span><h3>Whoever replies first usually wins</h3><p>The customer who messages at 11pm has messaged two other businesses too. The first real answer gets the booking.</p></div>
+            <div class="card reveal"><span class="tagnum">Certainty</span><h3>"Let me check" loses to a clear answer</h3><p>A reply with a real price, a real slot and a next step lets them say yes in the chat. A vague reply sends them back to shopping.</p></div>
+            <div class="card reveal"><span class="tagnum">Follow-up</span><h3>Quiet isn't the same as no</h3><p>Plenty of buyers go quiet because life got busy. One polite follow-up at the right time brings a lot of them back.</p></div>
         </div>
     </div>
         <div class="cta-row"><a class="btn btn-cta" href="#qualify">See if it fits my business <span class="arrow">&rarr;</span></a></div>
@@ -793,7 +852,7 @@
 <section id="money" class="band" style="padding-top:0">
     <div class="wrap">
         <div class="panel reveal">
-            <h2 class="caps center">And this is where the Closer makes you money</h2>
+            <h2 class="caps center">And this is where your AI sales team makes you money</h2>
             <ol class="numlist" style="margin-top:26px">
                 <li><div><b>Nights, weekends and public holidays.</b>Every enquiry gets a proper answer in seconds, so the 11pm customer books with you, not the next business on their list.</div></li>
                 <li><div><b>Quotes and bookings inside the chat.</b>It works from your own price list, stock and calendar, so the customer can say yes without waiting for your team.</div></li>
@@ -809,10 +868,10 @@
 <section id="guarantee" class="band">
     <div class="wrap">
         <div class="gbox reveal">
-            <div class="seal">NO<br>CONTRACT</div>
+            <div class="seal">No<br>contract</div>
             <h2>One month is the only commitment you ever make</h2>
             <p>The build is included, so you are not paying to be set up. Billing starts the day it goes live, not the day you sign. After the first month it is month to month with 30 days notice, and you can stop any time.</p>
-            <p>On the demo we look at your numbers first, and that is free. If the maths isn't there for your business, we'll tell you and we won't take your money.</p>
+            <p>On the call we look at your numbers first, and that is free. If the maths isn't there for your business, we'll tell you and we won't take your money.</p>
             <p class="fine">Full terms are in your agreement.</p>
         </div>
     </div>
@@ -850,7 +909,7 @@
 <!-- 13 BEFORE vs AFTER -->
 <section id="before-after" class="band">
     <div class="wrap">
-        <h2 class="caps center">Before vs after 41 Closer</h2>
+        <h2 class="caps center">Before and after 41 Sales Team</h2>
         <div class="ba reveal">
             <div class="before"><h3>Before</h3><ul>
 <li>The 11pm booking request waits until morning</li>
@@ -904,8 +963,8 @@
     <div class="wrap narrow">
         <h2 class="caps center">Frequently asked questions</h2>
         <div class="faq">
-                <details><summary>What happens on the call?</summary><p>30 minutes on Google Meet. You see the Closer running on your own products, your numbers worked out, and an honest answer on whether it fits.</p></details>
-                <details><summary>What do you build before the call?</summary><p>We take your website and build the Closer on your real products and prices, so it answers the kind of enquiry your business actually gets. We also message your business like a customer, to time how fast you reply today.</p></details>
+                <details><summary>What happens on the call?</summary><p>30 minutes on Google Meet. You see your AI running on your own products, your numbers worked out, and an honest answer on whether it fits.</p></details>
+                <details><summary>What do you build before the call?</summary><p>We take your website and build your AI on your real products and prices, so it answers the kind of enquiry your business actually gets. We also message your business like a customer, to time how fast you reply today.</p></details>
                 <details><summary>Is this a sales pitch?</summary><p>Partly, and we'll be upfront. You keep the numbers either way: how fast your WhatsApp replies today, and what the late ones are costing you. If it pays for itself we'll show the maths and the price. If it doesn't, we'll say so.</p></details>
                 <details><summary>I've been burned by an agency before.</summary><p>Fair. Two differences: you see it working on your own products before you pay anything, and we run it every week instead of handing you software to manage.</p></details>
                 <details><summary>How is this different from the WhatsApp tools I've seen?</summary><p>Those are software you set up and run: flows, menus, a shared inbox. They answer. This is built on your own prices, stock and calendar, it sells, and our team runs it for you. And once your numbers support it, we put money on the result.</p></details>
