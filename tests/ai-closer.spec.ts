@@ -72,13 +72,15 @@ for (const P of PAGES) {
 
     // 15 Oct 2026: the offer is the build call. Build included, live on one call, from
     // S$299 a month (Start, the price card's entry plan). The page now says the same as the ads.
-    test('offer is the build call: live on one call, from S$299, free to try, no guarantee', async ({ page }) => {
+    test('offer is consultative: free call, no pressure, from S$299, live in one call when ready, no guarantee', async ({ page }) => {
       await stubNetwork(page);
       await page.goto(P.path);
       const text = await page.locator('body').innerText();
       expect(text).toMatch(/free/i);
       expect(text).toMatch(/from S\$299 a month/i);
-      expect(text).toMatch(/live on one call|live by the end of one call/i);
+      // 16 Oct: consultative. The call is to see if it fits; going live is offered, never pushed.
+      expect(text).toMatch(/live in one call/i);
+      expect(text).toMatch(/no pressure/i);
       expect(text).not.toMatch(/leak audit/i);
       expect(text).not.toContain('9,600');
       expect(text).not.toContain('1,490');
@@ -307,7 +309,7 @@ test.describe('long form follows the event opt-in structure', () => {
     const hrefs = await ctas.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
     expect(new Set(hrefs)).toEqual(new Set(['#qualify']));
     const words = await ctas.allInnerTexts();
-    for (const w of words) expect(w.trim().toLowerCase()).toMatch(/^book my build call/);
+    for (const w of words) expect(w.trim().toLowerCase()).toMatch(/^see if it fits my business/);
   });
 
   // The escape hatch under the form is gone: it offered a way out at the exact moment
