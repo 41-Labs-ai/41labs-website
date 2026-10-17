@@ -24,7 +24,7 @@ LANES = {
         'ads': ['cold_fleet', 'cold_carrental', 'cold_dealership',
                 'cold_lane_fleet_doublebook', 'cold_lane_carrental_afterhours'],
         'chat': 'car',
-        'title': 'See What an AI Sales Team Would Do for Your Fleet | 41 Closer',
+        'title': 'See What an AI Sales Team Would Do for Your Fleet | 41 Sales Team',
         'aud': ('Not just a chatbot &middot; for Singapore rental yards, fleets and dealers, '
                 'where customers ask what is free and book over WhatsApp'),
         'h1': 'Every booking request answered, checked and confirmed.<br><span class="hl">Even at 2am.</span>',
