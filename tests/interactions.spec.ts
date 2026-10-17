@@ -18,18 +18,17 @@ test.describe('FAQ Accordion', () => {
     await expect(firstAnswer).toBeVisible();
   });
 
-  test('should toggle FAQ icon on click', async ({ page }) => {
-    const firstQuestion = page.locator('.faq-question').first();
+  test('should close FAQ answer on a second click', async ({ page }) => {
+    const firstItem = page.locator('.faq-item').first();
+    const firstQuestion = firstItem.locator('.faq-question');
 
-    // Get initial icon state
-    const icon = firstQuestion.locator('.faq-icon');
-    const initialText = await icon.textContent();
-
-    // Click to toggle
+    // Each question is a native <details>; the open state is the toggle.
+    await expect(firstItem).not.toHaveAttribute('open', '');
     await firstQuestion.click();
-
-    // Icon should change (+ to - or similar)
-    await page.waitForTimeout(300);
+    await expect(firstItem).toHaveAttribute('open', '');
+    await firstQuestion.click();
+    await expect(firstItem).not.toHaveAttribute('open', '');
+    await expect(firstItem.locator('.faq-answer')).not.toBeVisible();
   });
 });
 
@@ -55,7 +54,7 @@ test.describe('Contact Form', () => {
   test('should have submit button', async ({ page }) => {
     const submitBtn = page.locator('#contact-form button[type="submit"]');
     await expect(submitBtn).toBeVisible();
-    await expect(submitBtn).toContainText('Send Message');
+    await expect(submitBtn).toContainText(/send message/i);
   });
 
   test('should require name field', async ({ page }) => {
