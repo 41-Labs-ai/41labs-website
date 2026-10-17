@@ -17,8 +17,8 @@ test.describe('Accessibility', () => {
   });
 
   test('should have alt text on logo images', async ({ page }) => {
-    const logoImg = page.locator('.logo-img');
-    await expect(logoImg).toHaveAttribute('alt', /41 Labs/i);
+    const logoImg = page.locator('.site-logo img');
+    await expect(logoImg).toHaveAttribute('alt', /41 Sales Team/i);
   });
 
   test('should have proper heading hierarchy', async ({ page }) => {
@@ -32,7 +32,7 @@ test.describe('Accessibility', () => {
   });
 
   test('should have aria-label on mobile menu button', async ({ page }) => {
-    const mobileMenuBtn = page.locator('.mobile-menu-btn');
+    const mobileMenuBtn = page.locator('.nav-toggle');
     await expect(mobileMenuBtn).toHaveAttribute('aria-label', /menu/i);
   });
 
@@ -48,7 +48,7 @@ test.describe('Accessibility', () => {
   });
 
   test('should have descriptive link text for social links', async ({ page }) => {
-    const linkedInLink = page.locator('.footer-social a[aria-label]');
+    const linkedInLink = page.locator('.site-footer a[aria-label*="LinkedIn"]');
     await expect(linkedInLink.first()).toHaveAttribute('aria-label', /linkedin/i);
   });
 });
@@ -59,11 +59,11 @@ test.describe('Responsive Design', () => {
     await page.goto('/');
 
     // Desktop nav should be visible
-    const navLinks = page.locator('.nav-links');
+    const navLinks = page.locator('.site-nav');
     await expect(navLinks).toBeVisible();
 
     // Mobile menu should be hidden
-    const mobileMenuBtn = page.locator('.mobile-menu-btn');
+    const mobileMenuBtn = page.locator('.nav-toggle');
     await expect(mobileMenuBtn).not.toBeVisible();
   });
 
@@ -85,7 +85,7 @@ test.describe('Responsive Design', () => {
     await expect(heroHeading).toBeVisible();
 
     // Mobile menu button should be visible
-    const mobileMenuBtn = page.locator('.mobile-menu-btn');
+    const mobileMenuBtn = page.locator('.nav-toggle');
     await expect(mobileMenuBtn).toBeVisible();
   });
 });
