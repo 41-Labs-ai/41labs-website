@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting your WESS bookings</title>
+<meta name="doc-category" content="Calendar">
+<style>
+  :root{
+    --green:#16a34a; --green-bg:#f0fdf4; --ink:#1a1a1a; --muted:#52525b;
+    --rule:#e4e4e7; --amber-bg:#fffbeb; --amber-border:#f59e0b; --code-bg:#f4f4f5;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    margin:0; background:#e9e9ec; color:var(--ink);
+    font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;
+    font-size:10pt; line-height:15.5pt;
+  }
+
+  /* ---- Sheet (screen) ---- */
+  .doc{
+    background:#fff; width:210mm; margin:24px auto; padding:24mm 22mm 22mm;
+    box-shadow:0 2px 22px rgba(0,0,0,.13);
+  }
+
+  /* ---- Header ---- */
+  .run-header{ margin:0 0 6mm; }
+  .run-header .row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12pt;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+  .run-header .supplier{ text-transform:uppercase; letter-spacing:.04em; }
+  .run-header .docname{ text-align:right; }
+  .run-header .rule{ border-bottom:2.5pt solid var(--green); margin-top:4pt; }
+
+  /* ---- Footer ---- */
+  .run-footer{ margin:8mm 0 0; }
+  .run-footer .rule{ border-top:.5pt solid var(--rule); margin-bottom:4pt; }
+  .run-footer .row{
+    display:flex; justify-content:space-between;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+
+  /* ---- Titles ---- */
+  h1.title{ font-size:23pt; line-height:27pt; font-weight:bold; margin:0 0 3pt; }
+  p.subtitle{ font-size:11.5pt; line-height:16pt; color:var(--muted); margin:0 0 6pt; }
+  p.meta{ font-size:8.8pt; line-height:13pt; color:var(--muted); margin:0 0 14pt; }
+
+  h2.section-h{
+    font-size:13.5pt; line-height:17pt; font-weight:bold; margin:16pt 0 7pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+
+  p{ margin:0 0 6pt; }
+  strong{ font-weight:bold; }
+
+  /* ---- Lists ---- */
+  ul.bullets{ margin:0 0 4pt; padding-left:12pt; }
+  ul.bullets li{ margin:0 0 2pt; }
+  ol.actions{ margin:0 0 4pt; padding-left:14pt; }
+  ol.actions li{ margin:0 0 2pt; }
+
+  /* ---- Callouts ---- */
+  .callout{
+    width:100%; padding:7pt 9pt; margin:0 0 6pt;
+    font-size:9.2pt; line-height:14pt;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .callout p{ margin:0 0 4pt; font-size:9.2pt; line-height:14pt; }
+  .callout p:last-child{ margin-bottom:0; }
+  .callout ol{ margin:2pt 0 0; padding-left:14pt; }
+  .callout ol li{ margin:0 0 2pt; }
+  .callout ol li:last-child{ margin-bottom:0; }
+  .note{ background:var(--green-bg); border-left:2.2pt solid var(--green); }
+  .warn{ background:var(--amber-bg); border-left:2.2pt solid var(--amber-border); }
+
+  /* ---- Steps ---- */
+  .step{ margin:0 0 9pt; }
+  .step-head{
+    display:flex; align-items:flex-start; gap:8pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+  .step-head .num{
+    flex:0 0 auto; width:7.5mm; height:7.5mm; background:var(--green);
+    color:#fff; font-size:9.5pt; font-weight:bold;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-head .step-title{
+    font-size:11.5pt; line-height:15pt; font-weight:bold; margin:0;
+    align-self:center;
+  }
+  .step-body{ margin:5pt 0 0 10mm; }
+
+  /* ---- Key / value table ---- */
+  table.kv{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.kv td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.kv tr:last-child td{ border-bottom:0; }
+  table.kv td.k{ width:45mm; font-weight:bold; padding-right:6pt; }
+
+  /* ---- Data table (multi-column) ---- */
+  table.data{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.data th{
+    font-size:8.6pt; line-height:12.5pt; text-align:left; font-weight:bold;
+    padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:1.2pt solid var(--muted);
+    text-transform:uppercase; letter-spacing:.03em; color:var(--muted);
+  }
+  table.data td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 8pt 6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.data td:last-child, table.data th:last-child{ padding-right:0; }
+  table.data tr:last-child td{ border-bottom:0; }
+  table.data td.yes{ color:var(--green); font-weight:bold; }
+  table.data .ok{ color:var(--green); font-weight:bold; }
+  table.data .bad{ color:#b91c1c; font-weight:bold; }
+
+  /* ---- Checklist ---- */
+  table.checklist{ width:100%; border-collapse:collapse; }
+  table.checklist td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.checklist tr:last-child td{ border-bottom:0; }
+  table.checklist td.box{ width:8mm; }
+  table.checklist tr{ break-inside:avoid; page-break-inside:avoid; }
+  table.checklist td label{ display:block; cursor:pointer; }
+  table.checklist input[type="checkbox"]{
+    appearance:none; -webkit-appearance:none; -moz-appearance:none;
+    width:13pt; height:13pt; margin:0; vertical-align:-2pt; cursor:pointer;
+    border:1.2pt solid var(--muted); border-radius:2px; background:#fff;
+  }
+  table.checklist input[type="checkbox"]:checked{ background:var(--green); border-color:var(--green); }
+  table.checklist input[type="checkbox"]:checked::after{
+    content:""; display:block; width:4pt; height:7.5pt; margin:0.5pt auto 0;
+    border:solid #fff; border-width:0 2pt 2pt 0; transform:rotate(45deg);
+  }
+  table.checklist input[type="checkbox"]:focus-visible{ outline:2px solid var(--green); outline-offset:1px; }
+
+  /* ---- Code block ---- */
+  .code{
+    width:100%; background:var(--code-bg); padding:6pt 8pt; margin:0 0 6pt;
+    font-family:"Courier New",Courier,monospace; font-size:8.6pt; line-height:12.5pt;
+    word-break:break-all; break-inside:avoid; page-break-inside:avoid;
+  }
+  code.inline{
+    font-family:"Courier New",Courier,monospace; font-size:8.8pt;
+    background:var(--code-bg); padding:0 3pt; border-radius:2px;
+  }
+
+  /* ---- Print ---- */
+  @media print{
+    @page{ size:A4; margin:24mm 22mm 22mm 22mm; }
+    body{ background:#fff; }
+    .doc{ width:auto; margin:0; padding:0; box-shadow:none; }
+    .run-header{ position:fixed; top:-15mm; left:0; right:0; margin:0; }
+    .run-footer{ position:fixed; bottom:-15mm; left:0; right:0; margin:0; }
+    .run-header .row, .run-footer .row{ color:var(--muted); }
+  }
+
+  @media screen and (max-width:800px){
+    .doc{ width:auto; margin:0; padding:16px; box-shadow:none; }
+    table.data{ display:block; overflow-x:auto; }
+  }
+
+  /* ---- Back to the index (screen only) ---- */
+  .back-bar{ width:210mm; max-width:100%; margin:20px auto 0; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:5pt;
+    background:#fff; border:.75pt solid var(--rule); border-radius:999px;
+    padding:5pt 11pt; font-size:9pt; line-height:12pt; color:var(--muted);
+    text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,.07);
+  }
+  .back-link:hover{ color:var(--green); border-color:var(--green); }
+  .back-link .arrow{ font-size:11pt; line-height:1; }
+
+  @media print{ .back-bar{ display:none !important; } }
+  @media screen and (max-width:800px){
+    .back-bar{ width:auto; margin:0; padding:14px 16px 0; }
+  }
+
+  /* ---- Screen reading ----
+     The sheet above is sized for A4 print at 10pt, which reads small on a
+     monitor. Scale the type up on screen only, and give code a real mono
+     stack. Print keeps the sizes above, so pagination does not move. */
+  @media screen{
+    body{
+      font-size:13pt; line-height:20pt;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    h1.title{ font-size:28pt; line-height:33pt; margin:0 0 5pt; }
+    p.subtitle{ font-size:14.5pt; line-height:21pt; margin:0 0 8pt; }
+    p.meta{ font-size:11pt; line-height:16pt; }
+    h2.section-h{ font-size:18pt; line-height:23pt; margin:24pt 0 9pt; }
+    ul.bullets, ol.actions{ padding-left:18pt; }
+    .step-head .num{ width:9mm; height:9mm; font-size:12pt; }
+    .step-head .step-title{ font-size:15pt; line-height:20pt; }
+    .callout, .callout p{ font-size:12.5pt; line-height:19pt; }
+    table.kv td, table.data td, table.checklist td{ font-size:12.5pt; line-height:19pt; }
+    table.data th{ font-size:11pt; line-height:16pt; }
+    .shot .cap{ font-size:11pt; line-height:16pt; }
+    .run-header .row, .run-footer .row{ font-size:10pt; line-height:14pt; }
+    .code, code.inline{
+      font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,
+        "Liberation Mono","Courier New",monospace;
+    }
+    .code{ font-size:12pt; line-height:18.5pt; padding:9pt 11pt; }
+    code.inline{ font-size:12pt; padding:1pt 4pt; }
+    .back-link{ font-size:11pt; line-height:15pt; padding:6pt 13pt; }
+  }
+</style>
+</head>
+
+<body>
+<div class="back-bar">
+  <a class="back-link" href="/"><span class="arrow" aria-hidden="true">&larr;</span> All docs</a>
+</div>
+<div class="doc">
+  <header class="run-header">
+    <div class="row">
+      <div class="supplier">41 SALES TEAM &middot; 41 LABS</div>
+      <div class="docname">Connecting WESS</div>
+    </div>
+    <div class="rule"></div>
+  </header>
+  <main class="run-body">
+    <h1 class="title">Connecting your WESS bookings</h1>
+    <p class="subtitle">At the end of this guide, your AI takes booking requests for your outlets and hands them to your team, or sends your WESS booking link.</p>
+    <div class="callout note"><p>Your AI does not book into WESS directly yet. Your team books each request in WESS. Step 6 asks WESS to open access.</p></div>
+    <h2 class="section-h">Before you start</h2>
+    <p>You need:</p>
+    <ul class="bullets"><li>A <strong>WESS</strong> login that can export your customer list.</li><li>Your WESS booking link, if you want your AI to send it.</li><li>Your 41 Sales Team dashboard, with the <strong>owner</strong> or <strong>admin</strong> role.</li><li>About 10 minutes.</li></ul>
+    <h2 class="section-h">Step by step</h2>
+    <section class="step"><div class="step-head"><div class="num">01</div><h3 class="step-title">Open WESS on the Connections screen</h3></div><div class="step-body">
+<ol class="actions"><li>In your dashboard, go to <strong>Settings &rarr; Connections</strong>.</li><li>Under <strong>Add more</strong>, find <strong>WESS</strong>. The <strong>Booking</strong> chip shows booking systems only.</li><li>Press <strong>Connect</strong>.</li></ol>
+    </div></section>
+    <section class="step"><div class="step-head"><div class="num">02</div><h3 class="step-title">Choose how your AI books for now</h3></div><div class="step-body">
+<p>Under <strong>How your AI books for now</strong>, pick one:</p>
+<table class="kv"><tbody><tr><td class="k">Hand the booking to your team</td><td>Your AI takes the treatment, outlet and time the customer wants, tells them your team will confirm, and alerts your team on WhatsApp.</td></tr><tr><td class="k">Send your WESS booking link</td><td>Your AI answers questions, then sends your link so the customer picks a time in WESS.</td></tr></tbody></table>
+<p>If you pick the link, paste it into <strong>Your WESS booking link</strong>. It is the link in your Instagram bio or Google profile, starting with https://.</p>
+<ol class="actions"><li>Under <strong>Your outlets</strong>, type your outlet names, separated by commas.</li><li>Press <strong>Connect WESS</strong>.</li></ol>
+    </div></section>
+    <section class="step"><div class="step-head"><div class="num">03</div><h3 class="step-title">Export your customers from WESS</h3></div><div class="step-body">
+<ol class="actions"><li>In WESS, export your customer list as a CSV file.</li><li>Save the file on your computer.</li></ol>
+<div class="callout note"><p>If you cannot find the export in WESS, ask your WESS account manager where it is.</p></div>
+    </div></section>
+    <section class="step"><div class="step-head"><div class="num">04</div><h3 class="step-title">Upload your customer list</h3></div><div class="step-body">
+<ol class="actions"><li>On the WESS page, under <strong>Your customer list</strong>, press <strong>Upload WESS export</strong> and pick the file.</li><li>Check the counts: new, updated and skipped. A skipped row shows its reason.</li><li>Press <strong>Import</strong>. The button shows how many customers it will import.</li></ol>
+<p>Your AI then greets returning customers by name. Nobody is sent a message.</p>
+    </div></section>
+    <section class="step"><div class="step-head"><div class="num">05</div><h3 class="step-title">Ask WESS for access</h3></div><div class="step-body">
+<ol class="actions"><li>On the WESS page, under <strong>Where this is</strong>, press <strong>Ask WESS for access</strong>.</li><li>Send your WESS account manager the message the screen shows:</li></ol>
+<div class="code">Please give 41 Labs API access to our WESS account, so our AI assistant can see free times and book appointments for us.</div>
+    </div></section>
+    <section class="step"><div class="step-head"><div class="num">06</div><h3 class="step-title">Test it from your own phone</h3></div><div class="step-body">
+<ol class="actions"><li>From a phone that is not an admin number, message your business WhatsApp number and ask to book a treatment.</li><li>Check your WhatsApp: your team got the booking request, or the customer got your WESS link.</li></ol>
+    </div></section>
+    <h2 class="section-h">Checklist</h2><table class="checklist">
+<tr><td class="box"><input type="checkbox" id="ck1"></td><td><label for="ck1">I pressed Connect on WESS (Step 1)</label></td></tr>
+<tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">I chose how my AI books, typed my outlets and pressed Connect WESS (Step 2)</label></td></tr>
+<tr><td class="box"><input type="checkbox" id="ck3"></td><td><label for="ck3">I exported my customer list from WESS (Step 3)</label></td></tr>
+<tr><td class="box"><input type="checkbox" id="ck4"></td><td><label for="ck4">I uploaded the list and checked the counts (Step 4)</label></td></tr>
+<tr><td class="box"><input type="checkbox" id="ck5"></td><td><label for="ck5">I asked WESS for access (Step 5)</label></td></tr>
+<tr><td class="box"><input type="checkbox" id="ck6"></td><td><label for="ck6">A test booking request reached my team (Step 6)</label></td></tr>
+    </table>
+    <h2 class="section-h">Good to know</h2><ul class="bullets"><li>Upload a fresh export every month, so new customers are greeted as returning customers.</li><li>Your AI never confirms a time itself while it hands bookings to your team.</li><li>Press <strong>Disconnect</strong> to stop. Nothing changes in WESS.</li></ul>
+  </main>
+  <footer class="run-footer"><div class="rule"></div><div class="row">
+<div>Questions? Reply to your 41 Labs contact.</div><div class="pageno"></div></div></footer>
+</div>
+</body>
+</html>
