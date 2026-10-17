@@ -129,7 +129,10 @@ module.exports = async (req, res) => {
 
   const parsed = notesLib.parseLeadNotes(opp.statusNotes);
   const bookedKey = `booked:${bookingId}`;
-  const capiKey = `sent:capi_schedule:${bookingId}`;
+  // Claimed on the call (deal + start time), shared with the cron, which sees this same
+  // call under its Google event id. The old per-booking marker still counts.
+  const capiKey = startIso ? `sent:capi_schedule@${startIso}` : `sent:capi_schedule:${bookingId}`;
+  const legacyCapiKey = `sent:capi_schedule:${bookingId}`;
   let notes = String(opp.statusNotes || '');
   const fields = {};
   let action = 'booked';
@@ -165,6 +168,7 @@ module.exports = async (req, res) => {
   const before = String(opp.statusNotes || '');
   const willSendMeta = action === 'booked'
     && !notesLib.hasMarker(before, capiKey)
+    && !notesLib.hasMarker(before, legacyCapiKey)
     && !!env.META_CAPI_TOKEN;
   if (willSendMeta) notes = notesLib.addMarker(notes, capiKey);
 

@@ -204,7 +204,7 @@ async function runBookingSync({ env, fetchImpl, now }) {
     try {
       // 1. Bind + stage. Also refreshes nextAction/followUp if the call moved.
       const bindKey = `booked:${ev.id}`;
-      const nextAction = `Demo booked ${formatSgt(startMs)}. Run the leak audit before the call.`;
+      const nextAction = `Call booked ${formatSgt(startMs)}. Build their AI from their website before the call.`;
       if (!notesLib.hasMarker(opp.statusNotes, bindKey)) {
         const fields = { statusNotes: notesLib.addMarker(opp.statusNotes, bindKey), nextAction, followUp: startIso };
         if (opp.stage === 'SCREENING') fields.stage = 'MEETING';
@@ -218,7 +218,13 @@ async function runBookingSync({ env, fetchImpl, now }) {
       // Keyed per booking, not per deal. A flat 'sent:capi_schedule' meant a deal
       // reported its first booking and went silent for every later one, so a
       // reschedule or a second call never reached Meta.
-      await once(opp, `sent:capi_schedule:${ev.id}`, !!env.META_CAPI_TOKEN, () => {
+      // Claimed on the call itself (deal + start time), shared with api/cal-webhook.js:
+      // Cal.com and Google show the same call under different ids, and keying on the id
+      // reported Joie's booking twice (17 Oct 2026). The old per-id marker still counts.
+      const capiKey = startIso ? `sent:capi_schedule@${startIso}` : `sent:capi_schedule:${ev.id}`;
+      const alreadyReported = notesLib.hasMarker(opp.statusNotes, `sent:capi_schedule:${ev.id}`);
+      if (alreadyReported) summary.sends.push({ opportunityId: opp.id, key: capiKey, status: 'already' });
+      else await once(opp, capiKey, !!env.META_CAPI_TOKEN, () => {
         const c = contactOf(opp);
         const parsed = notesLib.parseLeadNotes(opp.statusNotes);
         const created = Date.parse(ev.created || '');

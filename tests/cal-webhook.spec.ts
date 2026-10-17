@@ -204,6 +204,22 @@ test.describe('a new booking', () => {
   });
 });
 
+test.describe('one call, reported to Meta once', () => {
+  // 17 Oct 2026: the cron and this webhook both reported Joie's booking. Whichever path
+  // sees the call first claims it by its start time; the other stays quiet.
+  test('a call the cron already reported is not reported again', async () => {
+    const seen = { ...OPP, statusNotes: `${OPP.statusNotes}\n[booked:gcal-event-9]\n[sent:capi_schedule@2026-09-25T05:00:00.000Z]` };
+    const { calls } = await run(body('BOOKING_CREATED'), { opp: seen });
+    expect(capiCall(calls), 'Meta must hear about one call once').toBeUndefined();
+  });
+
+  test('the claim this webhook writes is keyed on the call start, so the cron can see it', async () => {
+    const { calls } = await run(body('BOOKING_CREATED'));
+    expect(capiCall(calls)).toBeTruthy();
+    expect(String(patchCall(calls)!.body.statusNotes)).toContain('[sent:capi_schedule@2026-09-25T05:00:00.000Z]');
+  });
+});
+
 test.describe('a moved booking', () => {
   test('follows the new time and re-arms the reminders', async () => {
     const booked = { ...OPP, stage: 'MEETING',

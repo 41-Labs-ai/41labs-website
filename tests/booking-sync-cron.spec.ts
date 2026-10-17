@@ -278,7 +278,8 @@ test.describe('new booking -> MEETING + CAPI Schedule + Hermes booked', () => {
 
     const o = w.store.get('o1');
     expect(o.stage).toBe('MEETING');
-    expect(o.nextAction).toBe('Demo booked Mon 14 Sep 2026, 3:00pm SGT. Run the leak audit before the call.');
+    // 16 Oct 2026: the offer is the build call, not a leak audit.
+    expect(o.nextAction).toBe('Call booked Mon 14 Sep 2026, 3:00pm SGT. Build their AI from their website before the call.');
     expect(o.followUp).toBe('2026-09-14T07:00:00.000Z');
 
     const capi = capiCalls(w.calls);
@@ -419,6 +420,27 @@ test.describe('new booking -> MEETING + CAPI Schedule + Hermes booked', () => {
   // and the notes only kept fbclid. Without _fbp, server-side matching is weak enough
   // that Meta credits the booking to nobody, so Ads Manager can never show a
   // cost per booked call.
+  // 17 Oct 2026, Joie (Enjoy Your Holiday): Cal.com's webhook reported her booking to Meta
+  // under the Cal.com uid, then this cron reported the same call again under the Google
+  // event id. The claim is now on the call itself, the deal plus its start time, so the
+  // second path stays quiet whichever one runs first.
+  test('a call the Cal.com webhook already reported to Meta is not reported again', async () => {
+    const start = Date.parse('2026-09-14T07:00:00Z');
+    const o = opp('o1');
+    o.statusNotes = `${o.statusNotes}\n[booked:cal-uid-1]\n[sent:capi_schedule@${iso(start)}]`;
+    const w = makeWorld({ opps: [o], events: [booking('gcal-event-1', { start })] });
+    await w.run();
+    expect(capiCalls(w.calls), 'Meta must hear about one call once').toHaveLength(0);
+  });
+
+  test('the Schedule claim this cron writes is keyed on the call start, so the webhook can see it', async () => {
+    const start = Date.parse('2026-09-14T07:00:00Z');
+    const w = makeWorld({ opps: [opp('o1')], events: [booking('e1', { start })] });
+    await w.run();
+    expect(capiCalls(w.calls)).toHaveLength(1);
+    expect(w.store.get('o1').statusNotes).toContain(`[sent:capi_schedule@${iso(start)}]`);
+  });
+
   test('Schedule carries the same _fbp and _fbc the Lead had, or Meta cannot attribute it', async () => {
     const w = makeWorld({ opps: [opp('o1')], events: [booking('e1')] });
     await w.run();
