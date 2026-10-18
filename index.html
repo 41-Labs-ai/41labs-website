@@ -294,6 +294,29 @@
 
     /* example dashboard */
     .member-link{color:inherit;text-decoration:none}.member-link:hover{color:var(--primary-text);text-decoration:underline}
+    .sp-path{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:1fr}
+    @media(min-width:640px){.sp-path{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1000px){.sp-path{grid-template-columns:repeat(3,1fr)}}
+    .sp-step{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-card);padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+    .sp-n{width:28px;height:28px;border-radius:999px;background:var(--fg);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:600}
+    .sp-step h3{font-size:16px;font-weight:600;margin:0}
+    .sp-chat{display:flex;flex-direction:column;gap:6px;background:#efeae2;border-radius:14px;padding:10px;background-image:radial-gradient(circle at 1px 1px,rgba(23,32,27,.06) 1px,transparent 0);background-size:18px 18px}
+    .sb{max-width:88%;font-size:13.5px;line-height:1.4;padding:7px 10px;border-radius:14px;box-shadow:var(--shadow-raised);color:var(--fg)}
+    .sb.in{background:#fff;align-self:flex-start;border-top-left-radius:5px}
+    .sb.ai{background:#d9fdd3;align-self:flex-end;border-top-right-radius:5px}
+    .sp-note{text-align:center;font-size:12.5px;color:var(--subtle);margin:10px 0 0}
+    .sp-note.left{text-align:left;margin-top:8px}
+    .sp-proof{display:grid;gap:16px;grid-template-columns:1fr;margin-top:32px}
+    @media(min-width:900px){.sp-proof{grid-template-columns:repeat(3,1fr)}}
+    .sp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:22px;box-shadow:var(--shadow-panel);display:flex;flex-direction:column;gap:10px;min-width:0}
+    .sp-card h3{font-size:17px;font-weight:600;margin:0}
+    .sp-card>p{margin:0;color:var(--muted);font-size:15px}
+    .sp-chips{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+    .sp-chips li{font-size:13px;font-weight:500;background:var(--neutral-soft);border-radius:999px;padding:5px 11px;color:var(--fg)}
+    .sp-dash{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .sp-dash div{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px}
+    .sp-dash span{display:block;font-size:11.5px;color:var(--subtle);line-height:1.3}
+    .sp-dash b{display:block;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:4px}
     .jobs{list-style:none;margin:0;padding:0;display:grid;gap:16px;grid-template-columns:1fr}
     @media(min-width:640px){.jobs{grid-template-columns:1fr 1fr}}
     @media(min-width:1000px){.jobs{grid-template-columns:repeat(4,1fr)}}
@@ -869,7 +892,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="hero wash home-hero" aria-label="41 Sales Team">
         <div class="wrap home-hero-grid">
             <div class="hero-copy">
-                <p class="hero-eyebrow"><span class="dot"></span>For Singapore businesses that sell on WhatsApp</p>
+                <p class="hero-eyebrow"><span class="dot"></span>Built only for sales. For Singapore businesses that sell on WhatsApp</p>
                 <h1>Your AI sales team for WhatsApp. <span class="h1-soft">It answers, quotes, books and gets paid, 24/7.</span></h1>
                 <p class="lede">A reply in seconds, a quote, a booking and a payment link. We set it up and run it for you.</p>
                 <p class="hero-proof"><span class="hp-ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span>19 seconds median first reply on a live Singapore line.</span></p>
@@ -966,14 +989,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <ul class="trust-logos">
                     <li><img src="/assets/41st/logos/whatsapp.svg" alt="" width="26" height="26">WhatsApp</li>
                     <li><img src="/assets/41st/logos/messenger.svg" alt="" width="26" height="26">Messenger</li>
+                    <li><img src="/assets/41st/logos/instagram.svg" alt="" width="26" height="26">Instagram</li>
+                    <li><img src="/assets/41st/logos/telegram.svg" alt="" width="26" height="26">Telegram</li>
+                    <li><img src="/assets/41st/logos/line.svg" alt="" width="26" height="26">LINE</li>
+                    <li><img src="/assets/41st/logos/gmail.svg" alt="" width="26" height="26">Email</li>
                     <li><img src="/assets/41st/logos/stripe.svg" alt="" width="26" height="26">Stripe</li>
                     <li><img src="/assets/41st/logos/airwallex.png" alt="" width="26" height="26">Airwallex</li>
                     <li><img src="/assets/41st/logos/googlecalendar.svg" alt="" width="26" height="26">Google Calendar</li>
-                    <li><img src="/assets/41st/logos/googlesheets.svg" alt="" width="26" height="26">Google Sheets</li>
                     <li><img src="/assets/41st/logos/hubspot.svg" alt="" width="26" height="26">HubSpot</li>
                     <li><img src="/assets/41st/logos/shopify.svg" alt="" width="26" height="26">Shopify</li>
                     <li><img class="wide" src="/assets/41st/logos/plato.svg" alt="" width="50" height="26">Plato</li>
-                    <li><img src="/assets/41st/logos/xero.svg" alt="" width="26" height="26">Xero</li>
                 </ul>
                 <a class="trust-more" href="#integrations">See all integrations<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
             </div>
@@ -1045,6 +1070,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div><h3>Shows you every sale</h3></li>
             </ul>
+            <div class="btn-row center jobs-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify">Book a free call</a></div>
+        </div>
+    </section>
+
+    <!-- 3b. Built only for sales -->
+    <section id="built-to-sell" class="section section-white" aria-labelledby="sell-h">
+        <div class="wrap">
+            <div class="section-head center">
+                <p class="eyebrow">Built only for sales</p>
+                <h2 id="sell-h">Its only job is to make you money</h2>
+                <p class="lede">On every chat it follows the steps your best salesperson follows.</p>
+            </div>
+            <ol class="sp-path">
+                    <li class="sp-step"><span class="sp-n">1</span><h3>Replies in seconds</h3><div class="sp-chat"><div class="sb in">Hi, can service 3 aircon units Sat?</div><div class="sb ai">Yes, we have Saturday. Condo or landed?</div></div></li>
+                    <li class="sp-step"><span class="sp-n">2</span><h3>Asks the right questions</h3><div class="sp-chat"><div class="sb ai">Which area, and when were they last serviced?</div></div></li>
+                    <li class="sp-step"><span class="sp-n">3</span><h3>Recommends and quotes</h3><div class="sp-chat"><div class="sb ai">For 3 units, $180 with chemical wash. 10am or 2pm?</div></div></li>
+                    <li class="sp-step"><span class="sp-n">4</span><h3>Handles the objection</h3><div class="sp-chat"><div class="sb in">Bit pricey leh</div><div class="sb ai">That covers all three units and the gas top-up.</div></div></li>
+                    <li class="sp-step"><span class="sp-n">5</span><h3>Asks for the sale</h3><div class="sp-chat"><div class="sb ai">Shall I book Saturday 10am for you?</div><div class="sb in">Ok book</div></div></li>
+                    <li class="sp-step"><span class="sp-n">6</span><h3>Follows up</h3><div class="sp-chat"><div class="sb ai">Hi Mr Tan, still keen on Saturday?</div></div></li>
+            </ol>
+            <p class="sp-note">Example chats</p>
+            <div class="sp-proof">
+                <div class="sp-card">
+                    <h3>Tested on hard customers first</h3>
+                    <p>Before it goes live, we test it with 12 tough chats.</p>
+                    <ul class="sp-chips"><li>The haggler</li><li>The rival price quote</li><li>The one who goes quiet</li><li>The angry complaint</li><li>Writes in Chinese</li><li>The group booking</li></ul>
+                </div>
+                <div class="sp-card">
+                    <h3>Tuned on how you sell</h3>
+                    <p>We read your past chats before we build it. It learns your prices, your answers and your tone.</p>
+                    <div class="sp-chat sp-tone"><div class="sb in">Got discount for 2 sessions?</div><div class="sb ai">For 2 sessions it is $260 instead of $300. Want to lock in this week?</div></div>
+                    <p class="sp-note left">Example chat</p>
+                </div>
+                <div class="sp-card">
+                    <h3>Measured in sales</h3>
+                    <p>You see what it sold, every week.</p>
+                    <div class="sp-dash"><div><span>Revenue closed</span><b>$12,480</b></div><div><span>Deals closed</span><b>31</b></div><div><span>Back after a chase</span><b>11</b></div></div>
+                    <p class="sp-note left">Example figures</p>
+                </div>
+            </div>
             <div class="btn-row center jobs-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify">Book a free call</a></div>
         </div>
     </section>
@@ -1384,7 +1449,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 id="int-h">Works with what you already use</h2>
       <p class="lede">We connect them for you.</p>
     </div>
-    <ul class="int-grid" aria-label="Connections"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/messenger.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Messenger</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/instagram.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Instagram</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/airwallex.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googledrive.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Drive</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/calendly.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Calendly</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/caldotcom.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Cal.com</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/hubspot.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">HubSpot</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/zoho.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Zoho CRM</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/attio.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Attio</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/twenty.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Twenty</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/xero.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Xero</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/shopify.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Shopify</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/woocommerce.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">WooCommerce</span></li><li class="int-tile"><img class="int-ic int-wide" src="/assets/41st/logos/plato.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Plato</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">W</span><span class="int-name">WESS</span></li><li class="int-tile"><span class="int-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></span><span class="int-name">Any system with an API</span></li></ul>
+    <p class="int-group">Every channel your customers message you on</p>
+    <ul class="int-grid" aria-label="Channels"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/messenger.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Messenger</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/instagram.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Instagram</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/telegram.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Telegram</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/line.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">LINE</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/gmail.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Email</span></li></ul>
+    <p class="int-group">The systems you run your business on</p>
+    <ul class="int-grid" aria-label="Systems"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/airwallex.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googledrive.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Drive</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/calendly.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Calendly</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/caldotcom.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Cal.com</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/hubspot.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">HubSpot</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/zoho.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Zoho CRM</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/attio.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Attio</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/twenty.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Twenty</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/xero.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Xero</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/shopify.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Shopify</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/woocommerce.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">WooCommerce</span></li><li class="int-tile"><img class="int-ic int-wide" src="/assets/41st/logos/plato.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Plato</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">W</span><span class="int-name">WESS</span></li><li class="int-tile"><span class="int-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></span><span class="int-name">Any system with an API</span></li></ul>
   </div>
 </section>
 

@@ -23,7 +23,7 @@ test.describe('Homepage', () => {
   });
 
   test('hero names who it is for and carries one proof number', async ({ page }) => {
-    await expect(page.locator('.hero-eyebrow')).toHaveText('For Singapore businesses that sell on WhatsApp');
+    await expect(page.locator('.hero-eyebrow')).toHaveText('Built only for sales. For Singapore businesses that sell on WhatsApp');
     await expect(page.locator('.hero-proof')).toContainText('19 seconds median first reply on a live Singapore line.');
   });
 
@@ -65,16 +65,25 @@ test.describe('Homepage', () => {
 
   test('sections run in the framework order', async ({ page }) => {
     const ids = await page.locator('main > section').evaluateAll((els) => els.map((e) => e.id));
-    expect(ids).toEqual(['', 'trust', 'what-it-does', 'try-it', 'for-you', 'the-gap', 'what-we-do', 'compare', 'live',
+    expect(ids).toEqual(['', 'trust', 'what-it-does', 'built-to-sell', 'try-it', 'for-you', 'the-gap', 'what-we-do', 'compare', 'live',
       'proof', 'integrations', 'founder', 'risk', 'faq', 'book-call']);
+  });
+
+  test('"Built only for sales" shows the six-step sales path, the hard-customer test and sales measured', async ({ page }) => {
+    const sec = page.locator('#built-to-sell');
+    await expect(sec.locator('h2')).toHaveText('Its only job is to make you money');
+    await expect(sec.locator('.sp-step')).toHaveCount(6);
+    await expect(sec.locator('.sp-chips li')).toHaveCount(6);
+    await expect(sec.getByRole('link', { name: 'Book a free call' })).toHaveAttribute('href', /utm_campaign=home#qualify/);
   });
 
   test('trust strip sits right under the hero with the systems he uses and where we were seen', async ({ page }) => {
     const trust = page.locator('#trust');
     await expect(trust.locator('.trust-label')).toHaveText('Works with what you already use');
-    // 18 Oct 2026: ten real coloured logos, each a real image file, no letter placeholders.
-    await expect(trust.locator('.trust-logos li')).toHaveCount(10);
-    await expect(trust.locator('.trust-logos li img[src^="/assets/41st/logos/"]')).toHaveCount(10);
+    // 18 Oct 2026: twelve real coloured logos, channels first (WhatsApp, Messenger, Instagram, Telegram, LINE, Email).
+    await expect(trust.locator('.trust-logos li')).toHaveCount(12);
+    await expect(trust.locator('.trust-logos li img[src^="/assets/41st/logos/"]')).toHaveCount(12);
+    await expect(trust.locator('.trust-logos li').nth(3)).toContainText('Telegram');
     await expect(trust.locator('a[href="#integrations"]')).toContainText('See all integrations');
     await expect(trust).toContainText('Member of the Singapore A.I. Association. Seen at NRF APAC and SuperAI.');
   });
