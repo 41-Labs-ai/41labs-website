@@ -34,12 +34,13 @@ test.describe('Navigation', () => {
   });
 
   test('"Your AI team" menu links each live AI to its page', async ({ page }) => {
+    // The links sit in a closed dropdown, so they are checked by href rather than by visible role.
     const team = page.locator('.site-nav .nav-dd', { hasText: 'Your AI team' });
-    await expect(team.getByRole('link', { name: 'AI Sales Closer' })).toHaveAttribute('href', /41-closer/);
-    await expect(team.getByRole('link', { name: 'AI Operations Admin' })).toHaveAttribute('href', '/ai-operations-admin');
-    await expect(team.getByRole('link', { name: 'AI Manager' })).toHaveAttribute('href', '/ai-manager');
+    await expect(team.locator('a[href="/41-closer"]')).toHaveText('AI Sales Closer');
+    await expect(team.locator('a[href="/ai-operations-admin"]')).toHaveText('AI Operations Admin');
+    await expect(team.locator('a[href="/ai-manager"]')).toHaveText('AI Manager');
     // Not built yet, so it is named but never linked.
-    await expect(team.getByRole('link', { name: /Leads Generator/ })).toHaveCount(0);
+    await expect(team.locator('a', { hasText: 'Leads Generator' })).toHaveCount(0);
     await expect(team).toContainText('Coming soon');
   });
 
