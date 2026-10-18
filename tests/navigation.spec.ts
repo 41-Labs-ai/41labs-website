@@ -18,7 +18,7 @@ test.describe('Navigation', () => {
   test('should have top-level navigation items', async ({ page }) => {
     const nav = page.locator('.site-nav');
 
-    await expect(nav.getByRole('link', { name: 'AI Sales Closer' })).toBeVisible();
+    await expect(nav.locator('.nav-dd > button', { hasText: 'Your AI team' })).toBeVisible();
     await expect(nav.locator('.nav-dd > button', { hasText: 'Solutions' })).toBeVisible();
     await expect(nav.locator('.nav-dd > button', { hasText: 'Industries' })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Case studies' })).toBeVisible();
@@ -33,9 +33,14 @@ test.describe('Navigation', () => {
     await expect(navCta).toHaveAttribute('target', '_blank');
   });
 
-  test('"AI Sales Closer" nav link points to the Closer page', async ({ page }) => {
-    const closer = page.locator('.site-nav').getByRole('link', { name: 'AI Sales Closer' });
-    await expect(closer).toHaveAttribute('href', /41-closer/);
+  test('"Your AI team" menu links each live AI to its page', async ({ page }) => {
+    const team = page.locator('.site-nav .nav-dd', { hasText: 'Your AI team' });
+    await expect(team.getByRole('link', { name: 'AI Sales Closer' })).toHaveAttribute('href', /41-closer/);
+    await expect(team.getByRole('link', { name: 'AI Operations Admin' })).toHaveAttribute('href', '/ai-operations-admin');
+    await expect(team.getByRole('link', { name: 'AI Manager' })).toHaveAttribute('href', '/ai-manager');
+    // Not built yet, so it is named but never linked.
+    await expect(team.getByRole('link', { name: /Leads Generator/ })).toHaveCount(0);
+    await expect(team).toContainText('Coming soon');
   });
 
   test('Case studies nav link navigates to the case studies page', async ({ page }) => {
@@ -68,6 +73,6 @@ test.describe('Mobile Navigation', () => {
     await expect(navLinks).not.toBeVisible();
     await page.locator('.nav-toggle').click();
     await expect(navLinks).toBeVisible();
-    await expect(navLinks.getByRole('link', { name: 'AI Sales Closer' })).toBeVisible();
+    await expect(navLinks.locator('.nav-dd > button', { hasText: 'Your AI team' })).toBeVisible();
   });
 });

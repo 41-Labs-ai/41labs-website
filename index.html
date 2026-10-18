@@ -329,6 +329,13 @@
     @media(max-width:640px){.home-hero{padding-block:32px 64px}.hero-eyebrow{font-size:13px;margin-bottom:14px}}
 
     /* example dashboard */
+    .member-link{color:inherit;text-decoration:none}.member-link:hover{color:var(--primary-text);text-decoration:underline}
+    .more-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:18px 0 0}
+    .ind-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+    .ind-tab{font:500 14px/1 var(--font);min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface);color:var(--muted);cursor:pointer}
+    .ind-tab:hover{background:var(--neutral-soft);color:var(--fg)}
+    .ind-tab.on{background:var(--primary-soft);border-color:transparent;color:var(--fg)}
+    .ind-tab:focus-visible{outline:2px solid var(--primary-text);outline-offset:2px}
     .dash-wrap{position:relative;min-width:0}
     .dash{--g:rgba(255,255,255,.62);--gb:rgba(255,255,255,.85);position:relative;border-radius:var(--r-card);border:1px solid var(--border-strong);background:var(--bg);box-shadow:0 1px 2px rgba(23,32,27,.06),0 24px 60px rgba(23,32,27,.14);overflow:hidden}
     .dash-bar{display:flex;align-items:center;gap:12px;height:52px;padding:0 16px;background:var(--g);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid var(--border)}
@@ -673,7 +680,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="site-logo" href="/" aria-label="41 Sales Team home"><img src="/assets/brand/41salesteam-logo-black.webp" alt="41 Sales Team" width="122" height="30"><span>by 41 Labs</span></a>
     <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
-      <a href="/41-closer">AI Sales Closer</a>
+      <div class="nav-dd"><button type="button" aria-expanded="false">Your AI team</button>
+        <div class="nav-dd-menu">
+          <a href="/41-closer">AI Sales Closer</a>
+          <a href="/ai-operations-admin">AI Operations Admin</a>
+          <a href="/ai-manager">AI Manager</a>
+          <span class="nav-soon">AI Leads Generator <span class="pill">Coming soon</span></span>
+        </div></div>
       <div class="nav-dd"><button type="button" aria-expanded="false">Solutions</button>
         <div class="nav-dd-menu">
           <a href="/ai-sales-agent-singapore">AI Sales Agent</a>
@@ -757,39 +770,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
 
             <div class="dash-wrap">
-                <div class="dash" role="img" aria-label="Example dashboard for Lion City Rentals, an example business. Paid on WhatsApp last week: S$8,640, example figures.">
+                <div class="ind-tabs" role="tablist" aria-label="Pick a kind of business">
+                    <button type="button" role="tab" class="ind-tab on" aria-selected="true" data-ind="clinic">Clinic</button>
+                    <button type="button" role="tab" class="ind-tab" aria-selected="false" data-ind="renovation">Renovation</button>
+                    <button type="button" role="tab" class="ind-tab" aria-selected="false" data-ind="aircon">Aircon</button>
+                    <button type="button" role="tab" class="ind-tab" aria-selected="false" data-ind="rental">Car rental</button>
+                </div>
+                <div class="dash" id="dash" role="img" aria-label="Example dashboard for Orchard Aesthetics, an example business. Paid on WhatsApp last week: S$12,480, example figures.">
                     <div class="dash-bar">
-                        <span class="biz-logo" aria-hidden="true">L</span>
-                        <b>Lion City Rentals</b>
+                        <span class="biz-logo" aria-hidden="true" data-k="logo">O</span>
+                        <b data-k="biz">Orchard Aesthetics</b>
                         <span class="pill pill-example">Example</span>
                         <span class="grow"></span>
                         <span class="dash-date">Mon 12 Oct</span>
-                        <span class="me" aria-hidden="true">J</span>
+                        <span class="me" aria-hidden="true" data-k="me">S</span>
                     </div>
                     <div class="dash-body">
                         <div class="greet">
                             <div>
-                                <h3>Welcome back, Jason</h3>
-                                <p>Here is how Lion City Rentals did last week.</p>
+                                <h3>Welcome back, <span data-k="owner">Sarah</span></h3>
+                                <p>Here is how <span data-k="biz">Orchard Aesthetics</span> did last week.</p>
                             </div>
                             <span class="seg" aria-hidden="true"><span class="on">7 days</span><span>30 days</span></span>
                         </div>
                         <div class="tiles">
                             <div class="tile">
                                 <div class="tile-label"><span class="tile-ico"><svg class="i"><use href="#i-cash"/></svg></span>Paid on WhatsApp</div>
-                                <div class="tile-num"><small>S$</small><span id="paid-num" data-to="8640" data-from="8220">8,640</span></div>
-                                <div class="tile-ctx" id="paid-ctx">23 payments, example</div>
+                                <div class="tile-num"><small>S$</small><span id="paid-num" data-to="12480" data-from="11800">12,480</span></div>
+                                <div class="tile-ctx" id="paid-ctx" data-k="paidctx">31 payments, example</div>
                                 <div class="spark-box"><svg class="spark" viewBox="0 0 160 36" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15803d" stop-opacity=".35"/><stop offset="1" stop-color="#15803d" stop-opacity="0"/></linearGradient></defs><path d="M4.0,32.0 C8.2,30.6 20.9,25.6 29.3,23.6 C37.8,21.7 46.2,19.7 54.7,20.2 C63.1,20.7 71.6,28.3 80.0,26.6 C88.4,24.9 96.9,13.4 105.3,9.9 C113.8,6.4 122.2,6.5 130.7,5.5 C139.1,4.5 151.8,4.2 156.0,4.0 L156.0,36 L4.0,36 Z" fill="url(#g1)"/><path d="M4.0,32.0 C8.2,30.6 20.9,25.6 29.3,23.6 C37.8,21.7 46.2,19.7 54.7,20.2 C63.1,20.7 71.6,28.3 80.0,26.6 C88.4,24.9 96.9,13.4 105.3,9.9 C113.8,6.4 122.2,6.5 130.7,5.5 C139.1,4.5 151.8,4.2 156.0,4.0" fill="none" stroke="#15803d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><span class="spark-dot" style="--c:#15803d;top:11.1%"></span></div>
                             </div>
                             <div class="tile">
                                 <div class="tile-label"><span class="tile-ico"><svg class="i"><use href="#i-inbox"/></svg></span>New enquiries</div>
-                                <div class="tile-num">126</div>
-                                <div class="tile-ctx">31 after office hours</div>
+                                <div class="tile-num" data-k="enq">142</div>
+                                <div class="tile-ctx" data-k="enqctx">38 after office hours</div>
                                 <div class="spark-box"><svg class="spark" viewBox="0 0 160 36" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17201b" stop-opacity=".35"/><stop offset="1" stop-color="#17201b" stop-opacity="0"/></linearGradient></defs><path d="M4.0,32.0 C8.2,29.1 20.9,15.7 29.3,14.5 C37.8,13.3 46.2,26.2 54.7,25.0 C63.1,23.8 71.6,8.1 80.0,7.5 C88.4,6.9 96.9,22.1 105.3,21.5 C113.8,20.9 122.2,4.0 130.7,4.0 C139.1,4.0 151.8,18.6 156.0,21.5 L156.0,36 L4.0,36 Z" fill="url(#g2)"/><path d="M4.0,32.0 C8.2,29.1 20.9,15.7 29.3,14.5 C37.8,13.3 46.2,26.2 54.7,25.0 C63.1,23.8 71.6,8.1 80.0,7.5 C88.4,6.9 96.9,22.1 105.3,21.5 C113.8,20.9 122.2,4.0 130.7,4.0 C139.1,4.0 151.8,18.6 156.0,21.5" fill="none" stroke="#17201b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><span class="spark-dot" style="--c:#17201b;top:59.7%"></span></div>
                             </div>
                             <div class="tile">
                                 <div class="tile-label"><span class="tile-ico"><svg class="i"><use href="#i-back"/></svg></span>Back after a chase</div>
-                                <div class="tile-num">9</div>
+                                <div class="tile-num" data-k="chase">11</div>
                                 <div class="tile-ctx">Went quiet first</div>
                                 <div class="spark-box"><svg class="spark" viewBox="0 0 160 36" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4ed8" stop-opacity=".35"/><stop offset="1" stop-color="#1d4ed8" stop-opacity="0"/></linearGradient></defs><path d="M4.0,32.0 C8.2,29.7 20.9,22.7 29.3,18.0 C37.8,13.3 46.2,4.0 54.7,4.0 C63.1,4.0 71.6,15.7 80.0,18.0 C88.4,20.3 96.9,20.3 105.3,18.0 C113.8,15.7 122.2,6.3 130.7,4.0 C139.1,1.7 151.8,4.0 156.0,4.0 L156.0,36 L4.0,36 Z" fill="url(#g3)"/><path d="M4.0,32.0 C8.2,29.7 20.9,22.7 29.3,18.0 C37.8,13.3 46.2,4.0 54.7,4.0 C63.1,4.0 71.6,15.7 80.0,18.0 C88.4,20.3 96.9,20.3 105.3,18.0 C113.8,15.7 122.2,6.3 130.7,4.0 C139.1,1.7 151.8,4.0 156.0,4.0" fill="none" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><span class="spark-dot" style="--c:#1d4ed8;top:11.1%"></span></div>
                             </div>
@@ -800,19 +819,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <span class="drow-ico"><svg class="i"><use href="#i-msg"/></svg></span>
                                 <div><div class="drow-name">AI Sales Closer</div><div class="drow-sub">Enquiries answered</div></div>
                                 <span class="pill pill-good">Live</span>
-                                <span class="drow-count">126</span>
+                                <span class="drow-count" data-k="enq">142</span>
                             </div>
                             <div class="drow">
                                 <span class="drow-ico"><svg class="i"><use href="#i-clip"/></svg></span>
-                                <div><div class="drow-name">AI Operations Admin</div><div class="drow-sub">Collections confirmed</div></div>
+                                <div><div class="drow-name">AI Operations Admin</div><div class="drow-sub" data-k="opslabel">Appointments confirmed</div></div>
                                 <span class="pill pill-good">Live</span>
-                                <span class="drow-count">21</span>
+                                <span class="drow-count" data-k="ops">64</span>
                             </div>
                             <div class="drow">
                                 <span class="drow-ico"><svg class="i"><use href="#i-chart"/></svg></span>
                                 <div><div class="drow-name">AI Manager</div><div class="drow-sub">Things to look at</div></div>
                                 <span class="pill pill-good">Live</span>
-                                <span class="drow-count">3</span>
+                                <span class="drow-count" data-k="mgr">4</span>
                             </div>
                             <div class="drow soon">
                                 <span class="drow-ico off"><svg class="i"><use href="#i-mega"/></svg></span>
@@ -824,7 +843,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
                 <div class="float-pay" id="float-pay" aria-hidden="true">
                     <span class="tile-ico"><svg class="i"><use href="#i-cash"/></svg></span>
-                    <div><b>Paid S$420</b><span>Corolla, 1 week. 11:47 pm, example</span></div>
+                    <div><b data-k="paytitle">Paid S$680</b><span data-k="paysub">Acne scar package. 10:52 pm, example</span></div>
                 </div>
                 <p class="dash-caption">Example dashboard. Example business and numbers.</p>
             </div>
@@ -867,10 +886,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li>Your customers keep messaging your same WhatsApp number</li>
                     <li>We build it, connect it and tune it every week</li>
                 </ul>
-                <a class="more" href="/41-closer">See what the AI Sales Closer does</a>
+                <p class="more-links"><a class="more" href="/41-closer">AI Sales Closer</a> <a class="more" href="/ai-operations-admin">AI Operations Admin</a> <a class="more" href="/ai-manager">AI Manager</a></p>
             </div>
 
-            <div class="roster" aria-label="Your AI sales team">
+            <div class="roster" id="team" aria-label="Your AI sales team">
                 <div class="roster-top">
                     <div class="owner">
                         <span class="av"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span>
@@ -882,7 +901,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li>
                         <article class="member">
                             <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-msg"/></svg></span></span>
-                            <div class="who"><h3>AI Sales Closer</h3><span class="job">Answers, quotes, books and gets paid</span></div>
+                            <div class="who"><h3><a class="member-link" href="/41-closer">AI Sales Closer</a></h3><span class="job">Answers, quotes, books and gets paid</span></div>
                             <div class="pills"><span class="pill pill-good">Live</span></div>
                             <p class="desc">Answers every WhatsApp enquiry in minutes, day and night. It quotes, books, sends the payment link and chases customers who go quiet.</p>
                             <span class="act"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg>Example: Ravi K. paid S$920, 1:16 am</span>
@@ -891,7 +910,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li>
                         <article class="member">
                             <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-clip"/></svg></span></span>
-                            <div class="who"><h3>AI Operations Admin</h3><span class="job">Documents, reminders and changes</span></div>
+                            <div class="who"><h3><a class="member-link" href="/ai-operations-admin">AI Operations Admin</a></h3><span class="job">Documents, reminders and changes</span></div>
                             <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
                             <p class="desc">Handles everything after payment. It collects documents, confirms, sends reminders and handles changes.</p>
                             <span class="act"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Example: pickup reminder set for Fri 16 Oct</span>
@@ -900,7 +919,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li>
                         <article class="member">
                             <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-chart"/></svg></span></span>
-                            <div class="who"><h3>AI Manager</h3><span class="job">Watches the team and reports to you</span></div>
+                            <div class="who"><h3><a class="member-link" href="/ai-manager">AI Manager</a></h3><span class="job">Watches the team and reports to you</span></div>
                             <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
                             <p class="desc">Watches the other three. It tells you what happened and what to fix.</p>
                             <span class="act"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Example: sent you the Monday report, 8:00 am</span>
@@ -1070,7 +1089,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="big" aria-hidden="true"><span class="n" id="c-n">2</span><span class="unit" id="c-unit">more sales a month<br>covers Starter.</span></div>
                     <p class="sr" id="c-sum" aria-live="polite">2 more sales a month covers Starter.</p>
                     <p class="math" id="c-math">S$690 a month divided by S$500 a sale is 1.38. Rounded up, that is 2.</p>
-                    <p class="fine" id="c-fine">Plain arithmetic from your own numbers. It makes no forecast.</p>
+                    <p class="fine" id="c-fine">Worked out from the numbers you entered.</p>
                     <a href="https://wa.me/6580124848?text=Hi%2041%20Labs%21%20I%27m%20exploring%20AI%20for%20my%20business%20and%20not%20sure%20where%20to%20start." target="_blank" rel="noopener" class="btn btn-secondary">Talk through your numbers on WhatsApp</a>
                 </div>
             </div>
@@ -1148,7 +1167,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div>
                 <p class="kicker">Pricing</p>
                 <h2>Every plan gets the whole team</h2>
-                <p class="lede" style="margin-top:16px">Plans differ only by how many new customers a month.</p>
+                <p class="lede" style="margin-top:16px">Plans differ only by how many sales conversations a month. A sales conversation is one customer, handled from the first message until they pay or decide not to.</p>
                 <ul class="incl">
                     <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>AI Sales Closer</li>
                     <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>AI Operations Admin</li>
@@ -1165,10 +1184,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div>
                 <div class="card ptable">
                     <div class="pt-head" aria-hidden="true"><span>Plan</span><span>New customers</span><span>A month</span></div>
-                    <div class="pt-row"><span class="pt-name">Start</span><span class="pt-desc">About your first 100 new customers<em>Then S$3 each</em></span><span class="pt-price">S$299<small>a month</small></span></div>
-                    <div class="pt-row"><span class="pt-name">Starter</span><span class="pt-desc">About 350 new customers a month</span><span class="pt-price">S$690<small>a month</small></span></div>
-                    <div class="pt-row"><span class="pt-name">Pro</span><span class="pt-desc">About 1,000 new customers a month</span><span class="pt-price">S$1,490<small>a month</small></span></div>
-                    <div class="pt-row"><span class="pt-name">Scale</span><span class="pt-desc">About 3,000 new customers a month<em>Adds an account manager and monthly tuning</em></span><span class="pt-price">S$4,300<small>a month</small></span></div>
+                    <div class="pt-row"><span class="pt-name">Start</span><span class="pt-desc">About 100 sales conversations a month<em>To try it on your own customers first</em></span><span class="pt-price">S$299<small>a month</small></span></div>
+                    <div class="pt-row"><span class="pt-name">Starter</span><span class="pt-desc">About 350 sales conversations a month</span><span class="pt-price">S$690<small>a month</small></span></div>
+                    <div class="pt-row"><span class="pt-name">Pro</span><span class="pt-desc">About 1,000 sales conversations a month</span><span class="pt-price">S$1,490<small>a month</small></span></div>
+                    <div class="pt-row"><span class="pt-name">Scale</span><span class="pt-desc">About 3,000 sales conversations a month<em>Adds an account manager and monthly tuning</em></span><span class="pt-price">S$4,300<small>a month</small></span></div>
                     <div class="pt-row"><span class="pt-name">Custom</span><span class="pt-desc">Quoted on your build call</span><span class="pt-price"><span class="from">from </span>S$7,900<small>a month</small></span></div>
                     <div class="pt-foot"><span>Prices in SGD, no GST.</span><span>Customer counts are estimates.</span></div>
                 </div>
@@ -1361,7 +1380,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   var num = document.getElementById('paid-num'), ctx = document.getElementById('paid-ctx'), tile = document.getElementById('float-pay');
   if (num && tile && !reduce) {
     var from = +num.dataset.from, to = +num.dataset.to;
-    num.textContent = fmt(from); ctx.textContent = '22 payments, example';
+    var endCtx = ctx.textContent, m = endCtx.match(/^(\d+)/), startCtx = m ? endCtx.replace(m[1], String(+m[1] - 1)) : endCtx;
+    num.textContent = fmt(from); ctx.textContent = startCtx;
     tile.classList.add('pre');
     setTimeout(function(){
       tile.classList.add('in'); tile.classList.remove('pre');
@@ -1370,7 +1390,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         (function step(t){
           var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
           num.textContent = fmt(Math.round(from + (to - from) * e));
-          if (p < 1) requestAnimationFrame(step); else ctx.textContent = '23 payments, example';
+          if (p < 1) requestAnimationFrame(step); else ctx.textContent = endCtx;
         })(t0);
       }, 260);
     }, 1100);
@@ -1389,8 +1409,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var r = Math.round(raw * 100) / 100;
     document.getElementById('c-math').textContent = 'S$' + fmt(price) + ' a month divided by S$' + fmt(sale) + ' a sale is ' + r + '. ' + (Number.isInteger(raw) ? 'That is ' + n + '.' : 'Rounded up, that is ' + n + '.');
     document.getElementById('c-fine').textContent = name === 'Start'
-      ? 'Start covers about your first 100 new customers, then S$3 each. Plain arithmetic. It makes no forecast.'
-      : 'Plain arithmetic from your own numbers. It makes no forecast.';
+      ? 'Start covers about 100 sales conversations a month. Worked out from the numbers you entered.'
+      : 'Worked out from the numbers you entered.';
   }
   if (form) form.addEventListener('change', calc);
 
@@ -1407,6 +1427,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         .then(function(){ b.disabled = false; b.textContent = label; });
     });
   }
+})();
+</script>
+<script>
+/* Hero example dashboard: one example business per trade. Every figure is an example and is labelled so. */
+(function(){
+  var D={
+    clinic:{biz:'Orchard Aesthetics',logo:'O',me:'S',owner:'Sarah',paid:12480,paidctx:'31 payments, example',enq:142,enqctx:'38 after office hours',chase:11,opslabel:'Appointments confirmed',ops:64,mgr:4,paytitle:'Paid S$680',paysub:'Acne scar package. 10:52 pm, example'},
+    renovation:{biz:'Meridian Interiors',logo:'M',me:'D',owner:'Daniel',paid:18600,paidctx:'6 deposits, example',enq:58,enqctx:'17 after office hours',chase:7,opslabel:'Site visits confirmed',ops:14,mgr:2,paytitle:'Paid S$3,000',paysub:'Kitchen deposit. 11:20 pm, example'},
+    aircon:{biz:'CoolAir Services',logo:'C',me:'K',owner:'Kumar',paid:6920,paidctx:'54 jobs, example',enq:173,enqctx:'46 after office hours',chase:12,opslabel:'Jobs confirmed',ops:81,mgr:3,paytitle:'Paid S$240',paysub:'3 units serviced. 2:03 am, example'},
+    rental:{biz:'Lion City Rentals',logo:'L',me:'J',owner:'Jason',paid:8640,paidctx:'23 payments, example',enq:126,enqctx:'31 after office hours',chase:9,opslabel:'Collections confirmed',ops:21,mgr:3,paytitle:'Paid S$420',paysub:'Corolla, 1 week. 11:47 pm, example'}
+  };
+  var dash=document.getElementById('dash'); if(!dash) return;
+  var wrap=dash.parentNode, tabs=wrap.querySelectorAll('.ind-tab');
+  function fmt(n){return n.toLocaleString('en-SG');}
+  function show(k){
+    var d=D[k]; if(!d) return;
+    wrap.querySelectorAll('[data-k]').forEach(function(el){var v=d[el.getAttribute('data-k')]; if(v!==undefined) el.textContent=typeof v==='number'?fmt(v):v;});
+    var p=document.getElementById('paid-num'); if(p){p.textContent=fmt(d.paid);p.setAttribute('data-to',d.paid);}
+    dash.setAttribute('aria-label','Example dashboard for '+d.biz+', an example business. Paid on WhatsApp last week: S$'+fmt(d.paid)+', example figures.');
+    tabs.forEach(function(t){var on=t.getAttribute('data-ind')===k;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false');});
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('data-ind'));});});
 })();
 </script>
 </body>

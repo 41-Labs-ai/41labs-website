@@ -70,6 +70,7 @@ strong,b{font-weight:600}
 @media(hover:hover){.nav-dd:hover .nav-dd-menu{display:block}}
 .nav-dd-menu a{display:block;padding:9px 12px;border-radius:var(--r-field);color:var(--fg);text-decoration:none;font-size:15px}
 .nav-dd-menu a:hover{background:var(--neutral-soft)}
+.nav-soon{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;font-size:15px;color:var(--subtle)}
 .site-header .btn{min-height:40px;padding:0 18px;font-size:15px}
 .nav-toggle{display:none;margin-left:auto;width:44px;height:44px;border-radius:var(--r-pill);border:1px solid var(--border-strong);background:var(--surface);cursor:pointer;align-items:center;justify-content:center}
 .nav-toggle svg{width:20px;height:20px}

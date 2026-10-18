@@ -40,13 +40,13 @@ CAPSULE_2 = ("We measured the gap it closes. One real enquiry sent to 25 Singapo
              "the median wait was 13.3 hours, four never replied. The study is linked below.")
 
 TIERS = [
-    ("Start", "To try it on your own customers first.", "$299", "100 new customers",
-     ["The same product as every plan", "Then $3 for each new customer", "Move to Starter as you grow"], False),
-    ("Starter", "For one shop or one WhatsApp number.", "$690", "350 new customers",
+    ("Start", "To try it on your own customers first.", "$299", "100 sales conversations",
+     ["The same product as every plan", "Every chat handled from first message to payment", "Move to Starter as you grow"], False),
+    ("Starter", "For one shop or one WhatsApp number.", "$690", "350 sales conversations",
      ["Answers every message, day and night", "Quotes from your real prices", "Runs on your own WhatsApp number", "We set it up and load your catalogue", "Hands tricky ones to your team"], False),
-    ("Pro", "For a real catalogue that needs to close and take payment.", "$1,490", "1,000 new customers",
+    ("Pro", "For a real catalogue that needs to close and take payment.", "$1,490", "1,000 sales conversations",
      ["Everything in Starter", "Connects to your own systems", "Reads live stock and prices", "Writes orders and bookings back", "Takes payment right in the chat"], False),
-    ("Scale", "For high volume off one brand.", "$4,300", "3,000 new customers",
+    ("Scale", "For high volume off one brand.", "$4,300", "3,000 sales conversations",
      ["Everything in Pro", "Your own account manager", "We tune it for you every month", "Priority support"], False),
 ]
 
@@ -59,7 +59,7 @@ STEPS = [
 # Visible FAQ and FAQPage JSON-LD are both built from this list, so they always match.
 FAQ = [
     ("What is 41 Sales Team pricing?",
-     "Start is $299 a month, then $3 for each new customer after the first 100. Starter is $690, Pro $1,490, Scale $4,300, Custom from $7,900. The build is included. One month to start, charged from the day it goes live, then month to month with 30 days notice. No contract, no GST."),
+     "Start is $299 a month for about 100 sales conversations. Starter is $690, Pro $1,490, Scale $4,300, Custom from $7,900. The build is included. One month to start, charged from the day it goes live, then month to month with 30 days notice. No contract, no GST."),
     ("Is there a build fee or a setup fee?",
      "No. We train it on your products and prices, give it your way of talking, connect WhatsApp and switch it on, all inside the plan. The only one-time cost is connecting a system of your own that we have connected before, which is $2,400."),
     ("What do I need to give you?",
@@ -91,11 +91,11 @@ PRODUCT_LD = {
         "highPrice": "7900",
         "offerCount": "5",
         "offers": [
-            {"@type": "Offer", "name": "Start", "price": "299", "priceCurrency": "SGD", "description": "$299 a month, no build fee. The same product as every plan, for about your first 100 new customers, then $3 for each new customer after that. Month to month, 30 days notice, no contract."},
-            {"@type": "Offer", "name": "Starter", "price": "690", "priceCurrency": "SGD", "description": "$690 a month, no build fee. We set it up for you, load your catalogue and prices, and tune it to the way you sell. Handles about 350 new customers a month, estimated from the credits in the plan. Month to month, 30 days notice, no contract."},
-            {"@type": "Offer", "name": "Pro", "price": "1490", "priceCurrency": "SGD", "description": "$1,490 a month, no build fee. Everything in Starter, plus it connects to your own systems so it reads live stock and prices and writes orders and bookings back. Handles about 1,000 new customers a month, estimated from the credits in the plan."},
-            {"@type": "Offer", "name": "Scale", "price": "4300", "priceCurrency": "SGD", "description": "$4,300 a month, no build fee. Everything in Pro, for about 3,000 new customers a month, estimated from the credits in the plan."},
-            {"@type": "Offer", "name": "Custom", "price": "7900", "priceCurrency": "SGD", "description": "From $7,900 a month, no build fee. For about 6,000 new customers a month and up, many brands, or many numbers."},
+            {"@type": "Offer", "name": "Start", "price": "299", "priceCurrency": "SGD", "description": "$299 a month, no build fee. The same product as every plan, for about 100 sales conversations a month. Month to month, 30 days notice, no contract."},
+            {"@type": "Offer", "name": "Starter", "price": "690", "priceCurrency": "SGD", "description": "$690 a month, no build fee. We set it up for you, load your catalogue and prices, and tune it to the way you sell. Handles about 350 sales conversations a month. Month to month, 30 days notice, no contract."},
+            {"@type": "Offer", "name": "Pro", "price": "1490", "priceCurrency": "SGD", "description": "$1,490 a month, no build fee. Everything in Starter, plus it connects to your own systems so it reads live stock and prices and writes orders and bookings back. Handles about 1,000 sales conversations a month."},
+            {"@type": "Offer", "name": "Scale", "price": "4300", "priceCurrency": "SGD", "description": "$4,300 a month, no build fee. Everything in Pro, for about 3,000 sales conversations a month."},
+            {"@type": "Offer", "name": "Custom", "price": "7900", "priceCurrency": "SGD", "description": "From $7,900 a month, no build fee. For about 6,000 sales conversations a month and up, many brands, or many numbers."},
         ],
     },
 }
@@ -161,20 +161,20 @@ def ex_card(tag, msgs, outcome):
                 </div>'''
 
 TEAM = [
-    ("megaphone", "AI Leads Generator", '<span class="pill">Coming soon</span>', False),
-    ("message", "AI Sales Closer", '<span class="pill pill-good">This page</span>', True),
-    ("clipboard", "AI Operations Admin", "", False),
-    ("chart", "AI Manager", "", False),
+    ("megaphone", "AI Leads Generator", '<span class="pill">Coming soon</span>', False, None),
+    ("message", "AI Sales Closer", '<span class="pill pill-good">This page</span>', True, None),
+    ("clipboard", "AI Operations Admin", "", False, "/ai-operations-admin"),
+    ("chart", "AI Manager", "", False, "/ai-manager"),
 ]
 
 def team_strip():
     items = []
-    for ic, name, pill, here in TEAM:
+    for ic, name, pill, here, href in TEAM:
         inner = f'<span class="ts-icon">{icon(ic, 18)}</span><span class="ts-text"><span class="ts-name">{name}</span>{pill}</span>'
         if here:
             items.append(f'<li><span class="ts-item here" aria-current="page">{inner}</span></li>')
         else:
-            items.append(f'<li><a class="ts-item" href="{TEAM_HREF}">{inner}</a></li>')
+            items.append(f'<li><a class="ts-item" href="{href or TEAM_HREF}">{inner}</a></li>')
     return f'''<div class="team-strip" aria-label="The four AIs in 41 Sales Team">
                 <p class="ts-label">Part of 41 Sales Team</p>
                 <ul>{"".join(items)}</ul>
@@ -394,10 +394,10 @@ MAIN = f'''<main id="main">
             </div>
             <div class="grid-2 tiers">{"".join(tier_html(*t) for t in TIERS)}</div>
             <div class="grid-2 plan-notes">
-                <div class="card-flat"><p><b>One plan sits above these.</b> Past about 6,000 new customers a month, or more than one brand, Custom starts at $7,900. Ask us which one fits.</p></div>
+                <div class="card-flat"><p><b>One plan sits above these.</b> Past about 6,000 sales conversations a month, or more than one brand, Custom starts at $7,900. Ask us which one fits.</p></div>
                 <div class="card-flat"><p><b>No contract.</b> One month to start, charged from the day it goes live, not the day you sign. Month to month after that, 30 days notice. We tell you at 70% of your plan and again at the limit, so there are no shock bills.</p></div>
             </div>
-            <p class="note plan-fine">The customer numbers are estimates. Each plan includes a set amount of usage, and we divide it to show roughly how many new customers that covers. Prices in SGD. No GST is charged. Pay for a year up front and you get twelve months for ten. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost. <a href="/41-closer-terms">Plan terms and fair use</a>.</p>
+            <p class="note plan-fine">The numbers are estimates. A sales conversation is one customer, handled from the first message until they pay or decide not to. A short chat uses less of the plan, a long one with photos uses more. Prices in SGD. No GST is charged. Pay for a year up front and you get twelve months for ten. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost. <a href="/41-closer-terms">Plan terms and fair use</a>.</p>
             <div class="btn-row center plan-cta"><a class="btn btn-primary btn-lg" href="{WA}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Message the agent first, then pick a plan</a></div>
         </div>
     </section>

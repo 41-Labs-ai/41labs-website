@@ -59,6 +59,16 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://41labs.ai/ai-manager</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://41labs.ai/ai-operations-admin</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://41labs.ai/ai-sales-agent-australia</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
