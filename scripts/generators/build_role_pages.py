@@ -13,9 +13,14 @@ section renderers in this file (build_closer_page.py imports them):
   9 FAQ, 10 the other three AIs, then the final band with both buttons.
 Copy is word for word from COPY-DECK-v3.md, "AI ROLE PAGE TEMPLATE" and the role sections.
 
+18 Oct 2026, show-not-tell pass (founder: "too wordy, we need to SHOW"): each stage of "its day"
+is a small product visual (mini UI in site tokens) with a 2 to 4 word title and one line of 8 words
+at most. No bullet lists, outcome cards are a number or a short headline, the hand-over section is one
+alert card and one line. The "Coming next" block is gone: these pages only show what is live.
+Integrations show their real coloured logo files and never say "coming soon".
+
 Every feature on these pages was checked in the Hermes code on origin/master
-(17 Oct 2026). Anything not live for a client goes under "Coming next" with a
-neutral "Coming soon" pill. Do not add a feature here without checking the code.
+(17 Oct 2026), see verified-features.md. Do not add a feature here without checking the code.
 
 Run: python3 scripts/generators/build_role_pages.py  (twice: the second run changes nothing)
 """
@@ -44,41 +49,40 @@ WA_NOTE = "It replies in seconds, day or night."
 PRICING = "/pricing"
 COST_ANSWER = ('It is part of every 41 Sales Team plan, so there is no separate fee. Plans start small and grow with the number '
                'of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.')
-FINAL_LEDE = "We build it on your business before we meet. You test it. If you like it, it goes live that day."
+FINAL_LEDE = "We build it before we meet. If you like it, it goes live that day."
 
-# Live after one call: the homepage's three steps (copy deck v2, kept in v3).
+# Live after one call: the homepage's three steps, cut to one short line each (show-not-tell pass).
 LIVE_STEPS = [
-    ("Send us your website.", "We build your AI sales team on your products and prices before we meet."),
-    ("Test it on the call.", "You message it from your own phone, with your hardest questions."),
-    ("It goes live that day.", "We connect your WhatsApp and it starts answering your customers. We keep tuning it with you."),
+    ("Send us your website.", ""),
+    ("Test it on the call.", ""),
+    ("It goes live that day.", ""),
 ]
 
-# Try it now: homepage section 7 of copy deck v3, word for word (Closer page only).
-TRY_EYEBROW = "Try it now"
+# Try it now: homepage section 7 of copy deck v3 (Closer page only). Show-not-tell pass: the three steps went,
+# the button itself is the step.
 TRY_H2 = "Message our AI the way your customer would"
 TRY_LEDE = "Our own sales line runs on the same AI you would be buying. Ask it anything."
-TRY_STEPS = [
-    ('Tap "WhatsApp our AI now".', "WhatsApp opens with a message ready. Press send."),
-    ("Ask what you would ask a new supplier.", "How it works, how long setup takes, whether it handles your kind of customer."),
-    ("Watch it reply in seconds.", "It asks you a question or two, like a good salesperson would. If you want, it books your call with Alexander."),
-]
 TRY_NOTE = "+65 8012 4848 \u00b7 We only use your number to reply to you."
 
 # The four AIs, homepage section 6 of copy deck v3, word for word. Section 10 shows the other three.
+# Show-not-tell pass: the cards are the name, its status and a link. What each one does is on its own page.
 TEAM_CARDS = [
-    ("closer", "chat", "AI Sales Closer", "Answers every enquiry, quotes your prices, books and takes payment.", "/41-closer"),
-    ("ops", "clipboard", "AI Operations Admin", "Sends the invoice, saves the details and checks in on the date the customer asked for.", "/ai-operations-admin"),
-    ("manager", "chart", "AI Manager", "Shows every sale on one screen and alerts the right person when a customer needs a human.", "/ai-manager"),
-    ("leads", "megaphone", "AI Leads Generator", "Will run your Facebook and Instagram ads and send the enquiries straight to your AI sales team.", None),
+    ("closer", "chat", "AI Sales Closer", "/41-closer"),
+    ("ops", "clipboard", "AI Operations Admin", "/ai-operations-admin"),
+    ("manager", "chart", "AI Manager", "/ai-manager"),
+    ("leads", "megaphone", "AI Leads Generator", None),
 ]
-TEAM_LEDE = "They share your one WhatsApp number. Your staff can step into any chat, and the AI picks up again when they finish."
+TEAM_LEDE = "They share your one WhatsApp number."
 
-# Trust strip: logo files in /assets/41st/logos/, name tiles (first letter) where there is no logo file.
+# Trust strip: real coloured logo files in /assets/41st/logos/ (same files as partials/integrations.html).
+# WESS has no logo file, so it keeps a name tile. Plato's logo is wide. Every one is ready: no "coming soon".
 LOGOS = {
     "WhatsApp": "whatsapp.svg", "Facebook Messenger": "messenger.svg", "Stripe": "stripe.svg",
     "Google Calendar": "googlecalendar.svg", "Google Sheets": "googlesheets.svg",
-    "Airwallex": None, "Plato": None, "WESS": None, "Attio": None, "Twenty": None,
+    "Airwallex": "airwallex.png", "Plato": "plato.svg", "Attio": "attio.png", "Twenty": "twenty.png",
+    "WESS": None,
 }
+WIDE_LOGOS = {"plato.svg"}
 
 # Lucide-style line icons, stroke 1.75.
 ICONS = {
@@ -123,6 +127,57 @@ def answer(s: str) -> str:
     return s if "<a " in s else esc(s)
 
 
+# ---------------------------------------------------------------- mini product visuals (shared with build_closer_page.py)
+# Show, don't tell: every stage of "its day" and the hand-over section is a small piece of product UI in site
+# tokens. Each carries an "Example" tag, and a role="img" label so a screen reader hears what it shows.
+
+
+def mv(cls: str, inner: str, label: str) -> str:
+    return (f'<div class="mv {cls}" role="img" aria-label="{esc(label)}">'
+            f'<span class="mv-tag">Example</span>{inner}</div>')
+
+
+def mb(kind: str, text: str, *, time: str | None = None, attach: str = "") -> str:
+    """Mini chat bubble. kind: in (customer), ai (the AI), team (your staff), bot (our alert to your staff)."""
+    who = {"ai": '<span class="who">AI</span>', "team": '<span class="who-team">You</span>',
+           "bot": '<span class="who-bot">41 Sales Team</span>'}.get(kind, "")
+    t = f'<span class="t">{esc(time)}</span>' if time else ""
+    return f'<div class="bubble {kind}">{who}{"<br>" if who else ""}{esc(text)}{attach}{t}</div>'
+
+
+def mv_chat(label: str, *items: str) -> str:
+    return mv("chat", "".join(items), label)
+
+
+def mv_card(label: str, *items: str) -> str:
+    return mv("mv-card", "".join(items), label)
+
+
+def mline(text: str) -> str:
+    return f'<span class="chat-line">{esc(text)}</span>'
+
+
+def mpill(text: str, cls: str = "pill-good", ic: str = "check") -> str:
+    return f'<span class="pill {cls} chat-event">{icon(ic, 12)} {esc(text)}</span>'
+
+
+def mpanel(*rows: str) -> str:
+    return f'<div class="mv-panel">{"".join(rows)}</div>'
+
+
+def mrow(left: str, right: str, right_html: bool = False) -> str:
+    return f'<div class="mv-row"><span>{esc(left)}</span><b>{right if right_html else esc(right)}</b></div>'
+
+
+def mlink(text: str, ic: str = "lock") -> str:
+    return f'<span class="paylink">{icon(ic, 14)} {esc(text)}</span>'
+
+
+def macts(*labels: str) -> str:
+    return '<div class="mv-acts">' + "".join(
+        f'<span class="mv-btn{" ghost" if i else ""}">{esc(x)}</span>' for i, x in enumerate(labels)) + "</div>"
+
+
 # ---------------------------------------------------------------- content
 
 TEAM = [
@@ -132,8 +187,8 @@ TEAM = [
     ("manager", "AI Manager", "/ai-manager", "chart"),
 ]
 
-# Stage = (name, owner's pain or None, [what it does]). Copy deck v3 word for word. The deck gives
-# no pain line for the two role pages (verified features only), so those stages show none.
+# Stage = (title of 2 to 4 words, one line of 8 words at most, mini visual). Every claim traces to
+# verified-features.md. Example amounts use "$" and every visual carries the "Example" tag.
 PAGES = {
     "ai-operations-admin": {
         "key": "ops",
@@ -144,39 +199,55 @@ PAGES = {
         "eyebrow": "AI Operations Admin for WhatsApp",
         "h1": "AI Operations Admin.",
         "h1_soft": "The work after the sale gets done without you.",
-        "sub": "After a customer pays, it sends the invoice, saves their details, handles booking changes when your booking system is connected, and checks in on the date they asked for.",
+        "sub": "After a customer pays, it sends the invoice and handles what comes next.",
         "proof": None,
         # Answer capsule (AI engines quote it): JSON-LD description and the passage under the pain line.
         "capsule": "The AI Operations Admin is the part of 41 Sales Team (formerly 41 Closer) that handles the work after a customer pays on WhatsApp. It sends the invoice, saves the details they give, moves or cancels bookings when your booking system is connected, checks in on the date they ask for, and hands a chat to your staff when needed.",
         "logos": ["WhatsApp", "Stripe", "Airwallex", "Google Calendar", "Google Sheets", "Plato", "WESS"],
         "wins_h2": "What you get back.",
-        # Outcome cards: deck v3 headlines (no numbers), supporting lines from verified-features.md.
         "wins": [
-            ("receipt", None, "Invoice the moment they pay.", "When a customer pays in the chat, the invoice goes back to them on WhatsApp."),
-            ("file", None, "Details saved, nothing retyped.", "Dates, addresses and names go on the customer's record as they chat."),
-            ("bell", None, "Check-ins on the date they asked for.", "A customer asks to hear back in March, and it checks in then."),
+            ("receipt", None, "Invoices sent on payment"),
+            ("file", None, "No details retyped"),
+            ("bell", None, "Check-ins on the right date"),
         ],
-        "pain": "The sale is made, and then the admin starts: invoices, details, changes, reminders.",
+        "pain": "The sale is made, and then the admin starts.",
         "stages": [
-            ("Paid.", None, ["Sends the invoice when the payment comes in.", "Records the sale.", "Tells your team."]),
-            ("Details.", None, ["Saves what the customer tells it.", "Reads the photos and PDFs they send.", "Your team never retypes it."]),
-            ("Changes.", None, ["Moves or cancels a booking when your booking system is connected.", "Confirms the change in the chat."]),
-            ("Check-ins.", None, ["Messages the customer on the date they asked for.", "Uses approved templates after 24 hours."]),
-            ("Past customers.", None, ["Sends your messages to past customers by tag or by date."]),
+            ("Invoice on payment", "Sent the moment the payment lands.",
+             mv_card("Invoice line: INV-0142 for Ahmad R., $180, paid and sent to him on WhatsApp.",
+                     mpanel(mrow("Invoice INV-0142", "$180"), mrow("Customer", "Ahmad R."),
+                            mrow("Status", '<span class="pill pill-good">Paid</span>', True)),
+                     mpill("Sent on WhatsApp", "pill-good", "send"))),
+            ("Details saved", "From the chat, photos and PDFs too.",
+             mv_card("A customer record filled in from the chat: name, date and address, plus a photo the customer sent.",
+                     mpanel(mrow("Name", "Ahmad R."), mrow("Date", "Sat 24 Oct"), mrow("Address", "Tampines St 11")),
+                     mpill("Photo saved", "pill-good", "file"))),
+            ("Bookings moved", "When your booking system is connected.",
+             mv_card("A booking moved from Saturday 24 October at 10am to Sunday 25 October at 11am, confirmed in the chat.",
+                     mpanel(mrow("Was", '<span class="mv-old">Sat 24 Oct, 10:00am</span>', True),
+                            mrow("Now", "Sun 25 Oct, 11:00am")),
+                     mpill("Confirmed in the chat", "pill-good", "calendar"))),
+            ("Check-ins on the date", "On the date the customer asked.",
+             mv_chat("On Monday 1 March, the date the customer asked for, the AI checks in about the next visit.",
+                     mline("Mon 1 Mar, 9:00am"),
+                     mb("ai", "Hi Ahmad, you asked me to check in. Book your next visit?"),
+                     mb("in", "Yes please, same time."))),
+            ("Past customers messaged", "By tag, or by a date field.",
+             mv_card("A message to every past customer tagged renewal due, with opted-out customers skipped.",
+                     mpanel(mrow("Tag", '<span class="pill">renewal due</span>', True),
+                            mrow("Customers", "48"), mrow("Opted out", "Skipped")))),
         ],
-        "handover": ["Every new chat gets an owner on your team. Anyone can step in at any time, and the AI waits until they are done."],
+        "handover_line": "Every new chat gets an owner. The AI waits while they step in.",
+        "handover_visual": mv_chat("Your staff member gets a WhatsApp alert: a new chat from Ahmad R. is now theirs.",
+                                   mb("bot", "New chat for you: Ahmad R. wants to move his booking."),
+                                   mb("team", "On it.")),
         "compare": [
             ("Payment arrives", "Someone sends the invoice later", "Invoice sent straight away"),
             ("Customer sends details", "Copied by hand", "Saved from the chat"),
-            ('"Can I change my date?"', "Back and forth with staff", "Done in the chat when your booking system is connected"),
+            ('"Can I change my date?"', "Back and forth with staff", "Moved in the chat, once connected"),
             ('"Remind me next month"', "Easy to forget", "Messaged on that date"),
         ],
         "final_h2": "Hand over the admin after every sale",
         "service_type": "WhatsApp after-sales and operations admin",
-        "next": [
-            "Collecting documents from every customer, with a checklist you set",
-            "A reminder before every booking, sent by itself",
-        ],
         "faqs": [
             ("What does the AI Operations Admin do?", "It handles the work after a customer pays on WhatsApp. It sends the invoice, saves the details the customer gives, moves or cancels bookings when your booking system is connected, checks in on the date the customer asks for, and hands the chat to your staff when they are needed."),
             ("Does it send invoices?", "Yes. When a customer pays through the payment link in the chat, the invoice goes back to them on WhatsApp. It also sends one when a customer asks for an invoice for their records."),
@@ -196,37 +267,54 @@ PAGES = {
         "eyebrow": "AI sales manager for WhatsApp",
         "h1": "AI Manager.",
         "h1_soft": "Know what WhatsApp brings in, and who needs you.",
-        "sub": "It puts every sale on one screen in Singapore dollars, spots bank transfers for your team to confirm, and tells the right person on WhatsApp when a customer needs a human.",
+        "sub": "It puts every sale on one screen and alerts the right person on WhatsApp when a customer needs a human.",
         "proof": None,
         "capsule": "The AI Manager is the part of 41 Sales Team (formerly 41 Closer) that watches your WhatsApp sales for you. Its sales dashboard shows revenue closed, deals closed, your return and who still needs a reply. When a customer needs a person, it alerts the right staff member on WhatsApp, and it tells the admins if nobody answers.",
         "logos": ["WhatsApp", "Stripe", "Airwallex", "Google Sheets", "Attio", "Twenty"],
         "wins_h2": "What you get back.",
         "wins": [
-            ("trend", None, "Every sale on one screen.", "In Singapore dollars, with bank transfers it spots for you to confirm."),
-            ("bell", None, "The right person alerted.", "On WhatsApp, when a customer needs a human. They swipe-reply and the answer goes to the customer."),
-            ("users", None, "Nobody left waiting.", "Admins hear when a chat has no reply in the time you set."),
+            ("trend", None, "Every sale on one screen"),
+            ("bell", None, "The right person alerted"),
+            ("users", None, "Nobody left waiting"),
         ],
-        "pain": "You should not have to read every chat to know how your sales are doing.",
+        "pain": "You should not have to read every chat to know your sales.",
         "stages": [
-            ("Sales.", None, ["Revenue, deals closed and your return on one screen.", "Your pipeline by stage."]),
-            ("Payments you might miss.", None, ["Spots bank transfer and cash sales in the chat.", "Asks your team to confirm them."]),
-            ("Customers who need you.", None, ["Alerts the right person on WhatsApp.", "Tells admins when a chat has no reply.", "Reminds again after an hour."]),
-            ("Questions.", None, ['Ask it on WhatsApp, for example "How many leads came in this week?"', "Or ask the co-pilot on your dashboard."]),
-            ("Your team.", None, ["See how each team member's chats are going."]),
+            ("Sales on one screen", "Revenue, deals and your return.",
+             mv_card("Dashboard tile: revenue closed this month $18,400, up $3,200, with 23 deals and a return of 9 times.",
+                     '<span class="mv-k">Revenue closed, this month</span><span class="mv-big">$18,400</span>'
+                     '<span class="mv-up">+$3,200 vs last month</span>',
+                     mpanel(mrow("Deals closed", "23"), mrow("Your return", "9x")))),
+            ("Missed payments caught", "Bank transfers flagged for your team.",
+             mv_card("A bank transfer of $640 from Lim K. spotted in the chat, waiting for your team to confirm.",
+                     mpanel(mrow("Lim K.", "$640"), mrow("Paid by", "Bank transfer")),
+                     mpill("Needs confirm", "pill-warn", "bell"),
+                     macts("Confirm", "Not a sale"))),
+            ("The right person alerted", "They swipe-reply. It reaches the customer.",
+             mv_chat("Your staff member gets a WhatsApp alert that Grace T. wants a group price, and swipe-replies.",
+                     mb("bot", "Grace T. asked for a group price for 8. Swipe to reply."),
+                     mb("team", "10% off for 8 or more."),
+                     mline("Sent to Grace"))),
+            ("Ask on WhatsApp", "Or ask the co-pilot on your dashboard.",
+             mv_chat("You ask on WhatsApp how many leads came in this week and get the answer from live data.",
+                     mb("team", "How many leads came in this week?"),
+                     mb("bot", "34 new leads. 5 are waiting on a reply."))),
+            ("Your team's results", "Chats, sales and reply time per person.",
+             mv_card("Team table: Mei owns 18 chats with 6 sales and replies in 4 minutes, Jun owns 12 chats with 3 sales and replies in 9 minutes.",
+                     mpanel(mrow("Mei", "18 chats, 6 sales, 4m"), mrow("Jun", "12 chats, 3 sales, 9m"),
+                            mrow("Ravi", "9 chats, 4 sales, 6m")))),
         ],
-        "handover": ["When a customer needs a person, the alert says who it is, what they want and links to the chat."],
+        "handover_line": "The owner hears first. If nobody replies in time, every admin is told.",
+        "handover_visual": mv_chat("Your admins get a WhatsApp alert: Grace T. has waited 15 minutes and her owner has not replied yet.",
+                                   mb("bot", "No reply yet: Grace T. has waited 15 minutes for Mei."),
+                                   mb("team", "I will take it.")),
         "compare": [
             ("How did this week go", "Scroll through chats", "One screen, in Singapore dollars"),
             ("A bank transfer", "Checked later, sometimes missed", "Flagged for your team to confirm"),
-            ("A customer waiting for a person", "Nobody notices", "The right person is alerted on WhatsApp"),
+            ("A customer needs a person", "Nobody notices", "The right person is alerted"),
             ("Nobody replied", "Found out too late", "Admins are told"),
         ],
         "final_h2": "See your sales without reading every chat",
         "service_type": "AI sales manager and sales dashboard for WhatsApp",
-        "next": [
-            "A weekly report to you on WhatsApp, every Monday",
-            "A quality score for every conversation",
-        ],
         "faqs": [
             ("What is the AI Manager?", "It is the part of 41 Sales Team that watches your WhatsApp sales for you. It shows revenue closed, deals and who needs a reply on a sales dashboard, and it alerts the right person on your team on WhatsApp when a customer needs one."),
             ("What does the sales dashboard show?", "Revenue closed, deals closed, your return, and how many leads became sales. Under that, the number of active leads, new leads today, chats that need a reply, and a pipeline board with every customer by stage."),
@@ -308,12 +396,15 @@ ROLE_CSS = """
         .int-grid.trust-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
         .trust-grid .int-tile{padding:8px 12px;gap:8px;box-shadow:none}
         .trust-grid .int-ic{width:22px;height:22px}
+        .trust-grid img.int-wide{width:42px}
         .trust-grid .int-word{font-size:12px;border-radius:6px}
         .trust-grid .int-name{font-size:14px;white-space:nowrap}
         .trust-more{font-size:14px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
         /* 3 outcome cards */
         .wins>.card{display:flex;flex-direction:column}
-        .win h3{font-size:19px}
+        .win h3{font-size:19px;margin:0}
+        .wins.short>.card{flex-direction:row;align-items:center;gap:14px;padding:20px 22px}
+        .wins.short .icon-chip{margin:0;flex:none}
         .win p{margin:8px 0 0;color:var(--muted)}
         .out-num{display:block;font-size:clamp(34px,4vw,46px);line-height:1.05;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--fg)}
         .win .out-num+p{margin-top:10px;color:var(--fg);font-size:16.5px}
@@ -325,25 +416,48 @@ ROLE_CSS = """
         .pain-more .capsule p{margin:0}
         .pain-more .capsule strong{font-weight:500}
         .capsule-more{margin-top:16px;color:var(--muted)}
-        /* 5 its day */
-        .day{list-style:none;margin:0 auto;padding:0;display:grid;gap:14px;max-width:960px}
-        .stage{display:grid;gap:14px 32px;grid-template-columns:1fr;padding:22px 24px}
-        @media(min-width:760px){.stage{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:center}.day.compact .stage{grid-template-columns:240px minmax(0,1fr)}}
-        .stage-head{display:flex;gap:14px;align-items:flex-start}
-        .stage-num{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:15px;flex:none}
-        .stage-head h3{margin:5px 0 0}
-        .stage-pain{margin:6px 0 0;color:var(--muted);font-size:16px}
-        .stage .checks li{color:var(--fg)}
-        @media(max-width:759px){.stage .checks{padding-left:50px}}
-        .day.compact .stage-head{align-items:center}
-        .day.compact .stage-head h3{margin:0}
+        .gap-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+        .gap-stats .stat b{display:block;font-size:clamp(26px,3vw,34px);line-height:1.1;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+        .gap-stats .stat{padding:16px 18px}
+        @media(max-width:480px){.gap-stats .stat b{font-size:24px;white-space:nowrap}}
+        .gap-note{margin:12px 0 0;font-size:14px;color:var(--subtle)}
+        /* 5 its day: one card per stage, a mini product visual on top, a short title and one line */
+        .day{list-style:none;margin:0 auto;padding:0;display:grid;gap:16px;grid-template-columns:1fr;max-width:1080px}
+        @media(min-width:640px){.day{grid-template-columns:1fr 1fr}}
+        @media(min-width:1000px){.day{grid-template-columns:repeat(6,minmax(0,1fr))}.day>li{grid-column:span 2}.day>li:nth-child(n+4){grid-column:span 3}}
+        .stage{display:flex;flex-direction:column;gap:14px;padding:14px;min-width:0}
+        .stage-head{display:flex;gap:12px;align-items:flex-start;padding:0 4px 4px}
+        .stage-num{width:30px;height:30px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:14px;flex:none}
+        .stage-head h3{margin:3px 0 0;font-size:17px}
+        .stage-line{margin:2px 0 0;color:var(--muted);font-size:15px;line-height:1.45}
+        .mv{position:relative;border-radius:var(--r-panel);min-height:196px;padding:34px 12px 12px;font-size:13.5px;line-height:1.4;display:flex;flex-direction:column;justify-content:center;gap:8px;overflow:hidden;flex:1}
+        .mv.chat{padding:34px 12px 12px}
+        .mv .bubble{font-size:13.5px;max-width:90%;padding:7px 10px 5px}
+        .mv .paylink{font-size:13px;padding:6px 9px}
+        .mv .chat-event{font-size:12px}
+        .mv-card{background:var(--bg);border:1px solid var(--border)}
+        .mv-card .chat-event{align-self:flex-start;margin:0}
+        .mv-tag{position:absolute;top:9px;left:10px;font-size:11px;font-weight:500;line-height:16px;color:var(--subtle);background:var(--surface);padding:1px 8px;border-radius:var(--r-pill);box-shadow:var(--shadow-raised)}
+        .mv-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 12px;box-shadow:var(--shadow-raised)}
+        .mv-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border);min-width:0}
+        .mv-row:first-child{border-top:0}
+        .mv-row span{color:var(--muted)}
+        .mv-row b{font-weight:600;font-variant-numeric:tabular-nums;text-align:right;min-width:0}
+        .mv-k{font-size:12.5px;color:var(--muted)}
+        .mv-big{font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+        .mv-up{font-size:12.5px;color:var(--primary-text);margin-top:-4px}
+        .mv-old{text-decoration:line-through;color:var(--subtle);font-weight:500}
+        .mv-acts{display:flex;gap:8px;flex-wrap:wrap}
+        .mv-btn{display:inline-flex;align-items:center;padding:6px 14px;border-radius:var(--r-pill);background:var(--primary);color:var(--on-primary);font-weight:600;font-size:12.5px}
+        .mv-btn.ghost{background:var(--surface);color:var(--fg);border:1px solid var(--border-strong);font-weight:500}
         .after-cta{display:flex;justify-content:center;margin-top:32px}
-        /* 6 handing over */
-        .handover{max-width:860px;margin:0 auto;display:flex;gap:20px;align-items:flex-start;padding:28px}
-        .handover .icon-chip{margin:0;flex:none}
+        /* 6 handing over: one alert card your staff receive, one line */
+        .handover{max-width:900px;margin:0 auto;display:grid;gap:24px 40px;grid-template-columns:1fr;align-items:center;padding:28px}
+        @media(min-width:760px){.handover{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
         .handover h2{font-size:clamp(24px,3vw,32px)}
         .handover p{margin:12px 0 0;color:var(--muted)}
-        @media(max-width:640px){.handover{flex-direction:column;padding:22px}}
+        .handover .mv{min-height:0}
+        @media(max-width:640px){.handover{padding:18px}}
         /* 7 today vs */
         .cmp{max-width:900px;margin:0 auto}
         .cmp table{min-width:0;table-layout:fixed}
@@ -358,16 +472,16 @@ ROLE_CSS = """
         .step-card p{margin:8px 0 0;color:var(--muted)}
         ol.grid-3{list-style:none;margin:0;padding:0}
         .try-note{text-align:center;margin:12px 0 0}
-        .next-card{max-width:720px;margin:0 auto}
-        .next-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-        .next-list li{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);color:var(--fg)}
-        .next-list li:last-child{border-bottom:0}
         /* 10 the other three AIs */
         .sib{display:flex;flex-direction:column}
         .sib-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px}
         .sib-top .icon-chip{margin:0}
         .sib p{margin:8px 0 0;color:var(--muted)}
-        .sib a{margin-top:auto;padding-top:14px;font-weight:500;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+        .sib h3 a{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+        .sib h3 a svg{color:var(--primary-text)}
+        .sib h3 a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+        .sib{position:relative}
+        .sib:has(h3 a):hover{border-color:var(--border-strong)}
         .price-line{max-width:720px;margin:24px auto 0;text-align:center;color:var(--muted)}
         .price-line b{color:var(--fg)}
         .final-grid{text-align:center}
@@ -399,7 +513,8 @@ def trust_strip(names: list[str]) -> str:
     tiles = []
     for n in names:
         f = LOGOS[n]
-        ic = (f'<img class="int-ic" src="/assets/41st/logos/{f}" alt="" width="28" height="28" loading="lazy">' if f
+        wide = " int-wide" if f in WIDE_LOGOS else ""
+        ic = (f'<img class="int-ic{wide}" src="/assets/41st/logos/{f}" alt="" width="28" height="28" loading="lazy">' if f
               else f'<span class="int-ic int-word" aria-hidden="true">{n[0]}</span>')
         tiles.append(f'<li class="int-tile">{ic}<span class="int-name">{esc(n)}</span></li>')
     return f'''<section id="works-with" class="trust section-white" aria-label="Works with what you already use">
@@ -412,22 +527,23 @@ def trust_strip(names: list[str]) -> str:
 
 
 def outcome_cards(wins: list, h2: str) -> str:
-    """3. Three outcome cards: (icon, number or None, headline, line[, pill])."""
+    """3. Three outcome cards: (icon, number or None, label or headline[, pill]). A number gets a short label,
+    otherwise the card is a 3 to 5 word headline and nothing else."""
     cards = []
     for w in wins:
-        ic, num, h, line = w[:4]
-        pill = f'<span class="pill-wrap"><span class="pill">{esc(w[4])}</span></span>' if len(w) > 4 else ""
+        ic, num, text = w[:3]
+        pill = f'<span class="pill-wrap"><span class="pill">{esc(w[3])}</span></span>' if len(w) > 3 else ""
         if num:
-            cards.append(f'<div class="card win"><span class="out-num">{esc(num)}</span><p>{esc(line)}</p>{pill}</div>')
+            cards.append(f'<div class="card win"><span class="out-num">{esc(num)}</span><p>{esc(text)}</p>{pill}</div>')
         else:
-            cards.append(f'<div class="card win"><span class="icon-chip">{icon(ic, 20)}</span><h3>{esc(h)}</h3><p>{esc(line)}</p>{pill}</div>')
+            cards.append(f'<div class="card win"><span class="icon-chip">{icon(ic, 20)}</span><h3>{esc(text)}</h3>{pill}</div>')
+    short = "" if any(w[1] for w in wins) else " short"
     return f'''<section id="wins" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">What changes for you</span>
                 <h2>{esc(h2)}</h2>
             </div>
-            <div class="grid-3 wins">{"".join(cards)}</div>
+            <div class="grid-3 wins{short}">{"".join(cards)}</div>
         </div>
     </section>'''
 
@@ -442,33 +558,37 @@ def pain_block(line: str, more_html: str) -> str:
     </section>'''
 
 
+STAGE_TITLE_WORDS = (2, 4)
+STAGE_LINE_WORDS = 8
+
+
 def day_section(name: str, stages: list, book: str) -> str:
-    """5. Its day: numbered stages, each with a name, the owner's pain (when the deck has one) and what it does."""
+    """5. Its day: numbered stage cards, each a mini product visual, a 2 to 4 word title and one short line."""
     items = []
-    for i, (st, pain, lines) in enumerate(stages, 1):
-        p = f'<p class="stage-pain">{esc(pain)}</p>' if pain else ""
-        lis = "".join(f"<li>{esc(x)}</li>" for x in lines)
-        items.append(f'<li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">{i}</span>'
-                     f'<div><h3>{esc(st)}</h3>{p}</div></div><ul class="checks">{lis}</ul></li>')
+    for i, (st, line, visual) in enumerate(stages, 1):
+        assert STAGE_TITLE_WORDS[0] <= len(st.split()) <= STAGE_TITLE_WORDS[1], f"stage title {st!r}"
+        assert len(line.split()) <= STAGE_LINE_WORDS, f"stage line {line!r}"
+        items.append(f'<li class="card stage">{visual}<div class="stage-head"><span class="stage-num" aria-hidden="true">{i}</span>'
+                     f'<div><h3>{esc(st)}</h3><p class="stage-line">{esc(line)}</p></div></div></li>')
     return f'''<section id="its-day" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Its day</span>
-                <h2>What the {name} does, step by step.</h2>
+                <h2>Step by step.</h2>
             </div>
-            <ol class="day{"" if any(st[1] for st in stages) else " compact"}">{"".join(items)}</ol>
+            <ol class="day">{"".join(items)}</ol>
             <div class="after-cta">{book_btn(book)}</div>
         </div>
     </section>'''
 
 
-def handover_section(paras: list[str]) -> str:
-    """6. Handing over to your staff."""
-    ps = "".join(f"<p>{esc(x)}</p>" for x in paras)
+def handover_section(line: str, visual: str) -> str:
+    """6. Handing over to your staff: one alert card your staff receive, and one line."""
     return f'''<section id="handover" class="section section-white">
         <div class="wrap">
-            <div class="card handover"><span class="icon-chip">{icon("hand", 20)}</span>
-                <div><span class="eyebrow">When a person is needed</span><h2>Handing over to your staff</h2>{ps}</div>
+            <div class="card handover">
+                <div><h2>Handing over to your staff</h2><p>{esc(line)}</p></div>
+                {visual}
             </div>
         </div>
     </section>'''
@@ -476,11 +596,12 @@ def handover_section(paras: list[str]) -> str:
 
 def compare_section(name: str, rows: list, after: str = "") -> str:
     """7. Today vs with this AI."""
+    for row in rows:
+        assert all(len(c.split()) <= 7 for c in row), f"compare cell over 7 words: {row}"
     body = "".join(f'<tr><th scope="row">{esc(a)}</th><td>{esc(b)}</td><td class="with">{esc(c)}</td></tr>' for a, b, c in rows)
     return f'''<section id="compare" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">Side by side</span>
                 <h2>Today, and with the {name}.</h2>
             </div>
             <div class="table-wrap cmp"><table>
@@ -492,8 +613,8 @@ def compare_section(name: str, rows: list, after: str = "") -> str:
 
 
 def steps_cards(steps: list) -> str:
-    return "".join(f'<li class="card step-card"><span class="step-num" aria-hidden="true">{i}</span><h3>{esc(h)}</h3><p>{esc(t)}</p></li>'
-                   for i, (h, t) in enumerate(steps, 1))
+    return "".join(f'<li class="card step-card"><span class="step-num" aria-hidden="true">{i}</span><h3>{esc(h)}</h3>'
+                   + (f'<p>{esc(t)}</p>' if t else "") + "</li>" for i, (h, t) in enumerate(steps, 1))
 
 
 def try_section(wa: str, sid: str = "try-it") -> str:
@@ -501,11 +622,9 @@ def try_section(wa: str, sid: str = "try-it") -> str:
     return f'''<section id="{sid}" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">{TRY_EYEBROW}</span>
                 <h2>{TRY_H2}</h2>
                 <p class="lede">{TRY_LEDE}</p>
             </div>
-            <ol class="grid-3">{steps_cards(TRY_STEPS)}</ol>
             <div class="after-cta">{wa_btn(wa)}</div>
             <p class="note try-note">{TRY_NOTE}</p>
         </div>
@@ -528,8 +647,8 @@ def live_section(book: str) -> str:
 
 def faq_section(h2: str, faqs: list, white: bool = False) -> str:
     """9. FAQ, from the same list as the FAQPage JSON-LD."""
-    items = "".join(f'<details{" open" if i == 0 else ""}><summary>{esc(q)}</summary><p>{answer(a)}</p></details>'
-                    for i, (q, a) in enumerate(faqs))
+    # Every answer starts collapsed (show-not-tell pass): the questions are the scan, the answers are a tap away.
+    items = "".join(f'<details><summary>{esc(q)}</summary><p>{answer(a)}</p></details>' for q, a in faqs)
     return f'''<section id="faq" class="section{" section-white" if white else ""}">
         <div class="wrap">
             <div class="section-head center">
@@ -544,13 +663,13 @@ def faq_section(h2: str, faqs: list, white: bool = False) -> str:
 def siblings_section(key: str, after: str = "", white: bool = True) -> str:
     """10. The other three AIs as cards."""
     cards = []
-    for k, ic, name, line, href in TEAM_CARDS:
+    for k, ic, name, href in TEAM_CARDS:
         if k == key:
             continue
         pill = '<span class="pill">Coming soon</span>' if href is None else '<span class="pill pill-good">Live</span>'
-        link = f'<a href="{href}">See what it does {icon("arrow", 14)}</a>' if href else ""
+        title = f'<a href="{href}">{name} {icon("arrow", 16)}</a>' if href else name
         cards.append(f'<div class="card sib"><div class="sib-top"><span class="icon-chip">{icon(ic, 20)}</span>{pill}</div>'
-                     f'<h3>{name}</h3><p>{esc(line)}</p>{link}</div>')
+                     f'<h3>{title}</h3></div>')
     return f'''<section id="the-team" class="section{" section-white" if white else ""}">
         <div class="wrap">
             <div class="section-head center">
@@ -703,7 +822,6 @@ def build(slug: str, p: dict) -> str:
     key = p["key"]
     url = f"{ORIGIN}/{slug}"
     book = BOOK_CALL.format(slug=slug)
-    nxt = "".join(f'<li><span>{esc(n)}</span><span class="pill">Coming soon</span></li>' for n in p["next"])
     capsule = f'<div class="capsule"><p><strong>{esc(p["capsule"])}</strong></p></div>'
     price_line = (f'<p class="price-line"><a href="{PRICING}"><b>Part of every 41 Sales Team plan.</b></a> '
                   'Read how an <a href="/ai-sales-agent-singapore">AI sales agent works in Singapore</a>.</p>')
@@ -787,28 +905,17 @@ def build(slug: str, p: dict) -> str:
 
     {day_section(p['name'], p['stages'], book)}
 
-    {handover_section(p['handover'])}
+    {handover_section(p['handover_line'], p['handover_visual'])}
 
     {compare_section(p['name'], p['compare'])}
 
     {live_section(book)}
 
-    <section id="coming-next" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">Coming next</span>
-                <h2>What we are building next.</h2>
-                <p class="lede">These are not live yet. We will add them to this page when they are.</p>
-            </div>
-            <div class="card next-card"><ul class="next-list">{nxt}</ul></div>
-        </div>
-    </section>
+    {faq_section("What owners ask.", p['faqs'])}
 
-    {faq_section(f"What owners ask about the {p['name']}.", p['faqs'], white=True)}
+    {siblings_section(key, price_line)}
 
-    {siblings_section(key, price_line, white=False)}
-
-    <section id="start-now" class="section section-white">
+    <section id="start-now" class="section">
         <div class="wrap">
             <div class="cta-band wash">
                 <div class="final-grid">
@@ -835,8 +942,16 @@ def visible(page: str) -> str:
     return html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t)))
 
 
-# 18 Oct 2026: copy deck v3 asks for 900 to 1,300 visible words per role page (the old pages read too short).
-MAX_WORDS = 1300
+def shown(page: str) -> str:
+    """What a visitor reads without opening anything: the visible text minus the collapsed FAQ answers."""
+    page = re.sub(r"<head>.*?</head>", "", page, flags=re.S)
+    return visible(re.sub(r"(<details>\s*<summary>.*?</summary>).*?</details>", r"\1</details>", page, flags=re.S))
+
+
+# 18 Oct 2026: copy deck v3 asked for 900 to 1,300 visible words per role page.
+# 18 Oct 2026, same day: the founder found them "too wordy, we need to SHOW". The stages became mini product
+# visuals, so the ceiling is now 700 words a visitor reads without opening a FAQ answer (was about 1,150 to 1,300).
+MAX_WORDS = 700
 MIN_BOOK_CTAS = 3
 
 
@@ -844,9 +959,14 @@ def gate(slug: str, text: str) -> list[str]:
     seen = visible(text)
     problems = [f"{w!r} in the visible text (no prices, plain punctuation)"
                 for w in ("S$", "$299", "$690", "a month", "From $", "—", ";", "!", "‘", "’", "“", "”") if w in seen]
-    words = len(seen.split())
+    words = len(shown(text).split())
     if words > MAX_WORDS:
-        problems.append(f"{words} visible words, ceiling {MAX_WORDS}")
+        problems.append(f"{words} visible words outside collapsed FAQ answers, ceiling {MAX_WORDS}")
+    main = text[text.index("<main"):text.index("</main>")]
+    if "&lt;" in main:
+        problems.append("escaped HTML in the page body (a mini visual got markup where it expected text)")
+    if re.search(r"coming soon", re.sub(r'<div class="team-strip".*?</div>|<section id="the-team".*?</section>', "", main, flags=re.S), re.I):
+        problems.append('"coming soon" outside the AI Leads Generator pill (every integration is ready)')
     book = BOOK_CALL.format(slug=slug)
     n_book = len(re.findall(rf'<a class="btn btn-primary[^"]*" href="{re.escape(book)}">{BOOK_LABEL}</a>', text))
     if n_book < MIN_BOOK_CTAS:
@@ -867,7 +987,7 @@ def main() -> None:
         problems = gate(slug, text)
         if problems:
             raise SystemExit(f"REFUSED {slug}: " + "; ".join(problems))
-        print(f"{slug}: {len(visible(text).split())} visible words")
+        print(f"{slug}: {len(shown(text).split())} words shown, {len(visible(text).split())} with every FAQ answer open")
         old = out.read_text() if out.exists() else None
         if old != text:
             out.write_text(text)

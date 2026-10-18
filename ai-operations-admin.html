@@ -223,12 +223,15 @@
         .int-grid.trust-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
         .trust-grid .int-tile{padding:8px 12px;gap:8px;box-shadow:none}
         .trust-grid .int-ic{width:22px;height:22px}
+        .trust-grid img.int-wide{width:42px}
         .trust-grid .int-word{font-size:12px;border-radius:6px}
         .trust-grid .int-name{font-size:14px;white-space:nowrap}
         .trust-more{font-size:14px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
         /* 3 outcome cards */
         .wins>.card{display:flex;flex-direction:column}
-        .win h3{font-size:19px}
+        .win h3{font-size:19px;margin:0}
+        .wins.short>.card{flex-direction:row;align-items:center;gap:14px;padding:20px 22px}
+        .wins.short .icon-chip{margin:0;flex:none}
         .win p{margin:8px 0 0;color:var(--muted)}
         .out-num{display:block;font-size:clamp(34px,4vw,46px);line-height:1.05;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--fg)}
         .win .out-num+p{margin-top:10px;color:var(--fg);font-size:16.5px}
@@ -240,25 +243,48 @@
         .pain-more .capsule p{margin:0}
         .pain-more .capsule strong{font-weight:500}
         .capsule-more{margin-top:16px;color:var(--muted)}
-        /* 5 its day */
-        .day{list-style:none;margin:0 auto;padding:0;display:grid;gap:14px;max-width:960px}
-        .stage{display:grid;gap:14px 32px;grid-template-columns:1fr;padding:22px 24px}
-        @media(min-width:760px){.stage{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:center}.day.compact .stage{grid-template-columns:240px minmax(0,1fr)}}
-        .stage-head{display:flex;gap:14px;align-items:flex-start}
-        .stage-num{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:15px;flex:none}
-        .stage-head h3{margin:5px 0 0}
-        .stage-pain{margin:6px 0 0;color:var(--muted);font-size:16px}
-        .stage .checks li{color:var(--fg)}
-        @media(max-width:759px){.stage .checks{padding-left:50px}}
-        .day.compact .stage-head{align-items:center}
-        .day.compact .stage-head h3{margin:0}
+        .gap-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+        .gap-stats .stat b{display:block;font-size:clamp(26px,3vw,34px);line-height:1.1;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+        .gap-stats .stat{padding:16px 18px}
+        @media(max-width:480px){.gap-stats .stat b{font-size:24px;white-space:nowrap}}
+        .gap-note{margin:12px 0 0;font-size:14px;color:var(--subtle)}
+        /* 5 its day: one card per stage, a mini product visual on top, a short title and one line */
+        .day{list-style:none;margin:0 auto;padding:0;display:grid;gap:16px;grid-template-columns:1fr;max-width:1080px}
+        @media(min-width:640px){.day{grid-template-columns:1fr 1fr}}
+        @media(min-width:1000px){.day{grid-template-columns:repeat(6,minmax(0,1fr))}.day>li{grid-column:span 2}.day>li:nth-child(n+4){grid-column:span 3}}
+        .stage{display:flex;flex-direction:column;gap:14px;padding:14px;min-width:0}
+        .stage-head{display:flex;gap:12px;align-items:flex-start;padding:0 4px 4px}
+        .stage-num{width:30px;height:30px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:14px;flex:none}
+        .stage-head h3{margin:3px 0 0;font-size:17px}
+        .stage-line{margin:2px 0 0;color:var(--muted);font-size:15px;line-height:1.45}
+        .mv{position:relative;border-radius:var(--r-panel);min-height:196px;padding:34px 12px 12px;font-size:13.5px;line-height:1.4;display:flex;flex-direction:column;justify-content:center;gap:8px;overflow:hidden;flex:1}
+        .mv.chat{padding:34px 12px 12px}
+        .mv .bubble{font-size:13.5px;max-width:90%;padding:7px 10px 5px}
+        .mv .paylink{font-size:13px;padding:6px 9px}
+        .mv .chat-event{font-size:12px}
+        .mv-card{background:var(--bg);border:1px solid var(--border)}
+        .mv-card .chat-event{align-self:flex-start;margin:0}
+        .mv-tag{position:absolute;top:9px;left:10px;font-size:11px;font-weight:500;line-height:16px;color:var(--subtle);background:var(--surface);padding:1px 8px;border-radius:var(--r-pill);box-shadow:var(--shadow-raised)}
+        .mv-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 12px;box-shadow:var(--shadow-raised)}
+        .mv-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border);min-width:0}
+        .mv-row:first-child{border-top:0}
+        .mv-row span{color:var(--muted)}
+        .mv-row b{font-weight:600;font-variant-numeric:tabular-nums;text-align:right;min-width:0}
+        .mv-k{font-size:12.5px;color:var(--muted)}
+        .mv-big{font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+        .mv-up{font-size:12.5px;color:var(--primary-text);margin-top:-4px}
+        .mv-old{text-decoration:line-through;color:var(--subtle);font-weight:500}
+        .mv-acts{display:flex;gap:8px;flex-wrap:wrap}
+        .mv-btn{display:inline-flex;align-items:center;padding:6px 14px;border-radius:var(--r-pill);background:var(--primary);color:var(--on-primary);font-weight:600;font-size:12.5px}
+        .mv-btn.ghost{background:var(--surface);color:var(--fg);border:1px solid var(--border-strong);font-weight:500}
         .after-cta{display:flex;justify-content:center;margin-top:32px}
-        /* 6 handing over */
-        .handover{max-width:860px;margin:0 auto;display:flex;gap:20px;align-items:flex-start;padding:28px}
-        .handover .icon-chip{margin:0;flex:none}
+        /* 6 handing over: one alert card your staff receive, one line */
+        .handover{max-width:900px;margin:0 auto;display:grid;gap:24px 40px;grid-template-columns:1fr;align-items:center;padding:28px}
+        @media(min-width:760px){.handover{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
         .handover h2{font-size:clamp(24px,3vw,32px)}
         .handover p{margin:12px 0 0;color:var(--muted)}
-        @media(max-width:640px){.handover{flex-direction:column;padding:22px}}
+        .handover .mv{min-height:0}
+        @media(max-width:640px){.handover{padding:18px}}
         /* 7 today vs */
         .cmp{max-width:900px;margin:0 auto}
         .cmp table{min-width:0;table-layout:fixed}
@@ -273,16 +299,16 @@
         .step-card p{margin:8px 0 0;color:var(--muted)}
         ol.grid-3{list-style:none;margin:0;padding:0}
         .try-note{text-align:center;margin:12px 0 0}
-        .next-card{max-width:720px;margin:0 auto}
-        .next-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-        .next-list li{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);color:var(--fg)}
-        .next-list li:last-child{border-bottom:0}
         /* 10 the other three AIs */
         .sib{display:flex;flex-direction:column}
         .sib-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px}
         .sib-top .icon-chip{margin:0}
         .sib p{margin:8px 0 0;color:var(--muted)}
-        .sib a{margin-top:auto;padding-top:14px;font-weight:500;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+        .sib h3 a{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+        .sib h3 a svg{color:var(--primary-text)}
+        .sib h3 a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+        .sib{position:relative}
+        .sib:has(h3 a):hover{border-color:var(--border-strong)}
         .price-line{max-width:720px;margin:24px auto 0;text-align:center;color:var(--muted)}
         .price-line b{color:var(--fg)}
         .final-grid{text-align:center}
@@ -347,7 +373,7 @@
                     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">41 Sales Team</a> / <span aria-current="page">AI Operations Admin</span></nav>
                     <span class="eyebrow">AI Operations Admin for WhatsApp</span>
                     <h1>AI Operations Admin. <span class="h1-soft">The work after the sale gets done without you.</span></h1>
-                    <p class="lede hero-sub">After a customer pays, it sends the invoice, saves their details, handles booking changes when your booking system is connected, and checks in on the date they asked for.</p>
+                    <p class="lede hero-sub">After a customer pays, it sends the invoice and handles what comes next.</p>
                     
                     <div class="cta-pair"><div class="cta-col"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-operations-admin#qualify">Book a free call</a><p class="note">30 minutes with Alexander. We build your AI before the call. No contract.</p></div><div class="cta-col"><a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> WhatsApp our AI now</a><p class="note">It replies in seconds, day or night.</p></div></div>
                 </div>
@@ -369,7 +395,7 @@
     <section id="works-with" class="trust section-white" aria-label="Works with what you already use">
         <div class="wrap trust-row">
             <p class="trust-label">Works with what you already use</p>
-            <ul class="int-grid trust-grid"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">P</span><span class="int-name">Plato</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">W</span><span class="int-name">WESS</span></li></ul>
+            <ul class="int-grid trust-grid"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/airwallex.png" alt="" width="28" height="28" loading="lazy"><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><img class="int-ic int-wide" src="/assets/41st/logos/plato.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Plato</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">W</span><span class="int-name">WESS</span></li></ul>
             <a class="trust-more" href="/#integrations">See all integrations <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
         </div>
     </section>
@@ -377,16 +403,15 @@
     <section id="wins" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">What changes for you</span>
                 <h2>What you get back.</h2>
             </div>
-            <div class="grid-3 wins"><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></span><h3>Invoice the moment they pay.</h3><p>When a customer pays in the chat, the invoice goes back to them on WhatsApp.</p></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 14h6"/><path d="M9 18h4"/></svg></span><h3>Details saved, nothing retyped.</h3><p>Dates, addresses and names go on the customer&#x27;s record as they chat.</p></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><h3>Check-ins on the date they asked for.</h3><p>A customer asks to hear back in March, and it checks in then.</p></div></div>
+            <div class="grid-3 wins short"><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></span><h3>Invoices sent on payment</h3></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 14h6"/><path d="M9 18h4"/></svg></span><h3>No details retyped</h3></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><h3>Check-ins on the right date</h3></div></div>
         </div>
     </section>
 
     <section id="the-gap" class="section section-white">
         <div class="wrap">
-            <h2 class="pain">The sale is made, and then the admin starts: invoices, details, changes, reminders.</h2>
+            <h2 class="pain">The sale is made, and then the admin starts.</h2>
             <div class="read center-block pain-more"><div class="capsule"><p><strong>The AI Operations Admin is the part of 41 Sales Team (formerly 41 Closer) that handles the work after a customer pays on WhatsApp. It sends the invoice, saves the details they give, moves or cancels bookings when your booking system is connected, checks in on the date they ask for, and hands a chat to your staff when needed.</strong></p></div></div>
         </div>
     </section>
@@ -395,17 +420,18 @@
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Its day</span>
-                <h2>What the AI Operations Admin does, step by step.</h2>
+                <h2>Step by step.</h2>
             </div>
-            <ol class="day compact"><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><div><h3>Paid.</h3></div></div><ul class="checks"><li>Sends the invoice when the payment comes in.</li><li>Records the sale.</li><li>Tells your team.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><div><h3>Details.</h3></div></div><ul class="checks"><li>Saves what the customer tells it.</li><li>Reads the photos and PDFs they send.</li><li>Your team never retypes it.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><div><h3>Changes.</h3></div></div><ul class="checks"><li>Moves or cancels a booking when your booking system is connected.</li><li>Confirms the change in the chat.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">4</span><div><h3>Check-ins.</h3></div></div><ul class="checks"><li>Messages the customer on the date they asked for.</li><li>Uses approved templates after 24 hours.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">5</span><div><h3>Past customers.</h3></div></div><ul class="checks"><li>Sends your messages to past customers by tag or by date.</li></ul></li></ol>
+            <ol class="day"><li class="card stage"><div class="mv mv-card" role="img" aria-label="Invoice line: INV-0142 for Ahmad R., $180, paid and sent to him on WhatsApp."><span class="mv-tag">Example</span><div class="mv-panel"><div class="mv-row"><span>Invoice INV-0142</span><b>$180</b></div><div class="mv-row"><span>Customer</span><b>Ahmad R.</b></div><div class="mv-row"><span>Status</span><b><span class="pill pill-good">Paid</span></b></div></div><span class="pill pill-good chat-event"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg> Sent on WhatsApp</span></div><div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><div><h3>Invoice on payment</h3><p class="stage-line">Sent the moment the payment lands.</p></div></div></li><li class="card stage"><div class="mv mv-card" role="img" aria-label="A customer record filled in from the chat: name, date and address, plus a photo the customer sent."><span class="mv-tag">Example</span><div class="mv-panel"><div class="mv-row"><span>Name</span><b>Ahmad R.</b></div><div class="mv-row"><span>Date</span><b>Sat 24 Oct</b></div><div class="mv-row"><span>Address</span><b>Tampines St 11</b></div></div><span class="pill pill-good chat-event"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 14h6"/><path d="M9 18h4"/></svg> Photo saved</span></div><div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><div><h3>Details saved</h3><p class="stage-line">From the chat, photos and PDFs too.</p></div></div></li><li class="card stage"><div class="mv mv-card" role="img" aria-label="A booking moved from Saturday 24 October at 10am to Sunday 25 October at 11am, confirmed in the chat."><span class="mv-tag">Example</span><div class="mv-panel"><div class="mv-row"><span>Was</span><b><span class="mv-old">Sat 24 Oct, 10:00am</span></b></div><div class="mv-row"><span>Now</span><b>Sun 25 Oct, 11:00am</b></div></div><span class="pill pill-good chat-event"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 10h18"/></svg> Confirmed in the chat</span></div><div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><div><h3>Bookings moved</h3><p class="stage-line">When your booking system is connected.</p></div></div></li><li class="card stage"><div class="mv chat" role="img" aria-label="On Monday 1 March, the date the customer asked for, the AI checks in about the next visit."><span class="mv-tag">Example</span><span class="chat-line">Mon 1 Mar, 9:00am</span><div class="bubble ai"><span class="who">AI</span><br>Hi Ahmad, you asked me to check in. Book your next visit?</div><div class="bubble in">Yes please, same time.</div></div><div class="stage-head"><span class="stage-num" aria-hidden="true">4</span><div><h3>Check-ins on the date</h3><p class="stage-line">On the date the customer asked.</p></div></div></li><li class="card stage"><div class="mv mv-card" role="img" aria-label="A message to every past customer tagged renewal due, with opted-out customers skipped."><span class="mv-tag">Example</span><div class="mv-panel"><div class="mv-row"><span>Tag</span><b><span class="pill">renewal due</span></b></div><div class="mv-row"><span>Customers</span><b>48</b></div><div class="mv-row"><span>Opted out</span><b>Skipped</b></div></div></div><div class="stage-head"><span class="stage-num" aria-hidden="true">5</span><div><h3>Past customers messaged</h3><p class="stage-line">By tag, or by a date field.</p></div></div></li></ol>
             <div class="after-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-operations-admin#qualify">Book a free call</a></div>
         </div>
     </section>
 
     <section id="handover" class="section section-white">
         <div class="wrap">
-            <div class="card handover"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></svg></span>
-                <div><span class="eyebrow">When a person is needed</span><h2>Handing over to your staff</h2><p>Every new chat gets an owner on your team. Anyone can step in at any time, and the AI waits until they are done.</p></div>
+            <div class="card handover">
+                <div><h2>Handing over to your staff</h2><p>Every new chat gets an owner. The AI waits while they step in.</p></div>
+                <div class="mv chat" role="img" aria-label="Your staff member gets a WhatsApp alert: a new chat from Ahmad R. is now theirs."><span class="mv-tag">Example</span><div class="bubble bot"><span class="who-bot">41 Sales Team</span><br>New chat for you: Ahmad R. wants to move his booking.</div><div class="bubble team"><span class="who-team">You</span><br>On it.</div></div>
             </div>
         </div>
     </section>
@@ -413,12 +439,11 @@
     <section id="compare" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">Side by side</span>
                 <h2>Today, and with the AI Operations Admin.</h2>
             </div>
             <div class="table-wrap cmp"><table>
                 <thead><tr><th scope="col">What happens</th><th scope="col">Today</th><th scope="col">With the AI Operations Admin</th></tr></thead>
-                <tbody><tr><th scope="row">Payment arrives</th><td>Someone sends the invoice later</td><td class="with">Invoice sent straight away</td></tr><tr><th scope="row">Customer sends details</th><td>Copied by hand</td><td class="with">Saved from the chat</td></tr><tr><th scope="row">&quot;Can I change my date?&quot;</th><td>Back and forth with staff</td><td class="with">Done in the chat when your booking system is connected</td></tr><tr><th scope="row">&quot;Remind me next month&quot;</th><td>Easy to forget</td><td class="with">Messaged on that date</td></tr></tbody>
+                <tbody><tr><th scope="row">Payment arrives</th><td>Someone sends the invoice later</td><td class="with">Invoice sent straight away</td></tr><tr><th scope="row">Customer sends details</th><td>Copied by hand</td><td class="with">Saved from the chat</td></tr><tr><th scope="row">&quot;Can I change my date?&quot;</th><td>Back and forth with staff</td><td class="with">Moved in the chat, once connected</td></tr><tr><th scope="row">&quot;Remind me next month&quot;</th><td>Easy to forget</td><td class="with">Messaged on that date</td></tr></tbody>
             </table></div>
         </div>
     </section>
@@ -429,50 +454,39 @@
                 <span class="eyebrow">How it starts</span>
                 <h2>Live after one call.</h2>
             </div>
-            <ol class="grid-3"><li class="card step-card"><span class="step-num" aria-hidden="true">1</span><h3>Send us your website.</h3><p>We build your AI sales team on your products and prices before we meet.</p></li><li class="card step-card"><span class="step-num" aria-hidden="true">2</span><h3>Test it on the call.</h3><p>You message it from your own phone, with your hardest questions.</p></li><li class="card step-card"><span class="step-num" aria-hidden="true">3</span><h3>It goes live that day.</h3><p>We connect your WhatsApp and it starts answering your customers. We keep tuning it with you.</p></li></ol>
+            <ol class="grid-3"><li class="card step-card"><span class="step-num" aria-hidden="true">1</span><h3>Send us your website.</h3></li><li class="card step-card"><span class="step-num" aria-hidden="true">2</span><h3>Test it on the call.</h3></li><li class="card step-card"><span class="step-num" aria-hidden="true">3</span><h3>It goes live that day.</h3></li></ol>
             <div class="after-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-operations-admin#qualify">Book a free call</a></div>
         </div>
     </section>
 
-    <section id="coming-next" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">Coming next</span>
-                <h2>What we are building next.</h2>
-                <p class="lede">These are not live yet. We will add them to this page when they are.</p>
-            </div>
-            <div class="card next-card"><ul class="next-list"><li><span>Collecting documents from every customer, with a checklist you set</span><span class="pill">Coming soon</span></li><li><span>A reminder before every booking, sent by itself</span><span class="pill">Coming soon</span></li></ul></div>
-        </div>
-    </section>
-
-    <section id="faq" class="section section-white">
+    <section id="faq" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Questions</span>
-                <h2>What owners ask about the AI Operations Admin.</h2>
+                <h2>What owners ask.</h2>
             </div>
-            <div class="faq read center-block"><details open><summary>What does the AI Operations Admin do?</summary><p>It handles the work after a customer pays on WhatsApp. It sends the invoice, saves the details the customer gives, moves or cancels bookings when your booking system is connected, checks in on the date the customer asks for, and hands the chat to your staff when they are needed.</p></details><details><summary>Does it send invoices?</summary><p>Yes. When a customer pays through the payment link in the chat, the invoice goes back to them on WhatsApp. It also sends one when a customer asks for an invoice for their records.</p></details><details><summary>Can it change or cancel a booking?</summary><p>Yes, when your booking system is connected. It finds the customer&#x27;s own booking by their WhatsApp number, moves it to a free time or cancels it, and tells them exactly what happened. You can send late changes to your team instead.</p></details><details><summary>Is it an AI receptionist?</summary><p>On WhatsApp, it does a lot of the front desk work after a sale. It sends invoices, saves the details customers give, checks in when they asked, and moves bookings when your booking system is connected. It works on WhatsApp only and does not answer phone calls.</p></details><details><summary>How do follow-ups work after 24 hours?</summary><p>WhatsApp only allows approved messages once a customer has been quiet for 24 hours. We set those messages up on your account for you, so every follow-up still goes out. Nothing goes out in your quiet hours, and it stops for anyone who says stop.</p></details><details><summary>Can it message my past customers?</summary><p>Yes. Pick a tag, such as renewal due, and it messages every customer with that tag. Or pick a date field, such as an expiry date, and each customer gets a reminder when their date comes near. People who opted out are always skipped.</p></details><details><summary>How much does it cost?</summary><p>It is part of every 41 Sales Team plan, so there is no separate fee. Plans start small and grow with the number of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.</p></details></div>
+            <div class="faq read center-block"><details><summary>What does the AI Operations Admin do?</summary><p>It handles the work after a customer pays on WhatsApp. It sends the invoice, saves the details the customer gives, moves or cancels bookings when your booking system is connected, checks in on the date the customer asks for, and hands the chat to your staff when they are needed.</p></details><details><summary>Does it send invoices?</summary><p>Yes. When a customer pays through the payment link in the chat, the invoice goes back to them on WhatsApp. It also sends one when a customer asks for an invoice for their records.</p></details><details><summary>Can it change or cancel a booking?</summary><p>Yes, when your booking system is connected. It finds the customer&#x27;s own booking by their WhatsApp number, moves it to a free time or cancels it, and tells them exactly what happened. You can send late changes to your team instead.</p></details><details><summary>Is it an AI receptionist?</summary><p>On WhatsApp, it does a lot of the front desk work after a sale. It sends invoices, saves the details customers give, checks in when they asked, and moves bookings when your booking system is connected. It works on WhatsApp only and does not answer phone calls.</p></details><details><summary>How do follow-ups work after 24 hours?</summary><p>WhatsApp only allows approved messages once a customer has been quiet for 24 hours. We set those messages up on your account for you, so every follow-up still goes out. Nothing goes out in your quiet hours, and it stops for anyone who says stop.</p></details><details><summary>Can it message my past customers?</summary><p>Yes. Pick a tag, such as renewal due, and it messages every customer with that tag. Or pick a date field, such as an expiry date, and each customer gets a reminder when their date comes near. People who opted out are always skipped.</p></details><details><summary>How much does it cost?</summary><p>It is part of every 41 Sales Team plan, so there is no separate fee. Plans start small and grow with the number of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.</p></details></div>
         </div>
     </section>
 
-    <section id="the-team" class="section">
+    <section id="the-team" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Your AI sales team</span>
                 <h2>The rest of your AI sales team.</h2>
-                <p class="lede">They share your one WhatsApp number. Your staff can step into any chat, and the AI picks up again when they finish.</p>
+                <p class="lede">They share your one WhatsApp number.</p>
             </div>
-            <div class="grid-3"><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Sales Closer</h3><p>Answers every enquiry, quotes your prices, books and takes payment.</p><a href="/41-closer">See what it does <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Manager</h3><p>Shows every sale on one screen and alerts the right person when a customer needs a human.</p><a href="/ai-manager">See what it does <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/><path d="M18 5a9 9 0 0 1 0 14"/></svg></span><span class="pill">Coming soon</span></div><h3>AI Leads Generator</h3><p>Will run your Facebook and Instagram ads and send the enquiries straight to your AI sales team.</p></div></div><p class="price-line"><a href="/pricing"><b>Part of every 41 Sales Team plan.</b></a> Read how an <a href="/ai-sales-agent-singapore">AI sales agent works in Singapore</a>.</p>
+            <div class="grid-3"><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="pill pill-good">Live</span></div><h3><a href="/41-closer">AI Sales Closer <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></h3></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span class="pill pill-good">Live</span></div><h3><a href="/ai-manager">AI Manager <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></h3></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/><path d="M18 5a9 9 0 0 1 0 14"/></svg></span><span class="pill">Coming soon</span></div><h3>AI Leads Generator</h3></div></div><p class="price-line"><a href="/pricing"><b>Part of every 41 Sales Team plan.</b></a> Read how an <a href="/ai-sales-agent-singapore">AI sales agent works in Singapore</a>.</p>
         </div>
     </section>
 
-    <section id="start-now" class="section section-white">
+    <section id="start-now" class="section">
         <div class="wrap">
             <div class="cta-band wash">
                 <div class="final-grid">
                     <span class="eyebrow">Start now</span>
                     <h2>Hand over the admin after every sale</h2>
-                    <p class="lede">We build it on your business before we meet. You test it. If you like it, it goes live that day.</p>
+                    <p class="lede">We build it before we meet. If you like it, it goes live that day.</p>
                     <div class="cta-pair center"><div class="cta-col"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-operations-admin#qualify">Book a free call</a><p class="note">30 minutes with Alexander. We build your AI before the call. No contract.</p></div><div class="cta-col"><a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> WhatsApp our AI now</a><p class="note">It replies in seconds, day or night.</p></div></div>
                 </div>
             </div>

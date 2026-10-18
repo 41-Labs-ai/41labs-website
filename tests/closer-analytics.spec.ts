@@ -463,3 +463,72 @@ test.describe('AI role pages: one main action', () => {
     });
   }
 });
+
+// 18 Oct 2026, show-not-tell pass. The founder: "too wordy, we need to SHOW, not put too much text", and
+// for logos "put their real coloured logos and never put coming soon, say it's ready". These pin it.
+test.describe('AI role pages: show, do not tell', () => {
+  const paths = ['/41-closer.html', '/ai-operations-admin.html', '/ai-manager.html'];
+  const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
+  for (const path of paths) {
+    test(`${path}: real logos, every stage a product visual, under 700 words`, async ({ page }) => {
+      await page.route(/googletagmanager\.com|connect\.facebook\.net|fonts\.g/, (r) => r.abort());
+      await page.goto(path);
+
+      // Trust strip: a real logo file for every integration except WESS (no file yet, so a name tile), and no "coming soon".
+      const strip = page.locator('#works-with');
+      await expect(strip).not.toContainText(/coming soon/i);
+      const tiles = strip.locator('.int-tile');
+      expect(await tiles.count()).toBeGreaterThanOrEqual(5);
+      for (const t of await tiles.all()) {
+        const name = (await t.locator('.int-name').textContent())!.trim();
+        if (name === 'WESS') continue;
+        const img = t.locator('img.int-ic');
+        await expect(img, `${name} needs its logo file`).toHaveAttribute('src', /^\/assets\/41st\/logos\/[a-z]+\.(svg|png)$/);
+        await img.scrollIntoViewIfNeeded();
+        await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0), { message: `${name} logo loads` }).toBe(true);
+      }
+      // "Coming soon" only ever belongs to the AI Leads Generator.
+      const main = await page.locator('main').evaluate((m) => {
+        const c = m.cloneNode(true) as HTMLElement;
+        c.querySelectorAll('.team-strip, #the-team').forEach((e) => e.remove());
+        return c.textContent || '';
+      });
+      expect(main).not.toMatch(/coming soon/i);
+
+      // Its day: no bullet lists, each stage is a mini visual tagged Example, a 2 to 4 word title, one line of 8 words at most.
+      const day = page.locator('#its-day');
+      expect(await day.locator('ul.checks, ul li li').count()).toBe(0);
+      const stages = day.locator('.stage');
+      expect(await stages.count()).toBe(5);
+      for (const st of await stages.all()) {
+        await expect(st.locator('.mv[role="img"]')).toHaveCount(1);
+        await expect(st.locator('.mv-tag')).toHaveText('Example');
+        expect(words((await st.locator('h3').textContent())!)).toBeGreaterThanOrEqual(2);
+        expect(words((await st.locator('h3').textContent())!)).toBeLessThanOrEqual(4);
+        await expect(st.locator('.stage-line')).toHaveCount(1);
+        expect(words((await st.locator('.stage-line').textContent())!)).toBeLessThanOrEqual(8);
+      }
+
+      // Hand-over: one alert card and one line.
+      await expect(page.locator('#handover .mv[role="img"]')).toHaveCount(1);
+      await expect(page.locator('#handover p')).toHaveCount(1);
+
+      // Today vs: 7 words a cell at most.
+      for (const cell of await page.locator('#compare tbody th, #compare tbody td').allTextContents()) {
+        expect(words(cell), cell).toBeLessThanOrEqual(7);
+      }
+
+      // Under 700 words a visitor reads without opening a FAQ answer (the answers stay in the FAQ schema).
+      const shown = await page.locator('main').evaluate((m) => {
+        const c = m.cloneNode(true) as HTMLElement;
+        c.querySelectorAll('script, style, details:not([open]) > :not(summary)').forEach((e) => e.remove());
+        return c.textContent || '';
+      });
+      expect(words(shown)).toBeLessThan(700);
+      expect(await page.locator('#faq details[open]').count()).toBe(0);
+
+      // No sideways scroll at any width.
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+    });
+  }
+});

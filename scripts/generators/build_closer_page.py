@@ -9,6 +9,8 @@ because closer-analytics.js attributes time to section[id] / header[id].
 Facts: 41 Labs/pricing/41-CLOSER-PRICING.md. Rule: no overage price, no Meta fee, no guarantee, no invented number.
 18 Oct 2026 (copy deck v3): the page follows the AI role page template. The section renderers and the
 template CSS live in build_role_pages.py, so the three AI pages cannot drift apart.
+18 Oct 2026, show-not-tell pass: every stage of its day is a mini product visual (rp.mv_chat / rp.mv_card)
+with a short title and one line, the hand-over is one alert card, the study is two stat tiles.
 Run twice: the second run must change nothing."""
 import re, json, html, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -42,39 +44,53 @@ except OSError:
 CAPSULE = ("The AI Sales Closer is a managed AI sales agent on your own WhatsApp number. It answers every customer in seconds, at any hour, "
            "quotes from your real prices, asks the one qualifying question, and takes the payment or books the slot. "
            "41 Labs builds it before you pay and runs it for you.")
-CAPSULE_2 = ("We measured the gap it closes. One real enquiry sent to 25 Singapore businesses between 8pm and 11pm: one replied within five minutes, "
-             "the median wait was 13.3 hours, four never replied. The study is linked below.")
+# The study under the capsule, shown as two stat tiles (show-not-tell pass). Same facts as the study page.
+GAP_STATS = [("1 of 25", "businesses replied within five minutes"), ("13.3 hours", "median wait after 8pm")]
 
 # Copy deck v3 (18 Oct 2026), "AI SALES CLOSER", word for word. No prices on this page: plans live on /pricing.
-SUB = ("It answers every WhatsApp enquiry in seconds, at any hour, in your customer's language. It quotes from your real prices, "
-       "asks the questions that matter and takes the payment or books the slot.")
+SUB = "It answers every WhatsApp enquiry in seconds and takes the payment or books the slot."
 PROOF = "19 seconds median first reply on a live Singapore line."
 LOGOS = ["WhatsApp", "Facebook Messenger", "Stripe", "Airwallex", "Google Calendar", "Google Sheets", "Plato"]
-# Outcome cards. The third uses the same wording as this page's case (it was the "Not a demo" card).
+# Outcome cards: a number and a short label. The third is this page's case (it was the "Not a demo" card).
 WINS = [
-    ("clock", "19 seconds", None, "median first reply"),
-    ("clock", "1 in 4", None, "enquiries arrive after hours, and each one gets a reply"),
-    ("chart", "$300,000", None, "of sales every month through the AI Sales Closer at one Singapore industrial supplier", "Real client, kept private on request"),
+    ("clock", "19 seconds", "median first reply"),
+    ("clock", "1 in 4", "enquiries come after hours"),
+    ("chart", "$300,000", "monthly sales through it at one supplier", "Real client, name kept private"),
 ]
-PAIN = "A customer who waits until morning has often bought somewhere else by then."
+PAIN = "A customer who waits until morning often buys elsewhere."
+# Its day: (2 to 4 word title, one line of 8 words at most, mini visual). Example amounts use "$".
 STAGES = [
-    ("Answer.", "Customers message when it suits them, often after you close.",
-     ["Replies in seconds, day or night.", "Writes in your customer's language.", "Uses your own WhatsApp number."]),
-    ("Qualify.", "Not every enquiry is a buyer.",
-     ["Asks the one or two questions that matter: date, location, size.", "Then moves straight to the quote."]),
-    ("Quote.", '"How much?" is the question that wins or loses the sale.',
-     ["Quotes from your real price list.", "Gives the right options for what they asked.", "Never invents a price."]),
-    ("Close.", "A yes is only a sale once it is paid or booked.",
-     ["Sends the payment link or books the slot.", "Confirms in the chat.", "Tells your team straight away."]),
-    ("Follow up.", 'Many customers say "let me think".',
-     ["Messages them again on the day they asked for.", "Uses approved WhatsApp templates after 24 hours.", "Stops when they say no."]),
+    ("Answers in seconds", "Day or night, in their language.",
+     rp.mv_chat("At 11:42pm a customer asks if you are open on Sunday and the AI answers straight away.",
+                rp.mline("11:42 pm"),
+                rp.mb("in", "Hi, are you open on Sunday?"),
+                rp.mb("ai", "Yes, 10am to 6pm. What do you need?"))),
+    ("Asks what matters", "One or two questions, then the quote.",
+     rp.mv_chat("The AI asks for the date and group size, and the customer answers.",
+                rp.mb("ai", "Which date, and how many people?"),
+                rp.mb("in", "Sat 24 Oct, 6 of us."))),
+    ("Quotes real prices", "From your price list. Never invented.",
+     rp.mv_card("A quote for a group session for 6 people on Saturday 24 October: $540, from your price list.",
+                rp.mpanel(rp.mrow("Group session, 6 people", "$540"), rp.mrow("Sat 24 Oct, 10:00am", "Available")),
+                rp.mpill("From your price list", "pill-good", "file"))),
+    ("Takes the payment", "Or books the slot. Your team is told.",
+     rp.mv_chat("The AI sends a payment link for $540 and the customer pays.",
+                rp.mb("ai", "Here is your payment link.", attach=rp.mlink("Secure checkout, $540")),
+                rp.mpill("Paid $540"))),
+    ("Follows up", "On the day they asked for.",
+     rp.mv_chat("On the day the customer asked for, the AI checks in and the customer books.",
+                rp.mline("Tue 27 Oct, 10:00 am"),
+                rp.mb("ai", "Hi, you asked me to check in today. Still keen on Saturday?"),
+                rp.mb("in", "Yes, book it."))),
 ]
-HANDOVER = ["When a chat needs a person, your team gets the full chat and a short summary on WhatsApp. One tap turns the AI off "
-            "for that chat. When you switch it back on, it reads what your team said and carries on."]
+HANDOVER_LINE = "Your team gets the chat and a summary. One tap pauses the AI."
+HANDOVER_VISUAL = rp.mv_chat("Your staff member gets a WhatsApp alert with a summary: Grace T. asked for a refund.",
+                             rp.mb("bot", "Needs you: Grace T. asked for a refund. Her item arrived damaged."),
+                             rp.mb("team", "I will call her now."))
 COMPARE = [
     ("A message at 11pm", "Waits until morning", "Answered in seconds"),
     ('"How much?"', "Someone looks it up", "Quoted from your price list"),
-    ('"Let me think"', "Often forgotten", "Messaged again on the day they asked for"),
+    ('"Let me think"', "Often forgotten", "Messaged on the day they asked"),
     ("A tricky complaint", "Gets a guess", "Goes straight to the right person"),
 ]
 FINAL_H2 = "See it answer your own customers"
@@ -253,7 +269,8 @@ HERO_CHAT = "".join([
 ])
 
 CAPSULE_HTML = (f'<div class="capsule"><p><strong>{CAPSULE}</strong></p></div>'
-                f'<p class="capsule-more">{CAPSULE_2} <a href="/blog/whatsapp-response-time-singapore-study">Read the study</a>.</p>')
+                '<div class="gap-stats">' + "".join(f'<div class="stat"><b>{n}</b><span>{t}</span></div>' for n, t in GAP_STATS) + '</div>'
+                '<p class="gap-note"><a href="/blog/whatsapp-response-time-singapore-study">Read the study</a></p>')
 
 MAIN = f'''<main id="main">
 
@@ -290,13 +307,13 @@ MAIN = f'''<main id="main">
 
     {rp.day_section(NAME, STAGES, BOOK)}
 
-    {rp.handover_section(HANDOVER)}
+    {rp.handover_section(HANDOVER_LINE, HANDOVER_VISUAL)}
 
     {rp.compare_section(NAME, COMPARE, f'<div class="after-cta">{rp.book_btn(BOOK)}</div>')}
 
     {rp.try_section(WA_TRY)}
 
-    {rp.faq_section("What buyers ask before they start.", FAQ)}
+    {rp.faq_section("What buyers ask.", FAQ)}
 
     {rp.siblings_section("closer")}
 
@@ -313,7 +330,6 @@ MAIN = f'''<main id="main">
                     <div class="qr-card">
                         <img src="41-closer-qr.png" alt="Scan to chat with the AI Sales Closer on WhatsApp" width="228" height="228" loading="lazy">
                         <p class="qr-label">Scan to talk to it now</p>
-                        <p class="qr-sub">Point your phone camera here. It replies in seconds.</p>
                     </div>
                 </div>
             </div>
@@ -343,8 +359,19 @@ out = HEAD + partial("header.html") + MAIN + partial("footer.html") + TAIL
 assert out.count('"FAQPage"') == 1 and out.count("<h1") == 1
 # 1500 -> 1550 on 17 Oct 2026: the Start plan card (S$299) was added. Plans left this page on 18 Oct (1081 words), so down to 1150.
 # 1150 -> 1300 on 18 Oct 2026: copy deck v3 role template (its day, handover, today vs, try it now) targets 900 to 1,300 words.
+# 1300 -> 1000 on 18 Oct 2026, same day: founder said "too wordy, we need to SHOW". Stages became mini product visuals.
+# That ceiling counts every FAQ answer as open. What a visitor reads without opening one is gated at rp.MAX_WORDS (700) below.
 # No prices on this page (18 Oct brief): the price-position gate now pins the /pricing link line in the FAQ instead.
-problems, stats = check(out, max_words=1300, faq=FAQ, max_ctas=3, price_token="See pricing", price_within=1.0)
+problems, stats = check(out, max_words=1000, faq=FAQ, max_ctas=3, price_token="See pricing", price_within=1.0)
+n_shown = len(rp.shown(out).split())
+stats["shown"] = n_shown
+if n_shown > rp.MAX_WORDS:
+    problems.append(f"{n_shown} words shown outside collapsed FAQ answers, ceiling {rp.MAX_WORDS}")
+_main = out[out.index("<main"):out.index("</main>")]
+if "&lt;" in _main:
+    problems.append("escaped HTML in the page body (a mini visual got markup where it expected text)")
+if re.search(r"coming soon", re.sub(r'<div class="team-strip".*?</div>|<section id="the-team".*?</section>', "", _main, flags=re.S), re.I):
+    problems.append('"coming soon" outside the AI Leads Generator pill (every integration is ready)')
 # Main button: exact label and href, at least 3 times in the page body (the header button is extra).
 n_book = MAIN.count(rp.book_btn(BOOK))
 if n_book < 3:

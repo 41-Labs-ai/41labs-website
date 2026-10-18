@@ -205,12 +205,15 @@
         .int-grid.trust-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
         .trust-grid .int-tile{padding:8px 12px;gap:8px;box-shadow:none}
         .trust-grid .int-ic{width:22px;height:22px}
+        .trust-grid img.int-wide{width:42px}
         .trust-grid .int-word{font-size:12px;border-radius:6px}
         .trust-grid .int-name{font-size:14px;white-space:nowrap}
         .trust-more{font-size:14px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
         /* 3 outcome cards */
         .wins>.card{display:flex;flex-direction:column}
-        .win h3{font-size:19px}
+        .win h3{font-size:19px;margin:0}
+        .wins.short>.card{flex-direction:row;align-items:center;gap:14px;padding:20px 22px}
+        .wins.short .icon-chip{margin:0;flex:none}
         .win p{margin:8px 0 0;color:var(--muted)}
         .out-num{display:block;font-size:clamp(34px,4vw,46px);line-height:1.05;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--fg)}
         .win .out-num+p{margin-top:10px;color:var(--fg);font-size:16.5px}
@@ -222,25 +225,48 @@
         .pain-more .capsule p{margin:0}
         .pain-more .capsule strong{font-weight:500}
         .capsule-more{margin-top:16px;color:var(--muted)}
-        /* 5 its day */
-        .day{list-style:none;margin:0 auto;padding:0;display:grid;gap:14px;max-width:960px}
-        .stage{display:grid;gap:14px 32px;grid-template-columns:1fr;padding:22px 24px}
-        @media(min-width:760px){.stage{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:center}.day.compact .stage{grid-template-columns:240px minmax(0,1fr)}}
-        .stage-head{display:flex;gap:14px;align-items:flex-start}
-        .stage-num{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:15px;flex:none}
-        .stage-head h3{margin:5px 0 0}
-        .stage-pain{margin:6px 0 0;color:var(--muted);font-size:16px}
-        .stage .checks li{color:var(--fg)}
-        @media(max-width:759px){.stage .checks{padding-left:50px}}
-        .day.compact .stage-head{align-items:center}
-        .day.compact .stage-head h3{margin:0}
+        .gap-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+        .gap-stats .stat b{display:block;font-size:clamp(26px,3vw,34px);line-height:1.1;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+        .gap-stats .stat{padding:16px 18px}
+        @media(max-width:480px){.gap-stats .stat b{font-size:24px;white-space:nowrap}}
+        .gap-note{margin:12px 0 0;font-size:14px;color:var(--subtle)}
+        /* 5 its day: one card per stage, a mini product visual on top, a short title and one line */
+        .day{list-style:none;margin:0 auto;padding:0;display:grid;gap:16px;grid-template-columns:1fr;max-width:1080px}
+        @media(min-width:640px){.day{grid-template-columns:1fr 1fr}}
+        @media(min-width:1000px){.day{grid-template-columns:repeat(6,minmax(0,1fr))}.day>li{grid-column:span 2}.day>li:nth-child(n+4){grid-column:span 3}}
+        .stage{display:flex;flex-direction:column;gap:14px;padding:14px;min-width:0}
+        .stage-head{display:flex;gap:12px;align-items:flex-start;padding:0 4px 4px}
+        .stage-num{width:30px;height:30px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:14px;flex:none}
+        .stage-head h3{margin:3px 0 0;font-size:17px}
+        .stage-line{margin:2px 0 0;color:var(--muted);font-size:15px;line-height:1.45}
+        .mv{position:relative;border-radius:var(--r-panel);min-height:196px;padding:34px 12px 12px;font-size:13.5px;line-height:1.4;display:flex;flex-direction:column;justify-content:center;gap:8px;overflow:hidden;flex:1}
+        .mv.chat{padding:34px 12px 12px}
+        .mv .bubble{font-size:13.5px;max-width:90%;padding:7px 10px 5px}
+        .mv .paylink{font-size:13px;padding:6px 9px}
+        .mv .chat-event{font-size:12px}
+        .mv-card{background:var(--bg);border:1px solid var(--border)}
+        .mv-card .chat-event{align-self:flex-start;margin:0}
+        .mv-tag{position:absolute;top:9px;left:10px;font-size:11px;font-weight:500;line-height:16px;color:var(--subtle);background:var(--surface);padding:1px 8px;border-radius:var(--r-pill);box-shadow:var(--shadow-raised)}
+        .mv-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 12px;box-shadow:var(--shadow-raised)}
+        .mv-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border);min-width:0}
+        .mv-row:first-child{border-top:0}
+        .mv-row span{color:var(--muted)}
+        .mv-row b{font-weight:600;font-variant-numeric:tabular-nums;text-align:right;min-width:0}
+        .mv-k{font-size:12.5px;color:var(--muted)}
+        .mv-big{font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+        .mv-up{font-size:12.5px;color:var(--primary-text);margin-top:-4px}
+        .mv-old{text-decoration:line-through;color:var(--subtle);font-weight:500}
+        .mv-acts{display:flex;gap:8px;flex-wrap:wrap}
+        .mv-btn{display:inline-flex;align-items:center;padding:6px 14px;border-radius:var(--r-pill);background:var(--primary);color:var(--on-primary);font-weight:600;font-size:12.5px}
+        .mv-btn.ghost{background:var(--surface);color:var(--fg);border:1px solid var(--border-strong);font-weight:500}
         .after-cta{display:flex;justify-content:center;margin-top:32px}
-        /* 6 handing over */
-        .handover{max-width:860px;margin:0 auto;display:flex;gap:20px;align-items:flex-start;padding:28px}
-        .handover .icon-chip{margin:0;flex:none}
+        /* 6 handing over: one alert card your staff receive, one line */
+        .handover{max-width:900px;margin:0 auto;display:grid;gap:24px 40px;grid-template-columns:1fr;align-items:center;padding:28px}
+        @media(min-width:760px){.handover{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
         .handover h2{font-size:clamp(24px,3vw,32px)}
         .handover p{margin:12px 0 0;color:var(--muted)}
-        @media(max-width:640px){.handover{flex-direction:column;padding:22px}}
+        .handover .mv{min-height:0}
+        @media(max-width:640px){.handover{padding:18px}}
         /* 7 today vs */
         .cmp{max-width:900px;margin:0 auto}
         .cmp table{min-width:0;table-layout:fixed}
@@ -255,16 +281,16 @@
         .step-card p{margin:8px 0 0;color:var(--muted)}
         ol.grid-3{list-style:none;margin:0;padding:0}
         .try-note{text-align:center;margin:12px 0 0}
-        .next-card{max-width:720px;margin:0 auto}
-        .next-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-        .next-list li{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);color:var(--fg)}
-        .next-list li:last-child{border-bottom:0}
         /* 10 the other three AIs */
         .sib{display:flex;flex-direction:column}
         .sib-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px}
         .sib-top .icon-chip{margin:0}
         .sib p{margin:8px 0 0;color:var(--muted)}
-        .sib a{margin-top:auto;padding-top:14px;font-weight:500;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+        .sib h3 a{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+        .sib h3 a svg{color:var(--primary-text)}
+        .sib h3 a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+        .sib{position:relative}
+        .sib:has(h3 a):hover{border-color:var(--border-strong)}
         .price-line{max-width:720px;margin:24px auto 0;text-align:center;color:var(--muted)}
         .price-line b{color:var(--fg)}
         .final-grid{text-align:center}
@@ -341,7 +367,7 @@
                 <div>
                     <span class="eyebrow">AI Sales Closer for WhatsApp</span>
                     <h1>AI Sales Closer. <span class="h1-soft">It closes the sale while you sleep.</span></h1>
-                    <p class="lede hero-sub">It answers every WhatsApp enquiry in seconds, at any hour, in your customer's language. It quotes from your real prices, asks the questions that matter and takes the payment or books the slot.</p>
+                    <p class="lede hero-sub">It answers every WhatsApp enquiry in seconds and takes the payment or books the slot.</p>
                     <p class="proof"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg> 19 seconds median first reply on a live Singapore line.</p>
                     <div class="cta-pair"><div class="cta-col"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-sales-closer#qualify">Book a free call</a><p class="note">30 minutes with Alexander. We build your AI before the call. No contract.</p></div><div class="cta-col"><a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> WhatsApp our AI now</a><p class="note">It replies in seconds, day or night.</p></div></div>
                 </div>
@@ -366,7 +392,7 @@
     <section id="works-with" class="trust section-white" aria-label="Works with what you already use">
         <div class="wrap trust-row">
             <p class="trust-label">Works with what you already use</p>
-            <ul class="int-grid trust-grid"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/messenger.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Facebook Messenger</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">P</span><span class="int-name">Plato</span></li></ul>
+            <ul class="int-grid trust-grid"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/messenger.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Facebook Messenger</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/airwallex.png" alt="" width="28" height="28" loading="lazy"><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><img class="int-ic int-wide" src="/assets/41st/logos/plato.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Plato</span></li></ul>
             <a class="trust-more" href="/#integrations">See all integrations <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
         </div>
     </section>
@@ -374,17 +400,16 @@
     <section id="wins" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">What changes for you</span>
                 <h2>More sales, and your evenings back.</h2>
             </div>
-            <div class="grid-3 wins"><div class="card win"><span class="out-num">19 seconds</span><p>median first reply</p></div><div class="card win"><span class="out-num">1 in 4</span><p>enquiries arrive after hours, and each one gets a reply</p></div><div class="card win"><span class="out-num">$300,000</span><p>of sales every month through the AI Sales Closer at one Singapore industrial supplier</p><span class="pill-wrap"><span class="pill">Real client, kept private on request</span></span></div></div>
+            <div class="grid-3 wins"><div class="card win"><span class="out-num">19 seconds</span><p>median first reply</p></div><div class="card win"><span class="out-num">1 in 4</span><p>enquiries come after hours</p></div><div class="card win"><span class="out-num">$300,000</span><p>monthly sales through it at one supplier</p><span class="pill-wrap"><span class="pill">Real client, name kept private</span></span></div></div>
         </div>
     </section>
 
     <section id="the-gap" class="section section-white">
         <div class="wrap">
-            <h2 class="pain">A customer who waits until morning has often bought somewhere else by then.</h2>
-            <div class="read center-block pain-more"><div class="capsule"><p><strong>The AI Sales Closer is a managed AI sales agent on your own WhatsApp number. It answers every customer in seconds, at any hour, quotes from your real prices, asks the one qualifying question, and takes the payment or books the slot. 41 Labs builds it before you pay and runs it for you.</strong></p></div><p class="capsule-more">We measured the gap it closes. One real enquiry sent to 25 Singapore businesses between 8pm and 11pm: one replied within five minutes, the median wait was 13.3 hours, four never replied. The study is linked below. <a href="/blog/whatsapp-response-time-singapore-study">Read the study</a>.</p></div>
+            <h2 class="pain">A customer who waits until morning often buys elsewhere.</h2>
+            <div class="read center-block pain-more"><div class="capsule"><p><strong>The AI Sales Closer is a managed AI sales agent on your own WhatsApp number. It answers every customer in seconds, at any hour, quotes from your real prices, asks the one qualifying question, and takes the payment or books the slot. 41 Labs builds it before you pay and runs it for you.</strong></p></div><div class="gap-stats"><div class="stat"><b>1 of 25</b><span>businesses replied within five minutes</span></div><div class="stat"><b>13.3 hours</b><span>median wait after 8pm</span></div></div><p class="gap-note"><a href="/blog/whatsapp-response-time-singapore-study">Read the study</a></p></div>
         </div>
     </section>
 
@@ -392,17 +417,18 @@
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Its day</span>
-                <h2>What the AI Sales Closer does, step by step.</h2>
+                <h2>Step by step.</h2>
             </div>
-            <ol class="day"><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><div><h3>Answer.</h3><p class="stage-pain">Customers message when it suits them, often after you close.</p></div></div><ul class="checks"><li>Replies in seconds, day or night.</li><li>Writes in your customer&#x27;s language.</li><li>Uses your own WhatsApp number.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><div><h3>Qualify.</h3><p class="stage-pain">Not every enquiry is a buyer.</p></div></div><ul class="checks"><li>Asks the one or two questions that matter: date, location, size.</li><li>Then moves straight to the quote.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><div><h3>Quote.</h3><p class="stage-pain">&quot;How much?&quot; is the question that wins or loses the sale.</p></div></div><ul class="checks"><li>Quotes from your real price list.</li><li>Gives the right options for what they asked.</li><li>Never invents a price.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">4</span><div><h3>Close.</h3><p class="stage-pain">A yes is only a sale once it is paid or booked.</p></div></div><ul class="checks"><li>Sends the payment link or books the slot.</li><li>Confirms in the chat.</li><li>Tells your team straight away.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">5</span><div><h3>Follow up.</h3><p class="stage-pain">Many customers say &quot;let me think&quot;.</p></div></div><ul class="checks"><li>Messages them again on the day they asked for.</li><li>Uses approved WhatsApp templates after 24 hours.</li><li>Stops when they say no.</li></ul></li></ol>
+            <ol class="day"><li class="card stage"><div class="mv chat" role="img" aria-label="At 11:42pm a customer asks if you are open on Sunday and the AI answers straight away."><span class="mv-tag">Example</span><span class="chat-line">11:42 pm</span><div class="bubble in">Hi, are you open on Sunday?</div><div class="bubble ai"><span class="who">AI</span><br>Yes, 10am to 6pm. What do you need?</div></div><div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><div><h3>Answers in seconds</h3><p class="stage-line">Day or night, in their language.</p></div></div></li><li class="card stage"><div class="mv chat" role="img" aria-label="The AI asks for the date and group size, and the customer answers."><span class="mv-tag">Example</span><div class="bubble ai"><span class="who">AI</span><br>Which date, and how many people?</div><div class="bubble in">Sat 24 Oct, 6 of us.</div></div><div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><div><h3>Asks what matters</h3><p class="stage-line">One or two questions, then the quote.</p></div></div></li><li class="card stage"><div class="mv mv-card" role="img" aria-label="A quote for a group session for 6 people on Saturday 24 October: $540, from your price list."><span class="mv-tag">Example</span><div class="mv-panel"><div class="mv-row"><span>Group session, 6 people</span><b>$540</b></div><div class="mv-row"><span>Sat 24 Oct, 10:00am</span><b>Available</b></div></div><span class="pill pill-good chat-event"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 14h6"/><path d="M9 18h4"/></svg> From your price list</span></div><div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><div><h3>Quotes real prices</h3><p class="stage-line">From your price list. Never invented.</p></div></div></li><li class="card stage"><div class="mv chat" role="img" aria-label="The AI sends a payment link for $540 and the customer pays."><span class="mv-tag">Example</span><div class="bubble ai"><span class="who">AI</span><br>Here is your payment link.<span class="paylink"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Secure checkout, $540</span></div><span class="pill pill-good chat-event"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg> Paid $540</span></div><div class="stage-head"><span class="stage-num" aria-hidden="true">4</span><div><h3>Takes the payment</h3><p class="stage-line">Or books the slot. Your team is told.</p></div></div></li><li class="card stage"><div class="mv chat" role="img" aria-label="On the day the customer asked for, the AI checks in and the customer books."><span class="mv-tag">Example</span><span class="chat-line">Tue 27 Oct, 10:00 am</span><div class="bubble ai"><span class="who">AI</span><br>Hi, you asked me to check in today. Still keen on Saturday?</div><div class="bubble in">Yes, book it.</div></div><div class="stage-head"><span class="stage-num" aria-hidden="true">5</span><div><h3>Follows up</h3><p class="stage-line">On the day they asked for.</p></div></div></li></ol>
             <div class="after-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-sales-closer#qualify">Book a free call</a></div>
         </div>
     </section>
 
     <section id="handover" class="section section-white">
         <div class="wrap">
-            <div class="card handover"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></svg></span>
-                <div><span class="eyebrow">When a person is needed</span><h2>Handing over to your staff</h2><p>When a chat needs a person, your team gets the full chat and a short summary on WhatsApp. One tap turns the AI off for that chat. When you switch it back on, it reads what your team said and carries on.</p></div>
+            <div class="card handover">
+                <div><h2>Handing over to your staff</h2><p>Your team gets the chat and a summary. One tap pauses the AI.</p></div>
+                <div class="mv chat" role="img" aria-label="Your staff member gets a WhatsApp alert with a summary: Grace T. asked for a refund."><span class="mv-tag">Example</span><div class="bubble bot"><span class="who-bot">41 Sales Team</span><br>Needs you: Grace T. asked for a refund. Her item arrived damaged.</div><div class="bubble team"><span class="who-team">You</span><br>I will call her now.</div></div>
             </div>
         </div>
     </section>
@@ -410,12 +436,11 @@
     <section id="compare" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">Side by side</span>
                 <h2>Today, and with the AI Sales Closer.</h2>
             </div>
             <div class="table-wrap cmp"><table>
                 <thead><tr><th scope="col">What happens</th><th scope="col">Today</th><th scope="col">With the AI Sales Closer</th></tr></thead>
-                <tbody><tr><th scope="row">A message at 11pm</th><td>Waits until morning</td><td class="with">Answered in seconds</td></tr><tr><th scope="row">&quot;How much?&quot;</th><td>Someone looks it up</td><td class="with">Quoted from your price list</td></tr><tr><th scope="row">&quot;Let me think&quot;</th><td>Often forgotten</td><td class="with">Messaged again on the day they asked for</td></tr><tr><th scope="row">A tricky complaint</th><td>Gets a guess</td><td class="with">Goes straight to the right person</td></tr></tbody>
+                <tbody><tr><th scope="row">A message at 11pm</th><td>Waits until morning</td><td class="with">Answered in seconds</td></tr><tr><th scope="row">&quot;How much?&quot;</th><td>Someone looks it up</td><td class="with">Quoted from your price list</td></tr><tr><th scope="row">&quot;Let me think&quot;</th><td>Often forgotten</td><td class="with">Messaged on the day they asked</td></tr><tr><th scope="row">A tricky complaint</th><td>Gets a guess</td><td class="with">Goes straight to the right person</td></tr></tbody>
             </table></div><div class="after-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-sales-closer#qualify">Book a free call</a></div>
         </div>
     </section>
@@ -423,11 +448,9 @@
     <section id="try-it" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">Try it now</span>
                 <h2>Message our AI the way your customer would</h2>
                 <p class="lede">Our own sales line runs on the same AI you would be buying. Ask it anything.</p>
             </div>
-            <ol class="grid-3"><li class="card step-card"><span class="step-num" aria-hidden="true">1</span><h3>Tap &quot;WhatsApp our AI now&quot;.</h3><p>WhatsApp opens with a message ready. Press send.</p></li><li class="card step-card"><span class="step-num" aria-hidden="true">2</span><h3>Ask what you would ask a new supplier.</h3><p>How it works, how long setup takes, whether it handles your kind of customer.</p></li><li class="card step-card"><span class="step-num" aria-hidden="true">3</span><h3>Watch it reply in seconds.</h3><p>It asks you a question or two, like a good salesperson would. If you want, it books your call with Alexander.</p></li></ol>
             <div class="after-cta"><a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> WhatsApp our AI now</a></div>
             <p class="note try-note">+65 8012 4848 · We only use your number to reply to you.</p>
         </div>
@@ -437,9 +460,9 @@
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Questions</span>
-                <h2>What buyers ask before they start.</h2>
+                <h2>What buyers ask.</h2>
             </div>
-            <div class="faq read center-block"><details open><summary>Will it sound like a bot?</summary><p>No. We train it on your products, your prices and how you talk to customers, and we keep tuning it. You test it yourself before it goes live.</p></details><details><summary>What do I need to prepare?</summary><p>Your website. A price list or a voice note helps. We do the rest.</p></details><details><summary>Does it use my own WhatsApp number?</summary><p>Yes. It runs on your business WhatsApp number through the WhatsApp Business API. We connect it for you. Your customers see your brand, not ours.</p></details><details><summary>What languages does it reply in?</summary><p>Your customer&#x27;s language. If they write in Chinese, it answers in Chinese.</p></details><details><summary>What does it cost?</summary><p>Plans start small and grow with the number of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.</p></details><details><summary>What if it does not work for me?</summary><p>You stop. One month is the only commitment you ever make, then month to month with 30 days notice. There is no guarantee attached, because you message your own agent before any money moves. You own the agent and everything it learns, and we never share or sell your data.</p></details><details><summary>Is my data safe?</summary><p>We follow PDPA. If you leave, we export your data and hand it to you.</p></details></div>
+            <div class="faq read center-block"><details><summary>Will it sound like a bot?</summary><p>No. We train it on your products, your prices and how you talk to customers, and we keep tuning it. You test it yourself before it goes live.</p></details><details><summary>What do I need to prepare?</summary><p>Your website. A price list or a voice note helps. We do the rest.</p></details><details><summary>Does it use my own WhatsApp number?</summary><p>Yes. It runs on your business WhatsApp number through the WhatsApp Business API. We connect it for you. Your customers see your brand, not ours.</p></details><details><summary>What languages does it reply in?</summary><p>Your customer&#x27;s language. If they write in Chinese, it answers in Chinese.</p></details><details><summary>What does it cost?</summary><p>Plans start small and grow with the number of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.</p></details><details><summary>What if it does not work for me?</summary><p>You stop. One month is the only commitment you ever make, then month to month with 30 days notice. There is no guarantee attached, because you message your own agent before any money moves. You own the agent and everything it learns, and we never share or sell your data.</p></details><details><summary>Is my data safe?</summary><p>We follow PDPA. If you leave, we export your data and hand it to you.</p></details></div>
         </div>
     </section>
 
@@ -448,9 +471,9 @@
             <div class="section-head center">
                 <span class="eyebrow">Your AI sales team</span>
                 <h2>The rest of your AI sales team.</h2>
-                <p class="lede">They share your one WhatsApp number. Your staff can step into any chat, and the AI picks up again when they finish.</p>
+                <p class="lede">They share your one WhatsApp number.</p>
             </div>
-            <div class="grid-3"><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="10" height="4" rx="1"/><path d="M17 6h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1"/><path d="M9 14l2 2 4-4"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Operations Admin</h3><p>Sends the invoice, saves the details and checks in on the date the customer asked for.</p><a href="/ai-operations-admin">See what it does <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Manager</h3><p>Shows every sale on one screen and alerts the right person when a customer needs a human.</p><a href="/ai-manager">See what it does <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/><path d="M18 5a9 9 0 0 1 0 14"/></svg></span><span class="pill">Coming soon</span></div><h3>AI Leads Generator</h3><p>Will run your Facebook and Instagram ads and send the enquiries straight to your AI sales team.</p></div></div>
+            <div class="grid-3"><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="10" height="4" rx="1"/><path d="M17 6h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1"/><path d="M9 14l2 2 4-4"/></svg></span><span class="pill pill-good">Live</span></div><h3><a href="/ai-operations-admin">AI Operations Admin <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></h3></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span class="pill pill-good">Live</span></div><h3><a href="/ai-manager">AI Manager <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></h3></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/><path d="M18 5a9 9 0 0 1 0 14"/></svg></span><span class="pill">Coming soon</span></div><h3>AI Leads Generator</h3></div></div>
         </div>
     </section>
 
@@ -461,13 +484,12 @@
                     <div>
                         <span class="eyebrow">Start now</span>
                         <h2>See it answer your own customers</h2>
-                        <p class="lede">We build it on your business before we meet. You test it. If you like it, it goes live that day.</p>
+                        <p class="lede">We build it before we meet. If you like it, it goes live that day.</p>
                         <div class="cta-pair"><div class="cta-col"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-sales-closer#qualify">Book a free call</a><p class="note">30 minutes with Alexander. We build your AI before the call. No contract.</p></div><div class="cta-col"><a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> WhatsApp our AI now</a><p class="note">It replies in seconds, day or night.</p></div></div>
                     </div>
                     <div class="qr-card">
                         <img src="41-closer-qr.png" alt="Scan to chat with the AI Sales Closer on WhatsApp" width="228" height="228" loading="lazy">
                         <p class="qr-label">Scan to talk to it now</p>
-                        <p class="qr-sub">Point your phone camera here. It replies in seconds.</p>
                     </div>
                 </div>
             </div>

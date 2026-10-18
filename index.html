@@ -174,7 +174,7 @@
             },
             {
                 "@type": "Question",
-                "name": "Do my customers message a new number?",
+                "name": "Do customers need a new number?",
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "No. It works on your existing WhatsApp Business number. Your customers notice faster replies, nothing else."
@@ -190,7 +190,7 @@
             },
             {
                 "@type": "Question",
-                "name": "What if a customer asks something it cannot answer?",
+                "name": "What if it cannot answer?",
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "It hands the chat to the right person on your team and tells them on WhatsApp. It never makes up an answer."
@@ -692,6 +692,93 @@
     .member .see{grid-column:2/4;margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:500;text-decoration:none;justify-self:start}
     .member .see .i{width:14px;height:14px}
     @media(max-width:640px){.member .see{grid-column:1/-1}}
+
+    /* show-not-tell pass (18 Oct): real coloured logos, mini product visuals */
+    .trust-logos{gap:16px 28px}
+    @media(min-width:900px){.trust-logos{display:grid;grid-template-columns:repeat(5,max-content);justify-content:space-between;gap:18px 28px}}
+    .trust-logos li{opacity:1;gap:10px;font-size:15px}
+    .trust-logos img{width:26px;height:26px;filter:none;object-fit:contain}
+    .trust-logos img.wide{width:50px}
+    @media(max-width:640px){.trust-logos{grid-template-columns:repeat(2,minmax(0,1fr))}.trust-logos img{width:24px;height:24px}.trust-logos img.wide{width:46px}}
+
+    .jobs-note{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 0;font-size:13px;color:var(--subtle)}
+    .job{padding:0;gap:0;overflow:hidden}
+    .job h3{padding:16px 18px 18px;font-size:16.5px}
+    .jv{height:148px;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:16px;border-bottom:1px solid var(--border);background:radial-gradient(220px 140px at 0% 0%,rgba(74,222,128,.16),transparent 70%),radial-gradient(220px 140px at 100% 100%,rgba(125,211,252,.18),transparent 70%),var(--bg)}
+    .mb{max-width:90%;padding:7px 10px;border-radius:14px;font-size:13px;line-height:18px;color:var(--fg);box-shadow:var(--shadow-raised)}
+    .mb i{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:2px;font:400 10.5px/1.2 var(--font);color:var(--subtle)}
+    .mb.in{align-self:flex-start;background:var(--bubble-customer);border-top-left-radius:4px}
+    .mb.out{align-self:flex-end;background:var(--bubble-ai);border-top-right-radius:4px}
+    .mb .ai-b{height:14px;font-size:10px}
+    .mday{align-self:center;padding:4px 9px;border-radius:8px;background:var(--surface);box-shadow:var(--shadow-raised);font-size:11.5px;font-weight:500;color:var(--muted)}
+    .mc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow-raised);font-size:13px;line-height:1.4}
+    .mc-k{font-size:11.5px;font-weight:500;color:var(--subtle);margin-bottom:4px}
+    .mc-row{display:flex;justify-content:space-between;gap:10px;color:var(--muted)}
+    .mc-row span:last-child{font-variant-numeric:tabular-nums;color:var(--fg)}
+    .mc-total{margin-top:5px;padding-top:5px;border-top:1px solid var(--border);font-weight:600}
+    .mc-total span{color:var(--fg)}
+    .mcal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+    .mcal span{display:grid;place-items:center;height:30px;border-radius:9px;background:var(--surface);border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--subtle)}
+    .mcal span.on{background:var(--primary);border-color:transparent;color:var(--on-primary);font-weight:600}
+    .mslot{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-raised);font-size:13.5px}
+    .mslot b{flex:1;font-weight:600}
+    .mslot .ck{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary-text)}
+    .mslot .ck .i{width:12px;height:12px;stroke-width:2.5}
+    .mpay{display:flex;align-items:center;gap:10px;padding:12px}
+    .mic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary-text);flex:none}
+    .mic .i{width:18px;height:18px}
+    .mpay-t{flex:1;min-width:0}
+    .mpay-t b{display:block;font-size:14px;font-weight:600;white-space:nowrap}
+    .mpay-t span{display:block;font-size:12px;color:var(--primary-text);font-weight:500}
+    .mpay .pill{white-space:nowrap}
+    .malert .mic{background:var(--warning-soft);color:var(--warning)}
+    .malert .mpay-t b{color:var(--warning)}
+    .malert .mpay-t span{color:var(--fg)}
+    .mok{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);flex:none}
+    .mok .i{width:13px;height:13px;stroke-width:2.75}
+    .trade .go{width:32px;height:32px;margin-top:14px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--border-strong);color:var(--primary-text)}
+    .trade .go .i{margin:0;vertical-align:0}
+    .trade:hover .go{background:var(--primary-soft);border-color:transparent}
+    @media(max-width:679px){.trade .go{grid-column:2;margin-top:10px}}
+    .mbtn{padding:6px 12px;border-radius:999px;background:var(--fg);color:#fff;font-size:12px;font-weight:600}
+    .mrev{padding:10px 12px 6px}
+    .mrev-n{font-size:24px;line-height:1.1;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+    .mspark{display:block;width:100%;height:30px;margin-top:4px}
+    .jobs .pill-good,.mslot .pill-good{font-size:11.5px}
+
+    .try-split{display:grid;gap:40px;grid-template-columns:minmax(0,1fr);align-items:center}
+    @media(min-width:900px){.try-split{grid-template-columns:minmax(0,1fr) 360px;gap:64px;max-width:980px}}
+    #try-it .section-head{margin-bottom:24px}
+    #try-it .try-steps{display:flex;flex-direction:column;gap:10px;grid-template-columns:none}
+    #try-it .try-step{display:flex;align-items:center;gap:14px;padding:0}
+    #try-it .try-step .num{width:32px;height:32px;margin:0;font-size:14px;flex:none}
+    #try-it .try-step h3{margin:0;font-size:18px}
+    #try-it .try-cta{align-items:flex-start;text-align:left;margin-top:28px}
+    .mphone{justify-self:center;width:min(340px,100%);padding:9px;border-radius:44px;background:linear-gradient(160deg,#3a413d,#1b201e 30%,#1b201e 70%,#3a413d);box-shadow:0 0 0 1px rgba(0,0,0,.5),0 40px 80px -30px rgba(23,32,27,.45)}
+    .mscreen{border-radius:36px;overflow:hidden;background:#eef1ec}
+    .mscreen .wa-head{padding:18px 14px 10px 10px}
+    .mscreen .wall{padding:14px 10px 22px;min-height:180px}
+    .mav{background:var(--primary);color:var(--on-primary)}
+    .mphone-cap{margin:10px 0 2px;text-align:center;font-size:12px;color:rgba(255,255,255,.7)}
+    @media(max-width:899px){#try-it .try-cta{align-items:stretch}}
+    @media(max-width:639px){.jv{height:124px}.mscreen .wall{min-height:150px}.mphone{width:min(320px,100%)}}
+
+    .trade p{font-size:15px;margin:0}
+    .gap-stats{display:grid;gap:12px;grid-template-columns:minmax(0,1fr);margin-bottom:36px}
+    @media(min-width:760px){.gap-stats{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}}
+    .gap-big,.gap-side{padding:28px;border-radius:var(--r-card);background:var(--bg);border:1px solid var(--border)}
+    .gap-big{background:var(--fg);color:#fff;border-color:transparent}
+    .gap-num{font-size:clamp(56px,8vw,96px);line-height:1;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+    .gap-num small{font-size:.32em;font-weight:600;letter-spacing:-.01em}
+    .gap-big .gap-num{color:var(--primary)}
+    .gap-big p,.gap-side p{margin:12px 0 0;font-size:16px;line-height:1.45}
+    .gap-big p{color:rgba(255,255,255,.78)}
+    .gap-big a{color:#fff;text-underline-offset:3px}
+    .gap-side p{color:var(--muted)}
+    .choice{align-items:center}
+    .choice p{font-size:16px}
+    .dfy.three h3{font-size:18px}
+    @media(max-width:760px){.dfy.three li{align-items:center}.dfy.three .node{grid-row:auto}}
     </style>
 </head>
 <body>
@@ -784,8 +871,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="hero-copy">
                 <p class="hero-eyebrow"><span class="dot"></span>For Singapore businesses that sell on WhatsApp</p>
                 <h1>Your AI sales team for WhatsApp. <span class="h1-soft">It answers, quotes, books and gets paid, 24/7.</span></h1>
-                <p class="lede">Every customer gets a reply in seconds, a quote from your prices, a slot in your calendar and a payment link. After the sale it sends the invoice and the reminders, and you see every sale on one screen. We set it up and run it for you.</p>
-                <p class="hero-proof"><span class="hp-ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span>19 seconds median first reply on a live Singapore line. 20 businesses built across 17 industries.</span></p>
+                <p class="lede">A reply in seconds, a quote, a booking and a payment link. We set it up and run it for you.</p>
+                <p class="hero-proof"><span class="hp-ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span>19 seconds median first reply on a live Singapore line.</span></p>
                 <div class="cta-pair hero-cta" id="hero-cta">
                     <div class="cta-item">
                         <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a free call</a>
@@ -811,16 +898,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <b data-k="biz">Orchard Aesthetics</b>
                         <span class="pill pill-example">Example</span>
                         <span class="grow"></span>
-                        <span class="dash-date">Mon 12 Oct</span>
                         <span class="me" aria-hidden="true" data-k="me">S</span>
                     </div>
                     <div class="dash-body">
                         <div class="greet">
                             <div>
                                 <h3>Welcome back, <span data-k="owner">Sarah</span></h3>
-                                <p>Here is how <span data-k="biz">Orchard Aesthetics</span> did last week.</p>
                             </div>
-                            <span class="seg" aria-hidden="true"><span class="on">7 days</span><span>30 days</span></span>
                         </div>
                         <div class="tiles">
                             <div class="tile">
@@ -862,11 +946,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <span class="pill pill-good">Live</span>
                                 <span class="drow-count" data-k="mgr">4</span>
                             </div>
-                            <div class="drow soon">
-                                <span class="drow-ico off"><svg class="i"><use href="#i-mega"/></svg></span>
-                                <div><div class="drow-name">AI Leads Generator</div><div class="drow-sub">Facebook and Instagram ads</div></div>
-                                <span class="pill">Coming soon</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -874,7 +953,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <span class="tile-ico"><svg class="i"><use href="#i-cash"/></svg></span>
                     <div><b data-k="paytitle">Paid $680</b><span data-k="paysub">Acne scar package. 10:52 pm, example</span></div>
                 </div>
-                <p class="dash-caption">Example dashboard. Example business and numbers.</p>
+                <p class="dash-caption">Example dashboard and numbers.</p>
             </div>
         </div>
     </section>
@@ -885,14 +964,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="trust-row">
                 <p class="trust-label">Works with what you already use</p>
                 <ul class="trust-logos">
-                    <li><img src="/assets/41st/logos/whatsapp.svg" alt="" width="20" height="20">WhatsApp</li>
-                    <li><img src="/assets/41st/logos/messenger.svg" alt="" width="20" height="20">Facebook Messenger</li>
-                    <li><img src="/assets/41st/logos/stripe.svg" alt="" width="20" height="20">Stripe</li>
-                    <li><span class="tw" aria-hidden="true">A</span>Airwallex</li>
-                    <li><img src="/assets/41st/logos/googlecalendar.svg" alt="" width="20" height="20">Google Calendar</li>
-                    <li><img src="/assets/41st/logos/googlesheets.svg" alt="" width="20" height="20">Google Sheets</li>
-                    <li><span class="tw" aria-hidden="true">P</span>Plato</li>
-                    <li><span class="tw" aria-hidden="true">W</span>WESS</li>
+                    <li><img src="/assets/41st/logos/whatsapp.svg" alt="" width="26" height="26">WhatsApp</li>
+                    <li><img src="/assets/41st/logos/messenger.svg" alt="" width="26" height="26">Messenger</li>
+                    <li><img src="/assets/41st/logos/stripe.svg" alt="" width="26" height="26">Stripe</li>
+                    <li><img src="/assets/41st/logos/airwallex.png" alt="" width="26" height="26">Airwallex</li>
+                    <li><img src="/assets/41st/logos/googlecalendar.svg" alt="" width="26" height="26">Google Calendar</li>
+                    <li><img src="/assets/41st/logos/googlesheets.svg" alt="" width="26" height="26">Google Sheets</li>
+                    <li><img src="/assets/41st/logos/hubspot.svg" alt="" width="26" height="26">HubSpot</li>
+                    <li><img src="/assets/41st/logos/shopify.svg" alt="" width="26" height="26">Shopify</li>
+                    <li><img class="wide" src="/assets/41st/logos/plato.svg" alt="" width="50" height="26">Plato</li>
+                    <li><img src="/assets/41st/logos/xero.svg" alt="" width="26" height="26">Xero</li>
                 </ul>
                 <a class="trust-more" href="#integrations">See all integrations<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
             </div>
@@ -912,18 +993,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wrap">
             <div class="section-head center">
                 <p class="eyebrow">What it does for you</p>
-                <h2 id="jobs-h">Eight jobs it does on your WhatsApp, every day</h2>
-                <p class="lede">From the first message to the paid booking, and the admin after. You and your staff step in only when a person is needed.</p>
+                <h2 id="jobs-h">Eight jobs, done on your WhatsApp</h2>
+                <p class="jobs-note"><span class="pill pill-example">Example</span>Example screens and amounts</p>
             </div>
             <ul class="jobs">
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><h3>Answers every enquiry in seconds</h3><p>Day or night, on WhatsApp and Messenger, in your customer's language.</p></li>
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span><h3>Quotes from your real prices</h3><p>It reads your price list, so every customer gets the right figure.</p></li>
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h3>Books into your calendar</h3><p>It offers open slots and puts the booking straight into Google Calendar.</p></li>
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span><h3>Takes payment in the chat</h3><p>It sends a secure payment link by Stripe or Airwallex.</p></li>
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span><h3>Follows up until they decide</h3><p>Quiet customers hear from it again on the day they asked for.</p></li>
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></span><h3>Sends the invoice</h3><p>The moment the customer pays, with the details saved for your team.</p></li>
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><h3>Hands over to your staff</h3><p>Tricky chats go to the right person on WhatsApp, with the full chat.</p></li>
-                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span><h3>Shows you every sale</h3><p>Revenue and deals closed on one screen, in Singapore dollars.</p></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <span class="mb in">Hi, any slots Saturday?</span>
+                    <span class="mb out">Yes, 10am or 2pm. Which one?<i><span class="ai-b">AI</span></i></span>
+                </div><h3>Answers every enquiry in seconds</h3></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <div class="mc">
+                        <div class="mc-k">Quote</div>
+                        <div class="mc-row"><span>Deep clean, 3 rooms</span><span>$180</span></div>
+                        <div class="mc-row mc-total"><span>Total</span><span>$180</span></div>
+                    </div>
+                </div><h3>Quotes from your real prices</h3></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <div class="mcal"><span>Wed</span><span>Thu</span><span>Fri</span><span class="on">Sat</span><span>Sun</span></div>
+                    <div class="mslot"><span class="ck"><svg class="i"><use href="#i-check"/></svg></span><b>Sat 10:00</b><span class="pill pill-good">Booked</span></div>
+                </div><h3>Books into your calendar</h3></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <div class="mc mpay">
+                        <span class="mic"><svg class="i"><use href="#i-card"/></svg></span>
+                        <span class="mpay-t"><b>Pay $180</b><span>Tap to pay</span></span>
+                        <span class="pill pill-good">Paid</span>
+                    </div>
+                </div><h3>Takes payment in the chat</h3></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <span class="mday">2 days later</span>
+                    <span class="mb out">Still keen on Sat 10am? I can hold it.<i><span class="ai-b">AI</span></i></span>
+                </div><h3>Follows up until they decide</h3></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <div class="mc mpay">
+                        <span class="mic"><svg class="i"><use href="#i-doc"/></svg></span>
+                        <span class="mpay-t"><b>Invoice sent</b><span>#1042, $180</span></span>
+                        <span class="mok"><svg class="i"><use href="#i-check"/></svg></span>
+                    </div>
+                </div><h3>Sends the invoice</h3></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <div class="mc mpay malert">
+                        <span class="mic"><svg class="i"><use href="#i-bell"/></svg></span>
+                        <span class="mpay-t"><b>Needs you</b><span>Sarah, complaint</span></span>
+                        <span class="mbtn">Reply</span>
+                    </div>
+                </div><h3>Hands over to your staff</h3></li>
+                <li class="job"><div class="jv" aria-hidden="true">
+                    <div class="mc mrev">
+                        <div class="mc-k">This week</div>
+                        <div class="mrev-n">$12,480</div>
+                        <svg class="mspark" viewBox="0 0 160 36" preserveAspectRatio="none"><path d="M4.0,32.0 C8.2,30.6 20.9,25.6 29.3,23.6 C37.8,21.7 46.2,19.7 54.7,20.2 C63.1,20.7 71.6,28.3 80.0,26.6 C88.4,24.9 96.9,13.4 105.3,9.9 C113.8,6.4 122.2,6.5 130.7,5.5 C139.1,4.5 151.8,4.2 156.0,4.0" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+                    </div>
+                </div><h3>Shows you every sale</h3></li>
             </ul>
             <div class="btn-row center jobs-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify">Book a free call</a></div>
         </div>
@@ -931,32 +1051,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- 4. Try it now -->
     <section id="try-it" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <p class="kicker">Try it now</p>
-                <h2>Message our AI the way your customer would</h2>
-                <p class="lede">Our own sales line runs on the same AI you would be buying. Ask it anything.</p>
+        <div class="wrap try-split">
+            <div>
+                <div class="section-head">
+                    <p class="kicker">Try it now</p>
+                    <h2>Message our AI the way your customer would</h2>
+                </div>
+                <ol class="try-steps">
+                    <li class="try-step"><span class="num" aria-hidden="true">1</span><h3>Tap "WhatsApp our AI now".</h3></li>
+                    <li class="try-step"><span class="num" aria-hidden="true">2</span><h3>Ask your hardest question.</h3></li>
+                    <li class="try-step"><span class="num" aria-hidden="true">3</span><h3>Get a reply in seconds.</h3></li>
+                </ol>
+                <div class="try-cta">
+                    <a href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener" class="btn btn-secondary btn-lg btn-wa"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>WhatsApp our AI now</a>
+                    <p class="cta-micro">+65 8012 4848 · We only use your number to reply to you.</p>
+                </div>
             </div>
-            <ol class="try-steps">
-                <li class="card try-step">
-                    <span class="num" aria-hidden="true">1</span>
-                    <h3>Tap "WhatsApp our AI now".</h3>
-                    <p>WhatsApp opens with a message ready. Press send.</p>
-                </li>
-                <li class="card try-step">
-                    <span class="num" aria-hidden="true">2</span>
-                    <h3>Ask what you would ask a new supplier.</h3>
-                    <p>How it works, how long setup takes, whether it handles your kind of customer.</p>
-                </li>
-                <li class="card try-step">
-                    <span class="num" aria-hidden="true">3</span>
-                    <h3>Watch it reply in seconds.</h3>
-                    <p>It asks you a question or two, like a good salesperson would. If you want, it books your call with Alexander.</p>
-                </li>
-            </ol>
-            <div class="try-cta">
-                <a href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener" class="btn btn-secondary btn-lg btn-wa"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>WhatsApp our AI now</a>
-                <p class="cta-micro">+65 8012 4848 · We only use your number to reply to you.</p>
+            <div class="mphone" role="img" aria-label="Example chat with our AI: you ask how it would handle your customers, and it replies with a question about your business.">
+                <div class="mscreen" aria-hidden="true">
+                    <div class="wa-head">
+                        <span class="back"><svg class="i"><use href="#i-left"/></svg></span>
+                        <span class="wa-av mav">41</span>
+                        <span class="who"><span class="name">41 Sales Team</span></span>
+                    </div>
+                    <div class="wall">
+                        <div class="slot out"><div class="wb">Hi, how would you handle my customers?<span class="bm">9:02 pm<svg class="ticks"><use href="#i-ticks"/></svg></span></div></div>
+                        <div class="slot in"><div class="wb">Sure. What does your business sell?<span class="bm"><span class="ai-b">AI</span>9:02 pm</span></div></div>
+                    </div>
+                </div>
+                <p class="mphone-cap">Example chat</p>
             </div>
         </div>
     </section>
@@ -966,44 +1089,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wrap">
             <div class="section-head">
                 <h2>Built for owners whose customers WhatsApp before they buy</h2>
-                <p class="lede">If your customers ask about price and availability on WhatsApp, this is for you. Pick your business to see how it works for you.</p>
             </div>
             <ul class="trade-grid">
                 <li class="card trade">
                     <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span>
                     <h3>Aesthetic clinics</h3>
-                    <p>Patients ask about treatments, prices and slots after you close.</p>
-                    <a class="go" href="/industries/ai-for-aesthetic-clinics-singapore">See how it works for aesthetic clinics<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                    <p>Price and slot questions after hours.</p>
+                    <a class="go" href="/industries/ai-for-aesthetic-clinics-singapore" aria-label="See how it works for aesthetic clinics"><span class="sr">See how it works for aesthetic clinics</span><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                 </li>
                 <li class="card trade">
                     <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-hammer"/></svg></span>
                     <h3>Renovation contractors</h3>
-                    <p>Homeowners want a rough figure before they will book a site visit.</p>
-                    <a class="go" href="/industries/ai-for-renovation-contractors-singapore">See how it works for renovation contractors<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                    <p>A rough figure before the visit.</p>
+                    <a class="go" href="/industries/ai-for-renovation-contractors-singapore" aria-label="See how it works for renovation contractors"><span class="sr">See how it works for renovation contractors</span><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                 </li>
                 <li class="card trade">
                     <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-snow"/></svg></span>
                     <h3>Aircon and home services</h3>
-                    <p>Customers want a slot this week, and they message three companies at once.</p>
-                    <a class="go" href="/industries/ai-for-hvac-aircon-singapore">See how it works for aircon and home services<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                    <p>A slot this week, before others reply.</p>
+                    <a class="go" href="/industries/ai-for-hvac-aircon-singapore" aria-label="See how it works for aircon and home services"><span class="sr">See how it works for aircon and home services</span><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                 </li>
                 <li class="card trade">
                     <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span>
                     <h3>Car rental</h3>
-                    <p>Drivers message at night for a car the next morning.</p>
-                    <a class="go" href="/industries/ai-for-car-rental-companies-singapore">See how it works for car rental<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                    <p>Late messages for tomorrow's car.</p>
+                    <a class="go" href="/industries/ai-for-car-rental-companies-singapore" aria-label="See how it works for car rental"><span class="sr">See how it works for car rental</span><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                 </li>
                 <li class="card trade">
                     <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-plane"/></svg></span>
                     <h3>Travel agencies</h3>
-                    <p>Every trip is different, so every enquiry needs questions before a quote.</p>
-                    <a class="go" href="/industries/ai-for-travel-agencies-singapore">See how it works for travel agencies<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                    <p>Questions first, then the quote.</p>
+                    <a class="go" href="/industries/ai-for-travel-agencies-singapore" aria-label="See how it works for travel agencies"><span class="sr">See how it works for travel agencies</span><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                 </li>
                 <li class="card trade">
                     <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span>
                     <h3>Tuition and enrichment</h3>
-                    <p>Parents ask the same questions about levels, timings and fees.</p>
-                    <a class="go" href="/industries/ai-for-tuition-centres-singapore">See how it works for tuition and enrichment<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                    <p>Levels, timings and fees, answered.</p>
+                    <a class="go" href="/industries/ai-for-tuition-centres-singapore" aria-label="See how it works for tuition and enrichment"><span class="sr">See how it works for tuition and enrichment</span><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                 </li>
             </ul>
             <p class="all-ind"><a href="/industries">See all 30 industries<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a></p>
@@ -1014,19 +1136,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section id="the-gap" class="section section-white">
         <div class="wrap">
             <div class="section-head gap-head">
-                <p class="kicker">The gap it closes</p>
                 <h2>Most enquiries wait until morning</h2>
-                <p class="lede">We sent one real enquiry to <a href="/ai-sales-agent-singapore">25 Singapore businesses</a> between 8pm and 11pm. The median reply took 13.3 hours. Four never replied.</p>
             </div>
-            <h3 class="choices-head">Today an owner has three choices</h3>
+            <div class="gap-stats">
+                <div class="gap-big">
+                    <div class="gap-num">13.3<small> hours</small></div>
+                    <p>median wait for a reply after 8pm, <a href="/ai-sales-agent-singapore">25 Singapore businesses</a></p>
+                </div>
+                <div class="gap-side">
+                    <div class="gap-num">4<small> of 25</small></div>
+                    <p>never replied</p>
+                </div>
+            </div>
+            <h3 class="choices-head">Your choices today</h3>
             <ul class="choices">
-                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></span><p><b>Reply yourself at midnight.</b> You keep the sale and give up your evening.</p></li>
-                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span><p><b>Leave it until morning.</b> By then, many customers have already asked someone else.</p></li>
-                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg></span><p><b>Use a chatbot that sends menus.</b> Customers want a straight answer, so they stop replying.</p></li>
+                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></span><p><b>Reply yourself at midnight</b></p></li>
+                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span><p><b>Leave it until morning</b></p></li>
+                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg></span><p><b>Use a chatbot that sends menus</b></p></li>
             </ul>
             <div class="fourth">
                 <span class="ch-ico on"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span>
-                <p><b>41 Sales Team is a fourth choice. It answers like your best salesperson, at any hour, and hands over to you when a person is needed.</b></p>
+                <p><b>41 Sales Team is a fourth choice.</b> It replies in seconds, at any hour.</p>
             </div>
             <div class="sec-cta">
                 <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a free call</a>
@@ -1040,7 +1170,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="section-head">
                 <p class="kicker">Your AI sales team</p>
                 <h2>Four AIs that work with your staff</h2>
-                <p class="lede">They share your one WhatsApp number. Your staff can step into any chat, and the AI picks up again when they finish.</p>
             </div>
 
             <div class="roster" id="team" aria-label="Your AI sales team">
@@ -1049,7 +1178,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <span class="av"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span>
                         <span><b>You, the owner</b><small>Your staff can step into any chat</small></span>
                     </div>
-                    <span class="pill pill-example">Example activity</span>
                 </div>
                 <ul class="reports">
                     <li>
@@ -1057,8 +1185,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-msg"/></svg></span></span>
                             <div class="who"><h3><a class="member-link" href="/41-closer">AI Sales Closer</a></h3></div>
                             <div class="pills"><span class="pill pill-good">Live</span></div>
-                            <p class="desc">Answers every enquiry, quotes your prices, books and takes payment.</p>
-                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg>Example: Ravi K. paid $920, 1:16 am</span>
+                            <p class="desc">Answers, quotes, books and takes payment.</p>
                             <a class="see" href="/41-closer">See what it does<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                         </article>
                     </li>
@@ -1067,8 +1194,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-clip"/></svg></span></span>
                             <div class="who"><h3><a class="member-link" href="/ai-operations-admin">AI Operations Admin</a></h3></div>
                             <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
-                            <p class="desc">Sends the invoice, saves the details and checks in on the date the customer asked for.</p>
-                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Example: pickup reminder set for Fri 16 Oct</span>
+                            <p class="desc">Sends invoices and checks in on time.</p>
                             <a class="see" href="/ai-operations-admin">See what it does<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                         </article>
                     </li>
@@ -1077,8 +1203,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-chart"/></svg></span></span>
                             <div class="who"><h3><a class="member-link" href="/ai-manager">AI Manager</a></h3></div>
                             <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
-                            <p class="desc">Shows every sale on one screen and alerts the right person when a customer needs a human.</p>
-                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Example: flagged a bank transfer for you to confirm, 9:12 am</span>
+                            <p class="desc">Shows every sale and flags what needs you.</p>
                             <a class="see" href="/ai-manager">See what it does<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
                         </article>
                     </li>
@@ -1091,7 +1216,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </article>
                     </li>
                 </ul>
-                <p class="roster-note">Example activity at an example business.</p>
             </div>
         </div>
     </section>
@@ -1109,11 +1233,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </thead>
                     <tbody>
                         <tr><th scope="row">A message at 11pm</th><td class="today" data-label="Today">Waits until morning</td><td class="with" data-label="With 41 Sales Team">Answered in seconds</td></tr>
-                        <tr><th scope="row">"How much?"</th><td class="today" data-label="Today">You look up the price list</td><td class="with" data-label="With 41 Sales Team">It quotes from your real prices</td></tr>
-                        <tr><th scope="row">A customer goes quiet</th><td class="today" data-label="Today">Easy to forget</td><td class="with" data-label="With 41 Sales Team">It messages them again on the day they asked for</td></tr>
-                        <tr><th scope="row">A customer pays by bank transfer</th><td class="today" data-label="Today">You check your bank later</td><td class="with" data-label="With 41 Sales Team">It asks your team to confirm the sale</td></tr>
-                        <tr><th scope="row">A tricky question</th><td class="today" data-label="Today">Gets a guess, or waits</td><td class="with" data-label="With 41 Sales Team">Goes to the right person on your team, on WhatsApp</td></tr>
-                        <tr><th scope="row">How did this week go</th><td class="today" data-label="Today">You scroll through chats</td><td class="with" data-label="With 41 Sales Team">Every sale on one screen, in Singapore dollars</td></tr>
+                        <tr><th scope="row">"How much?"</th><td class="today" data-label="Today">You look it up</td><td class="with" data-label="With 41 Sales Team">Quotes your real prices</td></tr>
+                        <tr><th scope="row">A customer goes quiet</th><td class="today" data-label="Today">Easy to forget</td><td class="with" data-label="With 41 Sales Team">Messages them again on their day</td></tr>
+                        <tr><th scope="row">A bank transfer</th><td class="today" data-label="Today">You check later</td><td class="with" data-label="With 41 Sales Team">Asks your team to confirm it</td></tr>
+                        <tr><th scope="row">A tricky question</th><td class="today" data-label="Today">Waits for you</td><td class="with" data-label="With 41 Sales Team">Goes to the right person</td></tr>
+                        <tr><th scope="row">This week's sales</th><td class="today" data-label="Today">You scroll the chats</td><td class="with" data-label="With 41 Sales Team">Every sale on one screen</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1129,18 +1253,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <ol class="dfy three">
                 <li>
                     <span class="node"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg></span>
-                    <h3>Send us your website.</h3>
-                    <p>We build your AI sales team on your products and prices before we meet.</p>
+                    <h3>We build it from your website.</h3>
                 </li>
                 <li>
                     <span class="node"><svg class="i" aria-hidden="true"><use href="#i-mobile"/></svg></span>
-                    <h3>Test it on the call.</h3>
-                    <p>You message it from your own phone, with your hardest questions.</p>
+                    <h3>You test it on the call.</h3>
                 </li>
                 <li>
                     <span class="node"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
-                    <h3>It goes live that day.</h3>
-                    <p>We connect your WhatsApp and it starts answering your customers. We keep tuning it with you.</p>
+                    <h3>It goes live that same day.</h3>
                 </li>
             </ol>
             <div class="live-foot">
@@ -1159,29 +1280,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="proof-grid">
                     <div class="proof-item"><div class="proof-num">19<small> seconds</small></div><p class="proof-label">median first reply</p></div>
                     <div class="proof-item"><div class="proof-num">1 in 4</div><p class="proof-label">enquiries after hours</p></div>
-                    <div class="proof-item"><div class="proof-num">45,355</div><p class="proof-label">customer messages on one client's line</p></div>
+                    <div class="proof-item"><div class="proof-num">45,355</div><p class="proof-label">messages on one client's line</p></div>
                     <div class="proof-item"><div class="proof-num">20</div><p class="proof-label">businesses built, 17 industries</p></div>
                 </div>
                 <div class="proof-foot">
-                    <p class="source-line">Measured from our own systems on 13 September 2026. Message, after-hours and speed figures come from one Singapore distributor's live line over four and a half months. Member of the Singapore A.I. Association. Built on the WhatsApp Business Platform (Meta).</p>
+                    <p class="source-line">Measured from our own systems on 13 September 2026, on one Singapore distributor's live line.</p>
                 </div>
             </div>
 
             <div class="case-card">
-                <div class="case-num"><span class="pill">Real client, kept private on request</span><b>$300,000</b></div>
+                <div class="case-num"><span class="pill">Real client, name kept private</span><b>$300,000</b></div>
                 <div class="case-text">
                     <p class="case-line">of sales every month through the AI Sales Closer at one Singapore industrial supplier</p>
-                    <p>It quotes live from the supplier's own catalogue, replies in seconds day and night, and our team steps in only for the tricky ones.</p>
                 </div>
             </div>
 
             <div id="how-it-works" class="chat-block">
                 <div class="section-head center">
                     <h3 class="h-chat">A 1am enquiry, closed before morning</h3>
-                    <p class="lede">Example chat. On your build it answers with your own products and prices.</p>
                 </div>
             <div class="stage">
-                <p class="example-label"><span class="pill">Example chat</span>Lion City Rentals, car rental</p>
+                <p class="example-label"><span class="pill">Example chat</span>Lion City Rentals</p>
                 <div class="phone" role="img" aria-label="Example chat: a driver messages Lion City Rentals at 1:12 am. The AI quotes, sends a payment link and he pays $920 at 1:16 am.">
                     <div class="screen" aria-hidden="true">
                         <div class="island"></div>
@@ -1230,31 +1349,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <div class="tag l t1" aria-hidden="true">
                     <div class="h"><span class="ico nt"><svg class="i"><use href="#i-moon"/></svg></span>1:12 am on a Tuesday</div>
-                    <p>A driver asks for a car. Your office is closed.</p>
                 </div>
                 <div class="tag r t2" aria-hidden="true">
-                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>AI Sales Closer quoted</div>
-                    <p>Price, deposit and date, then asks to book.</p>
+                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>Quoted in seconds</div>
                 </div>
                 <div class="tag r t3" aria-hidden="true">
-                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>AI Sales Closer sent the payment link</div>
-                    <p>The car is held for him once he pays.</p>
+                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>Payment link sent</div>
                 </div>
                 <div class="tag l t4" aria-hidden="true">
-                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>AI Manager logged the sale</div>
-                    <p>You see it on your dashboard in the morning.</p>
+                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>Sale logged</div>
                 </div>
                 <div class="tag r t5" aria-hidden="true">
-                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>AI Operations Admin set the reminder</div>
-                    <p>The pickup reminder goes out on Friday.</p>
+                    <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>Pickup reminder set</div>
                 </div>
 
                 <div class="steps-m">
                     <ol>
-                        <li><span class="ico nt"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></span><span><b>1:12 am on a Tuesday</b><span>A driver asks for a car. Your office is closed.</span></span></li>
-                        <li><span class="ico ai"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span><span><b>AI Sales Closer quoted and sent the payment link</b><span>Price, deposit and date, then a link to pay.</span></span></li>
-                        <li><span class="ico ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>Paid at 1:16 am</b><span>$920 in while your office was closed.</span></span></li>
-                        <li><span class="ico ai"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span><span><b>AI Operations Admin set the reminder</b><span>AI Manager puts the sale in your morning report.</span></span></li>
+                        <li><span class="ico nt"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></span><span><b>1:12 am on a Tuesday</b><span>Your office is closed.</span></span></li>
+                        <li><span class="ico ai"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span><span><b>AI Sales Closer quoted and sent the payment link</b></span></li>
+                        <li><span class="ico ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>Paid $920 at 1:16 am</b></span></li>
+                        <li><span class="ico ai"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span><span><b>AI Operations Admin set the reminder</b></span></li>
                     </ol>
                 </div>
             </div>
@@ -1268,12 +1382,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="section-head center">
       <p class="eyebrow">Integrations</p>
       <h2 id="int-h">Works with what you already use</h2>
-      <p class="lede">Your AI sales team reads your prices, books into your calendar and takes payment in the chat. We connect it for you.</p>
+      <p class="lede">We connect them for you.</p>
     </div>
-    <ul class="int-grid" aria-label="Live connections"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/messenger.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Facebook Messenger</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">P</span><span class="int-name">Plato</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">W</span><span class="int-name">WESS</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Attio</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">T</span><span class="int-name">Twenty</span></li><li class="int-tile"><span class="int-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></span><span class="int-name">Webhooks to any system</span></li></ul>
-    <p class="int-soon-label">Coming soon</p>
-    <ul class="int-grid int-grid-soon" aria-label="Coming soon"><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/hubspot.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">HubSpot</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/zoho.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Zoho CRM</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/xero.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Xero</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/shopify.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Shopify</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/woocommerce.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WooCommerce</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/calendly.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Calendly</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/caldotcom.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Cal.com</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/googledrive.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Drive</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/instagram.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Instagram lead forms</span></li></ul>
-    <p class="int-note">Use another system? If it has an API, we can connect it. Ask us on the call.</p>
+    <ul class="int-grid" aria-label="Connections"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/messenger.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Messenger</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/instagram.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Instagram</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/airwallex.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googledrive.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Google Drive</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/calendly.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Calendly</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/caldotcom.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Cal.com</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/hubspot.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">HubSpot</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/zoho.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Zoho CRM</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/attio.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Attio</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/twenty.png" alt="" width="32" height="32" loading="lazy"><span class="int-name">Twenty</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/xero.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Xero</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/shopify.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Shopify</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/woocommerce.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">WooCommerce</span></li><li class="int-tile"><img class="int-ic int-wide" src="/assets/41st/logos/plato.svg" alt="" width="32" height="32" loading="lazy"><span class="int-name">Plato</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">W</span><span class="int-name">WESS</span></li><li class="int-tile"><span class="int-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></span><span class="int-name">Any system with an API</span></li></ul>
   </div>
 </section>
 
@@ -1283,8 +1394,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="card fcard">
                 <div class="fphoto"><img src="founder-photo.jpg" alt="Alexander Lee, Founder & CEO of 41 Labs, speaking at SuperReturn Asia" width="900" height="600" loading="lazy" decoding="async"></div>
                 <div class="ftext">
-                    <p class="kicker">From Alexander</p>
-                    <p class="quote">Most owners I meet are not short of enquiries. They lose them in the gap between the message and the reply. I built 41 Sales Team to close that gap for you, on your own WhatsApp, from the first call.</p>
+                    <p class="quote">Most owners I meet lose sales in the gap between the message and the reply. I built 41 Sales Team to close that gap, on your own WhatsApp.</p>
                     <div class="fsign">
                         <p class="signoff">Alexander Lee<span>Founder, 41 Labs</span></p>
                         <a href="https://www.linkedin.com/in/leejunweialexander/" target="_blank" rel="noopener">Connect on LinkedIn</a>
@@ -1301,9 +1411,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h2>What you risk</h2>
             </div>
             <ul class="risk-grid">
-                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>We build it before you pay, and you test it on the call.</li>
+                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>You test it before you pay.</li>
                 <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>Billing starts the day it goes live.</li>
-                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>Month to month. Stop any time with 30 days notice.</li>
+                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>Stop any time, 30 days notice.</li>
                 <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>No contract and no setup fee.</li>
             </ul>
         </div>
@@ -1313,14 +1423,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section id="faq" class="section section-white">
         <div class="wrap faq-wrap">
             <div class="section-head">
-                <p class="kicker">FAQ</p>
                 <h2>Frequently asked questions</h2>
             </div>
             <div class="faq">
                 <details class="faq-item"><summary class="faq-question">Will it sound like a bot?</summary><div class="faq-answer"><p>No. We train it on your products, your prices and how you talk to customers, and we keep tuning it. You test it yourself before it goes live.</p></div></details>
-                <details class="faq-item"><summary class="faq-question">Do my customers message a new number?</summary><div class="faq-answer"><p>No. It works on your existing WhatsApp Business number. Your customers notice faster replies, nothing else.</p></div></details>
+                <details class="faq-item"><summary class="faq-question">Do customers need a new number?</summary><div class="faq-answer"><p>No. It works on your existing WhatsApp Business number. Your customers notice faster replies, nothing else.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">Can my staff still reply?</summary><div class="faq-answer"><p>Yes. Anyone on your team can step into a chat at any time. The AI waits, then picks up when they finish.</p></div></details>
-                <details class="faq-item"><summary class="faq-question">What if a customer asks something it cannot answer?</summary><div class="faq-answer"><p>It hands the chat to the right person on your team and tells them on WhatsApp. It never makes up an answer.</p></div></details>
+                <details class="faq-item"><summary class="faq-question">What if it cannot answer?</summary><div class="faq-answer"><p>It hands the chat to the right person on your team and tells them on WhatsApp. It never makes up an answer.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">What languages does it reply in?</summary><div class="faq-answer"><p>Your customer's language. If they write in Chinese, it answers in Chinese.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">What do I need to prepare?</summary><div class="faq-answer"><p>Your website. A price list or a voice note helps. We do the rest.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">How long does setup take?</summary><div class="faq-answer"><p>We build it before the call. If you like it on the call, it goes live the same day.</p></div></details>
@@ -1328,15 +1437,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <details class="faq-item"><summary class="faq-question">Is my data safe?</summary><div class="faq-answer"><p>We follow PDPA. If you leave, we export your data and hand it to you.</p></div></details>
             </div>
             <div class="also">
-                <p>41 Labs also builds custom AI systems for Singapore businesses: quoting engines, document processing and back-office automation.</p>
+                <p>41 Labs also builds custom AI systems.</p>
                 <ul>
-                    <li><a href="/blog/what-is-ai-quote-automation">How AI quote automation works for Singapore suppliers</a></li>
-                    <li><a href="/blog/ai-automation-services-singapore">AI automation services in Singapore</a></li>
-                    <li><a href="/blog/ai-automation-singapore">AI automation in Singapore</a></li>
+                    <li><a href="/blog/what-is-ai-quote-automation">AI quote automation</a></li>
+                    <li><a href="/blog/ai-automation-services-singapore">AI automation services</a></li>
+                    <li><a href="/blog/ai-automation-singapore">AI automation guide</a></li>
                     <li><a href="/services/ai-consulting">AI consulting</a></li>
-                    <li><a href="/blog/best-ai-consulting-singapore">Best AI consulting companies in Singapore</a></li>
-                    <li><a href="/blog/ai-consulting-cost-singapore">What AI consulting costs in Singapore</a></li>
-                    <li><a href="locations/singapore.html">Learn about the EDGE grant</a></li>
+                    <li><a href="/blog/best-ai-consulting-singapore">Best AI consultants</a></li>
+                    <li><a href="/blog/ai-consulting-cost-singapore">AI consulting costs</a></li>
+                    <li><a href="locations/singapore.html">EDGE grant</a></li>
                 </ul>
             </div>
         </div>
@@ -1347,7 +1456,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wrap">
             <div class="cta-band">
                 <h2>See your own AI sales team on the call</h2>
-                <p class="lede">We build it on your business before we meet. You test it. If you like it, it goes live that day.</p>
                 <div class="cta-pair">
                     <div class="cta-item">
                         <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a free call</a>

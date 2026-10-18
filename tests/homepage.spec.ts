@@ -72,7 +72,9 @@ test.describe('Homepage', () => {
   test('trust strip sits right under the hero with the systems he uses and where we were seen', async ({ page }) => {
     const trust = page.locator('#trust');
     await expect(trust.locator('.trust-label')).toHaveText('Works with what you already use');
-    await expect(trust.locator('.trust-logos li')).toHaveCount(8);
+    // 18 Oct 2026: ten real coloured logos, each a real image file, no letter placeholders.
+    await expect(trust.locator('.trust-logos li')).toHaveCount(10);
+    await expect(trust.locator('.trust-logos li img[src^="/assets/41st/logos/"]')).toHaveCount(10);
     await expect(trust.locator('a[href="#integrations"]')).toContainText('See all integrations');
     await expect(trust).toContainText('Member of the Singapore A.I. Association. Seen at NRF APAC and SuperAI.');
   });
@@ -115,18 +117,33 @@ test.describe('Homepage', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 
-  test('integrations block is on the page with live and coming-soon systems', async ({ page }) => {
+  test('integrations block is one wall of ready connections, never "coming soon"', async ({ page }) => {
     const sec = page.locator('#integrations');
     await expect(sec.locator('h2')).toHaveText('Works with what you already use');
-    expect(await sec.locator('.int-grid:not(.int-grid-soon) .int-tile').count()).toBeGreaterThanOrEqual(8);
-    await expect(sec.locator('.int-grid-soon')).toBeAttached();
+    expect(await sec.locator('.int-grid .int-tile').count()).toBeGreaterThanOrEqual(20);
+    await expect(sec.locator('.int-grid-soon')).toHaveCount(0);
+    expect((await sec.innerText()).toLowerCase()).not.toContain('coming soon');
+  });
+
+  test('"Coming soon" appears in main only on the AI Leads Generator card', async ({ page }) => {
+    const hits = await page.locator('main').evaluate((m) => {
+      const out: string[] = [];
+      const walk = document.createTreeWalker(m, NodeFilter.SHOW_TEXT);
+      while (walk.nextNode()) {
+        const n = walk.currentNode as Text;
+        if (/coming soon/i.test(n.textContent || '')) out.push(n.parentElement!.closest('.member')?.textContent || 'outside');
+      }
+      return out;
+    });
+    expect(hits.length).toBe(1);
+    expect(hits[0]).toContain('AI Leads Generator');
   });
 
   test('what you risk lists the four plain promises', async ({ page }) => {
     await expect(page.locator('#risk .risk')).toHaveText([
-      'We build it before you pay, and you test it on the call.',
+      'You test it before you pay.',
       'Billing starts the day it goes live.',
-      'Month to month. Stop any time with 30 days notice.',
+      'Stop any time, 30 days notice.',
       'No contract and no setup fee.',
     ]);
   });
@@ -137,14 +154,19 @@ test.describe('Homepage', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 
-  test('"What it does for you" lists the eight jobs right under the trust strip, each with an icon', async ({ page }) => {
+  test('"What it does for you" shows the eight jobs as small product visuals with a short title', async ({ page }) => {
     const section = page.locator('#what-it-does');
     const jobs = section.locator('.job');
     await expect(jobs).toHaveCount(8);
     for (const job of await jobs.all()) {
-      await expect(job.locator('svg')).toHaveCount(1);
+      await expect(job.locator('.jv')).toHaveCount(1);
       await expect(job.locator('h3')).toHaveCount(1);
+      // Show, not tell: no explanatory sentence under the title.
+      await expect(job.locator('p')).toHaveCount(0);
+      expect((await job.locator('h3').innerText()).split(/\s+/).length).toBeLessThanOrEqual(5);
     }
+    // Example businesses and amounts are labelled once for the whole grid.
+    await expect(section.locator('.jobs-note')).toContainText('Example');
     await expect(section.getByRole('link', { name: 'Book a free call' })).toHaveAttribute('href', /utm_campaign=home#qualify/);
   });
 
