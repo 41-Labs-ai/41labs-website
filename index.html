@@ -294,6 +294,15 @@
 
     /* example dashboard */
     .member-link{color:inherit;text-decoration:none}.member-link:hover{color:var(--primary-text);text-decoration:underline}
+    .jobs{list-style:none;margin:0;padding:0;display:grid;gap:16px;grid-template-columns:1fr}
+    @media(min-width:640px){.jobs{grid-template-columns:1fr 1fr}}
+    @media(min-width:1000px){.jobs{grid-template-columns:repeat(4,1fr)}}
+    .job{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:22px;box-shadow:var(--shadow-panel);display:flex;flex-direction:column;gap:8px;min-width:0}
+    .job-ic{width:40px;height:40px;border-radius:999px;background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;margin-bottom:6px}
+    .job-ic svg{width:20px;height:20px}
+    .job h3{font-size:17px;line-height:1.3;font-weight:600;margin:0}
+    .job p{margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+    .jobs-cta{margin-top:32px}
     .ind-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
     .ind-tab{font:500 14px/1 var(--font);min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface);color:var(--muted);cursor:pointer}
     .ind-tab:hover{background:var(--neutral-soft);color:var(--fg)}
@@ -774,8 +783,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wrap home-hero-grid">
             <div class="hero-copy">
                 <p class="hero-eyebrow"><span class="dot"></span>For Singapore businesses that sell on WhatsApp</p>
-                <h1>Every WhatsApp enquiry answered in seconds. <span class="h1-soft">You wake up to bookings already agreed.</span></h1>
-                <p class="lede">41 Sales Team is your AI sales team. It replies on WhatsApp and Messenger day and night, in your tone. It quotes your real prices and follows up until the customer decides. We build it on your business and run it for you.</p>
+                <h1>Your AI sales team for WhatsApp. <span class="h1-soft">It answers, quotes, books and gets paid, 24/7.</span></h1>
+                <p class="lede">Every customer gets a reply in seconds, a quote from your prices, a slot in your calendar and a payment link. After the sale it sends the invoice and the reminders, and you see every sale on one screen. We set it up and run it for you.</p>
                 <p class="hero-proof"><span class="hp-ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span>19 seconds median first reply on a live Singapore line. 20 businesses built across 17 industries.</span></p>
                 <div class="cta-pair hero-cta" id="hero-cta">
                     <div class="cta-item">
@@ -898,7 +907,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <!-- 3. This is for me -->
+    <!-- 3. What it does for you -->
+    <section id="what-it-does" class="section" aria-labelledby="jobs-h">
+        <div class="wrap">
+            <div class="section-head center">
+                <p class="eyebrow">What it does for you</p>
+                <h2 id="jobs-h">Eight jobs it does on your WhatsApp, every day</h2>
+                <p class="lede">From the first message to the paid booking, and the admin after. You and your staff step in only when a person is needed.</p>
+            </div>
+            <ul class="jobs">
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><h3>Answers every enquiry in seconds</h3><p>Day or night, on WhatsApp and Messenger, in your customer's language.</p></li>
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span><h3>Quotes from your real prices</h3><p>It reads your price list, so every customer gets the right figure.</p></li>
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h3>Books into your calendar</h3><p>It offers open slots and puts the booking straight into Google Calendar.</p></li>
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span><h3>Takes payment in the chat</h3><p>It sends a secure payment link by Stripe or Airwallex.</p></li>
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span><h3>Follows up until they decide</h3><p>Quiet customers hear from it again on the day they asked for.</p></li>
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></span><h3>Sends the invoice</h3><p>The moment the customer pays, with the details saved for your team.</p></li>
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><h3>Hands over to your staff</h3><p>Tricky chats go to the right person on WhatsApp, with the full chat.</p></li>
+                <li class="job"><span class="job-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span><h3>Shows you every sale</h3><p>Revenue and deals closed on one screen, in Singapore dollars.</p></li>
+            </ul>
+            <div class="btn-row center jobs-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify">Book a free call</a></div>
+        </div>
+    </section>
+
+    <!-- 4. Try it now -->
+    <section id="try-it" class="section">
+        <div class="wrap">
+            <div class="section-head center">
+                <p class="kicker">Try it now</p>
+                <h2>Message our AI the way your customer would</h2>
+                <p class="lede">Our own sales line runs on the same AI you would be buying. Ask it anything.</p>
+            </div>
+            <ol class="try-steps">
+                <li class="card try-step">
+                    <span class="num" aria-hidden="true">1</span>
+                    <h3>Tap "WhatsApp our AI now".</h3>
+                    <p>WhatsApp opens with a message ready. Press send.</p>
+                </li>
+                <li class="card try-step">
+                    <span class="num" aria-hidden="true">2</span>
+                    <h3>Ask what you would ask a new supplier.</h3>
+                    <p>How it works, how long setup takes, whether it handles your kind of customer.</p>
+                </li>
+                <li class="card try-step">
+                    <span class="num" aria-hidden="true">3</span>
+                    <h3>Watch it reply in seconds.</h3>
+                    <p>It asks you a question or two, like a good salesperson would. If you want, it books your call with Alexander.</p>
+                </li>
+            </ol>
+            <div class="try-cta">
+                <a href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener" class="btn btn-secondary btn-lg btn-wa"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>WhatsApp our AI now</a>
+                <p class="cta-micro">+65 8012 4848 · We only use your number to reply to you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. This is for me -->
     <section id="for-you" class="section">
         <div class="wrap">
             <div class="section-head">
@@ -947,7 +1010,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <!-- 4. The problem -->
+    <!-- 6. The problem -->
     <section id="the-gap" class="section section-white">
         <div class="wrap">
             <div class="section-head gap-head">
@@ -971,38 +1034,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <!-- 5. What changes for you -->
-    <section id="what-changes" class="section">
-        <div class="wrap">
-            <div class="section-head">
-                <h2>What changes for you</h2>
-            </div>
-            <div class="wins">
-                <article class="card win">
-                    <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span>
-                    <h3>No more lost night enquiries.</h3>
-                    <p>1 in 4 enquiries arrive after office hours. Now every one gets a reply in seconds.</p>
-                </article>
-                <article class="card win">
-                    <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span>
-                    <h3>Quiet customers come back.</h3>
-                    <p>It messages them again on the day they asked for, so a "let me think" can still become a booking.</p>
-                </article>
-                <article class="card win">
-                    <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
-                    <h3>Your evenings back.</h3>
-                    <p>You stop answering the same questions at 11pm. Your staff step in only when a person is needed.</p>
-                </article>
-                <article class="card win">
-                    <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></span>
-                    <h3>You see the money.</h3>
-                    <p>Every sale it brings in, on one screen, in Singapore dollars.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Your AI sales team -->
+    <!-- 7. Your AI sales team -->
     <section id="what-we-do" class="section section-white">
         <div class="wrap team-split">
             <div class="section-head">
@@ -1060,38 +1092,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </li>
                 </ul>
                 <p class="roster-note">Example activity at an example business.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Try it now -->
-    <section id="try-it" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <p class="kicker">Try it now</p>
-                <h2>Message our AI the way your customer would</h2>
-                <p class="lede">Our own sales line runs on the same AI you would be buying. Ask it anything.</p>
-            </div>
-            <ol class="try-steps">
-                <li class="card try-step">
-                    <span class="num" aria-hidden="true">1</span>
-                    <h3>Tap "WhatsApp our AI now".</h3>
-                    <p>WhatsApp opens with a message ready. Press send.</p>
-                </li>
-                <li class="card try-step">
-                    <span class="num" aria-hidden="true">2</span>
-                    <h3>Ask what you would ask a new supplier.</h3>
-                    <p>How it works, how long setup takes, whether it handles your kind of customer.</p>
-                </li>
-                <li class="card try-step">
-                    <span class="num" aria-hidden="true">3</span>
-                    <h3>Watch it reply in seconds.</h3>
-                    <p>It asks you a question or two, like a good salesperson would. If you want, it books your call with Alexander.</p>
-                </li>
-            </ol>
-            <div class="try-cta">
-                <a href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener" class="btn btn-secondary btn-lg btn-wa"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>WhatsApp our AI now</a>
-                <p class="cta-micro">+65 8012 4848 · We only use your number to reply to you.</p>
             </div>
         </div>
     </section>

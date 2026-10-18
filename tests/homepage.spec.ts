@@ -17,7 +17,9 @@ test.describe('Homepage', () => {
   test('should display hero section with main heading', async ({ page }) => {
     const heroHeading = page.locator('.hero h1');
     await expect(heroHeading).toBeVisible();
-    await expect(heroHeading).toContainText('Every WhatsApp enquiry answered in seconds');
+    // 18 Oct 2026: the H1 says in plain words what the product is and does (the YC pattern).
+    await expect(heroHeading).toContainText('Your AI sales team for WhatsApp');
+    await expect(heroHeading).toContainText('answers, quotes, books and gets paid');
   });
 
   test('hero names who it is for and carries one proof number', async ({ page }) => {
@@ -63,7 +65,7 @@ test.describe('Homepage', () => {
 
   test('sections run in the framework order', async ({ page }) => {
     const ids = await page.locator('main > section').evaluateAll((els) => els.map((e) => e.id));
-    expect(ids).toEqual(['', 'trust', 'for-you', 'the-gap', 'what-changes', 'what-we-do', 'try-it', 'compare', 'live',
+    expect(ids).toEqual(['', 'trust', 'what-it-does', 'try-it', 'for-you', 'the-gap', 'what-we-do', 'compare', 'live',
       'proof', 'integrations', 'founder', 'risk', 'faq', 'book-call']);
   });
 
@@ -135,15 +137,15 @@ test.describe('Homepage', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 
-  test('"What changes for you" shows four wins, each with an icon', async ({ page }) => {
-    const section = page.locator('#what-changes');
-    await expect(section.locator('h2')).toHaveText('What changes for you');
-    const cards = section.locator('.win');
-    await expect(cards).toHaveCount(4);
-    for (const card of await cards.all()) {
-      await expect(card.locator('svg')).toHaveCount(1);
-      await expect(card.locator('h3')).toHaveCount(1);
+  test('"What it does for you" lists the eight jobs right under the trust strip, each with an icon', async ({ page }) => {
+    const section = page.locator('#what-it-does');
+    const jobs = section.locator('.job');
+    await expect(jobs).toHaveCount(8);
+    for (const job of await jobs.all()) {
+      await expect(job.locator('svg')).toHaveCount(1);
+      await expect(job.locator('h3')).toHaveCount(1);
     }
+    await expect(section.getByRole('link', { name: 'Book a free call' })).toHaveAttribute('href', /utm_campaign=home#qualify/);
   });
 
   test('example dashboard is labelled as an example', async ({ page }) => {
