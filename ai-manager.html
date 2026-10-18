@@ -157,16 +157,22 @@
 }</script>
 
     <style>
-        /* role page layer on top of site.css (siblings of /41-closer). Tokens only. */
+        /* AI role page template layer on top of site.css (/41-closer, /ai-operations-admin, /ai-manager). Tokens only. */
         .hero-grid{display:grid;gap:48px;grid-template-columns:1fr;align-items:center}
         @media(min-width:960px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:56px}}
         .hero-grid>*{min-width:0}
-        .hero h1 .h1-soft{display:block}
-        .hero .capsule{margin-top:24px;max-width:640px}
-        .hero .capsule strong{font-weight:500}
         .hero h1{font-size:clamp(34px,4.6vw,52px)}
-        @media(max-width:640px){.hero .capsule{font-size:16px;padding:16px 18px}}
+        .hero h1 .h1-soft{display:block}
+        .hero .hero-sub{margin:20px 0 0;max-width:600px}
         .hero .breadcrumb{margin-bottom:16px}
+        .proof{display:flex;align-items:flex-start;gap:8px;margin:18px 0 0;font-size:15px;font-weight:500;color:var(--fg)}
+        .proof svg{color:var(--primary-text);flex:none;margin-top:3px}
+        .cta-pair{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:28px}
+        .cta-col{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0;flex:0 1 250px}
+        .cta-col .note{margin:0;line-height:1.45}
+        .cta-pair.center{justify-content:center}
+        .cta-pair.center .cta-col{align-items:center;text-align:center}
+        @media(max-width:640px){.cta-pair{flex-direction:column;gap:18px}.cta-col{flex:none;max-width:none;width:100%;align-items:stretch;text-align:center}.cta-col .btn{width:100%;justify-content:center}}
         .phone{max-width:380px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:28px;box-shadow:var(--shadow-overlay);overflow:hidden}
         .phone-top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)}
         .phone-av{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;flex:none}
@@ -182,6 +188,21 @@
             .arrive{opacity:0;transform:translateY(8px);animation:arrive .32s var(--ease) forwards}
             @keyframes arrive{to{opacity:1;transform:none}}
         }
+        .dash{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);box-shadow:var(--shadow-overlay);padding:18px;max-width:460px;margin:0 auto}
+        .dash-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+        .dash-top b{font-size:16px;font-weight:600}
+        .dash-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .dash-tile{border:1px solid var(--border);border-radius:var(--r-panel);padding:12px 14px;background:var(--bg)}
+        .dash-tile span{display:block;font-size:12.5px;color:var(--muted)}
+        .dash-tile b{display:block;font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+        .dash-tile small{display:block;font-size:12px;color:var(--primary-text);margin-top:2px}
+        .dash-h{font-size:13px;font-weight:600;margin:16px 0 8px}
+        .dash-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--border);font-size:14px}
+        .dash-row .who{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .dash-row .who small{display:block;font-size:12.5px;color:var(--subtle);overflow:hidden;text-overflow:ellipsis}
+        .bubble.bot{background:var(--bubble-customer);align-self:flex-start;border-top-left-radius:6px}
+        .bubble .who-bot{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:var(--r-pill);background:var(--neutral-soft);color:var(--muted);margin-bottom:3px}
+        .bubble .who-team{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:var(--r-pill);background:rgba(29,78,216,.12);color:var(--info);margin-bottom:3px}
         .team-strip{margin-top:56px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:16px;box-shadow:var(--shadow-panel)}
         .ts-label{font-size:14px;color:var(--subtle);margin:0 0 10px 4px}
         .team-strip ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;grid-template-columns:1fr 1fr}
@@ -195,51 +216,75 @@
         .ts-text .pill{font-size:11.5px;padding:2px 8px}
         @media(max-width:520px){.ts-item{font-size:14px;padding:10px}.ts-icon{display:none}}
         .center-block{margin-inline:auto}
-        .feat h3{font-size:18px}
-        .ex-card{display:flex;flex-direction:column;gap:12px;padding:18px}
-        .ex-card .ex-tag{font-size:13.5px;font-weight:500;color:var(--subtle);margin:0}
-        .ex-card .chat{flex:1}
-        .ex-card .ex-out{margin:0}
-        .ex-note{margin:28px auto 0;max-width:720px;text-align:center;color:var(--muted)}
-        .bubble.bot{background:var(--bubble-customer);align-self:flex-start;border-top-left-radius:6px}
-        .bubble .who-bot{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:var(--r-pill);background:var(--neutral-soft);color:var(--muted);margin-bottom:3px}
-        .bubble .who-team{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:var(--r-pill);background:rgba(29,78,216,.12);color:var(--info);margin-bottom:3px}
-        .flow{list-style:none;margin:0;padding:0;display:grid;gap:16px;grid-template-columns:1fr}
-        @media(min-width:760px){.flow{grid-template-columns:1fr 1fr}}
-        @media(min-width:1040px){.flow{grid-template-columns:repeat(4,1fr)}}
-        .flow li{display:flex;flex-direction:column;gap:8px}
-        .flow .card{height:100%;display:flex;flex-direction:column;gap:8px}
-        .flow .card.here{border:2px solid var(--primary)}
-        .flow-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-        .flow-top .icon-chip{margin:0}
-        .flow .card h3{margin:0}
-        .flow .card a{font-weight:500;font-size:15px;text-decoration:none;margin-top:auto}
+        /* 2 trust strip: a compact one-row version of the integrations block */
+        .trust{padding:28px 0;border-bottom:1px solid var(--border)}
+        .trust-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 20px}
+        .trust-label{margin:0;font-size:14px;font-weight:500;color:var(--subtle)}
+        .int-grid.trust-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+        .trust-grid .int-tile{padding:8px 12px;gap:8px;box-shadow:none}
+        .trust-grid .int-ic{width:22px;height:22px}
+        .trust-grid .int-word{font-size:12px;border-radius:6px}
+        .trust-grid .int-name{font-size:14px;white-space:nowrap}
+        .trust-more{font-size:14px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+        /* 3 outcome cards */
+        .wins>.card{display:flex;flex-direction:column}
+        .win h3{font-size:19px}
+        .win p{margin:8px 0 0;color:var(--muted)}
+        .out-num{display:block;font-size:clamp(34px,4vw,46px);line-height:1.05;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--fg)}
+        .win .out-num+p{margin-top:10px;color:var(--fg);font-size:16.5px}
+        .win .pill{align-self:flex-start;margin-top:auto;padding-top:4px}
+        .win .pill-wrap{margin-top:auto;padding-top:14px}
+        /* 4 pain line */
+        .pain{font-size:clamp(26px,3.4vw,38px);line-height:1.2;max-width:880px;margin:0 auto;text-align:center}
+        .pain-more{margin-top:32px}
+        .pain-more .capsule p{margin:0}
+        .pain-more .capsule strong{font-weight:500}
+        .capsule-more{margin-top:16px;color:var(--muted)}
+        /* 5 its day */
+        .day{list-style:none;margin:0 auto;padding:0;display:grid;gap:14px;max-width:960px}
+        .stage{display:grid;gap:14px 32px;grid-template-columns:1fr;padding:22px 24px}
+        @media(min-width:760px){.stage{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:center}.day.compact .stage{grid-template-columns:240px minmax(0,1fr)}}
+        .stage-head{display:flex;gap:14px;align-items:flex-start}
+        .stage-num{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:15px;flex:none}
+        .stage-head h3{margin:5px 0 0}
+        .stage-pain{margin:6px 0 0;color:var(--muted);font-size:16px}
+        .stage .checks li{color:var(--fg)}
+        @media(max-width:759px){.stage .checks{padding-left:50px}}
+        .day.compact .stage-head{align-items:center}
+        .day.compact .stage-head h3{margin:0}
+        .after-cta{display:flex;justify-content:center;margin-top:32px}
+        /* 6 handing over */
+        .handover{max-width:860px;margin:0 auto;display:flex;gap:20px;align-items:flex-start;padding:28px}
+        .handover .icon-chip{margin:0;flex:none}
+        .handover h2{font-size:clamp(24px,3vw,32px)}
+        .handover p{margin:12px 0 0;color:var(--muted)}
+        @media(max-width:640px){.handover{flex-direction:column;padding:22px}}
+        /* 7 today vs */
+        .cmp{max-width:900px;margin:0 auto}
+        .cmp table{min-width:0;table-layout:fixed}
+        .cmp thead th:last-child{color:var(--primary-text)}
+        .cmp tbody th{font-size:15px;font-weight:500;color:var(--fg);background:transparent}
+        .cmp td{color:var(--muted)}
+        .cmp td.with{color:var(--fg);background:rgba(74,222,128,.08)}
+        @media(max-width:640px){.cmp table{font-size:14px}.cmp th,.cmp td{padding:10px}.cmp tbody th{font-size:14px}}
+        /* 8 steps */
+        .step-card .step-num{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:15px;margin-bottom:16px}
+        .step-card h3{font-size:18px}
+        .step-card p{margin:8px 0 0;color:var(--muted)}
+        ol.grid-3{list-style:none;margin:0;padding:0}
+        .try-note{text-align:center;margin:12px 0 0}
         .next-card{max-width:720px;margin:0 auto}
         .next-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
         .next-list li{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);color:var(--fg)}
         .next-list li:last-child{border-bottom:0}
+        /* 10 the other three AIs */
+        .sib{display:flex;flex-direction:column}
+        .sib-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px}
+        .sib-top .icon-chip{margin:0}
+        .sib p{margin:8px 0 0;color:var(--muted)}
+        .sib a{margin-top:auto;padding-top:14px;font-weight:500;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
         .price-line{max-width:720px;margin:24px auto 0;text-align:center;color:var(--muted)}
         .price-line b{color:var(--fg)}
-        .cta-note{margin:12px 0 0}
-        @media(max-width:640px){.cta-note{text-align:center}}
-        .wins{display:grid;gap:16px;grid-template-columns:1fr}
-        @media(min-width:640px){.wins{grid-template-columns:1fr 1fr}}
-        @media(min-width:1040px){.wins{grid-template-columns:repeat(4,1fr)}}
-        .wins>*{min-width:0}
-        .win h3{font-size:18px;margin-top:16px}
-        .win p{margin:0}
-        .dash{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);box-shadow:var(--shadow-overlay);padding:18px;max-width:460px;margin:0 auto}
-        .dash-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-        .dash-top b{font-size:16px;font-weight:600}
-        .dash-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-        .dash-tile{border:1px solid var(--border);border-radius:var(--r-panel);padding:12px 14px;background:var(--bg)}
-        .dash-tile span{display:block;font-size:12.5px;color:var(--muted)}
-        .dash-tile b{display:block;font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
-        .dash-tile small{display:block;font-size:12px;color:var(--primary-text);margin-top:2px}
-        .dash-h{font-size:13px;font-weight:600;margin:16px 0 8px}
-        .dash-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--border);font-size:14px}
-        .dash-row .who{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .dash-row .who small{display:block;font-size:12.5px;color:var(--subtle);overflow:hidden;text-overflow:ellipsis}
         .final-grid{text-align:center}
         @media(max-width:640px){.cta-band{padding:32px 20px}}
     </style>
@@ -289,7 +334,7 @@
       <a href="/pricing">Pricing</a>
       <a href="/case-studies">Case studies</a>
       <a href="/events">Events</a>
-      <a class="btn btn-primary" href="https://wa.me/6580124848?text=Hi%2041%20Labs%21%20I%27m%20exploring%20AI%20for%20my%20business%20and%20not%20sure%20where%20to%20start." target="_blank" rel="noopener">WhatsApp us</a>
+      <a class="btn btn-primary" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=header#qualify">Book a free call</a>
     </nav>
   </div>
 </header>
@@ -302,12 +347,9 @@
                     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">41 Sales Team</a> / <span aria-current="page">AI Manager</span></nav>
                     <span class="eyebrow">AI sales manager for WhatsApp</span>
                     <h1>AI Manager. <span class="h1-soft">Know what WhatsApp brings in, and who needs you.</span></h1>
-                    <div class="capsule"><p><strong>The AI Manager is the part of 41 Sales Team (formerly 41 Closer) that watches your WhatsApp sales for you. Its sales dashboard shows revenue closed, deals closed, your return and who still needs a reply. When a customer needs a person, it alerts the right staff member on WhatsApp, and it tells the admins if nobody answers.</strong></p></div>
-                    <div class="btn-row">
-                        <a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-manager#qualify">Book a call</a>
-                        <a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> Try it on WhatsApp</a>
-                    </div>
-                    <p class="note cta-note">30 minutes with Alexander. We build yours before the call.</p>
+                    <p class="lede hero-sub">It puts every sale on one screen in Singapore dollars, spots bank transfers for your team to confirm, and tells the right person on WhatsApp when a customer needs a human.</p>
+                    
+                    <div class="cta-pair"><div class="cta-col"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-manager#qualify">Book a free call</a><p class="note">30 minutes with Alexander. We build your AI before the call. No contract.</p></div><div class="cta-col"><a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> WhatsApp our AI now</a><p class="note">It replies in seconds, day or night.</p></div></div>
                 </div>
                 <div>
                     <div class="dash" role="img" aria-label="Example sales dashboard: this month $18,400 revenue closed, 23 deals closed, a return of 9 times, and 3 chats that need a reply.">
@@ -326,52 +368,75 @@
         </div>
     </header>
 
-    <section id="wins" class="section section-white">
+    <section id="works-with" class="trust section-white" aria-label="Works with what you already use">
+        <div class="wrap trust-row">
+            <p class="trust-label">Works with what you already use</p>
+            <ul class="int-grid trust-grid"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Attio</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">T</span><span class="int-name">Twenty</span></li></ul>
+            <a class="trust-more" href="/#integrations">See all integrations <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
+        </div>
+    </section>
+
+    <section id="wins" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">What changes for you</span>
                 <h2>What you get back.</h2>
             </div>
-            <div class="wins"><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span><h3>Every sale on one screen.</h3><p>In Singapore dollars, with bank transfers it spots for you to confirm.</p></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><h3>The right person alerted.</h3><p>On WhatsApp, when a customer needs a human. They swipe-reply and the answer goes to the customer.</p></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><h3>Nobody left waiting.</h3><p>Admins hear when a chat has no reply in the time you set.</p></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><h3>Ask it on WhatsApp.</h3><p>Send &quot;How many leads came in this week?&quot; and it answers.</p></div></div>
+            <div class="grid-3 wins"><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span><h3>Every sale on one screen.</h3><p>In Singapore dollars, with bank transfers it spots for you to confirm.</p></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><h3>The right person alerted.</h3><p>On WhatsApp, when a customer needs a human. They swipe-reply and the answer goes to the customer.</p></div><div class="card win"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><h3>Nobody left waiting.</h3><p>Admins hear when a chat has no reply in the time you set.</p></div></div>
         </div>
     </section>
 
-    <section id="what-it-does" class="section">
+    <section id="the-gap" class="section section-white">
+        <div class="wrap">
+            <h2 class="pain">You should not have to read every chat to know how your sales are doing.</h2>
+            <div class="read center-block pain-more"><div class="capsule"><p><strong>The AI Manager is the part of 41 Sales Team (formerly 41 Closer) that watches your WhatsApp sales for you. Its sales dashboard shows revenue closed, deals closed, your return and who still needs a reply. When a customer needs a person, it alerts the right staff member on WhatsApp, and it tells the admins if nobody answers.</strong></p></div></div>
+        </div>
+    </section>
+
+    <section id="its-day" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">What it does</span>
-                <h2>What it watches and tells you.</h2>
-                <p class="lede">Every item below is in your dashboard or on your WhatsApp today.</p>
+                <span class="eyebrow">Its day</span>
+                <h2>What the AI Manager does, step by step.</h2>
             </div>
-            <div class="grid-2"><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span><h3>A sales dashboard</h3><p>Revenue closed, deals closed, your return and how many leads became sales. Pick this month, a date range or all time.</p></div><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></span><h3>Counts the sales</h3><p>Card payments taken in the chat count by themselves. When a customer says they paid by bank transfer or cash, it spots it and asks you to confirm.</p></div><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span><h3>Your pipeline at a glance</h3><p>Every customer sits in a column by stage, so you see who is new, who is deciding and who has paid.</p></div><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><h3>Alerts the right person on WhatsApp</h3><p>When a customer needs a person, the chat&#x27;s owner gets a WhatsApp alert first. They swipe-reply the alert and the answer goes to the customer.</p></div><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><h3>Tells the admins if nobody answers</h3><p>If the owner has not replied within the wait you set, 15 minutes unless you change it, every admin gets a no reply yet message with a link to the chat.</p></div><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><h3>Answers your questions on WhatsApp</h3><p>Send &quot;who is waiting on a reply?&quot; or &quot;how many leads today?&quot; to the alert number and it answers from your live data.</p></div><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span><h3>A Co-pilot in your dashboard</h3><p>Ask in plain words how many leads came in this week, where customers drop off, or what one customer wanted. It reads your own chats and numbers.</p></div><div class="card feat"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><h3>Shows how the AI is doing</h3><p>The AI Health page shows how often the AI hands a chat to your team, how fast your team answers, and what is still waiting.</p></div></div>
+            <ol class="day compact"><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><div><h3>Sales.</h3></div></div><ul class="checks"><li>Revenue, deals closed and your return on one screen.</li><li>Your pipeline by stage.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><div><h3>Payments you might miss.</h3></div></div><ul class="checks"><li>Spots bank transfer and cash sales in the chat.</li><li>Asks your team to confirm them.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><div><h3>Customers who need you.</h3></div></div><ul class="checks"><li>Alerts the right person on WhatsApp.</li><li>Tells admins when a chat has no reply.</li><li>Reminds again after an hour.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">4</span><div><h3>Questions.</h3></div></div><ul class="checks"><li>Ask it on WhatsApp, for example &quot;How many leads came in this week?&quot;</li><li>Or ask the co-pilot on your dashboard.</li></ul></li><li class="card stage"><div class="stage-head"><span class="stage-num" aria-hidden="true">5</span><div><h3>Your team.</h3></div></div><ul class="checks"><li>See how each team member&#x27;s chats are going.</li></ul></li></ol>
+            <div class="after-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-manager#qualify">Book a free call</a></div>
         </div>
     </section>
 
-    <section id="see-it-work" class="section section-white">
+    <section id="handover" class="section section-white">
+        <div class="wrap">
+            <div class="card handover"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></svg></span>
+                <div><span class="eyebrow">When a person is needed</span><h2>Handing over to your staff</h2><p>When a customer needs a person, the alert says who it is, what they want and links to the chat.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="compare" class="section">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">See it in action</span>
-                <h2>What reaches you, and when.</h2>
-                <p class="lede">Three moments from a normal day, on your phone and in your dashboard.</p>
+                <span class="eyebrow">Side by side</span>
+                <h2>Today, and with the AI Manager.</h2>
             </div>
-            <div class="grid-3"><div class="card ex-card"><p class="ex-tag">A customer needs a person</p><div class="chat"><div class="bubble bot"><span class="who-bot">41 Sales Team</span><br>Needs a person: Daniel L. wants a price for 40 units delivered Friday. Swipe-reply this message to answer.</div><div class="bubble team"><span class="who-team">You</span><br>$9 each for 40, delivery Friday is fine.</div><div class="bubble bot"><span class="who-bot">41 Sales Team</span><br>Sent to Daniel L. Delivered.</div></div><p class="ex-out"><span class="pill pill-good"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg> Answered in 4 minutes</span></p></div><div class="card ex-card"><p class="ex-tag">Nobody replied in time</p><div class="chat"><div class="bubble bot"><span class="who-bot">41 Sales Team</span><br>No reply yet: Grace T. Mei was alerted 15 minutes ago and has not replied. Open chat.</div></div><p class="ex-out"><span class="pill pill-good"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg> Sent to every admin</span></p></div><div class="card ex-card"><p class="ex-tag">You ask a question</p><div class="chat"><div class="bubble team"><span class="who-team">You</span><br>How many leads came in today?</div><div class="bubble bot"><span class="who-bot">41 Sales Team</span><br>14 new leads today. 3 are waiting on a reply: Grace T., Ahmad R. and Lim K.</div></div><p class="ex-out"><span class="pill pill-good"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg> Answered from live data</span></p></div></div>
-            <p class="ex-note">Names and numbers above are examples. Alerts go to the WhatsApp numbers you list in Settings, and each person can turn their alerts on or off.</p>
+            <div class="table-wrap cmp"><table>
+                <thead><tr><th scope="col">What happens</th><th scope="col">Today</th><th scope="col">With the AI Manager</th></tr></thead>
+                <tbody><tr><th scope="row">How did this week go</th><td>Scroll through chats</td><td class="with">One screen, in Singapore dollars</td></tr><tr><th scope="row">A bank transfer</th><td>Checked later, sometimes missed</td><td class="with">Flagged for your team to confirm</td></tr><tr><th scope="row">A customer waiting for a person</th><td>Nobody notices</td><td class="with">The right person is alerted on WhatsApp</td></tr><tr><th scope="row">Nobody replied</th><td>Found out too late</td><td class="with">Admins are told</td></tr></tbody>
+            </table></div>
         </div>
     </section>
 
-    <section id="the-team" class="section">
+    <section id="how-it-starts" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
-                <span class="eyebrow">How it works with the other AIs</span>
-                <h2>Four AIs, one sales team.</h2>
-                <p class="lede">The AI Manager reads what the other AIs do, so you get one picture of the whole week. Read how an <a href="/ai-sales-agent-singapore">AI sales agent works in Singapore</a>.</p>
+                <span class="eyebrow">How it starts</span>
+                <h2>Live after one call.</h2>
             </div>
-            <ul class="flow"><li><div class="card"><div class="flow-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/><path d="M18 5a9 9 0 0 1 0 14"/></svg></span><span class="pill">Coming soon</span></div><h3>AI Leads Generator</h3><p>Brings new enquiries from your ads.</p></div></li><li><div class="card"><div class="flow-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Sales Closer</h3><p>Answers every enquiry, quotes and takes the payment.</p><a href="/41-closer">See the AI Sales Closer <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div></li><li><div class="card"><div class="flow-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="10" height="4" rx="1"/><path d="M17 6h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1"/><path d="M9 14l2 2 4-4"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Operations Admin</h3><p>Handles the work after payment: invoices, changes and check-ins.</p><a href="/ai-operations-admin">See the AI Operations Admin <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div></li><li><div class="card here"><div class="flow-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span class="pill pill-good">This page</span></div><h3>AI Manager</h3><p>Shows you what came in, what was paid and what needs you.</p></div></li></ul>
-            <p class="price-line"><a href="/pricing"><b>Part of every 41 Sales Team plan.</b></a> Next, see the <a href="/ai-operations-admin">AI Operations Admin</a>.</p>
+            <ol class="grid-3"><li class="card step-card"><span class="step-num" aria-hidden="true">1</span><h3>Send us your website.</h3><p>We build your AI sales team on your products and prices before we meet.</p></li><li class="card step-card"><span class="step-num" aria-hidden="true">2</span><h3>Test it on the call.</h3><p>You message it from your own phone, with your hardest questions.</p></li><li class="card step-card"><span class="step-num" aria-hidden="true">3</span><h3>It goes live that day.</h3><p>We connect your WhatsApp and it starts answering your customers. We keep tuning it with you.</p></li></ol>
+            <div class="after-cta"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-manager#qualify">Book a free call</a></div>
         </div>
     </section>
 
-    <section id="coming-next" class="section section-white">
+    <section id="coming-next" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Coming next</span>
@@ -382,13 +447,24 @@
         </div>
     </section>
 
-    <section id="faq" class="section">
+    <section id="faq" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Questions</span>
                 <h2>What owners ask about the AI Manager.</h2>
             </div>
             <div class="faq read center-block"><details open><summary>What is the AI Manager?</summary><p>It is the part of 41 Sales Team that watches your WhatsApp sales for you. It shows revenue closed, deals and who needs a reply on a sales dashboard, and it alerts the right person on your team on WhatsApp when a customer needs one.</p></details><details><summary>What does the sales dashboard show?</summary><p>Revenue closed, deals closed, your return, and how many leads became sales. Under that, the number of active leads, new leads today, chats that need a reply, and a pipeline board with every customer by stage.</p></details><details><summary>How does it tell my staff when a customer needs them?</summary><p>It sends a WhatsApp alert to the person who owns the chat, with the customer&#x27;s question and a link to the chat. They swipe-reply the alert, and their answer goes to the customer. If the chat has no owner, every admin gets the alert.</p></details><details><summary>What happens if nobody answers?</summary><p>If the owner has not replied within the wait you set, every admin gets a no reply yet message. If a question still waits on your team after an hour, your admins get a reminder on WhatsApp.</p></details><details><summary>Can I ask it questions on WhatsApp?</summary><p>Yes. Send a plain message to the alert number, such as who is waiting on a reply, or how many leads came in today. It answers from your live data. In the dashboard, the Co-pilot answers the same kind of question in more detail.</p></details><details><summary>Can my staff see only their own chats?</summary><p>Yes. Staff open the inbox on Mine, which shows only the chats they own. Owners and admins see everything, and the dashboard shows how many chats each person owns, how many became sales and how fast they reply.</p></details><details><summary>How much does it cost?</summary><p>It is part of every 41 Sales Team plan, so there is no separate fee. Plans start small and grow with the number of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.</p></details></div>
+        </div>
+    </section>
+
+    <section id="the-team" class="section">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">Your AI sales team</span>
+                <h2>The rest of your AI sales team.</h2>
+                <p class="lede">They share your one WhatsApp number. Your staff can step into any chat, and the AI picks up again when they finish.</p>
+            </div>
+            <div class="grid-3"><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Sales Closer</h3><p>Answers every enquiry, quotes your prices, books and takes payment.</p><a href="/41-closer">See what it does <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="10" height="4" rx="1"/><path d="M17 6h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1"/><path d="M9 14l2 2 4-4"/></svg></span><span class="pill pill-good">Live</span></div><h3>AI Operations Admin</h3><p>Sends the invoice, saves the details and checks in on the date the customer asked for.</p><a href="/ai-operations-admin">See what it does <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div><div class="card sib"><div class="sib-top"><span class="icon-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/><path d="M18 5a9 9 0 0 1 0 14"/></svg></span><span class="pill">Coming soon</span></div><h3>AI Leads Generator</h3><p>Will run your Facebook and Instagram ads and send the enquiries straight to your AI sales team.</p></div></div><p class="price-line"><a href="/pricing"><b>Part of every 41 Sales Team plan.</b></a> Read how an <a href="/ai-sales-agent-singapore">AI sales agent works in Singapore</a>.</p>
         </div>
     </section>
 
@@ -399,9 +475,7 @@
                     <span class="eyebrow">Start now</span>
                     <h2>See your sales without reading every chat</h2>
                     <p class="lede">We build it on your business before we meet. You test it. If you like it, it goes live that day.</p>
-                    <div class="btn-row">
-                        <a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-manager#qualify">Book a call</a>
-                    </div>
+                    <div class="cta-pair center"><div class="cta-col"><a class="btn btn-primary btn-lg" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-manager#qualify">Book a free call</a><p class="note">30 minutes with Alexander. We build your AI before the call. No contract.</p></div><div class="cta-col"><a class="btn btn-secondary btn-lg" href="https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg> WhatsApp our AI now</a><p class="note">It replies in seconds, day or night.</p></div></div>
                 </div>
             </div>
         </div>

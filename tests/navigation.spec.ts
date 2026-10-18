@@ -25,12 +25,14 @@ test.describe('Navigation', () => {
     await expect(nav.getByRole('link', { name: 'Events' })).toBeVisible();
   });
 
-  test('should have WhatsApp CTA in the header', async ({ page }) => {
+  // 18 Oct 2026: the sticky header carries the main action, a booked call (every top US site does).
+  // WhatsApp stays one tap away through the floating button.
+  test('header main button books a call, WhatsApp stays one tap away', async ({ page }) => {
     const navCta = page.locator('.site-nav .btn-primary');
     await expect(navCta).toBeVisible();
-    await expect(navCta).toContainText('WhatsApp');
-    await expect(navCta).toHaveAttribute('href', /wa\.me/);
-    await expect(navCta).toHaveAttribute('target', '_blank');
+    await expect(navCta).toHaveText('Book a free call');
+    await expect(navCta).toHaveAttribute('href', /\/ai-closer\?.*utm_campaign=header#qualify/);
+    await expect(page.locator('a.wa-float')).toHaveAttribute('href', /wa\.me/);
   });
 
   test('"Your AI team" menu links each live AI to its page', async ({ page }) => {

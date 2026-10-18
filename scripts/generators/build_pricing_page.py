@@ -391,10 +391,10 @@ def build() -> str:
             <h1>Pricing. <span class="h1-soft">The whole AI sales team on every plan.</span></h1>
             <p class="lede">The build is free. Billing starts the day it goes live. Month to month, 30 days notice, no contract.</p>
             <div class="btn-row">
-                <a class="btn btn-primary btn-lg" href="{book}">Book a call</a>
+                <a class="btn btn-primary btn-lg" href="{book}">Book a free call</a>
                 <a class="btn btn-secondary btn-lg" href="{WA_DEMO}" target="_blank" rel="noopener">{icon("wa")} Try it on WhatsApp</a>
             </div>
-            <p class="note">30 minutes with Alexander. We build yours before the call.</p>
+            <p class="note">30 minutes with Alexander. We build your AI before the call. No contract.</p>
         </div>
     </header>
 
@@ -474,7 +474,7 @@ def build() -> str:
             <div class="cta-band wash">
                 <h2>Find the plan that fits on the call</h2>
                 <div class="btn-row">
-                    <a class="btn btn-primary btn-lg" href="{book}">Book a call</a>
+                    <a class="btn btn-primary btn-lg" href="{book}">Book a free call</a>
                 </div>
             </div>
         </div>

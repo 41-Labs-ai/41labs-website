@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>41 Sales Team: WhatsApp AI Sales Agent for Singapore | 41 Labs</title>
-    <meta name="description" content="Your AI sales team answers every WhatsApp enquiry in seconds, follows up until the customer decides, and shows you every sale. Built and run by 41 Labs.">
+    <meta name="description" content="Your AI sales team answers every WhatsApp enquiry in seconds, quotes your real prices and follows up until the customer decides. Built and run by 41 Labs in Singapore.">
     <meta name="keywords" content="custom AI systems, AI automation, business AI, workflow automation, AI for operations, AI consulting, B2B AI solutions, enterprise AI, AI integration">
     <meta name="author" content="41 Labs">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://41labs.ai/">
     <meta property="og:title" content="41 Sales Team: WhatsApp AI Sales Agent for Singapore | 41 Labs">
-    <meta property="og:description" content="Your AI sales team answers every WhatsApp enquiry in seconds, follows up until the customer decides, and shows you every sale. Built and run by 41 Labs.">
+    <meta property="og:description" content="Your AI sales team answers every WhatsApp enquiry in seconds, quotes your real prices and follows up until the customer decides. Built and run by 41 Labs in Singapore.">
     <meta property="og:image" content="https://41labs.ai/og-image.jpg?v=2">
     <meta property="og:site_name" content="41 Labs">
     <meta property="og:locale" content="en_US">
@@ -32,7 +32,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://41labs.ai/">
     <meta name="twitter:title" content="41 Sales Team: WhatsApp AI Sales Agent for Singapore | 41 Labs">
-    <meta name="twitter:description" content="Your AI sales team answers every WhatsApp enquiry in seconds, follows up until the customer decides, and shows you every sale. Built and run by 41 Labs.">
+    <meta name="twitter:description" content="Your AI sales team answers every WhatsApp enquiry in seconds, quotes your real prices and follows up until the customer decides. Built and run by 41 Labs in Singapore.">
     <meta name="twitter:image" content="https://41labs.ai/og-image.jpg?v=2">
 
     <!-- Favicons -->
@@ -214,6 +214,14 @@
             },
             {
                 "@type": "Question",
+                "name": "How long does setup take?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We build it before the call. If you like it on the call, it goes live the same day."
+                }
+            },
+            {
+                "@type": "Question",
                 "name": "What does it cost?",
                 "acceptedAnswer": {
                     "@type": "Answer",
@@ -276,18 +284,16 @@
     /* hero */
     .home-hero{padding-block:64px 88px}
     .home-hero-grid{display:grid;gap:48px;grid-template-columns:minmax(0,1fr);align-items:center}
-    @media(min-width:1100px){.home-hero-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:56px}}
+    @media(min-width:1100px){.home-hero-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:48px}}
     .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--muted);margin:0 0 20px}
     .hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--primary-text);flex:none}
     .home-hero h1{max-width:19ch;font-size:clamp(34px,4vw,50px)}
     .home-hero h1 .h1-soft{color:var(--subtle)}
     .home-hero .lede strong{color:var(--fg)}
-    .hero-note{margin:16px 0 0;font-size:14px;color:var(--subtle);max-width:560px}
     @media(max-width:640px){.home-hero{padding-block:32px 64px}.hero-eyebrow{font-size:13px;margin-bottom:14px}}
 
     /* example dashboard */
     .member-link{color:inherit;text-decoration:none}.member-link:hover{color:var(--primary-text);text-decoration:underline}
-    .more-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:18px 0 0}
     .ind-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
     .ind-tab{font:500 14px/1 var(--font);min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface);color:var(--muted);cursor:pointer}
     .ind-tab:hover{background:var(--neutral-soft);color:var(--fg)}
@@ -359,10 +365,6 @@
     .proof-label{margin:8px 0 0;font-size:14px;color:var(--muted);line-height:1.45}
     .proof-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding:16px 28px;border-top:1px solid var(--border);background:var(--bg)}
     .proof-foot .source-line{margin:0;max-width:62ch}
-    .seen{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-    .seen>span{font-size:13px;color:var(--subtle);margin-right:4px}
-    .seen a{display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px 12px}
-    .seen img{height:22px;width:auto}
     @media(max-width:1099px){.proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.proof-item:nth-child(3){border-left:0}.proof-item:nth-child(n+3){border-top:1px solid var(--border)}}
     @media(max-width:640px){.proof-item{padding:20px 16px}.proof-num{font-size:30px}.proof-num small{font-size:16px}.proof-label{font-size:13px}.proof-foot{padding:16px}}
 
@@ -371,8 +373,6 @@
     @media(min-width:1000px){.team-split{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px}.team-split .section-head{position:sticky;top:104px}}
     .team-split .section-head{margin:0}
     .team-split .checks{margin-top:24px}
-    .team-split .more{display:inline-block;font-weight:500;text-decoration:none}
-    .team-split .more-links{margin-top:24px}
     .roster{position:relative;min-width:0}
     .roster-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
     .owner{display:inline-flex;align-items:center;gap:12px;padding:8px 18px 8px 8px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-panel);position:relative;z-index:1}
@@ -481,11 +481,6 @@
     .steps-m b{display:block;font-size:14px;line-height:1.35}
     .steps-m li>span>span{display:block;font-size:13px;line-height:19px;color:var(--muted);margin-top:2px}
     @media(min-width:1180px){.tag{display:block}.steps-m{display:none}}
-    .trades{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:center}
-    .trades span{font-size:14px;color:var(--subtle);margin-right:4px}
-    .trades a{font-size:14px;font-weight:500;color:var(--fg);text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-pill);padding:7px 14px}
-    .trades a:hover{background:var(--neutral-soft)}
-    /* done for you */
     .dfy{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative;list-style:none;margin:0;padding:0}
     .dfy::before{content:"";position:absolute;left:20px;right:20px;top:20px;height:1px;background:var(--border-strong)}
     .dfy li{position:relative;padding-right:24px}
@@ -494,16 +489,11 @@
     .dfy .when{margin:20px 0 0;font-size:13px;font-weight:500;color:var(--subtle)}
     .dfy h3{margin:4px 0 0;font-size:18px}
     .dfy p{margin:8px 0 0;font-size:15px;color:var(--muted)}
-    .dfy-foot{margin-top:48px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-    .chip-line{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--border);font-size:14px;color:var(--muted)}
-    .chip-line .i{color:var(--primary-text)}
     @media(max-width:760px){
       .dfy{grid-template-columns:1fr;gap:28px}
       .dfy::before{left:19.5px;right:auto;top:20px;bottom:20px;width:1px;height:auto}
       .dfy li{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:16px;padding-right:0}
       .dfy .node{grid-row:1/4}.dfy .when{margin-top:0}
-      .dfy-foot{margin-top:32px}.chip-line{border-radius:16px;align-items:flex-start}.chip-line .i{margin-top:3px}
-      .dfy-foot .btn{width:100%}
     }
 
     /* founder */
@@ -541,8 +531,6 @@
     .gap-head{max-width:760px}
     .gap-head .lede a{color:inherit;text-decoration-color:var(--border-strong);text-underline-offset:3px}
     .gap-head .lede a:hover{color:var(--primary-text)}
-    .home-proof .proof-card{margin-top:40px}
-    @media(max-width:640px){.home-proof .proof-card{margin-top:28px}}
 
     /* live after one call */
     .dfy.three{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -561,7 +549,140 @@
     .final .cta-band::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(420px 300px at 0% 0%,rgba(74,222,128,.24),transparent 70%),radial-gradient(460px 320px at 100% 0%,rgba(125,211,252,.26),transparent 70%),radial-gradient(620px 300px at 50% 120%,rgba(253,214,150,.30),transparent 70%)}
     .final .cta-band h2{max-width:22ch;margin-inline:auto}
     @media(max-width:640px){.final .cta-band{padding:40px 20px}.final .btn-row .btn{width:100%}}
-    @media(max-width:640px){.hero-cta .btn{flex:1 1 100%}}
+
+    /* hero proof + CTA pair (button with a line under it that says what happens) */
+    .hero-proof{display:flex;align-items:flex-start;gap:10px;margin:20px 0 0;font-size:15px;line-height:1.5;color:var(--fg);font-weight:500;max-width:560px}
+    .hp-ico{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary-text);flex:none;margin-top:1px}
+    .hp-ico .i{width:13px;height:13px;stroke-width:2.5}
+    .cta-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 14px;margin-top:28px;align-items:start;max-width:520px}
+    .cta-item{display:flex;flex-direction:column;gap:10px;min-width:0}
+    .cta-item .btn{width:100%;padding-inline:18px;font-size:16.5px}
+    .cta-micro{margin:0;font-size:13.5px;line-height:1.45;color:var(--subtle)}
+    .cta-band .cta-pair{margin:28px auto 0}
+    .cta-band .cta-item{text-align:center}
+    @media(max-width:640px){.cta-pair{grid-template-columns:minmax(0,1fr);gap:18px;max-width:none}}
+
+    /* 2. trust strip */
+    .trust{background:var(--surface);border-block:1px solid var(--border);padding-block:22px}
+    .trust-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px}
+    .trust-label{margin:0;font-size:13.5px;font-weight:500;color:var(--subtle);order:0}
+    .trust-more{order:1}
+    .trust-logos{list-style:none;margin:6px 0 0;padding:0;order:2;flex:1 1 100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px}
+    .trust-logos li{display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:600;color:var(--fg);opacity:.72;white-space:nowrap;letter-spacing:-.01em}
+    .trust-logos img{width:22px;height:22px;filter:grayscale(1) brightness(.35)}
+    .trust-logos .tw{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;background:var(--fg);font-size:12px;font-weight:700;color:#fff}
+    .trust-more{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap}
+    .trust-more .i{width:14px;height:14px}
+    .trust-seen{margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+    .trust-seen p{margin:0;font-size:13.5px;color:var(--subtle)}
+    .seen{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+    .seen a{display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:5px 11px}
+    .seen img{height:24px;width:auto}
+    @media(min-width:1000px){.trust-seen{justify-content:space-between}}
+    @media(max-width:640px){.trust{padding-block:20px}.trust-logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px}.trust-logos li{font-size:14px;white-space:normal}.trust-more{order:3}.trust-seen .seen{width:100%}}
+
+    /* 3. this is for me */
+    .trade-grid{list-style:none;margin:0;padding:0;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+    @media(min-width:680px){.trade-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(min-width:1000px){.trade-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .trade{position:relative;display:flex;flex-direction:column;padding:24px;transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
+    .trade:hover{transform:translateY(-2px);box-shadow:0 1px 2px rgba(23,32,27,.06),0 16px 36px rgba(23,32,27,.11)}
+    .trade .icon-chip{width:40px;height:40px;margin-bottom:16px}
+    .trade .icon-chip .i{width:19px;height:19px}
+    .trade h3{font-size:18px;margin:0 0 6px}
+    .trade p{font-size:15px;line-height:1.55;flex:1}
+    .trade .go{margin-top:16px;display:block;font-size:14.5px;font-weight:500;text-decoration:none}
+    .trade .go::after{content:"";position:absolute;inset:0;border-radius:inherit}
+    .trade .go .i{width:14px;height:14px;display:inline-block;vertical-align:-2px;margin-left:5px;transition:transform .16s var(--ease)}
+    .trade:hover .go .i{transform:translateX(3px)}
+    @media(max-width:679px){
+      .trade{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:14px;padding:18px 16px}
+      .trade .icon-chip{grid-row:1/4;margin:0}
+      .trade p{font-size:14.5px}.trade .go{margin-top:10px}
+    }
+    .all-ind{margin:24px 0 0}
+    .all-ind a{display:inline-flex;align-items:center;gap:6px;font-weight:500;text-decoration:none}
+    .all-ind .i{width:15px;height:15px}
+
+    /* 4. the problem */
+    .choices-head{font-size:17px;font-weight:600;margin:0 0 14px;color:var(--fg)}
+    .choices{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+    @media(min-width:860px){.choices{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .choice{display:flex;gap:14px;align-items:flex-start;padding:20px;border-radius:var(--r-panel);background:var(--bg);border:1px solid var(--border)}
+    .choice p{margin:0;font-size:15.5px;line-height:1.55;color:var(--muted)}
+    .choice b{color:var(--fg);font-weight:600}
+    .ch-ico{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--subtle);flex:none}
+    .ch-ico .i{width:17px;height:17px}
+    .ch-ico.on{background:var(--primary);border-color:transparent;color:var(--on-primary)}
+    .fourth{margin-top:12px;display:flex;gap:14px;align-items:center;padding:20px 22px;border-radius:var(--r-panel);background:var(--primary-soft);border:1px solid rgba(21,128,61,.18)}
+    .fourth p{margin:0;font-size:17px;line-height:1.5}
+    .fourth b{font-weight:600;color:var(--fg)}
+    .sec-cta{margin-top:32px}
+    @media(max-width:640px){.fourth{align-items:flex-start;padding:18px}.fourth p{font-size:16px}.sec-cta .btn{width:100%}}
+
+    /* 7. try it now */
+    .try-steps{list-style:none;margin:0;padding:0;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+    @media(min-width:860px){.try-steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .try-step{padding:28px 24px 24px}
+    .try-step .num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:#fff;font-size:15px;font-weight:600;margin-bottom:18px}
+    .try-step h3{font-size:18px;line-height:1.35;margin:0 0 8px}
+    .try-step p{font-size:15px;line-height:1.55}
+    @media(max-width:859px){
+      .try-step{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:14px;padding:18px 16px}
+      .try-step .num{grid-row:1/3;margin:0}
+    }
+    .try-cta{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+    .btn-wa svg{color:#16a34a}
+    @media(max-width:640px){.try-cta .btn{width:100%}}
+
+    /* 8. today vs with 41 Sales Team */
+    .compare{max-width:960px;margin:0 auto;border-radius:var(--r-card);box-shadow:var(--shadow-panel)}
+    .compare table{font-size:16px}
+    .compare th,.compare td{padding:16px 22px;vertical-align:middle}
+    .compare thead th{font-size:13.5px;padding-block:14px}
+    .compare thead th.with{color:var(--primary-text);background:rgba(74,222,128,.14)}
+    .compare tbody th{font-weight:600;color:var(--fg);font-size:16px;width:30%}
+    .compare td.today{color:var(--subtle);width:30%}
+    .compare td.with{color:var(--fg);font-weight:500;background:rgba(74,222,128,.07)}
+    .compare td.with::before{content:"";display:inline-block;width:10px;height:5px;border-left:2px solid var(--primary-text);border-bottom:2px solid var(--primary-text);transform:rotate(-45deg) translateY(-3px);margin-right:10px}
+    @media(max-width:700px){
+      .compare{background:transparent;border:0;box-shadow:none;overflow:visible}
+      .compare table,.compare tbody,.compare tr,.compare th,.compare td{display:block;width:auto;min-width:0}
+      .compare thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+      .compare tbody{display:grid;gap:12px}
+      .compare tr{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-panel);box-shadow:var(--shadow-raised);overflow:hidden}
+      .compare tbody th{width:auto;padding:14px 16px 10px;border-bottom:1px solid var(--border);background:var(--bg)}
+      .compare td{padding:10px 16px;border-bottom:0}
+      .compare td.today{width:auto}
+      .compare td::before{content:attr(data-label);display:block;font-size:12.5px;font-weight:500;color:var(--subtle);line-height:1.4;margin-bottom:2px}
+      .compare td.with::before{content:attr(data-label);display:block;width:auto;height:auto;border:0;transform:none;margin:0;color:var(--primary-text)}
+      .compare td.with{padding-bottom:14px}
+    }
+
+    /* 10. proof: case card + chat */
+    .case-card{margin-top:20px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px 40px;align-items:center;padding:28px 32px;border-radius:var(--r-card);background:var(--fg);color:#fff;box-shadow:var(--shadow-panel)}
+    .case-num{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+    .case-num .pill{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85)}
+    .case-num b{font-size:clamp(40px,5vw,56px);line-height:1;font-weight:700;letter-spacing:-.03em;color:var(--primary);font-variant-numeric:tabular-nums}
+    .case-text p{margin:0;font-size:15.5px;line-height:1.55;color:rgba(255,255,255,.74)}
+    .case-text .case-line{font-size:19px;line-height:1.4;font-weight:600;color:#fff;margin-bottom:8px}
+    @media(max-width:760px){.case-card{grid-template-columns:1fr;padding:24px 20px}}
+    .chat-block{margin-top:88px}
+    .chat-block .section-head{margin-bottom:24px}
+    .h-chat{font-size:clamp(24px,3vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em}
+    @media(max-width:640px){.chat-block{margin-top:64px}}
+
+    /* 12. what you risk */
+    .risk-grid{list-style:none;margin:0 auto;padding:0;display:grid;gap:12px;grid-template-columns:minmax(0,1fr);max-width:1000px}
+    @media(min-width:700px){.risk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .risk{display:flex;gap:14px;align-items:center;padding:20px 22px;border-radius:var(--r-panel);background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-raised);font-size:16px;line-height:1.5;color:var(--fg);font-weight:500}
+    .rk{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary-text);flex:none}
+    .rk .i{width:15px;height:15px;stroke-width:2.5}
+
+    /* team: per-card link */
+    .member .see{grid-column:2/4;margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:500;text-decoration:none;justify-self:start}
+    .member .see .i{width:14px;height:14px}
+    @media(max-width:640px){.member .see{grid-column:1/-1}}
     </style>
 </head>
 <body>
@@ -605,7 +726,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/pricing">Pricing</a>
       <a href="/case-studies">Case studies</a>
       <a href="/events">Events</a>
-      <a class="btn btn-primary" href="https://wa.me/6580124848?text=Hi%2041%20Labs%21%20I%27m%20exploring%20AI%20for%20my%20business%20and%20not%20sure%20where%20to%20start." target="_blank" rel="noopener">WhatsApp us</a>
+      <a class="btn btn-primary" href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=header#qualify">Book a free call</a>
     </nav>
   </div>
 </header>
@@ -637,21 +758,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <symbol id="i-doc" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 13h4M10 17h4"/></symbol>
   <symbol id="i-quote" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
   <symbol id="i-cog" viewBox="0 0 24 24"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2M12 22v-2M17 20.66l-1-1.73M11 10.27 7 3.34M20.66 17l-1.73-1M3.34 7l1.73 1M14 12h8M2 12h2M20.66 7l-1.73 1M3.34 17l1.73-1M17 3.34l-1 1.73M11 13.73l-4 6.93"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-hammer" viewBox="0 0 24 24"><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/></symbol>
+  <symbol id="i-snow" viewBox="0 0 24 24"><path d="M2 12h20"/><path d="M12 2v20"/><path d="m20 16-4-4 4-4"/><path d="m4 8 4 4-4 4"/><path d="m16 4-4 4-4-4"/><path d="m8 20 4-4 4 4"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01M3 18h.01M3 6h.01M8 12h13M8 18h13M8 6h13"/></symbol>
 </svg>
 <main id="main">
 
-    <!-- Hero -->
+    <!-- 1. Hero -->
     <section class="hero wash home-hero" aria-label="41 Sales Team">
         <div class="wrap home-hero-grid">
             <div class="hero-copy">
-                <p class="hero-eyebrow"><span class="dot"></span>41 Sales Team (formerly 41 Closer), by 41 Labs</p>
+                <p class="hero-eyebrow"><span class="dot"></span>For Singapore businesses that sell on WhatsApp</p>
                 <h1>Every WhatsApp enquiry answered in seconds. <span class="h1-soft">You wake up to bookings already agreed.</span></h1>
-                <p class="lede">Your AI sales team replies on WhatsApp and Messenger, day and night, in your tone, and keeps following up until the customer decides. We build it on your business and run it for you.</p>
-                <div class="btn-row hero-cta" id="hero-cta">
-                    <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a call</a>
-                    <a href="https://wa.me/6580124848?text=Hi%21%20Show%20me%2041%20Closer%20in%20action." target="_blank" rel="noopener" class="btn btn-secondary btn-lg"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Try it on WhatsApp</a>
+                <p class="lede">41 Sales Team is your AI sales team. It replies on WhatsApp and Messenger day and night, in your tone. It quotes your real prices and follows up until the customer decides. We build it on your business and run it for you.</p>
+                <p class="hero-proof"><span class="hp-ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span>19 seconds median first reply on a live Singapore line. 20 businesses built across 17 industries.</span></p>
+                <div class="cta-pair hero-cta" id="hero-cta">
+                    <div class="cta-item">
+                        <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a free call</a>
+                        <p class="cta-micro">30 minutes with Alexander. We build your AI before the call. No contract.</p>
+                    </div>
+                    <div class="cta-item">
+                        <a href="https://wa.me/6580124848?text=Hi%21%20Show%20me%2041%20Closer%20in%20action." target="_blank" rel="noopener" class="btn btn-secondary btn-lg"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>WhatsApp our AI now</a>
+                        <p class="cta-micro">It replies in seconds, day or night.</p>
+                    </div>
                 </div>
-                <p class="hero-note">30 minutes with Alexander. We build yours before the call.</p>
             </div>
 
             <div class="dash-wrap">
@@ -734,7 +869,109 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </div>
     </section>
-    <!-- What changes for you -->
+
+    <!-- 2. Trust strip -->
+    <section class="trust" id="trust" aria-label="Works with what you already use">
+        <div class="wrap">
+            <div class="trust-row">
+                <p class="trust-label">Works with what you already use</p>
+                <ul class="trust-logos">
+                    <li><img src="/assets/41st/logos/whatsapp.svg" alt="" width="20" height="20">WhatsApp</li>
+                    <li><img src="/assets/41st/logos/messenger.svg" alt="" width="20" height="20">Facebook Messenger</li>
+                    <li><img src="/assets/41st/logos/stripe.svg" alt="" width="20" height="20">Stripe</li>
+                    <li><span class="tw" aria-hidden="true">A</span>Airwallex</li>
+                    <li><img src="/assets/41st/logos/googlecalendar.svg" alt="" width="20" height="20">Google Calendar</li>
+                    <li><img src="/assets/41st/logos/googlesheets.svg" alt="" width="20" height="20">Google Sheets</li>
+                    <li><span class="tw" aria-hidden="true">P</span>Plato</li>
+                    <li><span class="tw" aria-hidden="true">W</span>WESS</li>
+                </ul>
+                <a class="trust-more" href="#integrations">See all integrations<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+            </div>
+            <div class="trust-row trust-seen">
+                <p>Member of the Singapore A.I. Association. Seen at NRF APAC and SuperAI.</p>
+                <div class="seen">
+                    <a href="/events" aria-label="Singapore A.I. Association"><img src="/logos/saia.png" alt="Singapore A.I. Association" width="84" height="22"></a>
+                    <a href="/events" aria-label="NRF Big Show APAC"><img src="/logos/nrf.jpg" alt="NRF Big Show APAC" width="44" height="22"></a>
+                    <a href="/events" aria-label="SuperAI"><img src="/logos/superai.jpg" alt="SuperAI" width="22" height="22"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. This is for me -->
+    <section id="for-you" class="section">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Built for owners whose customers WhatsApp before they buy</h2>
+                <p class="lede">If your customers ask about price and availability on WhatsApp, this is for you. Pick your business to see how it works for you.</p>
+            </div>
+            <ul class="trade-grid">
+                <li class="card trade">
+                    <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span>
+                    <h3>Aesthetic clinics</h3>
+                    <p>Patients ask about treatments, prices and slots after you close.</p>
+                    <a class="go" href="/industries/ai-for-aesthetic-clinics-singapore">See how it works for aesthetic clinics<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                </li>
+                <li class="card trade">
+                    <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-hammer"/></svg></span>
+                    <h3>Renovation contractors</h3>
+                    <p>Homeowners want a rough figure before they will book a site visit.</p>
+                    <a class="go" href="/industries/ai-for-renovation-contractors-singapore">See how it works for renovation contractors<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                </li>
+                <li class="card trade">
+                    <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-snow"/></svg></span>
+                    <h3>Aircon and home services</h3>
+                    <p>Customers want a slot this week, and they message three companies at once.</p>
+                    <a class="go" href="/industries/ai-for-hvac-aircon-singapore">See how it works for aircon and home services<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                </li>
+                <li class="card trade">
+                    <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span>
+                    <h3>Car rental</h3>
+                    <p>Drivers message at night for a car the next morning.</p>
+                    <a class="go" href="/industries/ai-for-car-rental-companies-singapore">See how it works for car rental<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                </li>
+                <li class="card trade">
+                    <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-plane"/></svg></span>
+                    <h3>Travel agencies</h3>
+                    <p>Every trip is different, so every enquiry needs questions before a quote.</p>
+                    <a class="go" href="/industries/ai-for-travel-agencies-singapore">See how it works for travel agencies<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                </li>
+                <li class="card trade">
+                    <span class="icon-chip"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span>
+                    <h3>Tuition and enrichment</h3>
+                    <p>Parents ask the same questions about levels, timings and fees.</p>
+                    <a class="go" href="/industries/ai-for-tuition-centres-singapore">See how it works for tuition and enrichment<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                </li>
+            </ul>
+            <p class="all-ind"><a href="/industries">See all 30 industries<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a></p>
+        </div>
+    </section>
+
+    <!-- 4. The problem -->
+    <section id="the-gap" class="section section-white">
+        <div class="wrap">
+            <div class="section-head gap-head">
+                <p class="kicker">The gap it closes</p>
+                <h2>Most enquiries wait until morning</h2>
+                <p class="lede">We sent one real enquiry to <a href="/ai-sales-agent-singapore">25 Singapore businesses</a> between 8pm and 11pm. The median reply took 13.3 hours. Four never replied.</p>
+            </div>
+            <h3 class="choices-head">Today an owner has three choices</h3>
+            <ul class="choices">
+                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></span><p><b>Reply yourself at midnight.</b> You keep the sale and give up your evening.</p></li>
+                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span><p><b>Leave it until morning.</b> By then, many customers have already asked someone else.</p></li>
+                <li class="choice"><span class="ch-ico"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg></span><p><b>Use a chatbot that sends menus.</b> Customers want a straight answer, so they stop replying.</p></li>
+            </ul>
+            <div class="fourth">
+                <span class="ch-ico on"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span>
+                <p><b>41 Sales Team is a fourth choice. It answers like your best salesperson, at any hour, and hands over to you when a person is needed.</b></p>
+            </div>
+            <div class="sec-cta">
+                <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a free call</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. What changes for you -->
     <section id="what-changes" class="section">
         <div class="wrap">
             <div class="section-head">
@@ -765,36 +1002,125 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <!-- The gap it closes -->
-    <section id="the-gap" class="section section-white home-proof">
-        <div class="wrap">
-            <div class="section-head gap-head">
-                <p class="kicker">The gap it closes</p>
-                <h2>Most enquiries wait until morning</h2>
-                <p class="lede">We sent one real enquiry to <a href="/ai-sales-agent-singapore">25 Singapore businesses</a> between 8pm and 11pm. The median reply took 13.3 hours. Four never replied.</p>
+    <!-- 6. Your AI sales team -->
+    <section id="what-we-do" class="section section-white">
+        <div class="wrap team-split">
+            <div class="section-head">
+                <p class="kicker">Your AI sales team</p>
+                <h2>Four AIs that work with your staff</h2>
+                <p class="lede">They share your one WhatsApp number. Your staff can step into any chat, and the AI picks up again when they finish.</p>
             </div>
-            <div class="proof-card">
-                <div class="proof-grid">
-                    <div class="proof-item"><div class="proof-num">19<small> seconds</small></div><p class="proof-label">median first reply</p></div>
-                    <div class="proof-item"><div class="proof-num">1 in 4</div><p class="proof-label">enquiries after hours</p></div>
-                    <div class="proof-item"><div class="proof-num">45,355</div><p class="proof-label">customer messages on one client's line</p></div>
-                    <div class="proof-item"><div class="proof-num">20</div><p class="proof-label">businesses built, 17 industries</p></div>
-                </div>
-                <div class="proof-foot">
-                    <p class="source-line">Measured from our own systems on 13 September 2026. Message, after-hours and speed figures come from one Singapore distributor's live line over four and a half months. Member of the Singapore A.I. Association. Built on the WhatsApp Business Platform (Meta).</p>
-                    <div class="seen">
-                        <span>Seen at</span>
-                        <a href="/events" aria-label="Singapore A.I. Association"><img src="/logos/saia.png" alt="Singapore A.I. Association" width="84" height="22" loading="lazy"></a>
-                        <a href="/events" aria-label="NRF Big Show APAC"><img src="/logos/nrf.jpg" alt="NRF Big Show APAC" width="44" height="22" loading="lazy"></a>
-                        <a href="/events" aria-label="SuperAI"><img src="/logos/superai.jpg" alt="SuperAI" width="22" height="22" loading="lazy"></a>
-                        <a href="/events" aria-label="Stripe"><img src="/logos/stripe.png" alt="Stripe" width="52" height="22" loading="lazy"></a>
+
+            <div class="roster" id="team" aria-label="Your AI sales team">
+                <div class="roster-top">
+                    <div class="owner">
+                        <span class="av"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span>
+                        <span><b>You, the owner</b><small>Your staff can step into any chat</small></span>
                     </div>
+                    <span class="pill pill-example">Example activity</span>
                 </div>
+                <ul class="reports">
+                    <li>
+                        <article class="member">
+                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-msg"/></svg></span></span>
+                            <div class="who"><h3><a class="member-link" href="/41-closer">AI Sales Closer</a></h3></div>
+                            <div class="pills"><span class="pill pill-good">Live</span></div>
+                            <p class="desc">Answers every enquiry, quotes your prices, books and takes payment.</p>
+                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg>Example: Ravi K. paid $920, 1:16 am</span>
+                            <a class="see" href="/41-closer">See what it does<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="member">
+                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-clip"/></svg></span></span>
+                            <div class="who"><h3><a class="member-link" href="/ai-operations-admin">AI Operations Admin</a></h3></div>
+                            <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
+                            <p class="desc">Sends the invoice, saves the details and checks in on the date the customer asked for.</p>
+                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Example: pickup reminder set for Fri 16 Oct</span>
+                            <a class="see" href="/ai-operations-admin">See what it does<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="member">
+                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-chart"/></svg></span></span>
+                            <div class="who"><h3><a class="member-link" href="/ai-manager">AI Manager</a></h3></div>
+                            <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
+                            <p class="desc">Shows every sale on one screen and alerts the right person when a customer needs a human.</p>
+                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Example: flagged a bank transfer for you to confirm, 9:12 am</span>
+                            <a class="see" href="/ai-manager">See what it does<svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="member soon">
+                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-mega"/></svg></span></span>
+                            <div class="who"><h3>AI Leads Generator</h3></div>
+                            <div class="pills"><span class="pill">Coming soon</span></div>
+                            <p class="desc">Will run your Facebook and Instagram ads and send the enquiries straight to your AI sales team.</p>
+                        </article>
+                    </li>
+                </ul>
+                <p class="roster-note">Example activity at an example business.</p>
             </div>
         </div>
     </section>
 
-    <!-- Live after one call -->
+    <!-- 7. Try it now -->
+    <section id="try-it" class="section">
+        <div class="wrap">
+            <div class="section-head center">
+                <p class="kicker">Try it now</p>
+                <h2>Message our AI the way your customer would</h2>
+                <p class="lede">Our own sales line runs on the same AI you would be buying. Ask it anything.</p>
+            </div>
+            <ol class="try-steps">
+                <li class="card try-step">
+                    <span class="num" aria-hidden="true">1</span>
+                    <h3>Tap "WhatsApp our AI now".</h3>
+                    <p>WhatsApp opens with a message ready. Press send.</p>
+                </li>
+                <li class="card try-step">
+                    <span class="num" aria-hidden="true">2</span>
+                    <h3>Ask what you would ask a new supplier.</h3>
+                    <p>How it works, how long setup takes, whether it handles your kind of customer.</p>
+                </li>
+                <li class="card try-step">
+                    <span class="num" aria-hidden="true">3</span>
+                    <h3>Watch it reply in seconds.</h3>
+                    <p>It asks you a question or two, like a good salesperson would. If you want, it books your call with Alexander.</p>
+                </li>
+            </ol>
+            <div class="try-cta">
+                <a href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener" class="btn btn-secondary btn-lg btn-wa"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>WhatsApp our AI now</a>
+                <p class="cta-micro">+65 8012 4848 · We only use your number to reply to you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Today vs with 41 Sales Team -->
+    <section id="compare" class="section section-white">
+        <div class="wrap">
+            <div class="section-head center">
+                <h2>Today vs with 41 Sales Team</h2>
+            </div>
+            <div class="table-wrap compare">
+                <table>
+                    <thead>
+                        <tr><th scope="col">What happens</th><th scope="col">Today</th><th scope="col" class="with">With 41 Sales Team</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">A message at 11pm</th><td class="today" data-label="Today">Waits until morning</td><td class="with" data-label="With 41 Sales Team">Answered in seconds</td></tr>
+                        <tr><th scope="row">"How much?"</th><td class="today" data-label="Today">You look up the price list</td><td class="with" data-label="With 41 Sales Team">It quotes from your real prices</td></tr>
+                        <tr><th scope="row">A customer goes quiet</th><td class="today" data-label="Today">Easy to forget</td><td class="with" data-label="With 41 Sales Team">It messages them again on the day they asked for</td></tr>
+                        <tr><th scope="row">A customer pays by bank transfer</th><td class="today" data-label="Today">You check your bank later</td><td class="with" data-label="With 41 Sales Team">It asks your team to confirm the sale</td></tr>
+                        <tr><th scope="row">A tricky question</th><td class="today" data-label="Today">Gets a guess, or waits</td><td class="with" data-label="With 41 Sales Team">Goes to the right person on your team, on WhatsApp</td></tr>
+                        <tr><th scope="row">How did this week go</th><td class="today" data-label="Today">You scroll through chats</td><td class="with" data-label="With 41 Sales Team">Every sale on one screen, in Singapore dollars</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Live after one call -->
     <section id="live" class="section">
         <div class="wrap">
             <div class="section-head">
@@ -818,20 +1144,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </li>
             </ol>
             <div class="live-foot">
-                <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a call</a>
+                <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a free call</a>
             </div>
         </div>
     </section>
 
-    <!-- How it works: one chat at 1am -->
-    <section id="how-it-works" class="section section-white">
+    <!-- 10. Proof -->
+    <section id="proof" class="section section-white home-proof">
         <div class="wrap">
-            <div class="section-head center">
-                <p class="kicker">See it work</p>
-                <h2>A 1am enquiry, closed before morning</h2>
-                <p class="lede">Example chat. On your build it answers with your own products and prices.</p>
+            <div class="section-head">
+                <h2>Results from live lines</h2>
+            </div>
+            <div class="proof-card">
+                <div class="proof-grid">
+                    <div class="proof-item"><div class="proof-num">19<small> seconds</small></div><p class="proof-label">median first reply</p></div>
+                    <div class="proof-item"><div class="proof-num">1 in 4</div><p class="proof-label">enquiries after hours</p></div>
+                    <div class="proof-item"><div class="proof-num">45,355</div><p class="proof-label">customer messages on one client's line</p></div>
+                    <div class="proof-item"><div class="proof-num">20</div><p class="proof-label">businesses built, 17 industries</p></div>
+                </div>
+                <div class="proof-foot">
+                    <p class="source-line">Measured from our own systems on 13 September 2026. Message, after-hours and speed figures come from one Singapore distributor's live line over four and a half months. Member of the Singapore A.I. Association. Built on the WhatsApp Business Platform (Meta).</p>
+                </div>
             </div>
 
+            <div class="case-card">
+                <div class="case-num"><span class="pill">Real client, kept private on request</span><b>$300,000</b></div>
+                <div class="case-text">
+                    <p class="case-line">of sales every month through the AI Sales Closer at one Singapore industrial supplier</p>
+                    <p>It quotes live from the supplier's own catalogue, replies in seconds day and night, and our team steps in only for the tricky ones.</p>
+                </div>
+            </div>
+
+            <div id="how-it-works" class="chat-block">
+                <div class="section-head center">
+                    <h3 class="h-chat">A 1am enquiry, closed before morning</h3>
+                    <p class="lede">Example chat. On your build it answers with your own products and prices.</p>
+                </div>
             <div class="stage">
                 <p class="example-label"><span class="pill">Example chat</span>Lion City Rentals, car rental</p>
                 <div class="phone" role="img" aria-label="Example chat: a driver messages Lion City Rentals at 1:12 am. The AI quotes, sends a payment link and he pays $920 at 1:16 am.">
@@ -894,7 +1242,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
                 <div class="tag l t4" aria-hidden="true">
                     <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>AI Manager logged the sale</div>
-                    <p>You see it in your report in the morning.</p>
+                    <p>You see it on your dashboard in the morning.</p>
                 </div>
                 <div class="tag r t5" aria-hidden="true">
                     <div class="h"><span class="ico ai"><svg class="i"><use href="#i-spark"/></svg></span>AI Operations Admin set the reminder</div>
@@ -910,84 +1258,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </ol>
                 </div>
             </div>
-
-
-            <nav class="trades" aria-label="Industries">
-                <span>See it for your trade:</span>
-                <a href="/industries/construction">Construction</a>
-                <a href="/industries/healthcare">Healthcare and clinics</a>
-                <a href="/industries/home-services">Home services</a>
-                <a href="/industries/professional-services">Professional services</a>
-                <a href="/industries/automotive">Automotive</a>
-                <a href="/industries/fnb">F&amp;B</a>
-                <a href="/industries/beauty-wellness">Beauty and wellness</a>
-                <a href="/industries">All industries</a>
-            </nav>
-        </div>
-    </section>
-
-    <!-- What we do: the team -->
-    <section id="what-we-do" class="section">
-        <div class="wrap team-split">
-            <div class="section-head">
-                <p class="kicker">Your AI sales team</p>
-                <h2>Four AIs that work with your staff</h2>
-                <p class="lede">They share your one WhatsApp number. Your staff can step into any chat, and the AI picks up again when they finish.</p>
-                <p class="more-links"><a class="more" href="/41-closer">AI Sales Closer</a> <a class="more" href="/ai-operations-admin">AI Operations Admin</a> <a class="more" href="/ai-manager">AI Manager</a></p>
-            </div>
-
-            <div class="roster" id="team" aria-label="Your AI sales team">
-                <div class="roster-top">
-                    <div class="owner">
-                        <span class="av"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span>
-                        <span><b>You, the owner</b><small>Your staff can step into any chat</small></span>
-                    </div>
-                    <span class="pill pill-example">Example activity</span>
-                </div>
-                <ul class="reports">
-                    <li>
-                        <article class="member">
-                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-msg"/></svg></span></span>
-                            <div class="who"><h3><a class="member-link" href="/41-closer">AI Sales Closer</a></h3><span class="job">Answers, quotes, books and gets paid</span></div>
-                            <div class="pills"><span class="pill pill-good">Live</span></div>
-                            <p class="desc">Answers every WhatsApp enquiry in seconds, day and night. It quotes, books, sends the payment link and chases customers who go quiet.</p>
-                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg>Example: Ravi K. paid $920, 1:16 am</span>
-                        </article>
-                    </li>
-                    <li>
-                        <article class="member">
-                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-clip"/></svg></span></span>
-                            <div class="who"><h3><a class="member-link" href="/ai-operations-admin">AI Operations Admin</a></h3><span class="job">Documents, reminders and changes</span></div>
-                            <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
-                            <p class="desc">Handles everything after payment. It collects documents, confirms, sends reminders and handles changes.</p>
-                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Example: pickup reminder set for Fri 16 Oct</span>
-                        </article>
-                    </li>
-                    <li>
-                        <article class="member">
-                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-chart"/></svg></span></span>
-                            <div class="who"><h3><a class="member-link" href="/ai-manager">AI Manager</a></h3><span class="job">Watches the team and reports to you</span></div>
-                            <div class="pills"><span class="pill pill-good">Live</span><span class="pill">Early</span></div>
-                            <p class="desc">Watches the other three. It tells you what happened and what to fix.</p>
-                            <span class="act"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Example: sent you the Monday report, 8:00 am</span>
-                        </article>
-                    </li>
-                    <li>
-                        <article class="member soon">
-                            <span class="aiav" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg><span class="role"><svg class="i"><use href="#i-mega"/></svg></span></span>
-                            <div class="who"><h3>AI Leads Generator</h3><span class="job">Runs your Facebook and Instagram ads</span></div>
-                            <div class="pills"><span class="pill">Coming soon</span></div>
-                            <p class="desc">Brings you new enquiries and sends them to your AI Sales Closer. It is not built yet.</p>
-                        </article>
-                    </li>
-                </ul>
-                <p class="roster-note">Example activity at an example business.</p>
             </div>
         </div>
     </section>
 
-    <!-- From Alexander -->
-    <section id="founder" class="section" aria-label="From Alexander">
+    <!-- 11. Integrations -->
+<section class="section integrations" id="integrations" aria-labelledby="int-h">
+  <div class="wrap">
+    <div class="section-head center">
+      <p class="eyebrow">Integrations</p>
+      <h2 id="int-h">Works with what you already use</h2>
+      <p class="lede">Your AI sales team reads your prices, books into your calendar and takes payment in the chat. We connect it for you.</p>
+    </div>
+    <ul class="int-grid" aria-label="Live connections"><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/whatsapp.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WhatsApp</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/messenger.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Facebook Messenger</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/stripe.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Stripe</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Airwallex</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlecalendar.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Calendar</span></li><li class="int-tile"><img class="int-ic" src="/assets/41st/logos/googlesheets.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Sheets</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">P</span><span class="int-name">Plato</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">W</span><span class="int-name">WESS</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">A</span><span class="int-name">Attio</span></li><li class="int-tile"><span class="int-ic int-word" aria-hidden="true">T</span><span class="int-name">Twenty</span></li><li class="int-tile"><span class="int-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></span><span class="int-name">Webhooks to any system</span></li></ul>
+    <p class="int-soon-label">Coming soon</p>
+    <ul class="int-grid int-grid-soon" aria-label="Coming soon"><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/hubspot.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">HubSpot</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/zoho.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Zoho CRM</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/xero.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Xero</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/shopify.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Shopify</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/woocommerce.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">WooCommerce</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/calendly.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Calendly</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/caldotcom.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Cal.com</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/googledrive.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Google Drive</span></li><li class="int-tile soon"><img class="int-ic" src="/assets/41st/logos/instagram.svg" alt="" width="28" height="28" loading="lazy"><span class="int-name">Instagram lead forms</span></li></ul>
+    <p class="int-note">Use another system? If it has an API, we can connect it. Ask us on the call.</p>
+  </div>
+</section>
+
+    <!-- 12. From Alexander -->
+    <section id="founder" class="section section-white" aria-label="From Alexander">
         <div class="wrap">
             <div class="card fcard">
                 <div class="fphoto"><img src="founder-photo.jpg" alt="Alexander Lee, Founder & CEO of 41 Labs, speaking at SuperReturn Asia" width="900" height="600" loading="lazy" decoding="async"></div>
@@ -1000,6 +1291,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- What you risk -->
+    <section id="risk" class="section">
+        <div class="wrap">
+            <div class="section-head center">
+                <h2>What you risk</h2>
+            </div>
+            <ul class="risk-grid">
+                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>We build it before you pay, and you test it on the call.</li>
+                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>Billing starts the day it goes live.</li>
+                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>Month to month. Stop any time with 30 days notice.</li>
+                <li class="risk"><span class="rk"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>No contract and no setup fee.</li>
+            </ul>
         </div>
     </section>
 
@@ -1017,6 +1323,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <details class="faq-item"><summary class="faq-question">What if a customer asks something it cannot answer?</summary><div class="faq-answer"><p>It hands the chat to the right person on your team and tells them on WhatsApp. It never makes up an answer.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">What languages does it reply in?</summary><div class="faq-answer"><p>Your customer's language. If they write in Chinese, it answers in Chinese.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">What do I need to prepare?</summary><div class="faq-answer"><p>Your website. A price list or a voice note helps. We do the rest.</p></div></details>
+                <details class="faq-item"><summary class="faq-question">How long does setup take?</summary><div class="faq-answer"><p>We build it before the call. If you like it on the call, it goes live the same day.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">What does it cost?</summary><div class="faq-answer"><p>Plans start small and grow with the number of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.</p></div></details>
                 <details class="faq-item"><summary class="faq-question">Is my data safe?</summary><div class="faq-answer"><p>We follow PDPA. If you leave, we export your data and hand it to you.</p></div></details>
             </div>
@@ -1035,15 +1342,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <!-- Book a call -->
+    <!-- Final band -->
     <section id="book-call" class="section final">
         <div class="wrap">
             <div class="cta-band">
                 <h2>See your own AI sales team on the call</h2>
                 <p class="lede">We build it on your business before we meet. You test it. If you like it, it goes live that day.</p>
-                <div class="btn-row">
-                    <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a call</a>
-                    <a href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener" class="btn btn-secondary btn-lg"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Try it on WhatsApp</a>
+                <div class="cta-pair">
+                    <div class="cta-item">
+                        <a href="/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=home#qualify" class="btn btn-primary btn-lg">Book a free call</a>
+                        <p class="cta-micro">30 minutes with Alexander. We build your AI before the call. No contract.</p>
+                    </div>
+                    <div class="cta-item">
+                        <a href="https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers." target="_blank" rel="noopener" class="btn btn-secondary btn-lg"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>WhatsApp our AI now</a>
+                        <p class="cta-micro">It replies in seconds, day or night.</p>
+                    </div>
                 </div>
             </div>
         </div>

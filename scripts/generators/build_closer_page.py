@@ -7,10 +7,13 @@ SEO rules: URL, canonical, og:url, robots unchanged. Tracking scripts (Meta pixe
 closer-analytics.js, track.js, the Contact tracker) are copied verbatim. Every section keeps an id,
 because closer-analytics.js attributes time to section[id] / header[id].
 Facts: 41 Labs/pricing/41-CLOSER-PRICING.md. Rule: no overage price, no Meta fee, no guarantee, no invented number.
+18 Oct 2026 (copy deck v3): the page follows the AI role page template. The section renderers and the
+template CSS live in build_role_pages.py, so the three AI pages cannot drift apart.
 Run twice: the second run must change nothing."""
 import re, json, html, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gates import check, visible_text
+import build_role_pages as rp
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 PAGE = os.path.join(ROOT, "41-closer.html")
@@ -19,9 +22,9 @@ PARTIALS = os.path.join(HERE, "partials")
 # CTA destinations: keep exactly (the live Meta ads and the Contact tracker key off these).
 WA = "https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers."
 WA_TRY = "https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers."
-# 18 Oct 2026: the page exists to get a booked call. Every "Book a call" goes to the qualify form on /ai-closer.
-BOOK = "/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-sales-closer#qualify"
-BOOK_NOTE = "30 minutes with Alexander. We build yours before the call."
+# 18 Oct 2026: the page exists to get a booked call. Every "Book a free call" goes to the qualify form on /ai-closer.
+BOOK = rp.BOOK_CALL.format(slug="ai-sales-closer")
+NAME = "AI Sales Closer"
 
 TITLE = "AI Sales Closer: WhatsApp AI closer | 41 Sales Team by 41 Labs"
 DESC = "The AI Sales Closer answers every WhatsApp enquiry in seconds, quotes your real prices and follows up until the customer pays. Built and run by 41 Labs."
@@ -42,20 +45,39 @@ CAPSULE = ("The AI Sales Closer is a managed AI sales agent on your own WhatsApp
 CAPSULE_2 = ("We measured the gap it closes. One real enquiry sent to 25 Singapore businesses between 8pm and 11pm: one replied within five minutes, "
              "the median wait was 13.3 hours, four never replied. The study is linked below.")
 
-# Wins: copy deck v2 (18 Oct 2026), words exact. No prices on this page: plans live on /pricing.
+# Copy deck v3 (18 Oct 2026), "AI SALES CLOSER", word for word. No prices on this page: plans live on /pricing.
+SUB = ("It answers every WhatsApp enquiry in seconds, at any hour, in your customer's language. It quotes from your real prices, "
+       "asks the questions that matter and takes the payment or books the slot.")
+PROOF = "19 seconds median first reply on a live Singapore line."
+LOGOS = ["WhatsApp", "Facebook Messenger", "Stripe", "Airwallex", "Google Calendar", "Google Sheets", "Plato"]
+# Outcome cards. The third uses the same wording as this page's case (it was the "Not a demo" card).
 WINS = [
-    ("message", "Every enquiry answered in seconds.", "Day or night, on your own number."),
-    ("check", "Real prices, every time.", "It quotes from your own list, so nothing is guessed."),
-    ("clock", "Quiet customers hear back.", "It messages them again on the day they asked for."),
-    ("lock", "Payment taken in the chat.", "It sends the link or books the slot, then tells your team."),
+    ("clock", "19 seconds", None, "median first reply"),
+    ("clock", "1 in 4", None, "enquiries arrive after hours, and each one gets a reply"),
+    ("chart", "$300,000", None, "of sales every month through the AI Sales Closer at one Singapore industrial supplier", "Real client, kept private on request"),
 ]
-
-# The homepage's three steps (copy deck v2): the time and effort levers.
-STEPS = [
-    ("Send us your website.", "We build your AI sales team on your products and prices before we meet."),
-    ("Test it on the call.", "You message it from your own phone, with your hardest questions."),
-    ("It goes live that day.", "We connect your WhatsApp and it starts answering your customers. We keep tuning it with you."),
+PAIN = "A customer who waits until morning has often bought somewhere else by then."
+STAGES = [
+    ("Answer.", "Customers message when it suits them, often after you close.",
+     ["Replies in seconds, day or night.", "Writes in your customer's language.", "Uses your own WhatsApp number."]),
+    ("Qualify.", "Not every enquiry is a buyer.",
+     ["Asks the one or two questions that matter: date, location, size.", "Then moves straight to the quote."]),
+    ("Quote.", '"How much?" is the question that wins or loses the sale.',
+     ["Quotes from your real price list.", "Gives the right options for what they asked.", "Never invents a price."]),
+    ("Close.", "A yes is only a sale once it is paid or booked.",
+     ["Sends the payment link or books the slot.", "Confirms in the chat.", "Tells your team straight away."]),
+    ("Follow up.", 'Many customers say "let me think".',
+     ["Messages them again on the day they asked for.", "Uses approved WhatsApp templates after 24 hours.", "Stops when they say no."]),
 ]
+HANDOVER = ["When a chat needs a person, your team gets the full chat and a short summary on WhatsApp. One tap turns the AI off "
+            "for that chat. When you switch it back on, it reads what your team said and carries on."]
+COMPARE = [
+    ("A message at 11pm", "Waits until morning", "Answered in seconds"),
+    ('"How much?"', "Someone looks it up", "Quoted from your price list"),
+    ('"Let me think"', "Often forgotten", "Messaged again on the day they asked for"),
+    ("A tricky complaint", "Gets a guess", "Goes straight to the right person"),
+]
+FINAL_H2 = "See it answer your own customers"
 
 # Visible FAQ and FAQPage JSON-LD are both built from this list, so they always match.
 # Answers may hold one <a>: the visible FAQ shows it, the JSON-LD gets the same words without the tag.
@@ -116,32 +138,6 @@ def bubble(kind, text, time=None, extra=""):
     t = f'<span class="t">{time}</span>' if time else ""
     return f'<div class="bubble {kind}{extra}">{who}{"<br>" if who else ""}{text}{t}</div>'
 
-def faq_html():
-    items = "".join(f'<details{" open" if i == 0 else ""}><summary>{html.escape(q)}</summary><p>{a if "<a " in a else html.escape(a)}</p></details>' for i, (q, a) in enumerate(FAQ))
-    return f'''<section id="faq" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">Questions</span>
-                <h2>What buyers ask before they start.</h2>
-            </div>
-            <div class="faq read center-block">{items}</div>
-        </div>
-    </section>'''
-
-def wins_html():
-    return "".join(f'<div class="card win"><span class="icon-chip">{icon(ic, 20)}</span><h3>{h}</h3><p>{p}</p></div>' for ic, h, p in WINS)
-
-def steps_html():
-    return "".join(f'''<div class="card step-card"><span class="step-num">{i}</span><h3>{h}</h3><p>{p}</p></div>''' for i, (h, p) in enumerate(STEPS, 1))
-
-def ex_card(tag, msgs, outcome):
-    chat = "".join(bubble(k, t) for k, t in msgs)
-    return f'''<div class="card ex-card">
-                    <p class="ex-tag">{tag}</p>
-                    <div class="chat">{chat}</div>
-                    <p class="ex-out"><span class="pill pill-good">{icon("check", 12)} {outcome}</span></p>
-                </div>'''
-
 TEAM = [
     ("megaphone", "AI Leads Generator", '<span class="pill">Coming soon</span>', False, None),
     ("message", "AI Sales Closer", '<span class="pill pill-good">This page</span>', True, None),
@@ -162,76 +158,17 @@ def team_strip():
                 <ul>{"".join(items)}</ul>
             </div>'''
 
-PAGE_CSS = """
-        /* /41-closer page layer on top of site.css. Tokens only. */
-        .hero-grid{display:grid;gap:48px;grid-template-columns:1fr;align-items:center}
-        @media(min-width:960px){.hero-grid{grid-template-columns:1.08fr .92fr;gap:56px}}
-        .hero-grid>*{min-width:0}
-        .hero h1 .h1-soft{display:block}
-        .phone{max-width:380px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:28px;box-shadow:var(--shadow-overlay);overflow:hidden}
-        .phone-top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)}
-        .phone-av{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;flex:none}
-        .phone-top b{display:block;font-size:15px;font-weight:600;line-height:1.2}
-        .phone-top small{display:block;font-size:12.5px;color:var(--primary-text)}
-        .phone .chat{border-radius:0;min-height:372px;padding:16px 14px}
-        .chat-day{align-self:center;font-size:12px;color:var(--subtle);background:var(--surface);padding:3px 10px;border-radius:var(--r-pill);box-shadow:var(--shadow-raised)}
-        .paylink{display:flex;align-items:center;gap:8px;margin-top:6px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.72);font-weight:500;font-size:14px;color:var(--fg)}
-        .paylink svg{color:var(--primary-text)}
-        .chat-event{align-self:center;margin-top:4px}
-        .hero-caption{text-align:center;font-size:13px;color:var(--subtle);margin:12px 0 0}
-        @media(prefers-reduced-motion:no-preference){
-            .phone .arrive{opacity:0;transform:translateY(8px);animation:arrive .32s var(--ease) forwards}
-            @keyframes arrive{to{opacity:1;transform:none}}
-        }
-        .team-strip{margin-top:56px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);padding:16px;box-shadow:var(--shadow-panel)}
-        .ts-label{font-size:14px;color:var(--subtle);margin:0 0 10px 4px}
-        .ts-label a{font-weight:500}
-        .team-strip ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;grid-template-columns:1fr 1fr}
-        @media(min-width:900px){.team-strip ul{grid-template-columns:repeat(4,1fr)}}
-        .ts-item{display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 12px;border-radius:var(--r-panel);border:1px solid var(--border);text-decoration:none;color:var(--fg);font-weight:500;font-size:15px;line-height:1.3;transition:background .12s var(--ease)}
-        a.ts-item:hover{background:var(--neutral-soft);color:var(--fg)}
-        .ts-item.here{background:var(--primary-soft);border-color:transparent}
-        .ts-icon{width:32px;height:32px;border-radius:var(--r-pill);background:var(--neutral-soft);color:var(--muted);display:grid;place-items:center;flex:none}
-        .ts-item.here .ts-icon{background:var(--surface);color:var(--primary-text)}
-        .ts-text{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
-        .ts-text .pill{font-size:11.5px;padding:2px 8px}
-        @media(max-width:520px){.ts-item{font-size:14px;padding:10px}.ts-icon{display:none}}
-        .center-block{margin-inline:auto}
-        .capsule{font-size:18px}
-        .capsule-more{margin-top:16px;color:var(--muted)}
-        .cta-note{margin:12px 0 0}
-        @media(max-width:640px){.cta-note{text-align:center}}
-        .wins{display:grid;gap:16px;grid-template-columns:1fr}
-        @media(min-width:640px){.wins{grid-template-columns:1fr 1fr}}
-        @media(min-width:1040px){.wins{grid-template-columns:repeat(4,1fr)}}
-        .wins>*{min-width:0}
-        .win h3{font-size:18px;margin-top:16px}
-        .win p{margin:0}
-        #not-for .section-head{margin-bottom:0}
-        .step-card .step-num{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:15px;margin-bottom:16px}
-        .ex-card{display:flex;flex-direction:column;gap:12px;padding:18px}
-        .ex-card .ex-tag{font-size:13.5px;font-weight:500;color:var(--subtle);margin:0}
-        .ex-card .chat{flex:1}
-        .ex-card .ex-out{margin:0}
-        .ex-note{margin:28px auto 0;max-width:720px;text-align:center;color:var(--muted)}
-        .case{max-width:860px;margin:0 auto;padding:32px}
-        .case-num{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:16px 0 18px}
-        .case-num b{font-size:clamp(40px,6vw,56px);line-height:1;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-        .case-num span{color:var(--muted);font-size:16px;max-width:420px;line-height:1.45}
-        .case .case-by{font-size:15px;color:var(--subtle);border-top:1px solid var(--border);padding-top:16px;margin-top:16px}
-        .founder-card{max-width:900px;margin:0 auto}
-        .founder-card .founder p{color:var(--muted)}
-        .founder img{aspect-ratio:4/5}
+# The role page template CSS (build_role_pages.py), plus the QR card in this page's final band.
+PAGE_CSS = rp.ROLE_CSS + """        /* /41-closer extras */
         .final-grid{display:grid;gap:32px;grid-template-columns:1fr;align-items:center;text-align:left}
         @media(min-width:860px){.final-grid{grid-template-columns:1.3fr .7fr}}
         .final-grid .lede{margin:14px 0 0}
-        .final-grid .btn-row{justify-content:flex-start}
         .qr-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-panel);padding:20px;text-align:center;max-width:260px;margin:0 auto}
         .qr-card img{width:180px;height:180px;margin:0 auto 12px;border-radius:12px;background:#fff;padding:8px}
         .qr-card p{margin:0}
         .qr-card .qr-label{font-weight:600}
         .qr-card .qr-sub{font-size:13.5px;color:var(--subtle);margin-top:4px}
-        @media(max-width:640px){.case{padding:22px}.cta-band{padding:32px 20px}}
+        @media(max-width:640px){.final-grid{text-align:center}.qr-card{display:none}}
 """
 
 HEAD = f'''<!DOCTYPE html>
@@ -315,6 +252,9 @@ HERO_CHAT = "".join([
     f'<span class="pill pill-good chat-event arrive" style="animation-delay:4s">{icon("check", 12)} Paid $2,400</span>',
 ])
 
+CAPSULE_HTML = (f'<div class="capsule"><p><strong>{CAPSULE}</strong></p></div>'
+                f'<p class="capsule-more">{CAPSULE_2} <a href="/blog/whatsapp-response-time-singapore-study">Read the study</a>.</p>')
+
 MAIN = f'''<main id="main">
 
     <header id="hero" class="hero wash">
@@ -323,17 +263,9 @@ MAIN = f'''<main id="main">
                 <div>
                     <span class="eyebrow">AI Sales Closer for WhatsApp</span>
                     <h1>AI Sales Closer. <span class="h1-soft">It closes the sale while you sleep.</span></h1>
-                    <p class="lede">This is the AI Sales Closer, one of four AIs in 41 Sales Team (formerly 41 Closer). A customer messages your WhatsApp at 2am. It answers in seconds, quotes your price and takes the payment. We build it on your business and run it for you.</p>
-                    <div class="btn-row">
-                        <a class="btn btn-primary btn-lg" href="{BOOK}">Book a call</a>
-                        <a class="btn btn-secondary btn-lg" href="{WA_TRY}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Try it on WhatsApp</a>
-                    </div>
-                    <p class="note cta-note">{BOOK_NOTE}</p>
-                    <ul class="hero-checks">
-                        <li>Replies in seconds, day and night</li>
-                        <li>Live after one call</li>
-                        <li>Month to month, no contract</li>
-                    </ul>
+                    <p class="lede hero-sub">{html.escape(SUB, quote=False)}</p>
+                    {rp.proof_line(PROOF)}
+                    {rp.cta_pair(BOOK, WA_TRY)}
                 </div>
                 <div>
                     <div class="phone" role="img" aria-label="Example WhatsApp chat: a customer asks for 200 units at 2:14am, the AI Sales Closer quotes $2,400, sends a payment link and the customer pays.">
@@ -350,111 +282,33 @@ MAIN = f'''<main id="main">
         </div>
     </header>
 
-    <section id="wins" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">What changes for you</span>
-                <h2>More sales, and your evenings back.</h2>
-            </div>
-            <div class="wins">{wins_html()}</div>
-        </div>
-    </section>
+    {rp.trust_strip(LOGOS)}
 
-    <section id="capsule" class="section-sm section-white">
-        <div class="wrap">
-            <div class="read center-block">
-                <div class="capsule"><p><strong>{CAPSULE}</strong></p></div>
-                <p class="capsule-more">{CAPSULE_2} <a href="/blog/whatsapp-response-time-singapore-study">Read the study</a>.</p>
-            </div>
-        </div>
-    </section>
+    {rp.outcome_cards(WINS, "More sales, and your evenings back.")}
 
-    <section id="how-it-starts" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">How it starts</span>
-                <h2>Live after one call.</h2>
-            </div>
-            <div class="grid-3">{steps_html()}</div>
-            <div class="btn-row center"><a class="btn btn-primary btn-lg" href="{BOOK}">Book a call</a></div>
-        </div>
-    </section>
+    {rp.pain_block(PAIN, CAPSULE_HTML)}
 
-    <section id="see-it-work" class="section section-white">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">See it in action</span>
-                <h2>It closes the sale inside the chat.</h2>
-                <p class="lede">Three messages your customers send today, and what the agent does with each.</p>
-            </div>
-            <div class="grid-3">
-                {ex_card("Distributor, 2:15am", [("in", "Got 200 units of the 12mm bolts? Need them this week."), ("ai", "Yes, 200 in stock. $2,400 the lot, ships today. Want me to lock it in?"), ("in", "Do it.")], "Closed, $2,400")}
-                {ex_card("Retail, saved a cold lead", [("in", "How much for the leather sofa?"), ("ai", "It is $1,890 with free delivery this week. Want me to hold one for you?"), ("in", "Yes please, hold it.")], "Saved the sale, $1,890")}
-                {ex_card("Services, books and takes payment", [("in", "Any slots this Saturday?"), ("ai", f'Yes, 2pm Saturday is open. A $50 deposit holds it.<span class="paylink">{icon("lock", 16)} Pay here</span>'), ("in", "Paid. See you then.")], "Booked, paid, Sat 2pm")}
-            </div>
-            <p class="ex-note">Prices and names above are examples. When a chat gets tricky, or the customer asks for a person, it hands over to your team with the whole history.</p>
-        </div>
-    </section>
+    {rp.day_section(NAME, STAGES, BOOK)}
 
-    <section id="not-a-demo" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">Not a demo</span>
-                <h2>It is already running real businesses.</h2>
-            </div>
-            <div class="card case">
-                <span class="pill">Real client, kept private on request</span>
-                <div class="case-num"><b>$300,000</b><span>of sales every month through the AI Sales Closer at one Singapore industrial supplier</span></div>
-                <p>It quotes live from the supplier's own catalogue, replies in seconds day and night, and our team steps in only for the tricky ones. It does not go off script, because we set the guardrails and watch it.</p>
-                <p class="case-by">In our published quote-automation case, quote time went from 3 hours to 5 minutes, errors fell 90% and sales capacity rose 35%. <a href="/case-studies/quote-automation-professional-services">Read the case</a>.</p>
-            </div>
-        </div>
-    </section>
+    {rp.handover_section(HANDOVER)}
 
-    <section id="not-for" class="section section-white">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">Honest limit</span>
-                <h2>Who should not buy this.</h2>
-                <p class="lede">If you get a handful of enquiries a week and someone answers them the same day, a WhatsApp auto-reply is enough, and we will tell you so. The AI Sales Closer pays for itself when messages arrive after hours, or faster than one person can answer.</p>
-            </div>
-        </div>
-    </section>
+    {rp.compare_section(NAME, COMPARE, f'<div class="after-cta">{rp.book_btn(BOOK)}</div>')}
 
-    <section id="founder" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">From the founder</span>
-                <h2>Why I built this.</h2>
-            </div>
-            <div class="founder-card">
-                <div class="founder">
-                    <img src="/assets/closer/lp-founder-letter.webp" alt="Alexander Lee, founder of 41 Labs" width="720" height="1024" loading="lazy">
-                    <div>
-                        <p>I watched good businesses lose sales for one reason. The customer messaged, and nobody answered in time. The product was right. The price was right. The reply was slow.</p>
-                        <p>The AI Sales Closer fixes that one thing. It answers every message, every hour, and follows up until the customer buys or says no. We build it, run it, and keep making it better.</p>
-                        <p>If you do real business on WhatsApp, try the agent and see for yourself. Then book a call with me and we build yours.</p>
-                        <p class="signoff">Alexander Lee<span>Founder, 41 Labs</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {rp.try_section(WA_TRY)}
 
-    {faq_html()}
+    {rp.faq_section("What buyers ask before they start.", FAQ)}
 
-    <section id="start-now" class="section section-white">
+    {rp.siblings_section("closer")}
+
+    <section id="start-now" class="section">
         <div class="wrap">
             <div class="cta-band wash">
                 <div class="final-grid">
                     <div>
                         <span class="eyebrow">Start now</span>
-                        <h2>See it answer your own customers</h2>
-                        <p class="lede">We build it on your business before we meet. You test it. If you like it, it goes live that day.</p>
-                        <div class="btn-row">
-                            <a class="btn btn-primary btn-lg" href="{BOOK}">Book a call</a>
-                            <a class="btn btn-secondary btn-lg" href="{WA}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Try it on WhatsApp</a>
-                        </div>
+                        <h2>{FINAL_H2}</h2>
+                        <p class="lede">{rp.FINAL_LEDE}</p>
+                        {rp.cta_pair(BOOK, WA)}
                     </div>
                     <div class="qr-card">
                         <img src="41-closer-qr.png" alt="Scan to chat with the AI Sales Closer on WhatsApp" width="228" height="228" loading="lazy">
@@ -488,8 +342,18 @@ def partial(name):
 out = HEAD + partial("header.html") + MAIN + partial("footer.html") + TAIL
 assert out.count('"FAQPage"') == 1 and out.count("<h1") == 1
 # 1500 -> 1550 on 17 Oct 2026: the Start plan card (S$299) was added. Plans left this page on 18 Oct (1081 words), so down to 1150.
+# 1150 -> 1300 on 18 Oct 2026: copy deck v3 role template (its day, handover, today vs, try it now) targets 900 to 1,300 words.
 # No prices on this page (18 Oct brief): the price-position gate now pins the /pricing link line in the FAQ instead.
-problems, stats = check(out, max_words=1150, faq=FAQ, max_ctas=3, price_token="See pricing", price_within=1.0)
+problems, stats = check(out, max_words=1300, faq=FAQ, max_ctas=3, price_token="See pricing", price_within=1.0)
+# Main button: exact label and href, at least 3 times in the page body (the header button is extra).
+n_book = MAIN.count(rp.book_btn(BOOK))
+if n_book < 3:
+    problems.append(f"{n_book} '{rp.BOOK_LABEL}' buttons in the page body, need 3")
+if MAIN.count(f'target="_blank" rel="noopener">{rp.icon("wa", 18)} {rp.WA_LABEL}</a>') < 2:
+    problems.append(f"'{rp.WA_LABEL}' must be in the hero and the final band")
+for bad in (";", "!"):
+    if bad in html.unescape(visible_text(MAIN)):
+        problems.append(f"{bad!r} in the visible copy")
 for bad in ("S$", "$299", "$690", "a month", "From $"):
     if bad in visible_text(out):
         problems.append(f"price wording {bad!r} on a page that must show no prices")

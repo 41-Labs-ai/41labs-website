@@ -43,7 +43,7 @@ test.describe('Book a call', () => {
   test('the #book-call band has a visible booking button', async ({ page }) => {
     const book = page.locator('#book-call .btn-primary');
     await expect(book).toBeVisible();
-    await expect(book).toContainText('Book a call');
+    await expect(book).toHaveText('Book a free call');
     await expect(book).toHaveAttribute('href', '/ai-closer?utm_source=41labs.ai&utm_medium=organic&utm_campaign=home#qualify');
   });
 });
@@ -57,12 +57,12 @@ test.describe('CTA Buttons', () => {
     expect(await heroCtaLink.getAttribute('target')).toBeNull();
   });
 
-  test('hero and CTA-band "Try it on WhatsApp" open WhatsApp in a new tab', async ({ page }) => {
+  test('hero, Try it now and CTA-band "WhatsApp our AI now" open WhatsApp in a new tab', async ({ page }) => {
     await page.goto('/');
 
-    for (const sel of ['.hero-cta .btn-secondary', '#book-call .btn-secondary']) {
+    for (const sel of ['.hero-cta .btn-secondary', '#try-it .try-cta .btn', '#book-call .btn-secondary']) {
       const link = page.locator(sel);
-      await expect(link).toContainText('Try it on WhatsApp');
+      await expect(link).toHaveText('WhatsApp our AI now');
       await expect(link).toHaveAttribute('href', /wa\.me\/6580124848\?text=/);
       await expect(link).toHaveAttribute('target', '_blank');
     }

@@ -39,7 +39,7 @@ test.describe('Accessibility', () => {
   test('the #book-call band has a named booking link', async ({ page }) => {
     // The contact form was replaced by a booking button; it must keep a readable name.
     await page.locator('#book-call').scrollIntoViewIfNeeded();
-    const book = page.getByRole('link', { name: 'Book a call' }).last();
+    const book = page.getByRole('link', { name: 'Book a free call' }).last();
     await expect(book).toBeVisible();
     await expect(book).toHaveAttribute('href', '/ai-closer?utm_source=41labs.ai&utm_medium=organic&utm_campaign=home#qualify');
   });

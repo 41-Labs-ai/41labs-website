@@ -296,7 +296,11 @@ test.describe('the page the ads actually point at', () => {
       .evaluateAll((els) => els.map((e) => e.id));
     expect(ids.length).toBeGreaterThanOrEqual(10);
     expect(ids).toContain('hero');            // the hero is a <header>, not a <section>
-    expect(ids).toContain('how-it-starts');   // #guarantee left this page in the 10 Oct 2026 rebuild (4a72739)
+    // #guarantee left this page in the 10 Oct 2026 rebuild (4a72739). #how-it-starts became #try-it on
+    // 18 Oct 2026 (copy deck v3 role template: the Closer page has "Try it now", the role pages "Live after one call")
+    expect(ids).toContain('try-it');
+    expect(ids).not.toContain('how-it-starts');
+    for (const id of ['works-with', 'its-day', 'handover', 'compare', 'faq', 'the-team', 'start-now']) expect(ids).toContain(id);
     // #plans left this page on 18 Oct 2026: prices moved to /pricing, the page now sells a booked call
     expect(ids).not.toContain('plans');
     expect(ids).toContain('wins');
@@ -307,10 +311,10 @@ test.describe('the page the ads actually point at', () => {
   test('time is attributed to a named section here too', async ({ page }) => {
     await stubGtm(page);
     await page.goto('/41-closer.html');
-    await page.locator('#how-it-starts').scrollIntoViewIfNeeded();
+    await page.locator('#try-it').scrollIntoViewIfNeeded();
     await page.waitForTimeout(2500);
     const sections: [string, number][] = (await page.evaluate(() => (window as any).cl41.snapshot())).journey.sections;
-    expect(Object.fromEntries(sections)['how-it-starts']).toBeGreaterThanOrEqual(1000);
+    expect(Object.fromEntries(sections)['try-it']).toBeGreaterThanOrEqual(1000);
   });
 
   test('the ad variant in ?v= is what the page reports, or the split test is unreadable', async ({ page }) => {
@@ -427,4 +431,35 @@ test.describe('the journey beacon lands on the visitor\'s real GA4 session', () 
     await page.goto('/ai-closer.html' + QS);
     expect((await page.evaluate(() => (window as any).cl41.snapshot())).gaSid).toBe('');
   });
+});
+
+// Copy deck v3 (18 Oct 2026): the three AI role pages exist to get a booked call. Same main button,
+// same words and the page's own campaign tag, at least three times in the body, and the second
+// button opens our own AI on WhatsApp in a new tab.
+test.describe('AI role pages: one main action', () => {
+  const pages: [string, string][] = [
+    ['/41-closer.html', 'ai-sales-closer'],
+    ['/ai-operations-admin.html', 'ai-operations-admin'],
+    ['/ai-manager.html', 'ai-manager'],
+  ];
+  for (const [path, slug] of pages) {
+    test(`${path}: "Book a free call" x3+ to the qualify form, "WhatsApp our AI now" in a new tab`, async ({ page }) => {
+      await page.route(/googletagmanager\.com|connect\.facebook\.net|fonts\.g/, (r) => r.abort());
+      await page.goto(path);
+      const book = page.locator('main a', { hasText: 'Book a free call' });
+      expect(await book.count()).toBeGreaterThanOrEqual(3);
+      for (const href of await book.evaluateAll((els) => els.map((e) => e.getAttribute('href')))) {
+        expect(href).toBe(`/ai-closer?utm_source=41labs.ai&utm_medium=organic&utm_campaign=${slug}#qualify`);
+      }
+      const wa = page.locator('main a', { hasText: 'WhatsApp our AI now' });
+      expect(await wa.count()).toBeGreaterThanOrEqual(2);
+      for (const a of await wa.evaluateAll((els) => els.map((e) => [e.getAttribute('href'), e.getAttribute('target')]))) {
+        expect(a[0]).toContain('https://wa.me/6580124848');
+        expect(a[1]).toBe('_blank');
+      }
+      await expect(page.locator('main')).toContainText('30 minutes with Alexander. We build your AI before the call. No contract.');
+      await expect(page.locator('main')).toContainText('It replies in seconds, day or night.');
+      await expect(page.locator('#works-with a[href="/#integrations"]')).toBeVisible();
+    });
+  }
 });
