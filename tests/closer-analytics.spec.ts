@@ -296,8 +296,14 @@ test.describe('the page the ads actually point at', () => {
       .evaluateAll((els) => els.map((e) => e.id));
     expect(ids.length).toBeGreaterThanOrEqual(10);
     expect(ids).toContain('hero');            // the hero is a <header>, not a <section>
-    expect(ids).toContain('how-it-starts');   // #guarantee left this page in the 10 Oct 2026 rebuild (4a72739)
-    expect(ids).toContain('plans');           // pre-existing anchor, must not be renamed
+    // #guarantee left this page in the 10 Oct 2026 rebuild (4a72739). #how-it-starts became #try-it on
+    // 18 Oct 2026 (copy deck v3 role template: the Closer page has "Try it now", the role pages "Live after one call")
+    expect(ids).toContain('try-it');
+    expect(ids).not.toContain('how-it-starts');
+    for (const id of ['works-with', 'its-day', 'handover', 'compare', 'faq', 'the-team', 'start-now']) expect(ids).toContain(id);
+    // #plans left this page on 18 Oct 2026: prices moved to /pricing, the page now sells a booked call
+    expect(ids).not.toContain('plans');
+    expect(ids).toContain('wins');
     expect(new Set(ids).size).toBe(ids.length);
     expect(await page.locator('section:not([id])').count()).toBe(0);
   });
@@ -305,10 +311,10 @@ test.describe('the page the ads actually point at', () => {
   test('time is attributed to a named section here too', async ({ page }) => {
     await stubGtm(page);
     await page.goto('/41-closer.html');
-    await page.locator('#how-it-starts').scrollIntoViewIfNeeded();
+    await page.locator('#try-it').scrollIntoViewIfNeeded();
     await page.waitForTimeout(2500);
     const sections: [string, number][] = (await page.evaluate(() => (window as any).cl41.snapshot())).journey.sections;
-    expect(Object.fromEntries(sections)['how-it-starts']).toBeGreaterThanOrEqual(1000);
+    expect(Object.fromEntries(sections)['try-it']).toBeGreaterThanOrEqual(1000);
   });
 
   test('the ad variant in ?v= is what the page reports, or the split test is unreadable', async ({ page }) => {
@@ -425,4 +431,104 @@ test.describe('the journey beacon lands on the visitor\'s real GA4 session', () 
     await page.goto('/ai-closer.html' + QS);
     expect((await page.evaluate(() => (window as any).cl41.snapshot())).gaSid).toBe('');
   });
+});
+
+// Copy deck v3 (18 Oct 2026): the three AI role pages exist to get a booked call. Same main button,
+// same words and the page's own campaign tag, at least three times in the body, and the second
+// button opens our own AI on WhatsApp in a new tab.
+test.describe('AI role pages: one main action', () => {
+  const pages: [string, string][] = [
+    ['/41-closer.html', 'ai-sales-closer'],
+    ['/ai-operations-admin.html', 'ai-operations-admin'],
+    ['/ai-manager.html', 'ai-manager'],
+  ];
+  for (const [path, slug] of pages) {
+    test(`${path}: "Book a free call" x3+ to the qualify form, "WhatsApp our AI now" in a new tab`, async ({ page }) => {
+      await page.route(/googletagmanager\.com|connect\.facebook\.net|fonts\.g/, (r) => r.abort());
+      await page.goto(path);
+      const book = page.locator('main a', { hasText: 'Book a free call' });
+      expect(await book.count()).toBeGreaterThanOrEqual(3);
+      for (const href of await book.evaluateAll((els) => els.map((e) => e.getAttribute('href')))) {
+        expect(href).toBe(`/ai-closer?utm_source=41labs.ai&utm_medium=organic&utm_campaign=${slug}#qualify`);
+      }
+      const wa = page.locator('main a', { hasText: 'WhatsApp our AI now' });
+      expect(await wa.count()).toBeGreaterThanOrEqual(2);
+      for (const a of await wa.evaluateAll((els) => els.map((e) => [e.getAttribute('href'), e.getAttribute('target')]))) {
+        expect(a[0]).toContain('https://wa.me/6580124848');
+        expect(a[1]).toBe('_blank');
+      }
+      await expect(page.locator('main')).toContainText('30 minutes with Alexander. We build your AI before the call. No contract.');
+      await expect(page.locator('main')).toContainText('It replies in seconds, day or night.');
+      await expect(page.locator('#works-with a[href="/#integrations"]')).toBeVisible();
+    });
+  }
+});
+
+// 18 Oct 2026, show-not-tell pass. The founder: "too wordy, we need to SHOW, not put too much text", and
+// for logos "put their real coloured logos and never put coming soon, say it's ready". These pin it.
+test.describe('AI role pages: show, do not tell', () => {
+  const paths = ['/41-closer.html', '/ai-operations-admin.html', '/ai-manager.html'];
+  const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
+  for (const path of paths) {
+    test(`${path}: real logos, every stage a product visual, under 700 words`, async ({ page }) => {
+      await page.route(/googletagmanager\.com|connect\.facebook\.net|fonts\.g/, (r) => r.abort());
+      await page.goto(path);
+
+      // Trust strip: a real logo file for every integration except WESS (no file yet, so a name tile), and no "coming soon".
+      const strip = page.locator('#works-with');
+      await expect(strip).not.toContainText(/coming soon/i);
+      const tiles = strip.locator('.int-tile');
+      expect(await tiles.count()).toBeGreaterThanOrEqual(5);
+      for (const t of await tiles.all()) {
+        const name = (await t.locator('.int-name').textContent())!.trim();
+        if (name === 'WESS') continue;
+        const img = t.locator('img.int-ic');
+        await expect(img, `${name} needs its logo file`).toHaveAttribute('src', /^\/assets\/41st\/logos\/[a-z]+\.(svg|png)$/);
+        await img.scrollIntoViewIfNeeded();
+        await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0), { message: `${name} logo loads` }).toBe(true);
+      }
+      // "Coming soon" only ever belongs to the AI Leads Generator.
+      const main = await page.locator('main').evaluate((m) => {
+        const c = m.cloneNode(true) as HTMLElement;
+        c.querySelectorAll('.team-strip, #the-team').forEach((e) => e.remove());
+        return c.textContent || '';
+      });
+      expect(main).not.toMatch(/coming soon/i);
+
+      // Its day: no bullet lists, each stage is a mini visual tagged Example, a 2 to 4 word title, one line of 8 words at most.
+      const day = page.locator('#its-day');
+      expect(await day.locator('ul.checks, ul li li').count()).toBe(0);
+      const stages = day.locator('.stage');
+      expect(await stages.count()).toBe(5);
+      for (const st of await stages.all()) {
+        await expect(st.locator('.mv[role="img"]')).toHaveCount(1);
+        await expect(st.locator('.mv-tag')).toHaveText('Example');
+        expect(words((await st.locator('h3').textContent())!)).toBeGreaterThanOrEqual(2);
+        expect(words((await st.locator('h3').textContent())!)).toBeLessThanOrEqual(4);
+        await expect(st.locator('.stage-line')).toHaveCount(1);
+        expect(words((await st.locator('.stage-line').textContent())!)).toBeLessThanOrEqual(8);
+      }
+
+      // Hand-over: one alert card and one line.
+      await expect(page.locator('#handover .mv[role="img"]')).toHaveCount(1);
+      await expect(page.locator('#handover p')).toHaveCount(1);
+
+      // Today vs: 7 words a cell at most.
+      for (const cell of await page.locator('#compare tbody th, #compare tbody td').allTextContents()) {
+        expect(words(cell), cell).toBeLessThanOrEqual(7);
+      }
+
+      // Under 700 words a visitor reads without opening a FAQ answer (the answers stay in the FAQ schema).
+      const shown = await page.locator('main').evaluate((m) => {
+        const c = m.cloneNode(true) as HTMLElement;
+        c.querySelectorAll('script, style, details:not([open]) > :not(summary)').forEach((e) => e.remove());
+        return c.textContent || '';
+      });
+      expect(words(shown)).toBeLessThan(700);
+      expect(await page.locator('#faq details[open]').count()).toBe(0);
+
+      // No sideways scroll at any width.
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+    });
+  }
 });

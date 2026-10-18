@@ -18,100 +18,53 @@ test.describe('FAQ Accordion', () => {
     await expect(firstAnswer).toBeVisible();
   });
 
-  test('should toggle FAQ icon on click', async ({ page }) => {
-    const firstQuestion = page.locator('.faq-question').first();
+  test('should close FAQ answer on a second click', async ({ page }) => {
+    const firstItem = page.locator('.faq-item').first();
+    const firstQuestion = firstItem.locator('.faq-question');
 
-    // Get initial icon state
-    const icon = firstQuestion.locator('.faq-icon');
-    const initialText = await icon.textContent();
-
-    // Click to toggle
+    // Each question is a native <details>; the open state is the toggle.
+    await expect(firstItem).not.toHaveAttribute('open', '');
     await firstQuestion.click();
-
-    // Icon should change (+ to - or similar)
-    await page.waitForTimeout(300);
+    await expect(firstItem).toHaveAttribute('open', '');
+    await firstQuestion.click();
+    await expect(firstItem).not.toHaveAttribute('open', '');
+    await expect(firstItem.locator('.faq-answer')).not.toBeVisible();
   });
 });
 
-test.describe('Contact Form', () => {
+test.describe('Book a call', () => {
+  // The old contact form at #book-call was replaced by the booking band. Old links
+  // to /#book-call still land there, and a visitor can book from it.
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.locator('#book-call').scrollIntoViewIfNeeded();
   });
 
-  test('should display contact form', async ({ page }) => {
-    const form = page.locator('#contact-form');
-    await expect(form).toBeVisible();
-  });
-
-  test('should have all required form fields', async ({ page }) => {
-    await expect(page.locator('#contact-name')).toBeVisible();
-    await expect(page.locator('#contact-email')).toBeVisible();
-    await expect(page.locator('#contact-company')).toBeVisible();
-    await expect(page.locator('#contact-challenge')).toBeVisible();
-    await expect(page.locator('#contact-details')).toBeVisible();
-  });
-
-  test('should have submit button', async ({ page }) => {
-    const submitBtn = page.locator('#contact-form button[type="submit"]');
-    await expect(submitBtn).toBeVisible();
-    await expect(submitBtn).toContainText('Send Message');
-  });
-
-  test('should require name field', async ({ page }) => {
-    const nameInput = page.locator('#contact-name');
-    await expect(nameInput).toHaveAttribute('required', '');
-  });
-
-  test('should require email field', async ({ page }) => {
-    const emailInput = page.locator('#contact-email');
-    await expect(emailInput).toHaveAttribute('required', '');
-    await expect(emailInput).toHaveAttribute('type', 'email');
-  });
-
-  test('should require company field', async ({ page }) => {
-    const companyInput = page.locator('#contact-company');
-    await expect(companyInput).toHaveAttribute('required', '');
-  });
-
-  test('should have challenge dropdown options', async ({ page }) => {
-    const challengeSelect = page.locator('#contact-challenge');
-    const options = challengeSelect.locator('option');
-
-    expect(await options.count()).toBeGreaterThanOrEqual(6);
-  });
-
-  test('should allow filling out form', async ({ page }) => {
-    await page.fill('#contact-name', 'Test User');
-    await page.fill('#contact-email', 'test@example.com');
-    await page.fill('#contact-company', 'Test Company');
-    await page.selectOption('#contact-challenge', 'slow-quotes');
-    await page.fill('#contact-details', 'This is a test message');
-
-    // Verify values are filled
-    await expect(page.locator('#contact-name')).toHaveValue('Test User');
-    await expect(page.locator('#contact-email')).toHaveValue('test@example.com');
-    await expect(page.locator('#contact-company')).toHaveValue('Test Company');
-    await expect(page.locator('#contact-challenge')).toHaveValue('slow-quotes');
-    await expect(page.locator('#contact-details')).toHaveValue('This is a test message');
+  test('the #book-call band has a visible booking button', async ({ page }) => {
+    const book = page.locator('#book-call .btn-primary');
+    await expect(book).toBeVisible();
+    await expect(book).toHaveText('Book a free call');
+    await expect(book).toHaveAttribute('href', '/ai-closer?utm_source=41labs.ai&utm_medium=organic&utm_campaign=home#qualify');
   });
 });
 
 test.describe('CTA Buttons', () => {
-  test('hero primary CTA opens WhatsApp in a new tab', async ({ page }) => {
+  test('hero primary CTA books a call in the same tab', async ({ page }) => {
     await page.goto('/');
 
     const heroCtaLink = page.locator('.hero-cta .btn-primary');
-    await expect(heroCtaLink).toHaveAttribute('href', /wa\.me/);
-    await expect(heroCtaLink).toHaveAttribute('target', '_blank');
+    await expect(heroCtaLink).toHaveAttribute('href', /^\/ai-closer\?.*#qualify$/);
+    expect(await heroCtaLink.getAttribute('target')).toBeNull();
   });
 
-  test('CTA-section primary button opens WhatsApp in a new tab', async ({ page }) => {
+  test('hero, Try it now and CTA-band "WhatsApp our AI now" open WhatsApp in a new tab', async ({ page }) => {
     await page.goto('/');
-    await page.locator('#book-call').scrollIntoViewIfNeeded();
 
-    const ctaLink = page.locator('.cta-content .btn-primary');
-    await expect(ctaLink).toHaveAttribute('href', /wa\.me/);
-    await expect(ctaLink).toHaveAttribute('target', '_blank');
+    for (const sel of ['.hero-cta .btn-secondary', '#try-it .try-cta .btn', '#book-call .btn-secondary']) {
+      const link = page.locator(sel);
+      await expect(link).toHaveText('WhatsApp our AI now');
+      await expect(link).toHaveAttribute('href', /wa\.me\/6580124848\?text=/);
+      await expect(link).toHaveAttribute('target', '_blank');
+    }
   });
 });

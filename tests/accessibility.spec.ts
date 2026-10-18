@@ -17,8 +17,8 @@ test.describe('Accessibility', () => {
   });
 
   test('should have alt text on logo images', async ({ page }) => {
-    const logoImg = page.locator('.logo-img');
-    await expect(logoImg).toHaveAttribute('alt', /41 Labs/i);
+    const logoImg = page.locator('.site-logo img');
+    await expect(logoImg).toHaveAttribute('alt', /41 Sales Team/i);
   });
 
   test('should have proper heading hierarchy', async ({ page }) => {
@@ -32,23 +32,20 @@ test.describe('Accessibility', () => {
   });
 
   test('should have aria-label on mobile menu button', async ({ page }) => {
-    const mobileMenuBtn = page.locator('.mobile-menu-btn');
+    const mobileMenuBtn = page.locator('.nav-toggle');
     await expect(mobileMenuBtn).toHaveAttribute('aria-label', /menu/i);
   });
 
-  test('should have proper form labels', async ({ page }) => {
+  test('the #book-call band has a named booking link', async ({ page }) => {
+    // The contact form was replaced by a booking button; it must keep a readable name.
     await page.locator('#book-call').scrollIntoViewIfNeeded();
-
-    // Check that labels exist for form inputs
-    const nameLabel = page.locator('label[for="contact-name"]');
-    await expect(nameLabel).toBeVisible();
-
-    const emailLabel = page.locator('label[for="contact-email"]');
-    await expect(emailLabel).toBeVisible();
+    const book = page.getByRole('link', { name: 'Book a free call' }).last();
+    await expect(book).toBeVisible();
+    await expect(book).toHaveAttribute('href', '/ai-closer?utm_source=41labs.ai&utm_medium=organic&utm_campaign=home#qualify');
   });
 
   test('should have descriptive link text for social links', async ({ page }) => {
-    const linkedInLink = page.locator('.footer-social a[aria-label]');
+    const linkedInLink = page.locator('.site-footer a[aria-label*="LinkedIn"]');
     await expect(linkedInLink.first()).toHaveAttribute('aria-label', /linkedin/i);
   });
 });
@@ -59,11 +56,11 @@ test.describe('Responsive Design', () => {
     await page.goto('/');
 
     // Desktop nav should be visible
-    const navLinks = page.locator('.nav-links');
+    const navLinks = page.locator('.site-nav');
     await expect(navLinks).toBeVisible();
 
     // Mobile menu should be hidden
-    const mobileMenuBtn = page.locator('.mobile-menu-btn');
+    const mobileMenuBtn = page.locator('.nav-toggle');
     await expect(mobileMenuBtn).not.toBeVisible();
   });
 
@@ -85,7 +82,7 @@ test.describe('Responsive Design', () => {
     await expect(heroHeading).toBeVisible();
 
     // Mobile menu button should be visible
-    const mobileMenuBtn = page.locator('.mobile-menu-btn');
+    const mobileMenuBtn = page.locator('.nav-toggle');
     await expect(mobileMenuBtn).toBeVisible();
   });
 });

@@ -29,7 +29,8 @@ const FULL_ENV = {
 
 const OPP = {
   id: 'opp-abc', stage: 'SCREENING', productLine: 'CLOSER_41',
-  createdAt: '2026-09-18T02:00:00.000Z',
+  // Relative to today: the webhook only matches deals from the last 30 days (api/cal-webhook.js), so a fixed date turned every test red on 18 Oct 2026.
+  createdAt: new Date(Date.now() - 2 * 24 * 3600 * 1000).toISOString(),
   statusNotes: 'Form: 41labs.ai/ai-closer\nTier: A (fit)\nfbclid=abc123\nfbp=fb.1.1757000000000.9\nfbc=fb.1.1757000000000.abc123\nUA: Mozilla/5.0',
   pointOfContact: { name: { firstName: 'Alan', lastName: 'Ong' },
     emails: { primaryEmail: 'onggl@cdgtaxi.com' },
