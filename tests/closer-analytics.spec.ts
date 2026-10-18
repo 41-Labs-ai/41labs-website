@@ -297,7 +297,9 @@ test.describe('the page the ads actually point at', () => {
     expect(ids.length).toBeGreaterThanOrEqual(10);
     expect(ids).toContain('hero');            // the hero is a <header>, not a <section>
     expect(ids).toContain('how-it-starts');   // #guarantee left this page in the 10 Oct 2026 rebuild (4a72739)
-    expect(ids).toContain('plans');           // pre-existing anchor, must not be renamed
+    // #plans left this page on 18 Oct 2026: prices moved to /pricing, the page now sells a booked call
+    expect(ids).not.toContain('plans');
+    expect(ids).toContain('wins');
     expect(new Set(ids).size).toBe(ids.length);
     expect(await page.locator('section:not([id])').count()).toBe(0);
   });

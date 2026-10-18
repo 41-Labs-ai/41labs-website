@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -24,8 +25,14 @@ ORIGIN = "https://41labs.ai"
 
 # CTA hrefs copied exactly from 41-closer.html and index.html.
 WA_DEMO = "https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers."
-BUILD_CALL = "/#book-call"
-PRICING = "/#pricing"
+# 18 Oct 2026: these pages exist to get a booked call. Every "Book a call" goes to the qualify form
+# on /ai-closer, tagged with the page slug. No prices on these pages: plans live on /pricing.
+BOOK_CALL = "/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign={slug}#qualify"
+BOOK_NOTE = "30 minutes with Alexander. We build yours before the call."
+PRICING = "/pricing"
+COST_ANSWER = ('It is part of every 41 Sales Team plan, so there is no separate fee. Plans start small and grow with the number '
+               'of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.')
+FINAL_LEDE = "We build it on your business before we meet. You test it. If you like it, it goes live that day."
 
 # Lucide-style line icons, stroke 1.75.
 ICONS = {
@@ -61,6 +68,15 @@ def esc(s: str) -> str:
     return html.escape(s, quote=True)
 
 
+def plain(s: str) -> str:
+    """FAQ answers may hold one <a>: the JSON-LD gets the same words without the tag."""
+    return re.sub(r"<[^>]+>", "", s)
+
+
+def answer(s: str) -> str:
+    return s if "<a " in s else esc(s)
+
+
 # ---------------------------------------------------------------- content
 
 TEAM = [
@@ -79,9 +95,16 @@ PAGES = {
         "keywords": "AI Operations Admin, WhatsApp after-sales, AI receptionist WhatsApp, WhatsApp reminders, booking changes WhatsApp, 41 Sales Team, 41 Closer",
         "eyebrow": "AI Operations Admin for WhatsApp",
         "h1": "AI Operations Admin.",
-        "h1_soft": "After-sales, done on WhatsApp.",
+        "h1_soft": "The work after the sale gets done without you.",
         "capsule": "The AI Operations Admin is the part of 41 Sales Team (formerly 41 Closer) that handles the work after a customer pays on WhatsApp. It sends the invoice, saves the details they give, moves or cancels bookings when your booking system is connected, checks in on the date they ask for, and hands a chat to your staff when needed.",
-        "checks": ["Invoice sent the moment they pay", "Check-ins on the date they ask for", "Your staff step in any time"],
+        # Wins: headlines from copy deck v2 (18 Oct 2026), lines only from verified-features.md.
+        "wins": [
+            ("receipt", "Invoice the moment they pay.", "When a customer pays in the chat, the invoice goes back to them on WhatsApp."),
+            ("file", "Details saved, nothing retyped.", "Dates, addresses and names go on the customer's record as they chat."),
+            ("bell", "Check-ins on the date they ask for.", "A customer asks to hear back in March, and it checks in then."),
+            ("hand", "Your staff step in any time.", "Take over any chat from the dashboard or WhatsApp. Type /ai and it carries on."),
+        ],
+        "final_h2": "Hand over the admin after every sale",
         "service_type": "WhatsApp after-sales and operations admin",
         "what_eyebrow": "What it does",
         "what_h2": "The after-sales work it does for you.",
@@ -100,7 +123,7 @@ PAGES = {
         "example_h2": "What happens after they pay.",
         "example_lede": "Three messages your customers send after a sale, and what it does with each.",
         "examples": [
-            ("After payment", [("in", "Paid. Can I get the invoice for my company?"), ("ai", "Thank you, payment received. Here is your invoice, INV-0142.|file|Invoice, S$180")], "Invoice sent"),
+            ("After payment", [("in", "Paid. Can I get the invoice for my company?"), ("ai", "Thank you, payment received. Here is your invoice, INV-0142.|file|Invoice, $180")], "Invoice sent"),
             ("Booking change, clinic with a connected booking system", [("in", "Can I move my Saturday appointment to Sunday?"), ("ai", "Sunday 25 Oct at 11am is free. Done, your appointment is now Sun 11am.")], "Booking moved"),
             ("A check-in the customer asked for", [("in", "Not now. Message me again in March?"), ("ai", "Sure. I will check in with you on Mon 1 Mar.")], "Check-in set for Mon 1 Mar, 9:00am"),
         ],
@@ -117,7 +140,7 @@ PAGES = {
             ("Is it an AI receptionist?", "On WhatsApp, it does a lot of the front desk work after a sale. It sends invoices, saves the details customers give, checks in when they asked, and moves bookings when your booking system is connected. It works on WhatsApp only and does not answer phone calls."),
             ("How do follow-ups work after 24 hours?", "WhatsApp only allows approved messages once a customer has been quiet for 24 hours. We set those messages up on your account for you, so every follow-up still goes out. Nothing goes out in your quiet hours, and it stops for anyone who says stop."),
             ("Can it message my past customers?", "Yes. Pick a tag, such as renewal due, and it messages every customer with that tag. Or pick a date field, such as an expiry date, and each customer gets a reminder when their date comes near. People who opted out are always skipped."),
-            ("How much does it cost?", "It is included in every 41 Sales Team plan, from S$299 a month. There is no separate fee for the AI Operations Admin."),
+            ("How much does it cost?", COST_ANSWER),
         ],
     },
     "ai-manager": {
@@ -128,15 +151,24 @@ PAGES = {
         "keywords": "AI Manager, AI sales manager, sales dashboard, WhatsApp sales dashboard, WhatsApp alerts, 41 Sales Team, 41 Closer",
         "eyebrow": "AI sales manager for WhatsApp",
         "h1": "AI Manager.",
-        "h1_soft": "See your sales and who needs you.",
+        "h1_soft": "Know what WhatsApp brings in, and who needs you.",
         "capsule": "The AI Manager is the part of 41 Sales Team (formerly 41 Closer) that watches your WhatsApp sales for you. Its sales dashboard shows revenue closed, deals closed, your return and who still needs a reply. When a customer needs a person, it alerts the right staff member on WhatsApp, and it tells the admins if nobody answers.",
-        "checks": ["Revenue and deals on one screen", "Alerts on your staff's WhatsApp", "Ask it questions on WhatsApp"],
+        # Wins: headlines from copy deck v2 (18 Oct 2026), lines only from verified-features.md.
+        # The deck's "How did we do this week?" is not verified (the WhatsApp assistant counts leads, it
+        # does not report sales), so the example question is one it does answer.
+        "wins": [
+            ("trend", "Every sale on one screen.", "In Singapore dollars, with bank transfers it spots for you to confirm."),
+            ("bell", "The right person alerted.", "On WhatsApp, when a customer needs a human. They swipe-reply and the answer goes to the customer."),
+            ("users", "Nobody left waiting.", "Admins hear when a chat has no reply in the time you set."),
+            ("chat", "Ask it on WhatsApp.", "Send \"How many leads came in this week?\" and it answers."),
+        ],
+        "final_h2": "See your sales without reading every chat",
         "service_type": "AI sales manager and sales dashboard for WhatsApp",
         "what_eyebrow": "What it does",
         "what_h2": "What it watches and tells you.",
         "what_lede": "Every item below is in your dashboard or on your WhatsApp today.",
         "features": [
-            ("trend", "A sales dashboard", "Revenue closed, deals closed, your return on the plan and how many leads became sales. Pick this month, a date range or all time."),
+            ("trend", "A sales dashboard", "Revenue closed, deals closed, your return and how many leads became sales. Pick this month, a date range or all time."),
             ("receipt", "Counts the sales", "Card payments taken in the chat count by themselves. When a customer says they paid by bank transfer or cash, it spots it and asks you to confirm."),
             ("board", "Your pipeline at a glance", "Every customer sits in a column by stage, so you see who is new, who is deciding and who has paid."),
             ("bell", "Alerts the right person on WhatsApp", "When a customer needs a person, the chat's owner gets a WhatsApp alert first. They swipe-reply the alert and the answer goes to the customer."),
@@ -149,7 +181,7 @@ PAGES = {
         "example_h2": "What reaches you, and when.",
         "example_lede": "Three moments from a normal day, on your phone and in your dashboard.",
         "examples": [
-            ("A customer needs a person", [("bot", "Needs a person: Daniel L. wants a price for 40 units delivered Friday. Swipe-reply this message to answer."), ("team", "S$9 each for 40, delivery Friday is fine."), ("bot", "Sent to Daniel L. Delivered.")], "Answered in 4 minutes"),
+            ("A customer needs a person", [("bot", "Needs a person: Daniel L. wants a price for 40 units delivered Friday. Swipe-reply this message to answer."), ("team", "$9 each for 40, delivery Friday is fine."), ("bot", "Sent to Daniel L. Delivered.")], "Answered in 4 minutes"),
             ("Nobody replied in time", [("bot", "No reply yet: Grace T. Mei was alerted 15 minutes ago and has not replied. Open chat.")], "Sent to every admin"),
             ("You ask a question", [("team", "How many leads came in today?"), ("bot", "14 new leads today. 3 are waiting on a reply: Grace T., Ahmad R. and Lim K.")], "Answered from live data"),
         ],
@@ -161,12 +193,12 @@ PAGES = {
         ],
         "faqs": [
             ("What is the AI Manager?", "It is the part of 41 Sales Team that watches your WhatsApp sales for you. It shows revenue closed, deals and who needs a reply on a sales dashboard, and it alerts the right person on your team on WhatsApp when a customer needs one."),
-            ("What does the sales dashboard show?", "Revenue closed, deals closed, your return on the plan, and how many leads became sales. Under that, the number of active leads, new leads today, chats that need a reply, and a pipeline board with every customer by stage."),
+            ("What does the sales dashboard show?", "Revenue closed, deals closed, your return, and how many leads became sales. Under that, the number of active leads, new leads today, chats that need a reply, and a pipeline board with every customer by stage."),
             ("How does it tell my staff when a customer needs them?", "It sends a WhatsApp alert to the person who owns the chat, with the customer's question and a link to the chat. They swipe-reply the alert, and their answer goes to the customer. If the chat has no owner, every admin gets the alert."),
             ("What happens if nobody answers?", "If the owner has not replied within the wait you set, every admin gets a no reply yet message. If a question still waits on your team after an hour, your admins get a reminder on WhatsApp."),
             ("Can I ask it questions on WhatsApp?", "Yes. Send a plain message to the alert number, such as who is waiting on a reply, or how many leads came in today. It answers from your live data. In the dashboard, the Co-pilot answers the same kind of question in more detail."),
             ("Can my staff see only their own chats?", "Yes. Staff open the inbox on Mine, which shows only the chats they own. Owners and admins see everything, and the dashboard shows how many chats each person owns, how many became sales and how fast they reply."),
-            ("How much does it cost?", "It is included in every 41 Sales Team plan, from S$299 a month. There is no separate fee for the AI Manager."),
+            ("How much does it cost?", COST_ANSWER),
         ],
     },
 }
@@ -237,6 +269,14 @@ CSS = """
         .next-list li:last-child{border-bottom:0}
         .price-line{max-width:720px;margin:24px auto 0;text-align:center;color:var(--muted)}
         .price-line b{color:var(--fg)}
+        .cta-note{margin:12px 0 0}
+        @media(max-width:640px){.cta-note{text-align:center}}
+        .wins{display:grid;gap:16px;grid-template-columns:1fr}
+        @media(min-width:640px){.wins{grid-template-columns:1fr 1fr}}
+        @media(min-width:1040px){.wins{grid-template-columns:repeat(4,1fr)}}
+        .wins>*{min-width:0}
+        .win h3{font-size:18px;margin-top:16px}
+        .win p{margin:0}
         .dash{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);box-shadow:var(--shadow-overlay);padding:18px;max-width:460px;margin:0 auto}
         .dash-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
         .dash-top b{font-size:16px;font-weight:600}
@@ -300,13 +340,11 @@ def schemas(slug: str, p: dict) -> str:
         "areaServed": {"@type": "Country", "name": "Singapore"},
         "provider": {"@type": "Organization", "name": "41 Labs", "url": ORIGIN},
         "brand": {"@type": "Brand", "name": "41 Sales Team", "alternateName": ["41 Closer"]},
-        "offers": {"@type": "Offer", "priceCurrency": "SGD", "price": "299",
-                   "description": "Included in every 41 Sales Team plan, from S$299 a month.", "url": f"{ORIGIN}/#pricing"},
     }
     faq = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in p["faqs"]],
+        "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": plain(a)}} for q, a in p["faqs"]],
     }
     crumbs = {
         "@context": "https://schema.org",
@@ -352,11 +390,11 @@ def bubble(kind: str, text: str, delay: float | None = None) -> str:
 
 def hero_visual(key: str) -> str:
     if key == "ops":
-        label = ("Example WhatsApp chat: a customer pays S$180 and gets the invoice, then asks to move a Saturday "
+        label = ("Example WhatsApp chat: a customer pays $180 and gets the invoice, then asks to move a Saturday "
                  "appointment to Sunday, and the AI moves it and sets a check-in for March.")
         chat = "".join([
-            f'<span class="pill pill-good chat-event arrive" style="animation-delay:.2s">{icon("check", 12)} Paid S$180</span>',
-            bubble("ai", "Thank you, payment received. Here is your invoice.|file|Invoice INV-0142, S$180", 0.8),
+            f'<span class="pill pill-good chat-event arrive" style="animation-delay:.2s">{icon("check", 12)} Paid $180</span>',
+            bubble("ai", "Thank you, payment received. Here is your invoice.|file|Invoice INV-0142, $180", 0.8),
             bubble("in", "Can I move Saturday to Sunday?", 1.7),
             bubble("ai", "Sunday 25 Oct at 11am is free. Done, you are booked for Sun 11am.", 2.6),
             bubble("in", "Thanks. Remind me about the next one in March?", 3.5),
@@ -368,8 +406,8 @@ def hero_visual(key: str) -> str:
                 '<span><b>Your WhatsApp</b><small>AI Operations Admin, online</small></span></div>\n'
                 f'                        <div class="chat">{chat}</div>\n                    </div>\n'
                 '                    <p class="hero-caption">Example chat</p>')
-    label = ("Example sales dashboard: this month S$18,400 revenue closed, 23 deals closed, a return of 9 times "
-             "the plan, and 3 chats that need a reply.")
+    label = ("Example sales dashboard: this month $18,400 revenue closed, 23 deals closed, a return of 9 times, "
+             "and 3 chats that need a reply.")
     rows = [
         ("Grace T.", "Asked for a group price", "Waiting 12m", "pill-warn"),
         ("Ahmad R.", "Wants to change the delivery date", "Waiting 5m", "pill-warn"),
@@ -378,8 +416,8 @@ def hero_visual(key: str) -> str:
     row_html = "".join(
         f'<div class="dash-row"><span class="who">{esc(n)}<small>{esc(s)}</small></span><span class="pill {c}">{esc(t)}</span></div>'
         for n, s, t, c in rows)
-    tiles = [("Revenue closed", "S$18,400", "+S$3,200 vs last month"), ("Deals closed", "23", "+4 vs last month"),
-             ("Your return", "9x", "on your plan"), ("Lead to sale", "21%", "first reply in 19s")]
+    tiles = [("Revenue closed", "$18,400", "+$3,200 vs last month"), ("Deals closed", "23", "+4 vs last month"),
+             ("Your return", "9x", "this month"), ("Lead to sale", "21%", "first reply in 19s")]
     tile_html = "".join(f'<div class="dash-tile"><span>{a}</span><b>{b}</b><small>{c}</small></div>' for a, b, c in tiles)
     return (f'<div class="dash" role="img" aria-label="{esc(label)}">\n'
             f'                        <div class="dash-top"><b>This month</b><span class="pill pill-good">{icon("check", 12)} Live</span></div>\n'
@@ -397,7 +435,10 @@ def build(slug: str, p: dict) -> str:
     other = "ai-manager" if key == "ops" else "ai-operations-admin"
     other_name = PAGES[other]["name"]
 
-    checks = "".join(f"<li>{esc(c)}</li>" for c in p["checks"])
+    book = BOOK_CALL.format(slug=slug)
+    wins = "".join(
+        f'<div class="card win"><span class="icon-chip">{icon(ic, 20)}</span><h3>{esc(h)}</h3><p>{esc(t)}</p></div>'
+        for ic, h, t in p["wins"])
     features = "".join(
         f'<div class="card feat"><span class="icon-chip">{icon(ic, 20)}</span><h3>{esc(h)}</h3><p>{esc(t)}</p></div>'
         for ic, h, t in p["features"])
@@ -431,7 +472,7 @@ def build(slug: str, p: dict) -> str:
 
     nxt = "".join(f'<li><span>{esc(n)}</span><span class="pill">Coming soon</span></li>' for n in p["next"])
     faq_html = "".join(
-        f'<details{" open" if i == 0 else ""}><summary>{esc(q)}</summary><p>{esc(a)}</p></details>'
+        f'<details{" open" if i == 0 else ""}><summary>{esc(q)}</summary><p>{answer(a)}</p></details>'
         for i, (q, a) in enumerate(p["faqs"]))
 
     return f"""<!DOCTYPE html>
@@ -495,10 +536,10 @@ def build(slug: str, p: dict) -> str:
                     <h1>{esc(p['h1'])} <span class="h1-soft">{esc(p['h1_soft'])}</span></h1>
                     <div class="capsule"><p><strong>{esc(p['capsule'])}</strong></p></div>
                     <div class="btn-row">
-                        <a class="btn btn-primary btn-lg" href="{BUILD_CALL}">Book your build call</a>
+                        <a class="btn btn-primary btn-lg" href="{book}">Book a call</a>
                         <a class="btn btn-secondary btn-lg" href="{WA_DEMO}" target="_blank" rel="noopener">{icon('wa')} Try it on WhatsApp</a>
                     </div>
-                    <ul class="hero-checks">{checks}</ul>
+                    <p class="note cta-note">{BOOK_NOTE}</p>
                 </div>
                 <div>
                     {hero_visual(key)}
@@ -508,7 +549,17 @@ def build(slug: str, p: dict) -> str:
         </div>
     </header>
 
-    <section id="what-it-does" class="section section-white">
+    <section id="wins" class="section section-white">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">What changes for you</span>
+                <h2>What you get back.</h2>
+            </div>
+            <div class="wins">{wins}</div>
+        </div>
+    </section>
+
+    <section id="what-it-does" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">{esc(p['what_eyebrow'])}</span>
@@ -519,7 +570,7 @@ def build(slug: str, p: dict) -> str:
         </div>
     </section>
 
-    <section id="see-it-work" class="section">
+    <section id="see-it-work" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">{esc(p['example_eyebrow'])}</span>
@@ -531,7 +582,7 @@ def build(slug: str, p: dict) -> str:
         </div>
     </section>
 
-    <section id="the-team" class="section section-white">
+    <section id="the-team" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">How it works with the other AIs</span>
@@ -539,11 +590,11 @@ def build(slug: str, p: dict) -> str:
                 <p class="lede">{esc(p['flow_lede'])} Read how an <a href="/ai-sales-agent-singapore">AI sales agent works in Singapore</a>.</p>
             </div>
             <ul class="flow">{"".join(flow)}</ul>
-            <p class="price-line"><b>Included in every plan, from S$299 a month.</b> <a href="{PRICING}">See the plans</a>. Next, see the <a href="/{other}">{other_name}</a>.</p>
+            <p class="price-line"><a href="{PRICING}"><b>Part of every 41 Sales Team plan.</b></a> Next, see the <a href="/{other}">{other_name}</a>.</p>
         </div>
     </section>
 
-    <section id="coming-next" class="section">
+    <section id="coming-next" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Coming next</span>
@@ -554,7 +605,7 @@ def build(slug: str, p: dict) -> str:
         </div>
     </section>
 
-    <section id="faq" class="section section-white">
+    <section id="faq" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Questions</span>
@@ -564,16 +615,15 @@ def build(slug: str, p: dict) -> str:
         </div>
     </section>
 
-    <section id="start-now" class="section">
+    <section id="start-now" class="section section-white">
         <div class="wrap">
             <div class="cta-band wash">
                 <div class="final-grid">
                     <span class="eyebrow">Start now</span>
-                    <h2>See it on your own business.</h2>
-                    <p class="lede">Book a build call and we build it from your website before we meet. Or message the AI Sales Closer on WhatsApp right now.</p>
+                    <h2>{esc(p['final_h2'])}</h2>
+                    <p class="lede">{FINAL_LEDE}</p>
                     <div class="btn-row">
-                        <a class="btn btn-primary btn-lg" href="{BUILD_CALL}">Book your build call</a>
-                        <a class="btn btn-secondary btn-lg" href="{WA_DEMO}" target="_blank" rel="noopener">{icon('wa')} Chat with it now</a>
+                        <a class="btn btn-primary btn-lg" href="{book}">Book a call</a>
                     </div>
                 </div>
             </div>
@@ -589,10 +639,19 @@ def build(slug: str, p: dict) -> str:
 """
 
 
+def visible(page: str) -> str:
+    t = re.sub(r"<script.*?</script>|<style.*?</style>|<nav.*?</nav>|<footer.*?</footer>", "", page, flags=re.S)
+    return html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t)))
+
+
 def main() -> None:
     for slug, p in PAGES.items():
         out = ROOT / f"{slug}.html"
         text = build(slug, p)
+        seen = visible(text)
+        bad = [w for w in ("S$", "$299", "$690", "a month", "From $", "\u2014", ";", "!", "\u2018", "\u2019", "\u201c", "\u201d") if w in seen]
+        if bad:
+            raise SystemExit(f"REFUSED {slug}: {bad} in the visible text (no prices, plain punctuation)")
         old = out.read_text() if out.exists() else None
         if old != text:
             out.write_text(text)

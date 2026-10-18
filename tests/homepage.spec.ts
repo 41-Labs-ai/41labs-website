@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+const BOOK_URL = '/ai-closer?utm_source=41labs.ai&utm_medium=organic&utm_campaign=home#qualify';
+
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -15,17 +17,42 @@ test.describe('Homepage', () => {
   test('should display hero section with main heading', async ({ page }) => {
     const heroHeading = page.locator('.hero h1');
     await expect(heroHeading).toBeVisible();
-    await expect(heroHeading).toContainText('An AI sales team on your WhatsApp');
+    await expect(heroHeading).toContainText('Every WhatsApp enquiry answered in seconds');
   });
 
   test('hero names the product and its old name once, plainly', async ({ page }) => {
     await expect(page.locator('.hero')).toContainText('41 Sales Team (formerly 41 Closer)');
   });
 
-  test('should display hero CTA button', async ({ page }) => {
-    const ctaButton = page.locator('.hero-cta .btn-primary');
-    await expect(ctaButton).toBeVisible();
-    await expect(ctaButton).toContainText('WhatsApp');
+  test('hero offers Book a call first and Try it on WhatsApp second', async ({ page }) => {
+    const book = page.locator('.hero-cta .btn-primary');
+    await expect(book).toBeVisible();
+    await expect(book).toContainText('Book a call');
+    await expect(book).toHaveAttribute('href', BOOK_URL);
+    const tryIt = page.locator('.hero-cta .btn-secondary');
+    await expect(tryIt).toContainText('Try it on WhatsApp');
+    await expect(tryIt).toHaveAttribute('href', /^https:\/\/wa\.me\/6580124848\?text=/);
+    await expect(tryIt).toHaveAttribute('target', '_blank');
+  });
+
+  test('every "Book a call" button goes to the booking page in the same tab', async ({ page }) => {
+    const books = page.locator('main a', { hasText: 'Book a call' });
+    expect(await books.count()).toBeGreaterThanOrEqual(3);
+    for (const a of await books.all()) {
+      await expect(a).toHaveAttribute('href', BOOK_URL);
+      expect(await a.getAttribute('target')).toBeNull();
+    }
+  });
+
+  test('"What changes for you" shows four wins, each with an icon', async ({ page }) => {
+    const section = page.locator('#what-changes');
+    await expect(section.locator('h2')).toHaveText('What changes for you');
+    const cards = section.locator('.win');
+    await expect(cards).toHaveCount(4);
+    for (const card of await cards.all()) {
+      await expect(card.locator('svg')).toHaveCount(1);
+      await expect(card.locator('h3')).toHaveCount(1);
+    }
   });
 
   test('example dashboard is labelled as an example', async ({ page }) => {
@@ -36,6 +63,7 @@ test.describe('Homepage', () => {
   });
 
   test('should display social proof stats with their source', async ({ page }) => {
+    await expect(page.locator('#the-gap h2')).toHaveText('Most enquiries wait until morning');
     const statsSection = page.locator('.proof-grid');
     await expect(statsSection).toBeVisible();
     await expect(page.locator('.proof-item')).toHaveCount(4);
@@ -71,21 +99,18 @@ test.describe('Homepage', () => {
     await expect(how.locator('.paid')).toContainText('Paid');
   });
 
-  test('should display the payback calculator', async ({ page }) => {
-    await page.locator('#payback').scrollIntoViewIfNeeded();
-    await expect(page.locator('#c-n')).toHaveText('2');
-    await page.locator('label[for="pScale"]').click();
-    await page.locator('label[for="s2000"]').click();
-    await expect(page.locator('#c-n')).toHaveText('3');
-    await expect(page.locator('#c-math')).toContainText('S$4,300 a month divided by S$2,000');
-  });
-
-  test('should display the five plans', async ({ page }) => {
-    const rows = page.locator('#pricing .pt-row');
-    await expect(rows).toHaveCount(5);
-    for (const price of ['S$299', 'S$690', 'S$1,490', 'S$4,300', 'S$7,900']) {
-      await expect(page.locator('#pricing')).toContainText(price);
+  test('shows no prices: plans and the payback calculator live on /pricing', async ({ page }) => {
+    // The homepage exists to get a booked call. Prices and plan names moved to /pricing.
+    await expect(page.locator('#pricing')).toHaveCount(0);
+    await expect(page.locator('#payback')).toHaveCount(0);
+    const text = await page.locator('main').innerText();
+    expect(text).not.toContain('S$');
+    for (const plan of ['Starter', 'Scale', 'a month']) expect(text).not.toContain(plan);
+    for (const meta of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
+      expect(await page.locator(meta).getAttribute('content'), meta).not.toContain('S$');
     }
+    // The one price line allowed is the FAQ answer that points to /pricing.
+    await expect(page.locator('#faq a[href="/pricing"]')).toHaveCount(1);
   });
 
   test('should display FAQ section', async ({ page }) => {
@@ -113,12 +138,18 @@ test.describe('Homepage', () => {
   test('keeps the in-body links to money pages and guides', async ({ page }) => {
     const main = page.locator('main');
     for (const href of [
-      '/41-closer', '/blog/what-is-ai-quote-automation', '/blog/ai-automation-services-singapore',
+      '/41-closer', '/ai-operations-admin', '/ai-manager', '/ai-sales-agent-singapore', '/services/ai-consulting', '/blog/what-is-ai-quote-automation', '/blog/ai-automation-services-singapore',
       '/blog/ai-automation-singapore', '/blog/best-ai-consulting-singapore', '/blog/ai-consulting-cost-singapore',
       'locations/singapore.html', '/events', '/industries/construction',
     ]) {
       expect(await main.locator(`a[href="${href}"]`).count(), href).toBeGreaterThan(0);
     }
+  });
+
+  test('the old #book-call anchor lands on the final booking band', async ({ page }) => {
+    const band = page.locator('#book-call');
+    await expect(band.locator('h2')).toHaveText('See your own AI sales team on the call');
+    await expect(band.locator('.btn-primary')).toHaveAttribute('href', BOOK_URL);
   });
 
   test('should display footer with contact info', async ({ page }) => {

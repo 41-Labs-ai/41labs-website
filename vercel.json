@@ -39,12 +39,7 @@
     },
     {
       "source": "/41-closer-pricing",
-      "destination": "/41-closer",
-      "permanent": true
-    },
-    {
-      "source": "/pricing",
-      "destination": "/41-closer",
+      "destination": "/pricing",
       "permanent": true
     },
     {

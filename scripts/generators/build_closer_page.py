@@ -19,9 +19,12 @@ PARTIALS = os.path.join(HERE, "partials")
 # CTA destinations: keep exactly (the live Meta ads and the Contact tracker key off these).
 WA = "https://wa.me/6580124848?text=Hi%2C%20I%20want%20to%20see%20how%2041%20Closer%20would%20answer%20my%20customers."
 WA_TRY = "https://wa.me/6580124848?text=Hi%2C%20I%20am%20trying%2041%20Closer.%20Show%20me%20how%20you%20would%20handle%20my%20customers."
+# 18 Oct 2026: the page exists to get a booked call. Every "Book a call" goes to the qualify form on /ai-closer.
+BOOK = "/ai-closer?utm_source=41labs.ai&amp;utm_medium=organic&amp;utm_campaign=ai-sales-closer#qualify"
+BOOK_NOTE = "30 minutes with Alexander. We build yours before the call."
 
 TITLE = "AI Sales Closer: WhatsApp AI closer | 41 Sales Team by 41 Labs"
-DESC = "AI Sales Closer by 41 Sales Team: a WhatsApp AI sales agent that answers in seconds, quotes your real prices and takes payment, day and night. From $299 a month."
+DESC = "The AI Sales Closer answers every WhatsApp enquiry in seconds, quotes your real prices and follows up until the customer pays. Built and run by 41 Labs."
 KEYWORDS = "AI Sales Closer, AI closer, 41 Closer, 41 Sales Team, WhatsApp AI sales agent, close more deals WhatsApp, AI sales rep Singapore, done for you WhatsApp sales"
 assert len(TITLE) <= 65, len(TITLE)
 assert len(DESC) <= 165, len(DESC)
@@ -35,73 +38,59 @@ except OSError:
 # Answer capsule: words kept exactly, product name swapped (AI engines quote this passage).
 CAPSULE = ("The AI Sales Closer is a managed AI sales agent on your own WhatsApp number. It answers every customer in seconds, at any hour, "
            "quotes from your real prices, asks the one qualifying question, and takes the payment or books the slot. "
-           "41 Labs builds it before you pay and runs it for you. From $299 a month, build included.")
+           "41 Labs builds it before you pay and runs it for you.")
 CAPSULE_2 = ("We measured the gap it closes. One real enquiry sent to 25 Singapore businesses between 8pm and 11pm: one replied within five minutes, "
              "the median wait was 13.3 hours, four never replied. The study is linked below.")
 
-TIERS = [
-    ("Start", "To try it on your own customers first.", "$299", "100 sales conversations",
-     ["The same product as every plan", "Every chat handled from first message to payment", "Move to Starter as you grow"], False),
-    ("Starter", "For one shop or one WhatsApp number.", "$690", "350 sales conversations",
-     ["Answers every message, day and night", "Quotes from your real prices", "Runs on your own WhatsApp number", "We set it up and load your catalogue", "Hands tricky ones to your team"], False),
-    ("Pro", "For a real catalogue that needs to close and take payment.", "$1,490", "1,000 sales conversations",
-     ["Everything in Starter", "Connects to your own systems", "Reads live stock and prices", "Writes orders and bookings back", "Takes payment right in the chat"], False),
-    ("Scale", "For high volume off one brand.", "$4,300", "3,000 sales conversations",
-     ["Everything in Pro", "Your own account manager", "We tune it for you every month", "Priority support"], False),
+# Wins: copy deck v2 (18 Oct 2026), words exact. No prices on this page: plans live on /pricing.
+WINS = [
+    ("message", "Every enquiry answered in seconds.", "Day or night, on your own number."),
+    ("check", "Real prices, every time.", "It quotes from your own list, so nothing is guessed."),
+    ("clock", "Quiet customers hear back.", "It messages them again on the day they asked for."),
+    ("lock", "Payment taken in the chat.", "It sends the link or books the slot, then tells your team."),
 ]
 
+# The homepage's three steps (copy deck v2): the time and effort levers.
 STEPS = [
-    ("You send your list", "Your products and prices, and a bit about how you sell. A photo of the price board or a voice note is fine. That is the only work on your side."),
-    ("We build it. You message it before you pay.", "We train it on your prices, give it your voice, and put it on a test number. You message your own agent the way a customer would. Nothing is paid yet."),
-    ("One free hour, then live", "We walk you through the platform, connect your payments and your WhatsApp number, and switch it on. Live within 48 hours of your list. Billing starts the day it goes live."),
+    ("Send us your website.", "We build your AI sales team on your products and prices before we meet."),
+    ("Test it on the call.", "You message it from your own phone, with your hardest questions."),
+    ("It goes live that day.", "We connect your WhatsApp and it starts answering your customers. We keep tuning it with you."),
 ]
 
 # Visible FAQ and FAQPage JSON-LD are both built from this list, so they always match.
+# Answers may hold one <a>: the visible FAQ shows it, the JSON-LD gets the same words without the tag.
 FAQ = [
-    ("What is 41 Sales Team pricing?",
-     "Start is $299 a month for about 100 sales conversations. Starter is $690, Pro $1,490, Scale $4,300, Custom from $7,900. The build is included. One month to start, charged from the day it goes live, then month to month with 30 days notice. No contract, no GST."),
-    ("Is there a build fee or a setup fee?",
-     "No. We train it on your products and prices, give it your way of talking, connect WhatsApp and switch it on, all inside the plan. The only one-time cost is connecting a system of your own that we have connected before, which is $2,400."),
-    ("What do I need to give you?",
-     "A list of your products and prices, and a bit about how you sell. We do everything else."),
-    ("What happens if I get more customers than my plan?",
-     "It keeps answering. We tell you when you reach 70% of your plan and again at the limit, so there are no surprises. You pick the next plan when you are ready."),
-    ("Will the price go up later?",
-     "Your price stays fixed while you are on the plan. If we ever raise prices, existing clients get 60 days written notice first."),
+    ("Will it sound like a bot?",
+     "No. We train it on your products, your prices and how you talk to customers, and we keep tuning it. You test it yourself before it goes live."),
+    ("What do I need to prepare?",
+     "Your website. A price list or a voice note helps. We do the rest."),
     ("Does it use my own WhatsApp number?",
      "Yes. It runs on your business WhatsApp number through the WhatsApp Business API. We connect it for you. Your customers see your brand, not ours."),
-    ("What languages does it speak?",
-     "English and the way Singapore really chats, including a mix of languages. We tune it to sound like your business. If your customers write mainly in another language, ask us before you count on it."),
+    ("What languages does it reply in?",
+     "Your customer's language. If they write in Chinese, it answers in Chinese."),
+    ("What does it cost?",
+     'Plans start small and grow with the number of conversations. See <a href="/pricing">pricing</a>, or we work out the right plan with you on the call.'),
     ("What if it does not work for me?",
      "You stop. One month is the only commitment you ever make, then month to month with 30 days notice. There is no guarantee attached, because you message your own agent before any money moves. You own the agent and everything it learns, and we never share or sell your data."),
+    ("Is my data safe?",
+     "We follow PDPA. If you leave, we export your data and hand it to you."),
 ]
+
+def plain(a):
+    return re.sub(r"<[^>]+>", "", a)
 
 PRODUCT_LD = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "41 Sales Team AI Sales Closer",
     "alternateName": ["41 Closer", "AI Sales Closer"],
-    "description": "The AI Sales Closer from 41 Sales Team (formerly 41 Closer) is the AI closer for WhatsApp. Not a chatbot that answers questions, but an AI that closes the deal and takes payment, day and night. A done-for-you WhatsApp AI sales agent built and run by 41 Labs. Live in 48 hours.",
+    "description": "The AI Sales Closer from 41 Sales Team (formerly 41 Closer) is the AI closer for WhatsApp. Not a chatbot that answers questions, but an AI that closes the deal and takes payment, day and night. A done-for-you WhatsApp AI sales agent built and run by 41 Labs. Live after one call.",
     "brand": {"@type": "Brand", "name": "41 Sales Team", "alternateName": ["41 Closer", "AI Sales Closer"]},
-    "manufacturer": {"@type": "Organization", "name": "41 Labs", "url": "https://41labs.ai"},
-    "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "SGD",
-        "lowPrice": "299",
-        "highPrice": "7900",
-        "offerCount": "5",
-        "offers": [
-            {"@type": "Offer", "name": "Start", "price": "299", "priceCurrency": "SGD", "description": "$299 a month, no build fee. The same product as every plan, for about 100 sales conversations a month. Month to month, 30 days notice, no contract."},
-            {"@type": "Offer", "name": "Starter", "price": "690", "priceCurrency": "SGD", "description": "$690 a month, no build fee. We set it up for you, load your catalogue and prices, and tune it to the way you sell. Handles about 350 sales conversations a month. Month to month, 30 days notice, no contract."},
-            {"@type": "Offer", "name": "Pro", "price": "1490", "priceCurrency": "SGD", "description": "$1,490 a month, no build fee. Everything in Starter, plus it connects to your own systems so it reads live stock and prices and writes orders and bookings back. Handles about 1,000 sales conversations a month."},
-            {"@type": "Offer", "name": "Scale", "price": "4300", "priceCurrency": "SGD", "description": "$4,300 a month, no build fee. Everything in Pro, for about 3,000 sales conversations a month."},
-            {"@type": "Offer", "name": "Custom", "price": "7900", "priceCurrency": "SGD", "description": "From $7,900 a month, no build fee. For about 6,000 sales conversations a month and up, many brands, or many numbers."},
-        ],
-    },
+    "manufacturer": {"@type": "Organization", "name": "41 Labs", "url": "https://41labs.ai"}
 }
 
 def faq_ld():
-    return {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]}
+    return {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": plain(a)}} for q, a in FAQ]}
 
 def ld(obj):
     return '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False, indent=1) + "</script>"
@@ -118,6 +107,7 @@ def icon(name, size=20):
         "lock": '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
         "whatsapp": '<path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 7.8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/>',
         "arrow": '<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
+        "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     }
     return f'<svg viewBox="0 0 24 24" width="{size}" height="{size}" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{paths[name]}</svg>'
 
@@ -127,7 +117,7 @@ def bubble(kind, text, time=None, extra=""):
     return f'<div class="bubble {kind}{extra}">{who}{"<br>" if who else ""}{text}{t}</div>'
 
 def faq_html():
-    items = "".join(f'<details{" open" if i == 0 else ""}><summary>{html.escape(q)}</summary><p>{html.escape(a)}</p></details>' for i, (q, a) in enumerate(FAQ))
+    items = "".join(f'<details{" open" if i == 0 else ""}><summary>{html.escape(q)}</summary><p>{a if "<a " in a else html.escape(a)}</p></details>' for i, (q, a) in enumerate(FAQ))
     return f'''<section id="faq" class="section">
         <div class="wrap">
             <div class="section-head center">
@@ -138,16 +128,8 @@ def faq_html():
         </div>
     </section>'''
 
-def tier_html(name, who, price, customers, lines, featured):
-    badge = '<span class="pill pill-good tier-badge">Most popular</span>' if featured else ""
-    lis = "".join(f"<li>{l}</li>" for l in lines)
-    return f'''<div class="card tier{" featured" if featured else ""}">
-                    <div class="tier-top"><h3>{name}</h3>{badge}</div>
-                    <p class="tier-for">{who}</p>
-                    <div class="tier-price"><b>{price}</b><span>/month</span></div>
-                    <p class="tier-count">About <b>{customers}</b> a month</p>
-                    <ul class="checks">{lis}</ul>
-                </div>'''
+def wins_html():
+    return "".join(f'<div class="card win"><span class="icon-chip">{icon(ic, 20)}</span><h3>{h}</h3><p>{p}</p></div>' for ic, h, p in WINS)
 
 def steps_html():
     return "".join(f'''<div class="card step-card"><span class="step-num">{i}</span><h3>{h}</h3><p>{p}</p></div>''' for i, (h, p) in enumerate(STEPS, 1))
@@ -217,23 +199,14 @@ PAGE_CSS = """
         .center-block{margin-inline:auto}
         .capsule{font-size:18px}
         .capsule-more{margin-top:16px;color:var(--muted)}
-        .tiers{margin-top:8px;align-items:stretch}
-        .tier{display:flex;flex-direction:column;gap:6px;text-align:left}
-        .tier.featured{border:2px solid var(--primary)}
-        .tier-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-        .tier-top h3{margin:0}
-        .tier .tier-for{font-size:15px}
-        .tier-price{margin-top:10px;display:flex;align-items:baseline;gap:4px}
-        .tier-price b{font-size:44px;line-height:1;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-        .tier-price span{color:var(--subtle);font-size:15px}
-        .tier .tier-count{font-size:15px;margin-bottom:12px}
-        .tier .checks li{font-size:15px}
-        .plan-notes{margin-top:24px}
-        .plan-notes p{color:var(--muted);margin:0}
-        .plan-notes b{color:var(--fg)}
-        .plan-fine{margin:20px auto 0;max-width:820px;text-align:center}
-        .plan-cta{margin-top:28px}
-        @media(max-width:560px){.plan-cta .btn{white-space:normal;text-align:center;line-height:1.3;padding-block:12px}}
+        .cta-note{margin:12px 0 0}
+        @media(max-width:640px){.cta-note{text-align:center}}
+        .wins{display:grid;gap:16px;grid-template-columns:1fr}
+        @media(min-width:640px){.wins{grid-template-columns:1fr 1fr}}
+        @media(min-width:1040px){.wins{grid-template-columns:repeat(4,1fr)}}
+        .wins>*{min-width:0}
+        .win h3{font-size:18px;margin-top:16px}
+        .win p{margin:0}
         #not-for .section-head{margin-bottom:0}
         .step-card .step-num{width:36px;height:36px;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font-weight:600;font-size:15px;margin-bottom:16px}
         .ex-card{display:flex;flex-direction:column;gap:12px;padding:18px}
@@ -312,7 +285,7 @@ HEAD = f'''<!DOCTYPE html>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="/assets/41st/site.css">
 
-    <!-- Product / Offer Schema -->
+    <!-- Product Schema (no offers: prices live on /pricing) -->
     {ld(PRODUCT_LD)}
 
     <!-- FAQ Schema -->
@@ -349,16 +322,17 @@ MAIN = f'''<main id="main">
             <div class="hero-grid">
                 <div>
                     <span class="eyebrow">AI Sales Closer for WhatsApp</span>
-                    <h1>AI Sales Closer. <span class="h1-soft">It closes the deal while you sleep.</span></h1>
-                    <p class="lede">This is the AI Sales Closer, one of four AIs in 41 Sales Team (formerly 41 Closer). A customer messages your WhatsApp at 2am. Nobody answers, so they buy somewhere else. It answers in seconds, quotes your price, and takes the payment. We build it. We run it.</p>
+                    <h1>AI Sales Closer. <span class="h1-soft">It closes the sale while you sleep.</span></h1>
+                    <p class="lede">This is the AI Sales Closer, one of four AIs in 41 Sales Team (formerly 41 Closer). A customer messages your WhatsApp at 2am. It answers in seconds, quotes your price and takes the payment. We build it on your business and run it for you.</p>
                     <div class="btn-row">
-                        <a class="btn btn-primary btn-lg" href="#plans">See the price</a>
-                        <a class="btn btn-secondary btn-lg" href="{WA_TRY}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Watch it sell, live</a>
+                        <a class="btn btn-primary btn-lg" href="{BOOK}">Book a call</a>
+                        <a class="btn btn-secondary btn-lg" href="{WA_TRY}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Try it on WhatsApp</a>
                     </div>
+                    <p class="note cta-note">{BOOK_NOTE}</p>
                     <ul class="hero-checks">
                         <li>Replies in seconds, day and night</li>
-                        <li>$300k/mo running through it</li>
-                        <li>Live in 48 hours</li>
+                        <li>Live after one call</li>
+                        <li>Month to month, no contract</li>
                     </ul>
                 </div>
                 <div>
@@ -376,6 +350,16 @@ MAIN = f'''<main id="main">
         </div>
     </header>
 
+    <section id="wins" class="section">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">What changes for you</span>
+                <h2>More sales, and your evenings back.</h2>
+            </div>
+            <div class="wins">{wins_html()}</div>
+        </div>
+    </section>
+
     <section id="capsule" class="section-sm section-white">
         <div class="wrap">
             <div class="read center-block">
@@ -385,34 +369,18 @@ MAIN = f'''<main id="main">
         </div>
     </section>
 
-    <section id="plans" class="section">
-        <div class="wrap">
-            <div class="section-head center">
-                <span class="eyebrow">One price. No hidden fees.</span>
-                <h2>The build is free. You pay monthly.</h2>
-                <p class="lede">Pick the plan that fits how many customers message you. Every plan includes the build, your own WhatsApp number, and our team running it.</p>
-            </div>
-            <div class="grid-2 tiers">{"".join(tier_html(*t) for t in TIERS)}</div>
-            <div class="grid-2 plan-notes">
-                <div class="card-flat"><p><b>One plan sits above these.</b> Past about 6,000 sales conversations a month, or more than one brand, Custom starts at $7,900. Ask us which one fits.</p></div>
-                <div class="card-flat"><p><b>No contract.</b> One month to start, charged from the day it goes live, not the day you sign. Month to month after that, 30 days notice. We tell you at 70% of your plan and again at the limit, so there are no shock bills.</p></div>
-            </div>
-            <p class="note plan-fine">The numbers are estimates. A sales conversation is one customer, handled from the first message until they pay or decide not to. A short chat uses less of the plan, a long one with photos uses more. Prices in SGD. No GST is charged. Pay for a year up front and you get twelve months for ten. Eligible Singapore SMEs can apply the EDGE grant, which replaced the EDG on 30 September 2026, to part of the cost. <a href="/41-closer-terms">Plan terms and fair use</a>.</p>
-            <div class="btn-row center plan-cta"><a class="btn btn-primary btn-lg" href="{WA}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Message the agent first, then pick a plan</a></div>
-        </div>
-    </section>
-
-    <section id="how-it-starts" class="section section-white">
+    <section id="how-it-starts" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">How it starts</span>
-                <h2>You send a list. We do the rest.</h2>
+                <h2>Live after one call.</h2>
             </div>
             <div class="grid-3">{steps_html()}</div>
+            <div class="btn-row center"><a class="btn btn-primary btn-lg" href="{BOOK}">Book a call</a></div>
         </div>
     </section>
 
-    <section id="see-it-work" class="section">
+    <section id="see-it-work" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">See it in action</span>
@@ -428,7 +396,7 @@ MAIN = f'''<main id="main">
         </div>
     </section>
 
-    <section id="not-a-demo" class="section section-white">
+    <section id="not-a-demo" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Not a demo</span>
@@ -436,14 +404,14 @@ MAIN = f'''<main id="main">
             </div>
             <div class="card case">
                 <span class="pill">Real client, kept private on request</span>
-                <div class="case-num"><b>$300,000</b><span>a month running through the AI Sales Closer at one Singapore industrial supplier</span></div>
+                <div class="case-num"><b>$300,000</b><span>of sales every month through the AI Sales Closer at one Singapore industrial supplier</span></div>
                 <p>It quotes live from the supplier's own catalogue, replies in seconds day and night, and our team steps in only for the tricky ones. It does not go off script, because we set the guardrails and watch it.</p>
                 <p class="case-by">In our published quote-automation case, quote time went from 3 hours to 5 minutes, errors fell 90% and sales capacity rose 35%. <a href="/case-studies/quote-automation-professional-services">Read the case</a>.</p>
             </div>
         </div>
     </section>
 
-    <section id="not-for" class="section">
+    <section id="not-for" class="section section-white">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">Honest limit</span>
@@ -453,7 +421,7 @@ MAIN = f'''<main id="main">
         </div>
     </section>
 
-    <section id="founder" class="section section-white">
+    <section id="founder" class="section">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">From the founder</span>
@@ -465,7 +433,7 @@ MAIN = f'''<main id="main">
                     <div>
                         <p>I watched good businesses lose sales for one reason. The customer messaged, and nobody answered in time. The product was right. The price was right. The reply was slow.</p>
                         <p>The AI Sales Closer fixes that one thing. It answers every message, every hour, and follows up until the customer buys or says no. We build it, run it, and keep making it better.</p>
-                        <p>If you do real business on WhatsApp, message the agent and see for yourself. If it impresses you, message me.</p>
+                        <p>If you do real business on WhatsApp, try the agent and see for yourself. Then book a call with me and we build yours.</p>
                         <p class="signoff">Alexander Lee<span>Founder, 41 Labs</span></p>
                     </div>
                 </div>
@@ -481,9 +449,12 @@ MAIN = f'''<main id="main">
                 <div class="final-grid">
                     <div>
                         <span class="eyebrow">Start now</span>
-                        <h2>Try it on WhatsApp tonight.</h2>
-                        <p class="lede">Message it on WhatsApp right now. Ask it anything your customers ask. Watch it close. Then pick a plan.</p>
-                        <div class="btn-row"><a class="btn btn-primary btn-lg" href="{WA}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Chat with it now</a></div>
+                        <h2>See it answer your own customers</h2>
+                        <p class="lede">We build it on your business before we meet. You test it. If you like it, it goes live that day.</p>
+                        <div class="btn-row">
+                            <a class="btn btn-primary btn-lg" href="{BOOK}">Book a call</a>
+                            <a class="btn btn-secondary btn-lg" href="{WA}" target="_blank" rel="noopener">{icon("whatsapp", 18)} Try it on WhatsApp</a>
+                        </div>
                     </div>
                     <div class="qr-card">
                         <img src="41-closer-qr.png" alt="Scan to chat with the AI Sales Closer on WhatsApp" width="228" height="228" loading="lazy">
@@ -516,8 +487,12 @@ def partial(name):
 
 out = HEAD + partial("header.html") + MAIN + partial("footer.html") + TAIL
 assert out.count('"FAQPage"') == 1 and out.count("<h1") == 1
-# 1500 -> 1550 on 17 Oct 2026: the Start plan card (S$299) was added, nothing else grew.
-problems, stats = check(out, max_words=1550, faq=FAQ, max_ctas=3)
+# 1500 -> 1550 on 17 Oct 2026: the Start plan card (S$299) was added. Plans left this page on 18 Oct (1081 words), so down to 1150.
+# No prices on this page (18 Oct brief): the price-position gate now pins the /pricing link line in the FAQ instead.
+problems, stats = check(out, max_words=1150, faq=FAQ, max_ctas=3, price_token="See pricing", price_within=1.0)
+for bad in ("S$", "$299", "$690", "a month", "From $"):
+    if bad in visible_text(out):
+        problems.append(f"price wording {bad!r} on a page that must show no prices")
 for bad in ("—", "‘", "’", "“", "”"):
     if bad in out:
         problems.append(f"forbidden character {bad!r}")
