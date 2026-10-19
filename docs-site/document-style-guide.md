@@ -335,7 +335,7 @@ Use one of these five kinds. Do not invent a sixth.
 | Step rail | A journey, the stages the reader goes through | One row of numbered nodes joined by a line. No more than 6 nodes. A longer journey is two rails |
 | Flow | A decision, where the next action depends on what the reader sees | A question node with a Yes branch and a No branch. Every branch is labelled and ends in an action |
 | Timeline bar | A time rule, such as a window, a wait or a deadline | One horizontal bar on a scale. The span the rule covers is filled green, and its start and end are labelled |
-| Side by side | Modes, two ways of doing the same thing | Two equal columns with a heading each, and the same rows in both, so the reader compares row against row |
+| Side by side | Modes, two or three ways of doing the same thing | One equal column for each mode the screen offers, with a heading each, and the same rows in all, so the reader compares row against row |
 | Chat bubbles | An example conversation | Bubbles in two columns, one for each side. Placeholders such as `<first name>` stand for every name and value. Never use a real name or a real message |
 
 ## 9. Page breaks
