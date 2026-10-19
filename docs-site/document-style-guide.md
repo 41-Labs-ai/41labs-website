@@ -80,7 +80,9 @@ Rules:
 - The brand green is `#4ade80`. It is too light to print on white paper. This
   style uses `#16a34a` instead. Keep this substitution.
 - Green is the only accent. Amber marks a warning and nothing else.
-- Use no other colour. A screenshot is the only image on the page.
+- Use no other colour. A diagram draws only in the tokens above, on white:
+  green, green background, ink, muted, rule, and amber for a warning step.
+  Screenshots and diagrams are the only images on the page.
 
 ## 3. Type
 
@@ -144,7 +146,7 @@ A4, portrait, one column. One text frame per page.
 | Indent of a step body | 10 mm |
 
 Every full-width element is 165 mm wide: a callout, a code block, a table, a
-screenshot.
+screenshot, a diagram.
 
 ## 6. Header and footer
 
@@ -285,11 +287,56 @@ for a screen name. Do not put a value that belongs to one reader in it.
 ### 8.7 Screenshot
 
 - Full content width, 165 mm, or less if the picture is small.
-- One screenshot for each screen the reader can misread.
+- One screenshot of every screen the reader touches.
+- Take it from the real product, with made-up data. Do not draw a screen that
+  you can capture. A key, a token or a secret shows as dots, never as its value.
 - Put a warning callout in place of a screenshot that is not captured yet. Name
   the screen and the control the picture must show.
 - A screenshot carries no name, no address and no account id. Mask any value on
   the picture that belongs to one reader.
+
+### 8.8 Diagram
+
+A drawing of a journey, a decision, a time rule, two modes, or an example
+conversation. It is part of the HTML page and is drawn in the section 2 colours.
+
+| Part | Value |
+|---|---|
+| Format | Inline `<svg>` in the HTML. No external file, no image link, no script |
+| Width | Content width, 165 mm, or less if the drawing is small |
+| Scaling | A `viewBox` and `width="100%"`, with no fixed height, so it scales with the page |
+| Font | Helvetica, with the fallback in section 3 |
+| Label | At least the small text size (8.8) when printed at content width |
+| Colour | Section 2 tokens only, on white |
+| Caption | One short sentence under the drawing, in small text |
+
+Rules:
+
+- Colour has one job each. Green and green background mark the path the reader
+  follows. Ink is the text and the arrows. Muted is a side note. Rule is a
+  divider or a scale line. Amber background and amber border mark a warning step
+  and nothing else. Label a warning step in words too, so it reads on a grey
+  print.
+- Give the `<svg>` `role="img"` and an `aria-label` that repeats the caption.
+- The caption says what the drawing shows. It adds no fact the drawing does not
+  hold.
+- Section 1 applies to every label and every caption. A drawing names no
+  business and no person, and holds no value that belongs to one reader.
+- Read it in print and at 390 px wide before you send. At 390 px the page shows
+  the drawing about 358 px across, and a label must still be at least 10 px
+  high. A drawing that cannot hold its labels at both sizes has too much in it:
+  stack the nodes vertically, or split it in two. A `viewBox` about 360 units
+  wide with labels of 10 units or more passes both.
+
+Use one of these five kinds. Do not invent a sixth.
+
+| Kind | Use it for | Shape |
+|---|---|---|
+| Step rail | A journey, the stages the reader goes through | One row of numbered nodes joined by a line. No more than 6 nodes. A longer journey is two rails |
+| Flow | A decision, where the next action depends on what the reader sees | A question node with a Yes branch and a No branch. Every branch is labelled and ends in an action |
+| Timeline bar | A time rule, such as a window, a wait or a deadline | One horizontal bar on a scale. The span the rule covers is filled green, and its start and end are labelled |
+| Side by side | Modes, two ways of doing the same thing | Two equal columns with a heading each, and the same rows in both, so the reader compares row against row |
+| Chat bubbles | An example conversation | Bubbles in two columns, one for each side. Placeholders such as `<first name>` stand for every name and value. Never use a real name or a real message |
 
 ## 9. Page breaks
 
@@ -297,6 +344,7 @@ for a screen name. Do not put a value that belongs to one reader in it.
 - Keep a callout on one page.
 - Keep a table on one page.
 - Keep a screenshot on one page.
+- Keep a diagram and its caption on one page.
 - Never leave a section heading alone at the bottom of a page.
 - Repeat the header and the footer on every page.
 
@@ -309,6 +357,13 @@ for a screen name. Do not put a value that belongs to one reader in it.
 - Write the full address of a page, such as a domain name, in bold body text or
   in a code block. Do not write "click here".
 - Which names and which sentences are allowed at all is section 1.
+
+A guide shows as much as it tells. Two rules hold it to that:
+
+- No more than three paragraphs in a row without a screenshot, a diagram, a
+  table or a step.
+- Every flow, decision or rule the guide explains gets a diagram (section 8.8).
+  Draw it. Do not leave it as a paragraph alone.
 
 ## 11. The HTML page
 
@@ -349,3 +404,7 @@ them reaches the printed page.
     short form.
 12. The HTML page carries a section tag and a back link, and `build-index.cjs`
     has been run.
+13. Every screen the reader touches has a screenshot. Every flow, decision and
+    rule has a diagram. No more than three paragraphs in a row without a
+    screenshot, diagram, table or step. Every diagram is inline SVG in the
+    section 2 colours, has a caption, and reads in print and at 390 px wide.
