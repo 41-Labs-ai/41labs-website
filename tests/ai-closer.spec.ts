@@ -449,6 +449,15 @@ test.describe('long form follows the event opt-in structure', () => {
 
   // The ads sell "your AI sales team, live on one call". The page a visitor lands on must
   // say the same thing in its title and headline, or he thinks he clicked the wrong link.
+  // 20 Oct 2026: on phones the <br> is hidden, and with no space next to it the headline read
+  // "AI sales teamwould do". The words must stay apart at every width.
+  test('the headline keeps a space between its two lines on a phone', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/ai-closer.html');
+    await expect(page.locator('#hero h1')).not.toContainText(/teamwould/);
+    await expect(page.locator('#hero h1')).toContainText(/sales team would do/);
+  });
+
   test('title and headline match the ads', async ({ page }) => {
     await page.goto('/ai-closer.html');
     await expect(page).toHaveTitle(/AI Sales Team/);
