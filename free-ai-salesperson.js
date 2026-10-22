@@ -170,6 +170,18 @@
             .catch(function () { clearTimeout(stop); return null; });
     }
 
+    // Same tiers as /ai-closer (closer-qualify.js): monthly enquiry value =
+    // enquiries a week x 4.3 x average sale. A at S$1M a month, B at S$100k, C below.
+    var ENQ = { under20: 10, '20to50': 35, '50to150': 100, '150plus': 250 };
+    var SALE = { under500: 250, '500to2k': 1200, '2kto10k': 5000, '10kplus': 15000 };
+    function qualify(e, s) {
+        var value = Math.round((ENQ[e] || 0) * 4.3 * (SALE[s] || 0));
+        var money = 'S$' + value.toLocaleString('en-SG');
+        if (value >= 1000000) return { tier: 'A', value: value, reason: 'About ' + money + ' a month through WhatsApp. Call this one first' };
+        if (value >= 100000) return { tier: 'B', value: value, reason: 'About ' + money + ' a month through WhatsApp. Enough for an AI salesperson to pay for itself' };
+        return { tier: 'C', value: value, reason: 'About ' + money + ' a month through WhatsApp. Check it can pay back before quoting' };
+    }
+
     // Step 1 done: a name and a number is a lead. Save it now, so someone who stops at the
     // website box is still in the CRM, still alerts Alexander, and still gets a WhatsApp from us.
     function captureContact() {
@@ -193,13 +205,21 @@
         e.preventDefault();
         if (!form.classList.contains('s2') || busy) return;
         var website = val('f-web');
-        if (!website) return;
+        var enq = (form.querySelector('[name=enquiries]:checked') || {}).value || '';
+        var sale = (form.querySelector('[name=saleValue]:checked') || {}).value || '';
+        if (!website || !enq || !sale) return;
+        var q = qualify(enq, sale);
         busy = true;
         lead.website = website;
         ga('lp_form_step', { step: 3 });
+        // Tier A and B are the clients we want more of. The server sends Meta a QualifiedLead
+        // for them (api/closer-lead.js), never from the browser, so the ad account learns from it.
+        ga('lead_tier', { tier: q.tier, monthly_value: q.value });
         (partial || Promise.resolve(null))
             .then(function () {
                 var body = base(); body.website = website;
+                body.enquiries = enq; body.saleValue = sale;
+                body.tier = q.tier; body.qualified = 'true'; body.fitReason = q.reason;
                 if (lead.opportunityId) body.opportunityId = lead.opportunityId;
                 return post(body);
             })
