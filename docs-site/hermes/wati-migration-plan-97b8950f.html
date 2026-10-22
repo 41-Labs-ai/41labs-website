@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting your WhatsApp number from WATI</title>
+<meta name="doc-category" content="Messaging">
+<meta name="doc-visibility" content="private">
+<style>
+  :root{
+    --green:#16a34a; --green-bg:#f0fdf4; --ink:#1a1a1a; --muted:#52525b;
+    --rule:#e4e4e7; --amber-bg:#fffbeb; --amber-border:#f59e0b; --code-bg:#f4f4f5;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    margin:0; background:#e9e9ec; color:var(--ink);
+    font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;
+    font-size:10pt; line-height:15.5pt;
+  }
+
+  /* ---- Sheet (screen) ---- */
+  .doc{
+    background:#fff; width:210mm; margin:24px auto; padding:24mm 22mm 22mm;
+    box-shadow:0 2px 22px rgba(0,0,0,.13);
+  }
+
+  /* ---- Header ---- */
+  .run-header{ margin:0 0 6mm; }
+  .run-header .row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12pt;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+  .run-header .supplier{ text-transform:uppercase; letter-spacing:.04em; }
+  .run-header .docname{ text-align:right; }
+  .run-header .rule{ border-bottom:2.5pt solid var(--green); margin-top:4pt; }
+
+  /* ---- Footer ---- */
+  .run-footer{ margin:8mm 0 0; }
+  .run-footer .rule{ border-top:.5pt solid var(--rule); margin-bottom:4pt; }
+  .run-footer .row{
+    display:flex; justify-content:space-between;
+    font-size:7.5pt; line-height:11pt; color:var(--muted);
+  }
+
+  /* ---- Titles ---- */
+  h1.title{ font-size:23pt; line-height:27pt; font-weight:bold; margin:0 0 3pt; }
+  p.subtitle{ font-size:11.5pt; line-height:16pt; color:var(--muted); margin:0 0 14pt; }
+
+  h2.section-h{
+    font-size:13.5pt; line-height:17pt; font-weight:bold; margin:16pt 0 7pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+
+  p{ margin:0 0 6pt; }
+  strong{ font-weight:bold; }
+
+  /* ---- Lists ---- */
+  ul.bullets{ margin:0 0 4pt; padding-left:12pt; }
+  ul.bullets li{ margin:0 0 2pt; }
+  ol.actions{ margin:0 0 4pt; padding-left:14pt; }
+  ol.actions li{ margin:0 0 2pt; }
+
+  /* ---- Callouts ---- */
+  .callout{
+    width:100%; padding:7pt 9pt; margin:0 0 6pt;
+    font-size:9.2pt; line-height:14pt;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .callout p{ margin:0 0 4pt; font-size:9.2pt; line-height:14pt; }
+  .callout p:last-child{ margin-bottom:0; }
+  .note{ background:var(--green-bg); border-left:2.2pt solid var(--green); }
+  .warn{ background:var(--amber-bg); border-left:2.2pt solid var(--amber-border); }
+
+  /* ---- Steps ---- */
+  .step{ margin:0 0 9pt; break-inside:avoid; page-break-inside:avoid; }
+  .step-head{
+    display:flex; align-items:flex-start; gap:8pt;
+    break-after:avoid; page-break-after:avoid;
+  }
+  .step-head .num{
+    flex:0 0 auto; width:7.5mm; height:7.5mm; background:var(--green);
+    color:#fff; font-size:9.5pt; font-weight:bold;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-head .step-title{
+    font-size:11.5pt; line-height:15pt; font-weight:bold; margin:0;
+    align-self:center;
+  }
+  .step-body{ margin:4pt 0 0 10mm; }
+
+  /* ---- Key / value table ---- */
+  table.kv{ width:100%; border-collapse:collapse; margin:0 0 6pt;
+    break-inside:avoid; page-break-inside:avoid; }
+  table.kv td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.kv tr:last-child td{ border-bottom:0; }
+  table.kv td.k{ width:45mm; font-weight:bold; padding-right:6pt; }
+
+  /* ---- Checklist ---- */
+  table.checklist{ width:100%; border-collapse:collapse; }
+  table.checklist td{
+    font-size:9.2pt; line-height:13.5pt; padding:6pt 0; vertical-align:top;
+    border-bottom:.5pt solid var(--rule);
+  }
+  table.checklist tr:last-child td{ border-bottom:0; }
+  table.checklist td.box{ width:8mm; }
+  table.checklist tr{ break-inside:avoid; page-break-inside:avoid; }
+  table.checklist td label{ display:block; cursor:pointer; }
+  table.checklist input[type="checkbox"]{
+    appearance:none; -webkit-appearance:none; -moz-appearance:none;
+    width:13pt; height:13pt; margin:0; vertical-align:-2pt; cursor:pointer;
+    border:1.2pt solid var(--muted); border-radius:2px; background:#fff;
+  }
+  table.checklist input[type="checkbox"]:checked{ background:var(--green); border-color:var(--green); }
+  table.checklist input[type="checkbox"]:checked::after{
+    content:""; display:block; width:4pt; height:7.5pt; margin:0.5pt auto 0;
+    border:solid #fff; border-width:0 2pt 2pt 0; transform:rotate(45deg);
+  }
+  table.checklist input[type="checkbox"]:focus-visible{ outline:2px solid var(--green); outline-offset:1px; }
+
+  /* ---- Print ---- */
+  @media print{
+    @page{ size:A4; margin:24mm 22mm 22mm 22mm; }
+    body{ background:#fff; }
+    .doc{ width:auto; margin:0; padding:0; box-shadow:none; }
+    .run-header{ position:fixed; top:-15mm; left:0; right:0; margin:0; }
+    .run-footer{ position:fixed; bottom:-15mm; left:0; right:0; margin:0; }
+    .run-header .row, .run-footer .row{ color:var(--muted); }
+  }
+
+  @media screen and (max-width:800px){
+    .doc{ width:auto; margin:0; padding:16px; box-shadow:none; }
+  }
+
+  /* ---- Back to the index (screen only) ---- */
+  .back-bar{ width:210mm; max-width:100%; margin:20px auto 0; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:5pt;
+    background:#fff; border:.75pt solid var(--rule); border-radius:999px;
+    padding:5pt 11pt; font-size:9pt; line-height:12pt; color:var(--muted);
+    text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,.07);
+  }
+  .back-link:hover{ color:var(--green); border-color:var(--green); }
+  .back-link .arrow{ font-size:11pt; line-height:1; }
+
+  @media print{ .back-bar{ display:none !important; } }
+  @media screen and (max-width:800px){
+    .back-bar{ width:auto; margin:0; padding:14px 16px 0; }
+  }
+
+  /* ---- Screen reading ----
+     The sheet above is sized for A4 print at 10pt, which reads small on a
+     monitor. Scale the type up on screen only. Print keeps the sizes above,
+     so pagination does not move. */
+  @media screen{
+    body{
+      font-size:13pt; line-height:20pt;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    h1.title{ font-size:28pt; line-height:33pt; margin:0 0 5pt; }
+    p.subtitle{ font-size:14.5pt; line-height:21pt; margin:0 0 18pt; }
+    h2.section-h{ font-size:18pt; line-height:23pt; margin:24pt 0 9pt; }
+    ul.bullets, ol.actions{ padding-left:18pt; }
+    .step-head .num{ width:9mm; height:9mm; font-size:12pt; }
+    .step-head .step-title{ font-size:15pt; line-height:20pt; }
+    .callout, .callout p{ font-size:12.5pt; line-height:19pt; }
+    table.kv td, table.checklist td{ font-size:12.5pt; line-height:19pt; }
+    .run-header .row, .run-footer .row{ font-size:10pt; line-height:14pt; }
+    .back-link{ font-size:11pt; line-height:15pt; padding:6pt 13pt; }
+  }
+</style>
+</head>
+<body>
+<div class="back-bar">
+  <a class="back-link" href="/"><span class="arrow" aria-hidden="true">&larr;</span> All docs</a>
+</div>
+<div class="doc">
+
+  <!-- ============ HEADER (repeats on every printed page) ============ -->
+  <header class="run-header">
+    <div class="row">
+      <div class="supplier">AI SALES CLOSER &middot; 41 LABS</div>
+      <div class="docname">Connecting WhatsApp from WATI</div>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <!-- ============ BODY ============ -->
+  <main class="run-body">
+
+    <h1 class="title">Connecting your WhatsApp number from WATI</h1>
+    <p class="subtitle">Move your WhatsApp number from WATI to Hermes in four steps, on the same number, and switch the AI on when you are ready.</p>
+
+    <div class="callout note">
+      <p><strong>The AI stays off until step 4.</strong> Hermes sends no message to your customers before you say you are ready.</p>
+    </div>
+
+    <h2 class="section-h">Before you start</h2>
+    <ul class="bullets">
+      <li>Access to your <strong>WATI</strong> account, including the <strong>API Docs</strong> page.</li>
+      <li>The name of your <strong>WATI plan</strong>.</li>
+      <li>The <strong>person who controls your WhatsApp Business Account</strong> in Meta, available for step 3.</li>
+      <li>Your <strong>41 Labs contact</strong>, for each step.</li>
+      <li>About 10 minutes for step 3.</li>
+    </ul>
+
+    <h2 class="section-h">Step by step</h2>
+
+    <!-- STEP 1 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">01</div>
+        <h3 class="step-title">Give Hermes access to WATI</h3>
+      </div>
+      <div class="step-body">
+        <ol class="actions">
+          <li>Confirm to your 41 Labs contact that Hermes may pull your WhatsApp chat history from WATI.</li>
+          <li>Tell your 41 Labs contact your WATI plan.</li>
+          <li>In WATI, open the <strong>API Docs</strong> page and send the API details to your 41 Labs contact.</li>
+        </ol>
+        <table class="kv">
+          <tr><td class="k">Who replies to customers</td><td>Your staff, in WATI</td></tr>
+          <tr><td class="k">Your AI assistant</td><td>Off</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">02</div>
+        <h3 class="step-title">Let Hermes learn from your chats</h3>
+      </div>
+      <div class="step-body">
+        <p>Hermes reads your chats, old and new, and learns your products, prices and style. There is nothing for you to do in this step.</p>
+        <ol class="actions">
+          <li>Keep replying to customers in WATI as usual.</li>
+        </ol>
+        <table class="kv">
+          <tr><td class="k">Who replies to customers</td><td>Your staff, in WATI</td></tr>
+          <tr><td class="k">Your AI assistant</td><td>Off. It only learns.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">03</div>
+        <h3 class="step-title">Move the number to Hermes</h3>
+      </div>
+      <div class="step-body">
+        <ol class="actions">
+          <li>Find the person who controls your WhatsApp Business Account in Meta.</li>
+          <li>That person signs in to Hermes and clicks <strong>Connect WhatsApp</strong>. This takes about 10 minutes.</li>
+          <li>From now on, reply to customers in the Hermes <strong>Inbox</strong>. All past chats are already there.</li>
+          <li>Stop using WATI.</li>
+        </ol>
+        <div class="callout note">
+          <p>Your customers keep the same number, and they see no break in the chat. Customers who asked you to stop messaging them stay opted out.</p>
+        </div>
+        <table class="kv">
+          <tr><td class="k">Who replies to customers</td><td>Your staff, in Hermes</td></tr>
+          <tr><td class="k">Your AI assistant</td><td>Off</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step">
+      <div class="step-head">
+        <div class="num">04</div>
+        <h3 class="step-title">Go live</h3>
+      </div>
+      <div class="step-body">
+        <ol class="actions">
+          <li>Try the AI on real customer questions with your 41 Labs contact.</li>
+          <li>Tell your 41 Labs contact when you are ready to go live. 41 Labs turns the AI on.</li>
+          <li>When the AI needs help, it sends the chat to your staff in the <strong>Inbox</strong>.</li>
+        </ol>
+        <table class="kv">
+          <tr><td class="k">Who replies to customers</td><td>The AI, with your staff as backup</td></tr>
+          <tr><td class="k">Your AI assistant</td><td>On</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <h2 class="section-h">Checklist</h2>
+    <table class="checklist">
+      <tr><td class="box"><input type="checkbox" id="ck1"></td><td><label for="ck1">Sent the WATI plan and API details to 41 Labs (Step 1)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck2"></td><td><label for="ck2">Kept replying in WATI while Hermes learned (Step 2)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck3"></td><td><label for="ck3">Clicked Connect WhatsApp in Hermes and moved the team to the Inbox (Step 3)</label></td></tr>
+      <tr><td class="box"><input type="checkbox" id="ck4"></td><td><label for="ck4">Tested the AI and told 41 Labs to go live (Step 4)</label></td></tr>
+    </table>
+
+  </main>
+
+  <!-- ============ FOOTER (repeats on every printed page) ============ -->
+  <footer class="run-footer">
+    <div class="rule"></div>
+    <div class="row">
+      <div>Questions? Reply to your 41 Labs contact.</div>
+      <div class="pageno"></div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
