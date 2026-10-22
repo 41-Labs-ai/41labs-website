@@ -329,7 +329,11 @@ module.exports = async (req, res) => {
   const capiInput = {
     eventId: clean(body.eventId, 80) || `lead_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`,
     eventTimeSec: Math.floor(Date.now() / 1000),
-    sourceUrl: `https://41labs.ai/ai-closer${body.variant === 'sf' ? '-sf' : ''}`,
+    // The page the form was on, so Meta can tell our landing pages apart. Only a
+    // 41labs.ai page is accepted: anything else falls back to /ai-closer.
+    sourceUrl: /^https:\/\/(www\.)?41labs\.ai\/[a-z0-9\-/]*$/i.test(clean(body.sourceUrl, 200))
+      ? clean(body.sourceUrl, 200).replace('://www.', '://')
+      : `https://41labs.ai/ai-closer${body.variant === 'sf' ? '-sf' : ''}`,
     email, phone: whatsapp, firstName, lastName,
     fbp: clean(body.fbp, 120), fbc: clean(body.fbc, 300), fbclid, clickMs: Date.now(),
     clientIp, userAgent, tier,

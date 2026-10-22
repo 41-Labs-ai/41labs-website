@@ -154,6 +154,7 @@
         var ids = metaIds();
         return {
             name: lead.name, whatsapp: lead.whatsapp, eventId: leadId,
+            sourceUrl: location.origin + location.pathname,
             fbp: ids.fbp, fbc: ids.fbc, fbclid: attr.fbclid || '',
             utm_source: attr.utm_source || '', utm_medium: attr.utm_medium || '', utm_campaign: attr.utm_campaign || '',
             utm_content: attr.utm_content || '', utm_term: attr.utm_term || '',

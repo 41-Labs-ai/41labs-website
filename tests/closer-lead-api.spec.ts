@@ -650,6 +650,16 @@ test.describe('Meta Conversions API', () => {
     expect(capiEvents(calls)[0].event_source_url).toBe('https://41labs.ai/ai-closer-sf');
   });
 
+  test('a lead from another 41labs.ai page reports that page, so each page is measured on its own', async () => {
+    const { calls } = await run({ ...lead, ...browser, sourceUrl: 'https://41labs.ai/free-ai-salesperson' }, { env: FULL_ENV });
+    expect(capiEvents(calls).map((e: any) => e.event_source_url)).toEqual(['https://41labs.ai/free-ai-salesperson', 'https://41labs.ai/free-ai-salesperson']);
+  });
+
+  test('a source url outside 41labs.ai is ignored and the default page is reported', async () => {
+    const { calls } = await run({ ...lead, ...browser, sourceUrl: 'https://evil.example/free-ai-salesperson' }, { env: FULL_ENV });
+    expect(capiEvents(calls)[0].event_source_url).toBe('https://41labs.ai/ai-closer');
+  });
+
   test('no token configured: no call to Meta, and the lead is still saved', async () => {
     const { calls, json } = await run({ ...lead, ...browser }, { env: { TWENTY_API_KEY: 'test-key' } });
     expect(capiCall(calls)).toBeUndefined();
