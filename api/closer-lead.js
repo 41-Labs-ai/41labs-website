@@ -321,10 +321,11 @@ module.exports = async (req, res) => {
   const waDigits = e164Digits(whatsapp);
   const deps = { env, fetchImpl };
 
-  // Back to Meta. Lead for everyone so the pixel keeps learning, QualifiedLead
-  // only for the tiers we want more of: that is the event the ad sets optimise
-  // on, so a Tier C form-fill must never look like a Tier A. The event_id comes
-  // from the browser pixel (ai-closer.js) so the same submit is not counted twice.
+  // Back to Meta. Lead for everyone, and QualifiedLead for every finished form, any tier
+  // (22 Oct 2026: the S$299 plan is built for the smaller business, so tier C is a lead we
+  // want more of). That is the event the ad sets optimise on. A partial is not one yet:
+  // api/cron/booking-sync.js sends it when they book a call. The event_id comes from the
+  // browser pixel (ai-closer.js) so the same submit is not counted twice.
   const { firstName, lastName } = splitName(name);
   const capiInput = {
     eventId: clean(body.eventId, 80) || `lead_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`,
@@ -341,7 +342,7 @@ module.exports = async (req, res) => {
   // A partial is contact details, not a completed lead. Reporting it as a Lead would
   // inflate the conversion count and teach Meta to buy half-finished forms.
   const capiEvents = isPartial ? [] : [buildLeadEvent(capiInput)];
-  if (!isPartial && (tier === 'A' || tier === 'B')) capiEvents.push(buildQualifiedLeadEvent(capiInput));
+  if (!isPartial && tier) capiEvents.push(buildQualifiedLeadEvent(capiInput));
 
   const hermesReport = {};
   const [alerts, hermes, meta] = await Promise.all([

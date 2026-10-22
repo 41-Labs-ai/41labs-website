@@ -213,7 +213,7 @@
         busy = true;
         lead.website = website;
         ga('lp_form_step', { step: 3 });
-        // Tier A and B are the clients we want more of. The server sends Meta a QualifiedLead
+        // Every tier is a client we want (the S$299 plan is for the smaller ones). The server sends Meta a QualifiedLead
         // for them (api/closer-lead.js), never from the browser, so the ad account learns from it.
         ga('lead_tier', { tier: q.tier, monthly_value: q.value });
         (partial || Promise.resolve(null))

@@ -313,12 +313,12 @@ async function runBookingSync({ env, fetchImpl, now }) {
     }
   }
 
-  // QualifiedLead for a name-only lead that reached a call (22 Oct 2026). The form only
-  // reports tier A and B, so a lead who left a name and number and stopped was invisible
-  // to the ad sets even when they went on to book, which is the clearest buying signal we
-  // have. MEETING covers a booking this run, one the AI made on WhatsApp, and a deal moved
-  // by hand. Tier C stays out on purpose. Older than 7 days, Meta can no longer tie it to
-  // the click, so it would only add noise.
+  // QualifiedLead for a name-only lead that reached a call (22 Oct 2026). The form reports
+  // every finished form (any tier), so a lead who left a name and number and stopped was
+  // the one left invisible to the ad sets, even when they went on to book, which is the
+  // clearest buying signal we have. MEETING covers a booking this run, one the AI made on
+  // WhatsApp, and a deal moved by hand. A lead with a tier already sent it from the form.
+  // Older than 7 days, Meta can no longer tie it to the click, so it would only add noise.
   for (const opp of opps) {
     const parsed = notesLib.parseLeadNotes(opp.statusNotes);
     if (opp.stage !== 'MEETING' || !parsed.partial) continue;

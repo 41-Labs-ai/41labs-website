@@ -3,7 +3,7 @@
 //
 // Three events, deepest last:
 //   Lead           every form submit. No value: it is only a signal that someone filled in the form.
-//   QualifiedLead  Tier A and B only, with a value. THIS is the event ad sets should optimise on.
+//   QualifiedLead  Every finished form (tier A, B or C) and every name-only lead that books a call, with a value. THIS is the event ad sets optimise on.
 //   Schedule       a call actually booked, with a bigger value. Sent by the booking cron.
 //
 // Every event must carry an event_id that the browser pixel also sends, or Meta
@@ -95,7 +95,7 @@ function buildEvent(i) {
 // Every form submit. No value on purpose: bidding on this would buy us Tier C.
 const buildLeadEvent = (i) => buildEvent({ ...i, eventName: 'Lead', contentName: i.contentName || '41closer-form' });
 
-// Tier A and B only. The event to optimise ad sets on. The '_q' suffix keeps it
+// Every finished form, any tier, plus a name-only lead once it books. The event to optimise ad sets on. The '_q' suffix keeps it
 // distinct from the Lead that fires on the same submit.
 const buildQualifiedLeadEvent = (i) => buildEvent({
   ...i,

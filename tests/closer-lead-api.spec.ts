@@ -578,9 +578,9 @@ test.describe('closer-lead: Hermes handoff', () => {
   });
 });
 
-// What Meta gets back. The point of all of this is that the ad account optimises
-// for leads we actually want, so a Tier C form-fill and a Tier A must not look
-// the same to Meta.
+// What Meta gets back. The ad account optimises on QualifiedLead: every finished
+// form, any tier, since 22 Oct 2026. A name-only lead is not one until it books a
+// call (api/cron/booking-sync.js).
 const capiCall = (calls: Call[]) => calls.find((c) => c.url.includes('graph.facebook.com'));
 const capiEvents = (calls: Call[]) => capiCall(calls)?.body?.data ?? [];
 const eventNames = (calls: Call[]) => capiEvents(calls).map((e: any) => e.event_name);
@@ -603,9 +603,12 @@ test.describe('Meta Conversions API', () => {
     expect(eventNames(calls)).toEqual(['Lead', 'QualifiedLead']);
   });
 
-  test('a Tier C lead sends Lead only: Meta must not learn to buy more of these', async () => {
+  // 22 Oct 2026, Alexander: "we want them all, because we start with low tier too". The
+  // S$299 plan is built for the smaller business, so a finished form from one is a lead
+  // we want Meta to find more of.
+  test('a Tier C lead qualifies too: the S$299 plan is made for smaller businesses', async () => {
     const { calls } = await run({ ...lead, ...browser, tier: 'C', qualified: 'no' }, { env: FULL_ENV });
-    expect(eventNames(calls)).toEqual(['Lead']);
+    expect(eventNames(calls)).toEqual(['Lead', 'QualifiedLead']);
   });
 
   test('the browser pixel event id is reused so the same lead is not counted twice', async () => {

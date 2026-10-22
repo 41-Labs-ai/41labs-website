@@ -7,7 +7,7 @@ import crypto from 'crypto';
 //
 // The contract that matters:
 //   - Lead           every form submit (volume, so Meta keeps learning)
-//   - QualifiedLead  Tier A and B only, carrying a value  <- the optimisation event
+//   - QualifiedLead  Every finished form (A, B or C) and name-only leads who book, carrying a value  <- the optimisation event
 //   - Schedule       a booked call, carrying a bigger value
 // Each one must share an event_id with the browser pixel or Meta counts it twice.
 

@@ -905,19 +905,14 @@ test.describe('name-only lead that reaches a call -> QualifiedLead to Meta', () 
     expect(qualified(w.calls), 'rerun must not report the same lead twice').toHaveLength(1);
   });
 
-  test('tier A or B: no extra QualifiedLead, the form already sent it', async () => {
-    for (const tier of ['A', 'B']) {
+  test('tier A, B or C: no extra QualifiedLead, the form already sent it', async () => {
+    for (const tier of ['A', 'B', 'C']) {
       const w = makeWorld({ opps: [opp('o1', { tier })], events: [booking('e1')] });
       await w.run();
       expect(qualified(w.calls), `tier ${tier}`).toHaveLength(0);
     }
   });
 
-  test('tier C books a call: still not qualified, Meta must not learn to find small businesses', async () => {
-    const w = makeWorld({ opps: [opp('o1', { tier: 'C' })], events: [booking('e1')] });
-    await w.run();
-    expect(qualified(w.calls)).toHaveLength(0);
-  });
 
   test('name-only lead still at SCREENING with no call: nothing sent', async () => {
     const w = makeWorld({ opps: [opp('o1', { statusNotes: NAME_ONLY, createdAt: iso(NOW - 2 * HOUR) })], events: [] });
