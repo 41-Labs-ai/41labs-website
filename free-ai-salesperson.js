@@ -251,7 +251,8 @@
                     name: lead.name,
                     'metadata[opportunityId]': lead.opportunityId || '',
                     'metadata[utm_content]': attr.utm_content || '',
-                    notes: ['Website: ' + lead.website, 'WhatsApp: ' + lead.whatsapp, 'Free 1-Call Superhuman Sales Team Launch, hero ' + variant.toUpperCase()].join(' | ')
+                    'metadata[variant]': variant,
+                    notes: ['Website: ' + lead.website, 'WhatsApp: ' + lead.whatsapp].join(' | ')
                 }
             });
             window.Cal('on', { action: 'bookingSuccessful', callback: function () { window.onFreeAiBooked(); } });
