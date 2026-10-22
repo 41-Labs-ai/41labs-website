@@ -153,7 +153,7 @@ Every page carries the same header and the same footer.
 The header has three parts, from the top:
 
 1. The system name and the supplier name, on the left, in capitals, with a
-   middle dot between them. Pattern: `HERMES · 41 LABS`. These are the only two
+   middle dot between them. Pattern: `AI SALES CLOSER · 41 LABS`. These are the only two
    names the header may carry. Never put a reader's name here.
 2. The document name, on the right, in sentence case. It is the short form of
    the title, with `your` and the noun dropped: `Connecting your Stripe account`
@@ -341,7 +341,7 @@ them reaches the printed page.
 5. The type sizes match section 3. Bold marks only a label or a value.
 6. The margins and the content width match section 5.
 7. The header and the footer are on every page, and the header reads
-   `HERMES · 41 LABS`.
+   `AI SALES CLOSER · 41 LABS`.
 8. The steps run from 1, with no gaps, and no step breaks across two pages.
 9. Each checklist row names a step number.
 10. The PDF and the HTML page break at the same place, page for page.
