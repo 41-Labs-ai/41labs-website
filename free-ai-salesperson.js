@@ -182,29 +182,29 @@
         return { tier: 'C', value: value, reason: 'About ' + money + ' a month through WhatsApp. Check it can pay back before quoting' };
     }
 
-    // Step 1 done: a name and a number is a lead. Save it now, so someone who stops at the
-    // website box is still in the CRM, still alerts Alexander, and still gets a WhatsApp from us.
+    // Step 1 done: name, number and website is a lead. Save it now, so someone who stops at the
+    // tier questions is still in the CRM, still alerts Alexander, and still gets a WhatsApp from us.
     function captureContact() {
         if (captured || !form.classList.contains('s2')) return;
         captured = true;
-        lead = { name: val('f-name'), whatsapp: val('f-wa'), website: '' };
+        lead = { name: val('f-name'), whatsapp: val('f-wa'), website: val('f-web') };
         try {
             if (window.fbq && window.FB_PIXEL_ID) window.fbq('init', window.FB_PIXEL_ID, { ph: lead.whatsapp.replace(/\D/g, ''), fn: lead.name.split(/\s+/)[0].toLowerCase() });
         } catch (err) {}
         pixel('Lead', { content_name: PAGE, variant: variant }, { eventID: leadId });
         ga('generate_lead', { event_category: 'conversion', cta_id: 'final_form' });
         ga('lp_form_step', { step: 2 });
-        var body = base(); body.partial = 'true';
+        var body = base(); body.partial = 'true'; body.website = lead.website;
         partial = post(body);
     }
     if (next1) next1.addEventListener('click', function () { setTimeout(captureContact, 0); });
 
-    // Step 2: the website. Same deal, now complete, then the calendar.
+    // Step 2: two taps for the tier. Same deal, now complete, then the calendar.
     var busy = false;
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         if (!form.classList.contains('s2') || busy) return;
-        var website = val('f-web');
+        var website = lead.website || val('f-web');
         var enq = (form.querySelector('[name=enquiries]:checked') || {}).value || '';
         var sale = (form.querySelector('[name=saleValue]:checked') || {}).value || '';
         if (!website || !enq || !sale) return;
