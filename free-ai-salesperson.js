@@ -157,7 +157,7 @@
             fbp: ids.fbp, fbc: ids.fbc, fbclid: attr.fbclid || '',
             utm_source: attr.utm_source || '', utm_medium: attr.utm_medium || '', utm_campaign: attr.utm_campaign || '',
             utm_content: attr.utm_content || '', utm_term: attr.utm_term || '',
-            notes: 'Page: Free AI Salesperson Offer, ' + location.host + location.pathname + ', hero ' + variant.toUpperCase(),
+            notes: 'Page: Free 1-Call Superhuman Sales Team Launch, ' + location.host + location.pathname + ', hero ' + variant.toUpperCase(),
             url_hp: (form.querySelector('[name=url_hp]') || {}).value || ''
         };
     }
@@ -230,7 +230,7 @@
                     name: lead.name,
                     'metadata[opportunityId]': lead.opportunityId || '',
                     'metadata[utm_content]': attr.utm_content || '',
-                    notes: ['Website: ' + lead.website, 'WhatsApp: ' + lead.whatsapp, 'Free AI Salesperson Offer, hero ' + variant.toUpperCase()].join(' | ')
+                    notes: ['Website: ' + lead.website, 'WhatsApp: ' + lead.whatsapp, 'Free 1-Call Superhuman Sales Team Launch, hero ' + variant.toUpperCase()].join(' | ')
                 }
             });
             window.Cal('on', { action: 'bookingSuccessful', callback: function () { window.onFreeAiBooked(); } });
