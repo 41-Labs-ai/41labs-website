@@ -870,3 +870,78 @@ test.describe('reminders', () => {
     expect(kinds(moved)).toEqual(['booked', 'reminder_1h']);
   });
 });
+
+// 22 Oct 2026. Meta only ever heard "QualifiedLead" for people who finished the form as
+// tier A or B. A lead who left a name and number and stopped (11 of 41 ad leads, 13 Sep
+// to 20 Oct) was invisible to it even when they went on to book a call, which is the
+// clearest sign of a buyer we have. Joie (Enjoy Your Holiday) was one. When such a lead
+// reaches MEETING, by a booking or by hand, Meta now hears it once as a QualifiedLead.
+test.describe('name-only lead that reaches a call -> QualifiedLead to Meta', () => {
+  const NAME_ONLY = 'Form: 41labs.ai/ai-closer\nWhatsApp enquiries/week: -\nAverage sale: -\nCosting them most: -\nWants: -\n' +
+    'Stage: contact captured, questions not answered\nUTM: utm_source=facebook utm_content=cold_travel\nfbclid=abc123\n' +
+    'fbp=fb.1.1757000000000.9876543210\nfbc=fb.1.1757000000000.abc123\nUA: Mozilla/5.0 test';
+  const qualified = (c: Call[]) => capiCalls(c).flatMap((x) => x.body.data).filter((e: any) => e.event_name === 'QualifiedLead');
+
+  test('books a call: Meta gets the Schedule and one QualifiedLead, with the click cookies', async () => {
+    const w = makeWorld({ opps: [opp('o1', { statusNotes: NAME_ONLY })], events: [booking('e1')] });
+    await w.run();
+    const names = capiCalls(w.calls).flatMap((x) => x.body.data).map((e: any) => e.event_name);
+    expect(names).toContain('Schedule');
+    const q = qualified(w.calls);
+    expect(q).toHaveLength(1);
+    expect(q[0].event_id).toBe('qualified_o1_q');
+    expect(q[0].user_data.fbc).toBe('fb.1.1757000000000.abc123');
+    expect(q[0].user_data.fbp).toBe('fb.1.1757000000000.9876543210');
+    expect(q[0].user_data.ph).toEqual(['fd38d3edfeb70b7fb09e74e269d27f6fb24d5c75799b7e3d85604a5965a6623f']);
+    expect(q[0].event_time).toBe(Math.floor(NOW / 1000));
+    expect(w.store.get('o1').statusNotes).toContain('[sent:capi_qualified]');
+  });
+
+  test('moved to MEETING by hand with no booking: still one QualifiedLead, never a second', async () => {
+    const w = makeWorld({ opps: [opp('o1', { statusNotes: NAME_ONLY, stage: 'MEETING' })], events: [] });
+    await w.run();
+    expect(qualified(w.calls)).toHaveLength(1);
+    await w.run(NOW + 10 * MIN);
+    expect(qualified(w.calls), 'rerun must not report the same lead twice').toHaveLength(1);
+  });
+
+  test('tier A or B: no extra QualifiedLead, the form already sent it', async () => {
+    for (const tier of ['A', 'B']) {
+      const w = makeWorld({ opps: [opp('o1', { tier })], events: [booking('e1')] });
+      await w.run();
+      expect(qualified(w.calls), `tier ${tier}`).toHaveLength(0);
+    }
+  });
+
+  test('tier C books a call: still not qualified, Meta must not learn to find small businesses', async () => {
+    const w = makeWorld({ opps: [opp('o1', { tier: 'C' })], events: [booking('e1')] });
+    await w.run();
+    expect(qualified(w.calls)).toHaveLength(0);
+  });
+
+  test('name-only lead still at SCREENING with no call: nothing sent', async () => {
+    const w = makeWorld({ opps: [opp('o1', { statusNotes: NAME_ONLY, createdAt: iso(NOW - 2 * HOUR) })], events: [] });
+    await w.run();
+    expect(qualified(w.calls)).toHaveLength(0);
+  });
+
+  test('lead older than 7 days: not sent, Meta can no longer credit it to the ad click', async () => {
+    const w = makeWorld({ opps: [opp('o1', { statusNotes: NAME_ONLY, stage: 'MEETING', createdAt: iso(NOW - 8 * 24 * HOUR) })], events: [] });
+    await w.run();
+    expect(qualified(w.calls)).toHaveLength(0);
+  });
+
+  test('Meta rejects it: claim released, the next run retries and it lands once', async () => {
+    const o = opp('o1', { statusNotes: NAME_ONLY, stage: 'MEETING' });
+    const bad = makeWorld({ opps: [o], events: [], capi: '500' });
+    await bad.run();
+    expect(bad.store.get('o1').statusNotes).not.toContain('[sent:capi_qualified]');
+  });
+
+  test('CAPI token missing: skipped and not marked, so it sends once the token is added', async () => {
+    const w = makeWorld({ opps: [opp('o1', { statusNotes: NAME_ONLY, stage: 'MEETING' })], events: [], env: { META_CAPI_TOKEN: '' } });
+    await w.run();
+    expect(qualified(w.calls)).toHaveLength(0);
+    expect(w.store.get('o1').statusNotes).not.toContain('[sent:capi_qualified]');
+  });
+});

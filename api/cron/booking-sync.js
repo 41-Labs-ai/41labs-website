@@ -19,7 +19,7 @@ const crypto = require('crypto');
 const { e164Digits, samePhone, formatSgt } = require('../_lib/util');
 const notesLib = require('../_lib/notes');
 const gcal = require('../_lib/google-calendar');
-const { buildScheduleEvent, sendCapiEvent } = require('../_lib/meta-capi');
+const { buildScheduleEvent, buildQualifiedLeadEvent, sendCapiEvent } = require('../_lib/meta-capi');
 const { hermesConfigured, postHermesIntake } = require('../_lib/hermes');
 const { listCloserCandidates, patchOpportunity } = require('../_lib/twenty');
 
@@ -310,6 +310,38 @@ async function runBookingSync({ env, fetchImpl, now }) {
       summary.unbooked.push(opp.id);
     } catch (e) {
       fail(`opp ${opp.id} / unbook: ${e && e.message ? e.message : e}`);
+    }
+  }
+
+  // QualifiedLead for a name-only lead that reached a call (22 Oct 2026). The form only
+  // reports tier A and B, so a lead who left a name and number and stopped was invisible
+  // to the ad sets even when they went on to book, which is the clearest buying signal we
+  // have. MEETING covers a booking this run, one the AI made on WhatsApp, and a deal moved
+  // by hand. Tier C stays out on purpose. Older than 7 days, Meta can no longer tie it to
+  // the click, so it would only add noise.
+  for (const opp of opps) {
+    const parsed = notesLib.parseLeadNotes(opp.statusNotes);
+    if (opp.stage !== 'MEETING' || !parsed.partial) continue;
+    if (t - Date.parse(opp.createdAt) > 7 * DAY) continue;
+    try {
+      await once(opp, 'sent:capi_qualified', !!env.META_CAPI_TOKEN, () => {
+        const c = contactOf(opp);
+        return sendCapiEvent(buildQualifiedLeadEvent({
+          eventId: `qualified_${opp.id}`,
+          email: c.emails[0],
+          phone: c.phone,
+          firstName: c.firstName,
+          lastName: c.lastName,
+          fbclid: parsed.fbclid,
+          fbp: parsed.fbp,
+          fbc: parsed.fbc,
+          clickMs: Date.parse(opp.createdAt),
+          userAgent: parsed.userAgent,
+          eventTimeSec: Math.floor(t / 1000),
+        }), { env, fetchImpl });
+      });
+    } catch (e) {
+      fail(`opp ${opp.id} / qualified: ${e && e.message ? e.message : e}`);
     }
   }
 
